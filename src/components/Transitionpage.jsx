@@ -10,13 +10,18 @@ import Account_page from './Page/Account'
 import About_page from './Page/About'
 import AD_page from './Page/Ad'
 import History_page from './Page/History'
+import styled from "styled-components";
 
+const Container = styled.div`
+
+`;
 const Transition = () => {
 
   
     const location = useLocation();
   
     return (
+      <Container>
       <TransitionGroup className="transition-group">
         <CSSTransition key={location.pathname} classNames="fade" timeout={500}>
           <Switch location={location}>
@@ -31,6 +36,7 @@ const Transition = () => {
           </Switch>
         </CSSTransition>
       </TransitionGroup>
+      </Container>
     );
   };
   

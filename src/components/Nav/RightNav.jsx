@@ -15,7 +15,7 @@ const Ul = styled.ul`
     background: linear-gradient(to top, #D9C6A0, #D9B7A0);
     position: fixed;
     transform: ${({ open }) => open ? 'translateX(0)' : 'translateX(100%)'};
-    opacity: ${({ open }) => open ? '1' : '0.5'};
+    opacity: ${({ open }) => open ? '0.8' : '0.5'};
     top: 0;
     right: 0;
     height: 100vh;

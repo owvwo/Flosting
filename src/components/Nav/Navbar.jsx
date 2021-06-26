@@ -2,20 +2,20 @@ import '../../App.css'
 import React from 'react';
 import styled from 'styled-components';
 import Navicon from './Navicon';
+import Loginicon from './Loginicon';
 
 const Nav = styled.nav`
   width: 100%;
-  height: 70px;
+  height: 50px;
   border-bottom: 2px solid #f1f1f1;
   padding: 0 20px;
   display: flex;
   justify-content: space-between;
   .logo {
-    padding: 15px 0;
     font-family: 'Lobster', cursive;
-    font-size: 30px;
-    border: 2px solid;
-    padding: 10px;
+    font-size: 20px;
+    border: 1.5px solid;
+    padding: 5px;
     margin: 5px;
   }
 `
@@ -27,6 +27,7 @@ const Navbar = () => {
         Flosting
       </div>
       <Navicon />
+      <Loginicon />
     </Nav>
   )
 }

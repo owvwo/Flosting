@@ -8,7 +8,7 @@ body {
   
   .fade-enter {
     opacity: 0;
-    transform: translateX(100%);
+    transform: translateX(50%);
   }
   
   .fade-enter-active {
@@ -19,7 +19,7 @@ body {
   
   .fade-exit {
     opacity: 1;
-    transform: translateX(-50%);
+    transform: translateX(-100%);
   }
   
   .fade-exit-active {

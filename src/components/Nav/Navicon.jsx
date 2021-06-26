@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import RightNav from './RightNav';
 
 const Styledicon = styled.div`
-  width: 2rem;
-  height: 2rem;
+  width: 1.5rem;
+  height: 1.5rem;
   position: fixed;
-  top: 15px;
+  top: 10px;
   right: 20px;
   z-index: 20;
   display: none;
@@ -16,7 +16,7 @@ const Styledicon = styled.div`
     flex-flow: column nowrap;
   }
   div {
-    width: 2rem;
+    width: 1.5rem;
     height: 0.1rem;
     background-color: ${({ open }) => open ? '#241C16' : '#333'};
     border-radius: 10px;
@@ -36,13 +36,13 @@ const Styledicon = styled.div`
 `;
 
 const Menutitle = styled.div`
-  width: 2rem;
+  width: 1.5rem;
   height: 1rem;
   position: fixed;
-  top: 47px;
+  top: 35px;
   right: 20px;
   text-align: center;
-  font-size: 10px;
+  font-size: 8px;
   font-family: 'Nanum Gothic', sans-serif;
 
 `;
