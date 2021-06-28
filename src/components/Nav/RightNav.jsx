@@ -55,9 +55,6 @@ const RightNav = ({ open }) => {
           <NavLink exact = {true} activeStyle={activeStyle} style = {noneactiveStyle} to= "/">홈</NavLink>
       </li>
       <li>
-          <NavLink activeStyle={activeStyle} style = {noneactiveStyle} to= "/login">로그인</NavLink>
-      </li>
-      <li>
           <NavLink activeStyle={activeStyle} style = {noneactiveStyle} to= "/submit">플로스팅 신청</NavLink>
       </li>
       <li>

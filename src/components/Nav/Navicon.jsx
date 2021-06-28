@@ -42,7 +42,7 @@ const Menutitle = styled.div`
   top: 35px;
   right: 20px;
   text-align: center;
-  font-size: 8px;
+  font-size: 0.5rem;
   font-family: 'Nanum Gothic', sans-serif;
 
 `;

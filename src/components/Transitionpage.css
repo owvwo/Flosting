@@ -1,5 +1,6 @@
 body {
-    overflow: hidden;
+    padding-top: 50px;
+    overflow: auto;
   }
   
   .transition-group {
@@ -8,12 +9,12 @@ body {
   
   .fade-enter {
     opacity: 0;
-    transform: translateX(50%);
+    transform: translateX(20%);
   }
   
   .fade-enter-active {
     opacity: 1;
-    transform: translateX(-50%);
+    transform: translateX(-40%);
     transition: all 1s ease-in;
   }
   

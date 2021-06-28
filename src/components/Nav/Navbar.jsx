@@ -3,12 +3,18 @@ import React from 'react';
 import styled from 'styled-components';
 import Navicon from './Navicon';
 import Loginicon from './Loginicon';
+import {NavLink} from 'react-router-dom'
 
 const Nav = styled.nav`
+  position: fixed;
+  z-index: 20;
+  top: 0px;
+  background-color: white;
+
   width: 100%;
   height: 50px;
   border-bottom: 2px solid #f1f1f1;
-  padding: 0 20px;
+  padding: 0px;
   display: flex;
   justify-content: space-between;
   .logo {
@@ -21,10 +27,20 @@ const Nav = styled.nav`
 `
 
 const Navbar = () => {
+  const activeStyle = {
+    color: '#000000'
+  };
+  const noneactiveStyle = {
+    textDecoration: 'none',
+    color: '#000000'
+  }
+
   return (
     <Nav>
       <div className="logo">
-        Flosting
+        <NavLink exact = {true} activeStyle={activeStyle} style = {noneactiveStyle} to= "/">
+          Flosting
+        </NavLink>
       </div>
       <Navicon />
       <Loginicon />

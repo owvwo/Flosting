@@ -4,8 +4,9 @@ import styled from 'styled-components';
 const Container = styled.div`
   left: 0;
   width: 100%;
-  height: 100%;
-  overflow-y : scroll;
+  height: calc(100%-50px);
+  background-color: yellow;
+  overflow: scroll;
 `;
 
 const Home = () =>{
@@ -36,6 +37,23 @@ const Home = () =>{
             <h1>22</h1>
             <h1>23</h1>
             <h1>24</h1>
+            <h1>25</h1>
+            <h1>26</h1>
+            <h1>27</h1>
+            <h1>28</h1>
+            <h1>29</h1>
+            <h1>30</h1>
+            <h1>31</h1>
+            <h1>32</h1>
+            <h1>33</h1>
+            <h1>34</h1>
+            <h1>35</h1>
+            <h1>36</h1>
+            <h1>37</h1>
+            <h1>38</h1>
+            <h1>39</h1>
+            <h1>40</h1>
+            <h1>41</h1>
         </Container>
 
     );
