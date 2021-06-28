@@ -38,8 +38,7 @@ const Ul = styled.ul`
 `;
 
 
-
-const RightNav = ({ open }) => {
+const RightNav = (props) => {
 
     const activeStyle ={
         color: '#7A7671'
@@ -50,27 +49,27 @@ const RightNav = ({ open }) => {
     }
 
   return (
-    <Ul open={open}>
+    <Ul open={props.open}>
       <li>
-          <NavLink exact = {true} activeStyle={activeStyle} style = {noneactiveStyle} to= "/">홈</NavLink>
+          <NavLink onClick={() => props.setOpen(!props.open)}exact = {true} activeStyle={activeStyle} style = {noneactiveStyle} to= "/">홈</NavLink>
       </li>
       <li>
-          <NavLink activeStyle={activeStyle} style = {noneactiveStyle} to= "/submit">플로스팅 신청</NavLink>
+          <NavLink onClick={() => props.setOpen(!props.open)} activeStyle={activeStyle} style = {noneactiveStyle} to= "/submit">플로스팅 신청</NavLink>
       </li>
       <li>
-          <NavLink activeStyle={activeStyle} style = {noneactiveStyle} to= "/confirm">플로스팅 확인</NavLink>
+          <NavLink onClick={() => props.setOpen(!props.open)} activeStyle={activeStyle} style = {noneactiveStyle} to= "/confirm">플로스팅 확인</NavLink>
       </li>
       <li>
-          <NavLink activeStyle={activeStyle} style = {noneactiveStyle} to= "/account">결제 안내</NavLink>
+          <NavLink onClick={() => props.setOpen(!props.open)} activeStyle={activeStyle} style = {noneactiveStyle} to= "/account">결제 안내</NavLink>
       </li>
       <li>
-          <NavLink activeStyle={activeStyle} style = {noneactiveStyle} to= "/history">플로스팅 역사</NavLink>
+          <NavLink onClick={() => props.setOpen(!props.open)} activeStyle={activeStyle} style = {noneactiveStyle} to= "/history">플로스팅 역사</NavLink>
       </li>
       <li>
-          <NavLink activeStyle={activeStyle} style = {noneactiveStyle} to= "/about">제작 기획</NavLink>
+          <NavLink onClick={() => props.setOpen(!props.open)} activeStyle={activeStyle} style = {noneactiveStyle} to= "/about">제작 기획</NavLink>
       </li>
       <li>
-          <NavLink activeStyle={activeStyle} style = {noneactiveStyle} to= "/ad">광고 문의</NavLink>
+          <NavLink onClick={() => props.setOpen(!props.open)} activeStyle={activeStyle} style = {noneactiveStyle} to= "/ad">광고 문의</NavLink>
       </li>
     </Ul>
   )

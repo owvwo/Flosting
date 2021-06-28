@@ -59,7 +59,7 @@ const Navicon = () => {
       <Menutitle>
         메뉴
       </Menutitle>
-      <RightNav open={open}/>
+      <RightNav open={open} setOpen = {setOpen}/>
     </>
   )
 }
