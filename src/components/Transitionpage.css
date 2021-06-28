@@ -4,7 +4,8 @@ body {
   }
   
   .transition-group {
-    position: relative;
+    width: 100%;
+    position: fixed;
   }
   
   .fade-enter {

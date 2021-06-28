@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import {GiSpotedFlower } from 'react-icons/gi'
 import {NavLink} from 'react-router-dom'
-import { black } from 'chalk';
 
 const Logicon = styled.div`
 
