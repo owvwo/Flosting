@@ -6,6 +6,15 @@
 
 모바일용 웹사이트 개발중
 
-### About
-Developer: jwoo820
-Developer: owvwo
+### Developer
+
+jwoo820
+
+### Developer
+
+owvwo
+
+### Developer
+
+wogus0518
+
