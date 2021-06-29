@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
+import{NavLink} from 'react-router-dom';
 
 
 const Wrapper = styled.div`
@@ -80,24 +81,26 @@ class Login extends Component{
 
         return (
             <Wrapper>
-            <Container>
-                <FlostingTitle>
-                    Flosting
-                </FlostingTitle>
-                {this.state.currentPage === null ? (
-                    <Container>
-                        <Button login onClick={() => this.handlePageChange(false)}>
-                            로그인
-                        </Button>
-                        <Button register>
-                            회원가입
-                        </Button>
-                    </Container>
-                ) : (
-                    <Loginbar />
-                )
-                }
-            </Container>
+                <Container>
+                    <FlostingTitle>
+                        Flosting
+                    </FlostingTitle>
+                    {this.state.currentPage === null ? (
+                        <Container>
+                            <Button login onClick={() => this.handlePageChange(false)}>
+                                로그인
+                            </Button>
+                            <NavLink to="/register">
+                                <Button register>
+                                    회원가입
+                                </Button>
+                            </NavLink>
+                        </Container>
+                    ) : (
+                        <Loginbar />
+                    )
+                    }
+                </Container>
             </Wrapper>
         );
     }
