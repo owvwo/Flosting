@@ -1,9 +1,5 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
-import { MDBContainer } from 'mdbreact';
-import '@fortawesome/fontawesome-free/css/all.min.css'; 
-import'bootstrap-css-only/css/bootstrap.min.css'; 
-import'mdbreact/dist/css/mdb.css';
 
 const Container = styled.div`
     display : flex;
