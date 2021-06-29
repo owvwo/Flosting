@@ -36,6 +36,9 @@ const Styledicon = styled.div`
 `;
 
 const Menutitle = styled.div`
+display: none;
+@media (max-width: 768px){
+  display : flex;
   width: 1.5rem;
   height: 1rem;
   position: fixed;
@@ -44,6 +47,7 @@ const Menutitle = styled.div`
   text-align: center;
   font-size: 0.5rem;
   font-family: 'Nanum Gothic', sans-serif;
+}
 
 `;
 const Navicon = () => {

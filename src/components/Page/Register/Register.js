@@ -8,7 +8,7 @@ import styled from 'styled-components';
 const Container = styled.div`
     font-family: 'Noto Sans KR', sans-serif;
     font-weight: 400;
-    margin: 1rem 2rem;
+    margin: 0rem 2rem;
     
 
     h1{
