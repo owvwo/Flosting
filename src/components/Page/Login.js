@@ -53,10 +53,19 @@ const Input = styled.input.attrs(props => ({
     padding: ${props => props.size};
 `;
 
+const Loginbar = () => {
+    return (
+        <Container>
+
+        </Container>
+    )
+}
+
 class Login extends Component{
 
     state = {
         currentPage : null
+        
     }
 
     handlePageChange = (page) => {
@@ -65,10 +74,25 @@ class Login extends Component{
 
     render(){
 
-        return(
-            <div>
-                <p>hi</p>
-            </div>
+        return (
+            <Container>
+                <FlostingTitle>
+                    Flosting
+                </FlostingTitle>
+                {this.state.currentPage === null ? (
+                    <Container>
+                        <Button login onClick={() => this.handlePageChange(false)}>
+                            로그인
+                        </Button>
+                        <Button register>
+                            회원가입
+                        </Button>
+                    </Container>
+                ) : (
+                    <Loginbar />
+                )
+                }
+            </Container>
         );
     }
 }
