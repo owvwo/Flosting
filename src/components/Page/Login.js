@@ -1,19 +1,7 @@
-import React, {Component, useState} from 'react';
-import '@fortawesome/fontawesome-free/css/all.min.css'; 
-import'bootstrap-css-only/css/bootstrap.min.css'; 
-import'mdbreact/dist/css/mdb.css';
-
-import { TransitionGroup, CSSTransition } from "react-transition-group";
-import { Route, Switch, useLocation } from "react-router-dom";
-import {NavLink} from 'react-router-dom'
-
-
-import { MDBContainer,   MDBInput } from 'mdbreact';
+import React, {Component} from 'react';
 import styled from 'styled-components';
-import { render } from '@testing-library/react';
 
 const Container = styled.div`
-
     display : flex;
     flex-direction: column;
     justify-content: center;
@@ -68,13 +56,13 @@ const Input = styled.input.attrs(props => ({
 
 const Loginbar = () => {
     return(
-        <MDBContainer>
+        <Container>
             <Input placeholder="학번"  />
             <Input placeholder="비밀번호" />
             <Button register>
                 로그인
             </Button>
-        </MDBContainer>
+        </Container>
     );
 }
 class Login extends Component{
@@ -89,27 +77,25 @@ class Login extends Component{
 
     render(){
 
-        return(
-            <MDBContainer>
-                <Container>
-                    <FlostingTitle>
-                        Flosting
-                    </FlostingTitle>
-                    {this.state.currentPage === null ? (
-                        <MDBContainer>
-                            <Button login onClick = {() => this.handlePageChange(false)}>
-                                로그인
-                            </Button>
-                            <Button register>
-                                회원가입
-                            </Button>
-                        </MDBContainer>
-                    ) : (
-                        <Loginbar />
-                    )
-                    }
-                </Container>
-            </MDBContainer>
+        return (
+            <Container>
+                <FlostingTitle>
+                    Flosting
+                </FlostingTitle>
+                {this.state.currentPage === null ? (
+                    <Container>
+                        <Button login onClick={() => this.handlePageChange(false)}>
+                            로그인
+                        </Button>
+                        <Button register>
+                            회원가입
+                        </Button>
+                    </Container>
+                ) : (
+                    <Loginbar />
+                )
+                }
+            </Container>
         );
     }
 }
