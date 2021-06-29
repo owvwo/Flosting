@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
 
+
+const Wrapper = styled.div`
+`;
 const Container = styled.div`
     display : flex;
     flex-direction: column;
@@ -41,10 +44,10 @@ const Input = styled.input.attrs(props => ({
     type: "text",
   }))`
   line-height: 3rem;
-  padding: 5px;
+  padding-left: 10px;
   margin: 5px;
   height: 3rem;
-  width: 300px;
+  width: 290px;
   font-size: 1rem;
   border: 2px solid #E0BCC1;
   border-radius: 5px;
@@ -76,6 +79,7 @@ class Login extends Component{
     render(){
 
         return (
+            <Wrapper>
             <Container>
                 <FlostingTitle>
                     Flosting
@@ -94,6 +98,7 @@ class Login extends Component{
                 )
                 }
             </Container>
+            </Wrapper>
         );
     }
 }
