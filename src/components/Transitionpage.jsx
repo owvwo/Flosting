@@ -10,6 +10,7 @@ import Account_page from './Page/Account'
 import About_page from './Page/About'
 import AD_page from './Page/Ad'
 import History_page from './Page/History'
+import Register_page from './Page/Register/Register'
 
 const Transition = () => {
 
@@ -28,6 +29,7 @@ const Transition = () => {
             <Route path="/about" component={About_page} />
             <Route path="/history" component={History_page} />
             <Route path="/ad" component={AD_page} />
+            <Route path="/register" component={Register_page} />
           </Switch>
         </CSSTransition>
       </TransitionGroup>
