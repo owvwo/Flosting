@@ -1,19 +1,8 @@
 import React, { useState } from "react";
-import {
-  Button,
-  Form,
-  Container,
-  Row,
-  Col,
-  Image,
-  Range,
-} from "react-bootstrap";
+import Select from "react-select";
+import { Button, Form, Container, Row, Col, Image } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import Slider from "@material-ui/core/Slider";
-import { withStyles } from "@material-ui/core/styles";
-const Submit = (props) => {
+const Submit = () => {
   // 아이디 전달
   const [validated, setValidated] = useState(false);
   // const [userNicName, setUserNicName] = useState("");
@@ -28,104 +17,29 @@ const Submit = (props) => {
       event.preventDefault();
       event.stopPropagation();
     }
-
     setValidated(true);
   };
 
-  // userAge Slider
-  const useStyles = makeStyles((theme) => ({
-    root: {
-      width: 300,
-    },
-    margin: {
-      height: theme.spacing(3),
-    },
-  }));
+  // 체크박스 toggle
+  const [lilacVisible, setLilacVisible] = useState(true);
+  const [daisyVisible, setDaisyVisible] = useState(true);
+  const [daisyGayVisible, setDaisyGayVisible] = useState(true);
 
-  const marks = [
-    {
-      value: 20,
-      label: "20살",
-    },
-    {
-      value: 23,
-      label: "23살",
-    },
-    {
-      value: 27,
-      label: "27살",
-    },
-    {
-      value: 30,
-      label: "30살",
-    },
-  ];
+  const handleLilacVisible = (event) => {
+    setLilacVisible(!lilacVisible);
+  };
+  const handleDaisyVisible = (event) => {
+    setDaisyVisible(!daisyVisible);
+  };
+  const handleDaisyGayVisible = (event) => {
+    setDaisyGayVisible(!daisyGayVisible);
+  };
 
-  function valuetext(value) {
-    return `${value}°C`;
-  }
+  // checkbox mount
 
-  const classes = useStyles();
-
-  // arbnb slider
-  const useStylesAirBnb = makeStyles((theme) => ({
-    root: {
-      width: 300 + theme.spacing(3) * 2,
-    },
-    margin: {
-      height: theme.spacing(3),
-    },
-  }));
-
-  const AirbnbSlider = withStyles({
-    root: {
-      color: "#3a8589",
-      height: 3,
-      padding: "13px 0",
-    },
-    thumb: {
-      height: 27,
-      width: 27,
-      backgroundColor: "#fff",
-      border: "1px solid currentColor",
-      marginTop: -12,
-      marginLeft: -13,
-      boxShadow: "#ebebeb 0 2px 2px",
-      "&:focus, &:hover, &$active": {
-        boxShadow: "#ccc 0 2px 3px 1px",
-      },
-      "& .bar": {
-        // display: inline-block !important;
-        height: 9,
-        width: 1,
-        backgroundColor: "currentColor",
-        marginLeft: 1,
-        marginRight: 1,
-      },
-    },
-    active: {},
-    track: {
-      height: 3,
-    },
-    rail: {
-      color: "#d8d8d8",
-      opacity: 1,
-      height: 3,
-    },
-  })(Slider);
-
-  function AirbnbThumbComponent(props) {
-    return (
-      <span {...props}>
-        <span className="bar" />
-        <span className="bar" />
-        <span className="bar" />
-      </span>
-    );
-  }
   return (
     <div>
-      <Container fluid="md">
+      <Container fluid>
         <Row className="text-center">
           <h1>참가신청서</h1>
         </Row>
@@ -164,45 +78,115 @@ const Submit = (props) => {
           </Form.Group>
 
           <Form.Group controlId="userAge" className="md-3" fluid>
-            <div className={classes.root}>
-              <Typography id="discrete-slider-custom" gutterBottom>
-                나이를 선택해주세요
-              </Typography>
-              <Slider
-                min={20}
-                max={30}
-                defaultValue={20}
-                getAriaValueText={valuetext}
-                aria-labelledby="discrete-slider-always"
-                step={1}
-                valueLabelDisplay="auto"
-                marks={marks}
-              />
-            </div>
+            <Form.Label>본인 나이를 선택해주세요@</Form.Label>
+            <Form.Control type="range" mix={20} max={30} />
           </Form.Group>
 
-          <Form.Group>
-            <Form.Label>상대방의 나이</Form.Label>
-            <Form.Control
-              type="range"
-              placeholder="닉네임"
-              required
-              min={20}
-              max={30}
-              defaultValue={[21, 29]}
-            />
+          <Form.Group controlId="matchingType">
+            <Form.Label>신청할 타입은 ??</Form.Label>
+            {["checkbox"].map((type) => (
+              <div key={`inline-${type}`} className="mb-3">
+                <Form.Check
+                  onClick={handleLilacVisible}
+                  inline
+                  label="라일락"
+                  name="ticket"
+                  type={type}
+                  id={`matchingType${type}-1`}
+                ></Form.Check>
+                <Form.Check
+                  onClick={handleDaisyVisible}
+                  inline
+                  label="데이지 이성"
+                  name="ticket"
+                  type={type}
+                  id={`matchingType${type}-2`}
+                ></Form.Check>
+                <Form.Check
+                  onClick={handleDaisyGayVisible}
+                  inline
+                  label="데이지 동성"
+                  name="ticket"
+                  type={type}
+                  id={`matchingType${type}-3`}
+                ></Form.Check>
+              </div>
+            ))}
           </Form.Group>
-          <AirbnbSlider
-            ThumbComponent={AirbnbThumbComponent}
-            getAriaLabel={(index) =>
-              index === 0 ? "Minimum price" : "Maximum price"
-            }
-            defaultValue={[20, 40]}
-          />
+          <Form.Group controlId="lilacSubmit">
+            {lilacVisible ? (
+              ""
+            ) : (
+              <Form.Group controlId="lilacOther" className="md-3" fluid>
+                <Form.Label>라일락 상대방의 나이를 선택해주세요@</Form.Label>
+                <Form.Control type="range" mix={20} max={30} />
+                <Form.Label>라일락</Form.Label>
+                <Select placeholder="0">
+                  <option>0</option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                </Select>
+              </Form.Group>
+            )}
+          </Form.Group>
+          <Form.Group controlId="lilacSubmit">
+            {daisyVisible ? (
+              ""
+            ) : (
+              <Form.Group controlId="daisyOther" className="md-3" fluid>
+                <Form.Label>
+                  데이지 이성 상대방의 나이를 선택해주세요@
+                </Form.Label>
+                <Form.Control type="range" mix={20} max={30} />
+                <Form.Label>데이지 이성</Form.Label>
+                <Select placeholder="0">
+                  <option>0</option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                </Select>
+              </Form.Group>
+            )}
+          </Form.Group>
+          <Form.Group controlId="lilacSubmit">
+            {daisyGayVisible ? (
+              ""
+            ) : (
+              <Form.Group controlId="daisyGayOther" className="md-3" fluid>
+                <Form.Label>
+                  데이지 동성 상대방의 나이를 선택해주세요@
+                </Form.Label>
+                <Form.Control type="range" mix={20} max={30} />
+                <Form.Label>데이지 동성</Form.Label>
+                <Select placeholder="0">
+                  <option>0</option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                </Select>
+              </Form.Group>
+            )}
+          </Form.Group>
           <Form.Group controlId="finalBtn">
-            <Button variant="primary" type="submit">
-              Submit
-            </Button>
+            <Row>
+              <Col>
+                <Button variant="primary" type="submit">
+                  Home
+                </Button>
+              </Col>
+              <Col>
+                <Button variant="primary" type="submit">
+                  Submit
+                </Button>
+              </Col>
+            </Row>
           </Form.Group>
         </Form>
       </Container>
