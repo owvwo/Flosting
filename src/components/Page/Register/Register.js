@@ -1,9 +1,10 @@
-import React, { Component } from 'react'
+import React, { Component, useState } from 'react'
 import SelectSearch from 'react-select-search';
 import './Searchbox.css'
 import fuzzySearch from './fuzzySearch';
 import {Schools } from './Schools';
 import styled from 'styled-components';
+import{NavLink} from 'react-router-dom';
 
 const Container = styled.div`
     font-family: 'Noto Sans KR', sans-serif;
@@ -71,42 +72,45 @@ const Input = styled.input`
   border-radius: 5px;
 `;
 
-class Register extends Component {
+function Register({set_auth_regis}) {
 
-    render() {
-        return (
-            <Container>
-                <h1>
-                    플로스팅 회원가입
-                </h1>
-                <School_number>
-                    <School_title>
-                        학번
-                    </School_title>
-                    <School_content>
-                        ※ 년도가 아닌 8 ~ 13자리로 이루어진 본인의 고유학번을 입력해주세요.
-                    </School_content>
-                    <Input placeholder="학번을 입력하세요"></Input>
+    const handleClick = () =>{
+        set_auth_regis(true);
+    }
+    return (
+        <Container>
+            <h1>
+                플로스팅 회원가입
+            </h1>
+            <School_number>
+                <School_title>
+                    학번
+                </School_title>
+                <School_content>
+                    ※ 년도가 아닌 8 ~ 13자리로 이루어진 본인의 고유학번을 입력해주세요.
+                </School_content>
+                <Input placeholder="학번을 입력하세요"></Input>
 
-                </School_number>
-                <School_name>
-                    <School_title>
-                        학교
-                    </School_title>
-                    <SelectSearch
-                        options={Schools}
-                        search
-                        filterOptions={fuzzySearch}
-                        emptyMessage="Not found"
-                        placeholder="학교 이름을 검색하세요."
-                    />
-                </School_name>
-                <Button register>
+            </School_number>
+            <School_name>
+                <School_title>
+                    학교
+                </School_title>
+                <SelectSearch
+                    options={Schools}
+                    search
+                    filterOptions={fuzzySearch}
+                    emptyMessage="Not found"
+                    placeholder="학교 이름을 검색하세요."
+                />
+            </School_name>
+            <NavLink to="/register/terms">
+                <Button register onClick={handleClick}>
                     다음
                 </Button>
-            </Container>
-        );
-    }
+            </NavLink>
+        </Container>
+    );
 }
 
 export default Register;
