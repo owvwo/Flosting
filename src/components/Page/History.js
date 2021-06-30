@@ -7,6 +7,7 @@ const Wrap = styled.div`
     margin-left: 5px;
     margin-right: 5px;
     margin-top: 5px;
+    text-align : center;
     `
 const 사진 = styled.div`
     background-color: grey;
