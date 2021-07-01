@@ -13,7 +13,7 @@ import UserAge from "./SubmitComponents/UserAge";
 import MatchingType from "./SubmitComponents/MatchingType";
 import OtherRange from "./SubmitComponents/OtherRange";
 import Ticket from "./SubmitComponents/Ticket";
-
+//aa
 const Submit = () => {
   // 아이디 전달
   const [validated, setValidated] = useState(false);
