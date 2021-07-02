@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 
-import { Button, Form, Container, Row, Col, Image } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
+// import { Button, Form, Container, Row, Col, Image } from "react-bootstrap";
+// import "bootstrap/dist/css/bootstrap.min.css";
 
-import { NavLink } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.css"; // or include from a CDN
-import "react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css";
-import RangeSlider from "react-bootstrap-range-slider";
-import { Slider } from "@material-ui/core";
+// import { NavLink } from "react-router-dom";
+// import "bootstrap/dist/css/bootstrap.css"; // or include from a CDN
+// import "react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css";
+// import RangeSlider from "react-bootstrap-range-slider";
+// import { Slider } from "@material-ui/core";
 import NickName from "./SubmitComponents/NicName";
 import UserAge from "./SubmitComponents/UserAge";
 import MatchingType from "./SubmitComponents/MatchingType";
@@ -16,84 +16,86 @@ import Ticket from "./SubmitComponents/Ticket";
 //aa
 const Submit = () => {
   // 아이디 전달
-  const [validated, setValidated] = useState(false);
+  // const [validated, setValidated] = useState(false);
 
   // submit 유효성 검사
-  const handleSubmit = (event) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-    setValidated(true);
-  };
+  // const handleSubmit = (event) => {
+  //   const form = event.currentTarget;
+  //   if (form.checkValidity() === false) {
+  //     event.preventDefault();
+  //     event.stopPropagation();
+  //   }
+  //   setValidated(true);
+  // };
 
-  // 체크박스 toggle
-  const [lilacVisible, setLilacVisible] = useState(true);
-  const [daisyVisible, setDaisyVisible] = useState(true);
-  const [daisyGayVisible, setDaisyGayVisible] = useState(true);
+  // // 체크박스 toggle
+  // const [lilacVisible, setLilacVisible] = useState(true);
+  // const [daisyVisible, setDaisyVisible] = useState(true);
+  // const [daisyGayVisible, setDaisyGayVisible] = useState(true);
 
-  const handleLilacVisible = (event) => {
-    setLilacVisible(!lilacVisible);
-  };
-  const handleDaisyVisible = (event) => {
-    setDaisyVisible(!daisyVisible);
-  };
-  const handleDaisyGayVisible = (event) => {
-    setDaisyGayVisible(!daisyGayVisible);
-  };
+  // const handleLilacVisible = (event) => {
+  //   setLilacVisible(!lilacVisible);
+  // };
+  // const handleDaisyVisible = (event) => {
+  //   setDaisyVisible(!daisyVisible);
+  // };
+  // const handleDaisyGayVisible = (event) => {
+  //   setDaisyGayVisible(!daisyGayVisible);
+  // };
 
-  // user age range
-  const [userAge, setUserAge] = useState(20);
-  // other lilac age
-  const [lilacAgeValue, setLilacAgeValue] = useState([20, 29]);
-  const updateLilacRange = (event, newValue) => {
-    setLilacAgeValue(newValue);
-  };
+  // // user age range
+  // const [userAge, setUserAge] = useState(20);
+  // // other lilac age
+  // const [lilacAgeValue, setLilacAgeValue] = useState([20, 29]);
+  // const updateLilacRange = (event, newValue) => {
+  //   setLilacAgeValue(newValue);
+  // };
 
-  // agemark
+  // // agemark
 
-  const marks = [
-    {
-      value: 20,
-    },
-    {
-      value: 21,
-    },
-    {
-      value: 22,
-    },
-    {
-      value: 23,
-    },
-    {
-      value: 24,
-    },
-    {
-      value: 25,
-    },
-    {
-      value: 26,
-    },
-    {
-      value: 27,
-    },
-    {
-      value: 28,
-    },
-    {
-      value: 29,
-    },
-  ];
+  // const marks = [
+  //   {
+  //     value: 20,
+  //   },
+  //   {
+  //     value: 21,
+  //   },
+  //   {
+  //     value: 22,
+  //   },
+  //   {
+  //     value: 23,
+  //   },
+  //   {
+  //     value: 24,
+  //   },
+  //   {
+  //     value: 25,
+  //   },
+  //   {
+  //     value: 26,
+  //   },
+  //   {
+  //     value: 27,
+  //   },
+  //   {
+  //     value: 28,
+  //   },
+  //   {
+  //     value: 29,
+  //   },
+  // ];
 
   return (
     <div>
+      <h1>참가신청서</h1>
+      <img src="Image/Logo.png" width="100" height="100" />
       <NickName></NickName>
       <UserAge></UserAge>
       <MatchingType></MatchingType>
       <OtherRange></OtherRange>
       <Ticket></Ticket>
-      <Container>
+      {/* <Container>
         <Row className="text-center">
           <h1>참가신청서</h1>
         </Row>
@@ -134,18 +136,18 @@ const Submit = () => {
           <Form.Group controlId="userAge" className="md-3">
             <Form.Label>본인 나이를 선택해주세요@</Form.Label>
             <Form.Group as={Row}>
-              <Col xs="9">
-                <RangeSlider
+              <Col xs="9"> */}
+      {/* <RangeSlider
                   value={userAge}
                   min={20}
                   max={30}
-                  onChange={(e) => setUserAge(e.target.value)}
-                />
-              </Col>
+                  onChange={(e) => setUserAge(e.target.value)} */}
+      {/* /> */}
+      {/* </Col>
               <Col xs="3">
                 <Form.Control value={userAge} />
-              </Col>
-            </Form.Group>
+              </Col> */}
+      {/* </Form.Group>
           </Form.Group>
 
           <Form.Group controlId="matchingType">
@@ -159,8 +161,8 @@ const Submit = () => {
                   name="ticket"
                   type={type}
                   id={`matchingType${type}-1`}
-                ></Form.Check>
-                <Form.Check
+                ></Form.Check> */}
+      {/* <Form.Check
                   onClick={handleDaisyVisible}
                   inline
                   label="데이지 이성"
@@ -180,8 +182,8 @@ const Submit = () => {
             ))}
           </Form.Group>
           <Form.Group controlId="lilacSubmit">
-            {lilacVisible ? (
-              ""
+            {lilacVisible ? ( */}
+      {/* ""
             ) : (
               <Form.Group controlId="lilacOther" className="md-3">
                 <Form.Label>
@@ -245,8 +247,8 @@ const Submit = () => {
           <Form.Group controlId="finalBtn">
             <Row>
               <Col>
-                <NavLink to="/">
-                  <Button variant="primary" type="submit">
+                <NavLink to="/"> */}
+      {/* <Button variant="primary" type="submit">
                     Home
                   </Button>
                 </NavLink>
@@ -259,7 +261,7 @@ const Submit = () => {
             </Row>
           </Form.Group>
         </Form>
-      </Container>
+      </Container> */}
     </div>
   );
 };

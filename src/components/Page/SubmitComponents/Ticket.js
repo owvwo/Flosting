@@ -41,9 +41,9 @@ const Ticket = () => {
           }}
         >
           <option aria-label="None" value="" />
-          <option value={10}>Ten</option>
-          <option value={20}>Twenty</option>
-          <option value={30}>Thirty</option>
+          <option value={0}>0</option>
+          <option value={1}>1</option>
+          <option value={2}>2</option>
         </Select>
       </FormControl>
     </div>
