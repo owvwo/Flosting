@@ -51,7 +51,7 @@ display: none;
 
 `;
 const Navicon = () => {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
   
   return (
     <>
