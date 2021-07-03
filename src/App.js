@@ -4,7 +4,7 @@ import { BrowserView, MobileView } from "react-device-detect"; //모바일 및 �
 import Navbar from "./components/Nav/Navbar";
 import Transition from "./components/Transitionpage";
 import ScrollToTop from "./components/ScrollToTop";
-import { Form } from "react-bootstrap";
+
 class App extends Component {
   render() {
     return (
