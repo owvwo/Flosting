@@ -6,7 +6,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import { firstTerm } from './FirstTerm'
 import { SecondTerm } from './SecondTerm'
-import { props } from 'bluebird';
+import{NavLink} from 'react-router-dom';
 
 const Boldtheme = createMuiTheme({
     palette: {
@@ -43,6 +43,15 @@ const Button = styled.button`
     if (props.register) return '#FFFFFF';
     else if(props.login) return '#828282';
   }};
+  opacity: ${props => {
+    if (props.disabled) return '0.5';
+    else return '1.0';
+  }};
+  cursor: ${props => {
+    if (props.disabled) return 'default';
+    else return 'pointer'
+  }};
+  
 `;
 
 const Container = styled.div`
@@ -98,12 +107,20 @@ const CheckContainer = styled.div`
         font-size : 10px;
     }
 `
-function Register({ auth_regis }) {
+function Register({ auth_regis, S_name, S_num }) {
 
     const [allchecked, setCheckedAll] = React.useState(false);
     const [achecked, setCheckedA] = React.useState(false);
     const [bchecked, setCheckedB] = React.useState(false);
     const [cchecked, setCheckedC] = React.useState(false);
+    const [disabledcheck, setDC] = React.useState(true);
+
+    function goNext () {
+        if(achecked && bchecked && cchecked)
+            setDC(true);
+        else
+            setDC(false);
+    }
 
     
     const handleallChecked = (event) => {
@@ -117,7 +134,12 @@ function Register({ auth_regis }) {
             setCheckedB(false);
             setCheckedC(false);
         }
+        goNext();
       };
+
+    
+    console.log(S_num)
+    console.log(S_name)
 
 
     if (!auth_regis) { return (<Redirect to='/register' />); }
@@ -209,10 +231,11 @@ function Register({ auth_regis }) {
                             <p>플로스팅은 국내 대학생을 위한 서비스이며, 본인 인증을 통해 만 14세 이상만 가입할 수 있습니다.</p>
                         </SmallScrollBox>
                     )}
-
-                <Button register>
+                <NavLink to ='/register/last'>
+                <Button disabled={disabledcheck} register>
                     휴대폰 인증
                 </Button>
+                </NavLink>
                 </Container>
             </ThemeProvider>
 

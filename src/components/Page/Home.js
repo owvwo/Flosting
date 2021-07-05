@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import CheckService from './Register/CheckService'
+import Certification from './Register/Certification'
 
 const Container = styled.div`
   left: 0;
@@ -14,7 +14,7 @@ const Home = () =>{
     return(
         <Container>
             <h1>홈</h1>
-            <CheckService></CheckService>
+            <Certification></Certification>
             <h1>1</h1>
             <h1>2</h1>
             <h1>3</h1>
