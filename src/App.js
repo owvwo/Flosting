@@ -7,14 +7,8 @@ import {
 import Navbar from './components/Nav/Navbar';
 import Transition from './components/Transitionpage';
 import ScrollToTop from './components/ScrollToTop';
-import {makeStyles} from '@material-ui/core/styles'
 
-const useStyles = makeStyles(theme => ({
-  input: {
-    padding : theme.spacing(0)
-  }
 
-}));
 class App extends Component {
   render(){
 

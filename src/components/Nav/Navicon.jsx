@@ -45,6 +45,7 @@ display: none;
   top: 35px;
   right: 20px;
   text-align: center;
+  justify-content : center;
   font-size: 0.5rem;
   font-family: 'Nanum Gothic', sans-serif;
 }

@@ -72,45 +72,107 @@ const Input = styled.input`
   border-radius: 5px;
 `;
 
-function Register({set_auth_regis}) {
 
-    const handleClick = () =>{
-        set_auth_regis(true);
+class Register extends Component {
+
+    state = {   
+        S_num : "123",
+        S_name : ""
     }
-    return (
-        <Container>
-            <h1>
-                플로스팅 회원가입
-            </h1>
-            <School_number>
-                <School_title>
-                    학번
-                </School_title>
-                <School_content>
-                    ※ 년도가 아닌 8 ~ 13자리로 이루어진 본인의 고유학번을 입력해주세요.
-                </School_content>
-                <Input placeholder="학번을 입력하세요"></Input>
 
-            </School_number>
-            <School_name>
-                <School_title>
-                    학교
-                </School_title>
-                <SelectSearch
-                    options={Schools}
-                    search
-                    filterOptions={fuzzySearch}
-                    emptyMessage="Not found"
-                    placeholder="학교 이름을 검색하세요."
-                />
-            </School_name>
-            <NavLink to="/register/terms">
-                <Button register onClick={handleClick}>
-                    다음
-                </Button>
-            </NavLink>
-        </Container>
-    );
+    handleClick = () => {
+        this.props.set_auth_regis(true);
+    }
+    
+    handleNumChange = (e) =>{
+        this.props.set_S_num(e.target.value)
+    }
+
+    render() {
+        const {handleClick, handleNumChange} = this;
+
+        return (
+            <Container>
+                <h1>
+                    플로스팅 회원가입
+                </h1>
+                <School_number>
+                    <School_title>
+                        학번
+                    </School_title>
+                    <School_content>
+                        ※ 년도가 아닌 8 ~ 13자리로 이루어진 본인의 고유학번을 입력해주세요.
+                    </School_content>
+                    <Input
+                        placeholder="학번을 입력하세요"
+                        onChange = {handleNumChange} 
+                        />
+
+                </School_number>
+                <School_name>
+                    <School_title>
+                        학교
+                    </School_title>
+                    <SelectSearch
+                        options={Schools}
+                        search
+                        filterOptions={fuzzySearch}
+                        onChange ={(selected) => this.props.set_S_name(selected)}
+                        emptyMessage="Not found"
+                        placeholder="학교 이름을 검색하세요."
+                    />
+                </School_name>
+                <NavLink to="/register/terms">
+                    <Button register onClick={handleClick}>
+                        다음
+                    </Button>
+                </NavLink>
+            </Container>
+        );
+    }
 }
+// function Register({set_auth_regis}) {
+
+//     const handleClick = () =>{
+//         set_auth_regis(true);
+//     }
+    
+    
+//     return (
+//         <Container>
+//             <h1>
+//                 플로스팅 회원가입
+//             </h1>
+//             <School_number>
+//                 <School_title>
+//                     학번
+//                 </School_title>
+//                 <School_content>
+//                     ※ 년도가 아닌 8 ~ 13자리로 이루어진 본인의 고유학번을 입력해주세요.
+//                 </School_content>
+//                 <Input 
+//                 placeholder="학번을 입력하세요"/>
+
+//             </School_number>
+//             <School_name>
+//                 <School_title>
+//                     학교
+//                 </School_title>
+//                 <SelectSearch
+//                     options={Schools}
+//                     search
+//                     filterOptions={fuzzySearch}
+//                     emptyMessage="Not found"
+//                     placeholder="학교 이름을 검색하세요."
+//                 />
+//             </School_name>
+//             <NavLink to="/register/terms">
+//                 <Button register onClick={handleClick}>
+//                     다음
+//                 </Button>
+//             </NavLink>
+//         </Container>
+//     );
+// }
 
 export default Register;
