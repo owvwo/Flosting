@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import {GiSpotedFlower } from 'react-icons/gi'
-import {NavLink} from 'react-router-dom'
+import { GiSpotedFlower } from 'react-icons/gi'
+import { NavLink } from 'react-router-dom'
+import fire from '../Page/Register/LoginFire'
 
 const Logicon = styled.div`
   display: none;
@@ -33,6 +34,26 @@ const Menutitle = styled.div`
 `;
 
 const Loginicon = () => {
+  const [user, setUser] = useState('');
+
+  const authListener = () => {
+    fire.auth().onAuthStateChanged((user) => {
+      if (user) {
+        setUser(user);
+      } else {
+        setUser("");
+      }
+    });
+  };
+
+  const handleLogout = () => {
+    fire.auth().signOut();
+  }
+
+  useEffect(() => {
+    authListener();
+  }, []);
+
   const activeStyle = {
     color: '#000000'
   };
@@ -40,19 +61,33 @@ const Loginicon = () => {
     color: '#000000'
   }
 
+  if (user) {
     return (
-        <>
-            <Logicon>
-                <NavLink activeStyle={activeStyle} style = {noneactiveStyle} to= "/login">
-                  <GiSpotedFlower size = "1.5em" />
-                </NavLink>
-            </Logicon>
-            <Menutitle>
-            로그인
-            </Menutitle>
+      <div onClick = {handleLogout}>
+        <Logicon>
+            <GiSpotedFlower size="1.5em" />
+        </Logicon>
+        <Menutitle>
+          로그아웃
+        </Menutitle>
 
-        </>
-    )
+      </div>
+    );
+  } else {
+    return (
+      <>
+        <Logicon>
+          <NavLink activeStyle={activeStyle} style={noneactiveStyle} to="/login">
+            <GiSpotedFlower size="1.5em" />
+          </NavLink>
+        </Logicon>
+        <Menutitle>
+          로그인
+        </Menutitle>
+
+      </>
+    );
+  }
 }
 
 export default Loginicon

@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^12.1.10",
     "antd": "^4.16.6",
     "bootstrap": "^4.6.0",
+    "firebase": "^8.7.0",
     "jQuery": "^1.7.4",
     "open-color": "^1.8.0",
     "react": "^17.0.2",

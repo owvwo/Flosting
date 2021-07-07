@@ -1,8 +1,9 @@
-import React, { Component, useState } from 'react'
+import React, { Component, useEffect, useState } from 'react'
 import './Searchbox.css'
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
+import fire from './LoginFire';
 
 const Container = styled.div`
     font-family: 'Noto Sans KR', sans-serif;
@@ -65,10 +66,89 @@ const Input = styled.input`
 `;
 
 
-class LastRegister extends Component {
-    render() {
-        if (!this.props.auth_regis) { return (<Redirect to='/register' />); }
+const LastRegister = (props) => {
+
+    const {auth_regis, S_name, S_num, user, authListener} = props
+    const email = S_num + "@flosting.com";
+    const [password, setPassword] = useState('');
+    const [passwordError, setPasswordError] = useState('');
+    
+    const clearInputs = () => {
+        setPassword('');
+    }
+    const clearErrors = () =>{
+        setPasswordError('');
+    }
+    // const handleLogin = () =>{
+    //     clearErrors();
+    //     fire
+    //         .auth()
+    //         .signInWithEmailAndPassword(email, password)
+    //         .catch(err => {
+    //             switch(err.code){
+    //                 case "auth/invalid-email":
+    //                 case "auth/user-disabled":
+    //                 case "auth/user-not-found":
+    //                     setEmailError(err.message);
+    //                     break;
+    //                 case "auth/wrong-password":
+    //                     setPasswordError(err.message);
+    //                     break;
+    //             }
+    //         });
+    // };
+    const handleSignUp = () =>{
+        clearErrors();
+        fire
+            .auth()
+            .createUserWithEmailAndPassword(email, password)
+            .catch(err => {
+                switch(err.code){
+                    case "auth/email-already-in-use":
+                    // case "auth/invalid-email":
+                    //     setEmailError(err.message);
+                    //     break;
+                    case "auth/weak-password":
+                        setPasswordError(err.message);
+                        break;
+                }
+            });
+    }
+    // const handleLogout = () => {
+    //     fire.auth().signOut();
+    // }
+
+    useEffect(()=>{
+        authListener();
+    }, []);
+    
+    
+    if (!auth_regis) { return (<Redirect to='/register' />); }
         else {
+            if(user){
+                return(
+                    <Container>
+                        <h1>
+                        회원가입 완료
+                        </h1>
+                        <p>축하드립니다.</p>
+                        <School_title>
+                            당신 ID
+                            <p>{email}</p>
+                        </School_title>
+                        <School_title>
+                            당신 비밀번호
+                            <p>{password}</p>
+                        </School_title>
+                        <NavLink to = '/'>
+                        <Button register>
+                            홈으로 이동
+                        </Button>
+                        </NavLink>
+                    </Container>
+                );
+            }
+            else{
             return (
                 <Container>
                     <h1>
@@ -83,21 +163,29 @@ class LastRegister extends Component {
                         </School_content>
                         <Input
                             placeholder="비밀번호 입력"
+                            type = "password"
+                            required
+                            value = {password}
+                            onChange = {e => setPassword(e.target.value)}
                         />
+                        <p> {passwordError}</p>
 
                     </Password_content>
                     <School_title>
                             넘어온 ID
-                            <p>{this.props.S_num}</p>
+                            <p>{email}</p>
                     </School_title>
                     <School_title>
                             넘어온 학교
-                            <p>{this.props.S_name}</p>
+                            <p>{S_name}</p>
                     </School_title>
+                    <Button onClick = {handleSignUp} register>
+                        회원가입 완료
+                    </Button>
                 </Container>
             );
+            }
         }
-    }
 }
 
 export default LastRegister;
