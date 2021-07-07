@@ -4,7 +4,7 @@ import { Route, Switch, useLocation } from "react-router-dom";
 import "./Transitionpage.css";
 import Home_page from './Page/Home'
 import Login_page from './Page/Login/Login'
-import Submit_page from './Page/Submit'
+import Submit_page from './Page/Submit/Submit'
 import Confirm_page from './Page/Confirm'
 import Account_page from './Page/Account'
 import About_page from './Page/About'

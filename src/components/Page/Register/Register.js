@@ -1,10 +1,10 @@
-import React, { Component, useState } from 'react'
+import React, { Component, useState, useEffect } from 'react'
 import SelectSearch from 'react-select-search';
 import './Searchbox.css'
 import fuzzySearch from './fuzzySearch';
-import {Schools } from './Schools';
+import { Schools } from './Schools';
 import styled from 'styled-components';
-import{NavLink} from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const Container = styled.div`
     font-family: 'Noto Sans KR', sans-serif;
@@ -38,30 +38,45 @@ const School_title = styled.div`
 const School_content = styled.div`
     font-size: 0.5rem;
 `;
+const Error_message = styled.div`
+    margin-left : 0.2rem;
+    font-size: 0.5rem;
+    color: ${props => props.limitnum ? '#00AB6F' : '#EF0C00'};
+`
+
 const Button = styled.button`
   font-family: 'Noto Sans KR', sans-serif;
   font-weight: 700;
   padding: 10px 15px;
   margin: 5px;
   border: ${props => {
-    if (props.register) return 'none';
-    else if(props.login) return '1px solid #E0BCC1';
-  }};
+        if (props.register) return 'none';
+        else if (props.login) return '1px solid #E0BCC1';
+    }};
   border-radius: 5px;
   height: 3rem;
   width: 300px;
   background-color: ${props => {
-    if (props.register) return '#E0BCC1';
-    else if(props.login) return '#FFFFFF';
-  }};
+        if (props.register) return '#E0BCC1';
+        else if (props.login) return '#FFFFFF';
+    }};
   color: ${props => {
-    if (props.register) return '#FFFFFF';
-    else if(props.login) return '#828282';
-  }};
+        if (props.register) return '#FFFFFF';
+        else if (props.login) return '#828282';
+    }};
+  opacity: ${props => {
+        if (props.disabled) return '0.5';
+        else return '1.0';
+      }};
+  cursor: ${props => {
+        if (props.disabled) return 'default';
+        else return 'pointer'
+      }};
 `;
 const Input = styled.input`
-  border : 1px solid #A6A6A6;
-  background: #EBEBEB;
+  border : ${props => props.limitnum ? '1px solid #A6A6A6' : '1px solid #EF0C00'};
+  background: ${props => props.limitnum ? '#EBEBEB' : 'white'};
+  color: ${props => props.limitnum ? 'black' : '#EF0C00'};
   type : text;
   line-height: 2rem;
   padding-left: 10px;
@@ -73,106 +88,97 @@ const Input = styled.input`
 `;
 
 
-class Register extends Component {
+const Register = (props) => {
 
-    state = {   
-        S_num : "123",
-        S_name : ""
+    const { set_S_num, set_S_name, set_auth_regis } = props
+
+    const [limitnum, setlimitnum] = useState(false); // 학번의 제한 체크 변수
+    const [limitname, setlimitname] = useState(false); // 학교의 체크 변수
+    const [limitnummessasge, setlimitnummessasge] = useState("숫자로 입력해주세요.");
+    const [canNext, setcanNext] = useState(true); //다음으로 갈 수 있는지 체크해주는 변수
+
+    useEffect(() => {
+        cangoNext();
+    }, [limitnum])
+    useEffect(() => {
+        cangoNext();
+    }, [limitname])
+
+    const cangoNext = () =>{
+        if(limitnum && limitname)
+            setcanNext(false);
+        else
+            setcanNext(true);
+    }
+    const handleClick = () => {
+        set_auth_regis(true);
     }
 
-    handleClick = () => {
-        this.props.set_auth_regis(true);
+    const handleNumChange = (e) => {
+        set_S_num(e.target.value);
+        if (((e.target.value).length <= 13 && (e.target.value).length >= 8)) {
+            setlimitnum(true);
+        } else {
+            setlimitnum(false);
+        }
+        if ((e.target.value).length <= 13 && (e.target.value).length >= 8) {
+            setlimitnummessasge("사용가능한 학번입니다!");
+        }
+        else if((e.target.value).length == 0) {
+            setlimitnummessasge("숫자로 입력해주세요.");
+        }
+        else {
+            setlimitnummessasge("학번의 길이가 너무 짧아요!");
+        }
     }
-    
-    handleNumChange = (e) =>{
-        this.props.set_S_num(e.target.value)
+    const handleNameChange = (selected) => {
+        set_S_name(selected);
+        setlimitname(true);
     }
 
-    render() {
-        const {handleClick, handleNumChange} = this;
 
-        return (
-            <Container>
-                <h1>
-                    플로스팅 회원가입
-                </h1>
-                <School_number>
-                    <School_title>
-                        학번
-                    </School_title>
-                    <School_content>
-                        ※ 년도가 아닌 8 ~ 13자리로 이루어진 본인의 고유학번을 입력해주세요.
-                    </School_content>
-                    <Input
-                        placeholder="학번을 입력하세요"
-                        onChange = {handleNumChange} 
-                        />
+    return (
+        <Container>
+            <h1>
+                플로스팅 회원가입
+            </h1>
+            <School_number>
+                <School_title>
+                    학번
+                </School_title>
+                <School_content>
+                    ※ 년도가 아닌 8 ~ 13자리로 이루어진 본인의 고유학번을 입력해주세요.
+                </School_content>
+                <Input
+                    limitnum={limitnum}
+                    placeholder="학번을 입력하세요"
+                    onChange={handleNumChange}
+                />
+                <Error_message limitnum = {limitnum}>
+                    {limitnummessasge}
+                </Error_message>
 
-                </School_number>
-                <School_name>
-                    <School_title>
-                        학교
-                    </School_title>
-                    <SelectSearch
-                        options={Schools}
-                        search
-                        filterOptions={fuzzySearch}
-                        onChange ={(selected) => this.props.set_S_name(selected)}
-                        emptyMessage="Not found"
-                        placeholder="학교 이름을 검색하세요."
-                    />
-                </School_name>
-                <NavLink to="/register/terms">
-                    <Button register onClick={handleClick}>
-                        다음
-                    </Button>
-                </NavLink>
-            </Container>
-        );
-    }
+            </School_number>
+            <School_name>
+                <School_title>
+                    학교
+                </School_title>
+                <SelectSearch
+                    options={Schools}
+                    search
+                    filterOptions={fuzzySearch}
+                    onChange={handleNameChange}
+                    emptyMessage="Not found"
+                    placeholder="학교 이름을 검색하세요."
+                />
+            </School_name>
+            <NavLink to="/register/terms">
+                <Button register onClick={handleClick} disabled = {canNext}>
+                    다음
+                </Button>
+            </NavLink>
+        </Container>
+    );
 }
-// function Register({set_auth_regis}) {
-
-//     const handleClick = () =>{
-//         set_auth_regis(true);
-//     }
-    
-    
-//     return (
-//         <Container>
-//             <h1>
-//                 플로스팅 회원가입
-//             </h1>
-//             <School_number>
-//                 <School_title>
-//                     학번
-//                 </School_title>
-//                 <School_content>
-//                     ※ 년도가 아닌 8 ~ 13자리로 이루어진 본인의 고유학번을 입력해주세요.
-//                 </School_content>
-//                 <Input 
-//                 placeholder="학번을 입력하세요"/>
-
-//             </School_number>
-//             <School_name>
-//                 <School_title>
-//                     학교
-//                 </School_title>
-//                 <SelectSearch
-//                     options={Schools}
-//                     search
-//                     filterOptions={fuzzySearch}
-//                     emptyMessage="Not found"
-//                     placeholder="학교 이름을 검색하세요."
-//                 />
-//             </School_name>
-//             <NavLink to="/register/terms">
-//                 <Button register onClick={handleClick}>
-//                     다음
-//                 </Button>
-//             </NavLink>
-//         </Container>
-//     );
-// }
 
 export default Register;

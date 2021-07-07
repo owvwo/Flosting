@@ -14,7 +14,6 @@ const Home = () =>{
     return(
         <Container>
             <h1>홈</h1>
-            <Certification></Certification>
             <h1>1</h1>
             <h1>2</h1>
             <h1>3</h1>
