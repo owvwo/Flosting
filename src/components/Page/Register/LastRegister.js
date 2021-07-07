@@ -73,30 +73,9 @@ const LastRegister = (props) => {
     const [password, setPassword] = useState('');
     const [passwordError, setPasswordError] = useState('');
     
-    const clearInputs = () => {
-        setPassword('');
-    }
     const clearErrors = () =>{
         setPasswordError('');
     }
-    // const handleLogin = () =>{
-    //     clearErrors();
-    //     fire
-    //         .auth()
-    //         .signInWithEmailAndPassword(email, password)
-    //         .catch(err => {
-    //             switch(err.code){
-    //                 case "auth/invalid-email":
-    //                 case "auth/user-disabled":
-    //                 case "auth/user-not-found":
-    //                     setEmailError(err.message);
-    //                     break;
-    //                 case "auth/wrong-password":
-    //                     setPasswordError(err.message);
-    //                     break;
-    //             }
-    //         });
-    // };
     const handleSignUp = () =>{
         clearErrors();
         fire
@@ -114,9 +93,6 @@ const LastRegister = (props) => {
                 }
             });
     }
-    // const handleLogout = () => {
-    //     fire.auth().signOut();
-    // }
 
     useEffect(()=>{
         authListener();

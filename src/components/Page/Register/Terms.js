@@ -137,10 +137,6 @@ function Register({ auth_regis, S_name, S_num }) {
         goNext();
       };
 
-    
-    console.log(S_num)
-    console.log(S_name)
-
 
     if (!auth_regis) { return (<Redirect to='/register' />); }
     else {
