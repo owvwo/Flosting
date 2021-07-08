@@ -1,13 +1,18 @@
-import "./App.css";
-import React, { Component } from "react";
-import { BrowserView, MobileView } from "react-device-detect"; //모바일 및 브라우저 따로 위함.
-import Navbar from "./components/Nav/Navbar";
-import Transition from "./components/Transitionpage";
-import ScrollToTop from "./components/ScrollToTop";
+import './App.css';
+import React, {Component} from 'react';
+import {
+  BrowserView,
+  MobileView,
+} from "react-device-detect"; //모바일 및 브라우저 따로 위함.
+import Navbar from './components/Nav/Navbar';
+import Transition from './components/Transitionpage';
+import ScrollToTop from './components/ScrollToTop';
+
 
 class App extends Component {
-  render() {
-    return (
+  render(){
+
+    return(
       <div>
         <ScrollToTop></ScrollToTop>
         <BrowserView>
@@ -21,6 +26,7 @@ class App extends Component {
       </div>
     );
   }
+
 }
 
 export default App;

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Certification from './Register/Certification'
 
 const Container = styled.div`
   left: 0;
