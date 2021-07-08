@@ -16,6 +16,13 @@ const Container = styled.div`
         margin-top: 2rem;
     }
 `;
+const Nicname_content = styled.div`
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    margin-top: 2rem;
+`;
+
 const Password_content = styled.div`
     display: flex;
     justify-content: space-between;
@@ -31,7 +38,7 @@ const School_title = styled.div`
 const School_content = styled.div`
     font-size: 0.5rem;
 `;
-const Button = styled.button`
+const RegButton = styled.button`
   font-family: 'Noto Sans KR', sans-serif;
   font-weight: 700;
   padding: 10px 15px;
@@ -76,6 +83,7 @@ const LastRegister = (props) => {
     const clearErrors = () =>{
         setPasswordError('');
     }
+
     const handleSignUp = () =>{
         clearErrors();
         fire
@@ -91,6 +99,20 @@ const LastRegister = (props) => {
                         setPasswordError(err.message);
                         break;
                 }
+            });
+        fire
+            .firestore()
+            .collection("회원정보")
+            .add({
+              ID: S_num,
+              Password: password,
+              School_name: S_name,
+            })
+            .then(() => {
+              
+            })
+            .catch((error) => {
+              alert(error.message);
             });
     }
 
@@ -117,9 +139,9 @@ const LastRegister = (props) => {
                             <p>{password}</p>
                         </School_title>
                         <NavLink to = '/'>
-                        <Button register>
+                        <RegButton register>
                             홈으로 이동
-                        </Button>
+                        </RegButton>
                         </NavLink>
                     </Container>
                 );
@@ -130,6 +152,19 @@ const LastRegister = (props) => {
                     <h1>
                         플로스팅 회원가입
                     </h1>
+                    <Nicname_content>
+                        <School_title>
+                            닉네임
+                        </School_title>
+                        <School_content>
+                            ※ 한글과 영어로 이루어진 문자열로, 2~6글자로 설정해주세요.
+                        </School_content>
+                        <Input
+                            placeholder="닉네임 입력"
+                            type = "text"
+                            required
+                        />
+                    </Nicname_content>
                     <Password_content>
                         <School_title>
                             비밀번호
@@ -145,19 +180,22 @@ const LastRegister = (props) => {
                             onChange = {e => setPassword(e.target.value)}
                         />
                         <p> {passwordError}</p>
+                        <School_title>
+                            비밀번호 확인
+                        </School_title>
+                        <Input
+                            placeholder="비밀번호 입력"
+                            type = "password"
+                            required
+                            value = {password}
+                            onChange = {e => setPassword(e.target.value)}
+                        />
+                        <p> {passwordError}</p>
 
                     </Password_content>
-                    <School_title>
-                            넘어온 ID
-                            <p>{email}</p>
-                    </School_title>
-                    <School_title>
-                            넘어온 학교
-                            <p>{S_name}</p>
-                    </School_title>
-                    <Button onClick = {handleSignUp} register>
+                    <RegButton onClick = {handleSignUp} register>
                         회원가입 완료
-                    </Button>
+                    </RegButton>
                 </Container>
             );
             }

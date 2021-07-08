@@ -1,8 +1,8 @@
 .Submit {
     display: flex;
     justify-content: center;
-  }
-  
+}
+
   label {
     font-weight: bold;
     display: flex;
@@ -15,9 +15,9 @@
     margin-right: 20px;
   }
   
-  input[type='text'],
+  /* input[type='text'],
   input[type='email'],
-  input[type='password'],
+  input[type='password'], */
   textarea,
   select {
     display: block;

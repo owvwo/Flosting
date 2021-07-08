@@ -49,6 +49,7 @@ const Transition = () => {
           <Route path="/ad" component={AD_page} />
           <Route exact path="/register" render={props => (
             <Register_page
+              S_num = {S_num}
               set_S_num={set_S_num}
               set_S_name={set_S_name}
               set_auth_regis={set_auth_regis}

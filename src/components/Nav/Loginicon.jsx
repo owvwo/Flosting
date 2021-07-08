@@ -64,9 +64,11 @@ const Loginicon = () => {
   if (user) {
     return (
       <div onClick = {handleLogout}>
+        <NavLink activeStyle={activeStyle} style={noneactiveStyle} to="/">
         <Logicon>
             <GiSpotedFlower size="1.5em" />
         </Logicon>
+        </NavLink>
         <Menutitle>
           로그아웃
         </Menutitle>
