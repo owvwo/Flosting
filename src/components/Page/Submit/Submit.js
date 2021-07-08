@@ -4,7 +4,7 @@ import EnrollmentForm from "./components/EnrollmentForm";
 function Submit() {
   return (
     <div>
-      <EnrollmentForm margin={1} />
+      <EnrollmentForm />
     </div>
   );
 }
