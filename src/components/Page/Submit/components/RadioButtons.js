@@ -2,10 +2,12 @@ import React from "react";
 import { Field, ErrorMessage } from "formik";
 import TextError from "./TextError";
 import { InputLabel } from "@material-ui/core";
+import "../FormikContainer.css";
+
 function RadioButtons(props) {
   const { label, name, options, ...rest } = props;
   return (
-    <div className="form-control">
+    <div className="formik-container">
       <InputLabel>{label}</InputLabel>
       <Field name={name}>
         {({ field }) => {

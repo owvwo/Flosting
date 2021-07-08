@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import FormikControl from "./FormikControl";
@@ -7,9 +7,16 @@ import { Button } from "@material-ui/core";
 import Slider from "react-slick";
 import styled from "styled-components";
 import img from "../../../../images/FlostingEmo.png";
+import "../FormikContainer.css";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Slide from "@material-ui/core/Slide";
 function EnrollmentForm() {
   const ticketOptions = [
-    { key: "티켓을 선택하세요", value: "" },
+    { key: "", value: "" },
     { key: "0", value: "0" },
     { key: "1", value: "1" },
     { key: "2", value: "2" },
@@ -28,7 +35,7 @@ function EnrollmentForm() {
   ];
 
   const desiredUnivOptions = [
-    { key: "학교 선택", value: "" },
+    { key: "", value: "" },
     { key: "우리학교만", value: "myUniv" },
     { key: "타학교만", value: "otherUniv" },
     { key: "상관없음", value: "dnt_M" },
@@ -36,7 +43,7 @@ function EnrollmentForm() {
   // props
   const initialValues = {
     userAge: "",
-    sex: "",
+    userSex: "",
     ticket: {
       lilac: "",
       daisy: "",
@@ -55,19 +62,19 @@ function EnrollmentForm() {
   };
   // 유효성 검사
   const validationSchema = Yup.object({
-    // nicName: Yup.string().required("Required"),
-    // sex: Yup.string().required("Required"),
+    userAge: Yup.string().required("Required"),
+    userSex: Yup.string().required("Required"),
   });
 
   // 데이터 베이스
   const db = fire.firestore();
-
+  // Submit Handler
   const onSubmit = (values) => {
     console.log("Form data", values);
     db.collection("Flosting_7")
       .add({
         userAge: values.userAge,
-        sex: values.sex,
+        userSex: values.userSex,
         ticket: values.ticket,
         otherAge: values.otherAge,
         desiredUniv: values.desiredUniv,
@@ -92,30 +99,34 @@ function EnrollmentForm() {
   const Wrap = styled.div`
     margin: 1rem;
     text-align: center;
-    h3 {
-      text-align: center;
-    }
+    justify-content: center;
+
     img {
       align-items: center;
-      width: 100%;
-      height: 100%;
+      width: 90%;
+      height: 90%;
     }
   `;
-  const Container = styled.div`
-    margin: 1rem;
-    text-align: center;
-    h3 {
-      text-align: center;
-    }
-    img {
-      align-items: center;
-      width: 100%;
-      height: 100%;
-    }
-  `;
+  // trigger submit
+  const [lilacCheck, setLilacCheck] = useState(false);
+  const [daisyCheck, setDaisyCheck] = useState(false);
+  const [gayCheck, setGayCheck] = useState(false);
+  // trigger handler
+
+  // alert Dialog Message
+  const [open, setOpen] = useState(false);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+  });
   return (
     <div>
-      <h1>참가신청서</h1>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -127,20 +138,21 @@ function EnrollmentForm() {
               <Slider {...settings}>
                 <Wrap>
                   <h1>본인정보 입력</h1>
+
                   <img src={img} />
-                  {/* 유저 나이 */}
-                  {/* <label>hi</label> */}
+
                   <FormikControl
                     control="radio"
                     label="나이를 선택해주세요"
                     name="userAge"
                     options={ageOptions}
                   />
+
                   {/* 유저 성별 */}
                   <FormikControl
                     control="radio"
                     label="성별을 선택해 주세요"
-                    name="sex"
+                    name="userSex"
                     options={sexOptions}
                   />
                 </Wrap>
@@ -157,10 +169,11 @@ function EnrollmentForm() {
                   {/* 학교 선택 */}
                   <FormikControl
                     control="select"
-                    label="상대방 학교 선택"
+                    label="학교 선택"
                     name="desiredUniv.lilac"
                     options={desiredUnivOptions}
                   />
+
                   {/* 라일락 티켓 */}
                   <FormikControl
                     control="select"
@@ -182,10 +195,11 @@ function EnrollmentForm() {
                   {/* 학교 선택 */}
                   <FormikControl
                     control="select"
-                    label="상대방 학교 선택"
+                    label="학교 선택"
                     name="desiredUniv.daisy"
                     options={desiredUnivOptions}
                   />
+
                   {/* 데이지 티켓 */}
                   <FormikControl
                     control="select"
@@ -207,7 +221,7 @@ function EnrollmentForm() {
                   {/* 학교 선택 */}
                   <FormikControl
                     control="select"
-                    label="상대방 학교 선택"
+                    label="학교 선택"
                     name="desiredUniv.gay"
                     options={desiredUnivOptions}
                   />
@@ -225,11 +239,54 @@ function EnrollmentForm() {
                   <Button
                     variant="contained"
                     color="primary"
+                    onClick={handleClickOpen}
+                    disabled={!formik.isValid}
+                  >
+                    신청하기!!
+                  </Button>
+                  <div>
+                    {formik.isValid === false ? (
+                      <div className="error">필수항목을 입력해주세요</div>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                  {/* <Dialog
+                    open={open}
+                    TransitionComponent={Transition}
+                    keepMounted
+                    onClose={handleClose}
+                  >
+                    <DialogTitle id="alert-dialog-slide-title">
+                      {"정말로 신청할꺼냐??"}
+                    </DialogTitle>
+                    <DialogContent>
+                      <DialogContentText id="alert-dialog-slide-description">
+                        신청 정보는 ~~ props~~
+                      </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                      <Button onClick={handleClose} color="primary">
+                        Disagree
+                      </Button>
+
+                      <Button
+                        onClick={handleClose}
+                        color="primary"
+                        type="submit"
+                      >
+                        Agree
+                      </Button>
+                    </DialogActions>
+                  </Dialog>
+                  <Button
+                    variant="contained"
+                    color="primary"
                     type="submit"
                     disabled={!formik.isValid}
                   >
                     Submit
-                  </Button>
+                  </Button> */}
                 </Wrap>
               </Slider>
             </Form>

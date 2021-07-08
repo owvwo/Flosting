@@ -1,0 +1,16 @@
+
+select{
+    font-family: 'Noto Sans KR', sans-serif;
+    width: 90%;
+    height: 2rem;
+    margin: 1rem;
+}
+input[type=radio]{
+    font-family: 'Noto Sans KR', sans-serif;
+    margin: 1rem;
+}
+.error{
+    font-family: 'Noto Sans KR', sans-serif;
+    color: red;
+    margin: 1rem;
+}
