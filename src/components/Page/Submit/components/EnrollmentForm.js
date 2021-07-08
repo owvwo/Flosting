@@ -3,7 +3,9 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import FormikControl from "./FormikControl";
 import fire from "../../Register/LoginFire";
-
+import { Button } from "@material-ui/core";
+import Slider from "react-slick";
+import styled from "styled-components";
 function EnrollmentForm() {
   const db = fire.firestore();
 
@@ -12,12 +14,6 @@ function EnrollmentForm() {
     { key: "0", value: "0" },
     { key: "1", value: "1" },
     { key: "2", value: "2" },
-  ];
-
-  const ticketTypeOptions = [
-    { key: "Lilac", value: "lilac" },
-    { key: "Daisy", value: "daisy" },
-    { key: "DaisyGay", value: "daisy_gay" },
   ];
 
   const sexOptions = [
@@ -40,7 +36,6 @@ function EnrollmentForm() {
       daisy: "",
       gay: "",
     },
-    matchingTypes: [],
     otherAge: {
       lilac: "",
       daisy: "",
@@ -63,7 +58,6 @@ function EnrollmentForm() {
         userAge: values.userAge,
         sex: values.sex,
         ticket: values.ticket,
-        matchingTypes: values.matchingTypes,
         otherAge: values.otherAge,
       })
       .then(() => {
@@ -73,11 +67,31 @@ function EnrollmentForm() {
         alert(error.message);
       });
   };
+  // 슬라이더 세팅
+  const settings = {
+    dots: true,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+  };
 
+  // 사용자 정보 입력
+  const Wrap = styled.div`
+    margin: 1rem;
+    text-align: center;
+    h3 {
+      text-align: center;
+    }
+  `;
+
+  // 라일락 정보 입력
+  // 데이지 정보 입력
+  // 게이 정보 입력
   return (
     <div>
       <h1>참가신청서</h1>
-      <h1>이미지</h1>
+
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -86,79 +100,99 @@ function EnrollmentForm() {
         {(formik) => {
           return (
             <Form>
-              {/* 닉네임 */}
-              <FormikControl
-                control="input"
-                type="text"
-                label="NicName"
-                name="nicName"
-              />
-              {/* 유저 나이 */}
-              <FormikControl
-                control="radio"
-                label="Choose your age"
-                name="userAge"
-                options={ageOptions}
-              />
-              {/* 유저 성별 */}
-              <FormikControl
-                control="radio"
-                label="Choose your Sex"
-                name="sex"
-                options={sexOptions}
-              />
-              {/* 매칭타입 */}
-              <FormikControl
-                control="checkbox"
-                label="MatchingType"
-                name="matchingTypes"
-                options={ticketTypeOptions}
-              />
-              {/* 라일락 나이 */}
-              <FormikControl
-                control="radio"
-                label="Lilac Age"
-                name="otherAge.lilac"
-                options={ageOptions}
-              />
-              {/* 라일락 티켓 */}
-              <FormikControl
-                control="select"
-                label="LilacTicket"
-                name="ticket.lilac"
-                options={ticketOptions}
-              />
-              {/* 데이지 나이 */}
-              <FormikControl
-                control="radio"
-                label="Daisy Age"
-                name="otherAge.daisy"
-                options={ageOptions}
-              />
-              {/* 데이지 티켓 */}
-              <FormikControl
-                control="select"
-                label="DaisyTicket"
-                name="ticket.daisy"
-                options={ticketOptions}
-              />
-              {/* 게이 나이 */}
-              <FormikControl
-                control="radio"
-                label="Gay age"
-                name="otherAge.gay"
-                options={ageOptions}
-              />
-              {/* 게이 티켓 */}
-              <FormikControl
-                control="select"
-                label="GayTicket"
-                name="ticket.gay"
-                options={ticketOptions}
-              />
-              <button type="submit" disabled={!formik.isValid}>
-                Submit
-              </button>
+              <Slider {...settings}>
+                <Wrap>
+                  <h1>본인정보 입력</h1>
+                  <h1>이미지</h1>
+                  {/* 닉네임 */}
+                  <FormikControl
+                    control="input"
+                    type="text"
+                    label="NicName"
+                    name="nicName"
+                  />
+                  {/* 유저 나이 */}
+                  <FormikControl
+                    control="radio"
+                    label="Choose your age"
+                    name="userAge"
+                    options={ageOptions}
+                  />
+                  {/* 유저 성별 */}
+                  <FormikControl
+                    control="radio"
+                    label="Choose your Sex"
+                    name="sex"
+                    options={sexOptions}
+                  />
+                </Wrap>
+                <Wrap>
+                  <h1>라일락 입력</h1>
+                  <h1>이미지</h1>
+                  {/* 라일락 나이 */}
+                  <FormikControl
+                    control="radio"
+                    label="Lilac Age"
+                    name="otherAge.lilac"
+                    options={ageOptions}
+                  />
+                  {/* 라일락 티켓 */}
+                  <FormikControl
+                    control="select"
+                    label="LilacTicket"
+                    name="ticket.lilac"
+                    options={ticketOptions}
+                  />
+                </Wrap>
+                <Wrap>
+                  <h1>데이지 입력</h1>
+                  <h1>이미지</h1>
+                  {/* 데이지 티켓 */}
+                  <FormikControl
+                    control="radio"
+                    label="Daisy Age"
+                    name="otherAge.daisy"
+                    options={ageOptions}
+                  />
+                  {/* 데이지 티켓 */}
+                  <FormikControl
+                    control="select"
+                    label="DiasyTicket"
+                    name="ticket.daisy"
+                    options={ticketOptions}
+                  />
+                </Wrap>
+                <Wrap>
+                  <h1>게이 입력</h1>
+                  <h1>이미지</h1>
+                  {/* 게이 나이 */}
+                  <FormikControl
+                    control="radio"
+                    label="Gay age"
+                    name="otherAge.gay"
+                    options={ageOptions}
+                  />
+                  {/* 게이 티켓 */}
+                  <FormikControl
+                    control="select"
+                    label="GayTicket"
+                    name="ticket.gay"
+                    options={ticketOptions}
+                  />
+                </Wrap>
+                <Wrap>
+                  <h1>마지막 확인</h1>
+                  <h1>이미지</h1>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                    disabled={!formik.isValid}
+                  >
+                    Submit
+                  </Button>
+                </Wrap>
+              </Slider>
             </Form>
           );
         }}

@@ -3,7 +3,6 @@ import Input from "./Input";
 import Select from "./Select";
 import RadioButtons from "./RadioButtons";
 import CheckboxGroup from "./CheckboxGroup";
-// import ChakraInput from "./ChakraInput";
 
 function FormikControl(props) {
   const { control, ...rest } = props;
