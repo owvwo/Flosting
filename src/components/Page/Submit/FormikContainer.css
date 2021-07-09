@@ -14,3 +14,7 @@ input[type=radio]{
     color: red;
     margin: 1rem;
 }
+h1{
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size:xx-large;
+}
