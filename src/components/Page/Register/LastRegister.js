@@ -1,9 +1,31 @@
 import React, { Component, useEffect, useState } from 'react'
-import './Searchbox.css'
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
+
 import { Redirect } from 'react-router-dom';
 import fire from './LoginFire';
+import SuccessRegister from './SuccessRegister';
+
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core';
+
+const Colortheme = createMuiTheme({
+    palette: {
+        primary: {
+            main: '#E0BCC1'
+        }
+    },
+    typography: {
+        fontSize: 10,
+        fontWeightRegular: 700,
+        fontFamily: "Noto Sans KR"
+    }
+
+})
 
 const Container = styled.div`
     font-family: 'Noto Sans KR', sans-serif;
@@ -58,10 +80,18 @@ const RegButton = styled.button`
         if (props.register) return '#FFFFFF';
         else if (props.login) return '#828282';
     }};
+  opacity: ${props => {
+        if (props.disabled) return '0.5';
+        else return '1.0';
+    }};
+  cursor: ${props => {
+        if (props.disabled) return 'default';
+        else return 'pointer'
+    }};
 `;
 const Input = styled.input`
-  border : 1px solid #A6A6A6;
-  background: #EBEBEB;
+  border : ${props => props.limitnum ? '1px solid #A6A6A6' : '1px solid #EF0C00'};
+  color: ${props => props.limitnum ? (props.overlap ? '#A6A6A6' : 'black') : '#EF0C00'};
   type : text;
   line-height: 2rem;
   padding-left: 10px;
@@ -72,25 +102,179 @@ const Input = styled.input`
   border-radius: 5px;
 `;
 
+const Input_password = styled.input`
+  border-radius: 5px;
+  border : 1px solid #A6A6A6;
+  background: #EBEBEB;
+  type : text;
+  line-height: 2rem;
+  padding-left: 10px;
+  margin: 5px;
+  height: 2rem;
+  width: 200px;
+  font-size: 0.8rem;
+`;
+
+const InputDiv = styled.div`
+    display : flex;
+    flex-direction: row;
+`
+const Overlapbtn = styled.button`
+    font-family: 'Noto Sans KR', sans-serif;
+    border-radius: 8px;
+    margin: 5px;
+    border : ${props => props.overlap ? '1px solid #00AB6F' : '1px solid #A6A6A6'};
+    color :  ${props => props.overlap ? '#00AB6F' : 'black'};
+    width: 4rem;
+    height: 2rem;
+    font-size: 0.7rem;
+`;
+const Error_message = styled.div`
+    margin-left : 0.2rem;
+    font-size: 0.5rem;
+    color: ${props => props.limitnum ? '#00AB6F' : '#EF0C00'};
+`
+const Error_message_Password= styled.div`
+    margin-left : 0.2rem;
+    font-size: 0.5rem;
+    color: ${props => props.limitnum ? (props.limitnum_C ? '#00AB6F' : '#F55C29') : '#EF0C00'};
+`
+
+
 
 const LastRegister = (props) => {
 
-    const {auth_regis, S_name, S_num, user, authListener} = props
+    const { auth_regis, S_name, S_num, user, authListener } = props
     const email = S_num + "@flosting.com";
-    const [password, setPassword] = useState('');
-    const [passwordError, setPasswordError] = useState('');
-    
-    const clearErrors = () =>{
+    const [password, setPassword] = useState(''); // 패스워드
+    const [password2, setPassword2] = useState(''); //패스워드 확인
+    const [nickname, setnickname] = useState(''); // 닉네임
+    const [passwordError, setPasswordError] = useState("패스워드를 입력해주세요.");
+    const [repasswordError, setrepasswordError] = useState("패스워드를 재입력해주세요.");
+    const [correspass, setcorrespass] = useState(false); //패스워드 일치 불일치
+    const [limitpassword, setlimitpassword] = useState(false); // 패스워드 글자 수 통과
+    const [limitpassword_C, setlimitpassword_C] = useState(false); //패스워드 안전, 매우안전
+    const [overlap, setoverLap] = useState(false); // 닉네임 중복
+    const [open, setOpen] = useState(false); // OK알람창
+    const [open2, setOpen2] = useState(false); //중복알람창
+    const [limitnick, setlimitnick] = useState(false); //닉네임 두글자 이상하게 하기위함.
+    const [limitnickmessage, setlimitnickmessage] = useState(''); //닉넴 에러 메세지
+    const [canNext, setcanNext] = useState(true); //다음으로 갈 수 있는지 체크해주는 변수
+    const db = fire.firestore();
+
+    const clearErrors = () => {
         setPasswordError('');
     }
+    useEffect(() => {
+        cangoNext();
+    }, [overlap])
+    useEffect(() => {
+        cangoNext();
+    }, [correspass])
+    useEffect(() => {
+        cangoNext();
+    }, [limitpassword])
 
-    const handleSignUp = () =>{
+    const cangoNext = () => {
+        if (correspass && limitpassword && overlap)
+            setcanNext(false);
+        else
+            setcanNext(true);
+    }
+
+    const overlapOk = () => {
+        setlimitnickmessage("닉네임이 정해졌어요!")
+        setoverLap(true);
+        setOpen(false);
+    }
+
+    const handleoverlap = () => { //중복검사
+
+        if (limitnick) {
+            let Infodb = db.collection("회원정보");
+            let query = Infodb.where("Nickname", "==", nickname).get().then((querySnapshot) => {
+                if (querySnapshot.size) {
+                    setOpen2(true);
+                    setoverLap(false);
+                } else {
+                    setOpen(true); //alert창 띄우기
+                }
+            });
+        } else {
+            alert("닉네임의 길이를 확인해주세요!")
+        }
+
+    }
+    const handlerePassChange = (e) => {
+        if (e.target.value.length > 20) //글자수 제한
+        e.target.value = e.target.value.slice(0, 20);
+        setPassword2(e.target.value);
+
+        if ((e.target.value).length == 0) {
+            setrepasswordError("패스워드를 입력해주세요.");
+            setcorrespass(false);
+        }else if ((e.target.value) == password){
+            setrepasswordError("패스워드 일치!");
+            setcorrespass(true);
+        }else{
+            setrepasswordError("패스워드 불일치!");
+            setcorrespass(false);
+        }
+    }
+    const handlePassChange = (e) => {
+        if (e.target.value.length > 20) //글자수 제한
+            e.target.value = e.target.value.slice(0, 20);
+        setPassword(e.target.value);
+
+        if ((e.target.value).length == 0) {
+            setPasswordError("패스워드를 입력해주세요.");
+            setlimitpassword(false);
+        }else if((e.target.value).length <6){
+            setPasswordError("글자 부족!");
+            setlimitpassword(false);
+        }else if((e.target.value).length <10){
+            setPasswordError("안전");
+            setlimitpassword(true);
+            setlimitpassword_C(false);
+        }else if((e.target.value).length <20){
+            setPasswordError("매우 안전");
+            setlimitpassword_C(true);
+        }
+
+    }
+    const handleNicChange = (e) => {
+        let pattern = /[^ㄱ-ㅎ|가-힣|a-z|A-Z|]/gi; // 한글이랑 영어만
+        e.target.value = e.target.value.replace(pattern, '');
+        if (e.target.value.length > 6) //글자수 제한
+            e.target.value = e.target.value.slice(0, 6);
+        setnickname(e.target.value);
+
+        if (((e.target.value).length >= 2)) {
+            setlimitnick(true);
+        } else {
+            setlimitnick(false);
+        }
+        if ((e.target.value).length >= 2) {
+            
+            setlimitnickmessage("중복 확인 버튼을 눌러주세요!");
+        }
+        else if ((e.target.value).length == 0) {
+            setlimitnickmessage("한글과 영어만 입력 가능해요.");
+        }
+        else {
+            setlimitnickmessage("닉네임의 길이가 너무 짧아요!");
+        }
+    }
+    const handleSignUp = () => {
         clearErrors();
         fire
             .auth()
             .createUserWithEmailAndPassword(email, password)
+            .then((user) =>{
+                saveDB();
+            })
             .catch(err => {
-                switch(err.code){
+                switch (err.code) {
                     case "auth/email-already-in-use":
                     // case "auth/invalid-email":
                     //     setEmailError(err.message);
@@ -100,54 +284,43 @@ const LastRegister = (props) => {
                         break;
                 }
             });
+    }
+    
+    const saveDB = () =>{
         fire
-            .firestore()
-            .collection("회원정보")
-            .add({
-              ID: S_num,
-              Password: password,
-              School_name: S_name,
-            })
-            .then(() => {
-              
-            })
-            .catch((error) => {
-              alert(error.message);
-            });
+        .firestore()
+        .collection("회원정보")
+        .add({
+            ID: S_num,
+            Password: password,
+            School_name: S_name,
+            Nickname: nickname
+        })
+        .then(() => {
+
+        })
+        .catch((error) => {
+            alert(error.message);
+        });
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         authListener();
     }, []);
-    
-    
+
+
     if (!auth_regis) { return (<Redirect to='/register' />); }
-        else {
-            if(user){
-                return(
-                    <Container>
-                        <h1>
-                        회원가입 완료
-                        </h1>
-                        <p>축하드립니다.</p>
-                        <School_title>
-                            당신 ID
-                            <p>{email}</p>
-                        </School_title>
-                        <School_title>
-                            당신 비밀번호
-                            <p>{password}</p>
-                        </School_title>
-                        <NavLink to = '/'>
-                        <RegButton register>
-                            홈으로 이동
-                        </RegButton>
-                        </NavLink>
-                    </Container>
-                );
-            }
-            else{
+    else {
+        if (user) {
             return (
+                <SuccessRegister ID = {S_num} Nickname = {nickname} School_name = {S_name}>
+
+                </SuccessRegister>
+            );
+        }
+        else {
+            return (
+                <ThemeProvider theme={Colortheme}>
                 <Container>
                     <h1>
                         플로스팅 회원가입
@@ -159,11 +332,58 @@ const LastRegister = (props) => {
                         <School_content>
                             ※ 한글과 영어로 이루어진 문자열로, 2~6글자로 설정해주세요.
                         </School_content>
+                        <InputDiv>
                         <Input
+                            overlap = {overlap}
+                            limitnum = {limitnick}
                             placeholder="닉네임 입력"
-                            type = "text"
+                            type="text"
                             required
+                            value={nickname}
+                            onChange={handleNicChange}
                         />
+                        <Overlapbtn overlap={overlap} onClick={handleoverlap} disabled = {overlap}>
+                            중복 확인
+                        </Overlapbtn>
+                        </InputDiv>
+                        <Error_message limitnum={limitnick}>
+                        {limitnickmessage}
+                        </Error_message>
+                        <Dialog
+                            open={open}
+                            onClose={() => setOpen(false)}
+                            aria-labelledby="responsive-dialog-title"
+                        >
+                            <DialogTitle id="responsive-dialog-title">{nickname}</DialogTitle>
+                            <DialogContent>
+                                <DialogContentText>
+                                    위 닉네임으로 설정하시겠습니까?
+                                </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button variant="contained" autoFocus onClick={overlapOk} color="primary">
+                                    확인
+                                </Button>
+                                <Button variant="outlined" onClick={() => setOpen(false)} color="primary" autoFocus>
+                                    취소
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
+                        <Dialog
+                            open={open2}
+                            onClose={() => setOpen2(false)}
+                            aria-labelledby="responsive-dialog-title"
+                        >
+                            <DialogTitle id="responsive-dialog-title">{nickname}</DialogTitle>
+                            <DialogContent>
+                                다음 닉네임은 이미 사용중이네요!
+                            </DialogContent>
+                            <DialogActions>
+                                <Button variant="contained" autoFocus onClick={() => setOpen2(false)} color="primary">
+                                    확인
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
                     </Nicname_content>
                     <Password_content>
                         <School_title>
@@ -172,34 +392,39 @@ const LastRegister = (props) => {
                         <School_content>
                             ※ 최소 6글자 이상 문자로 이루어진 문자열로 입력해주세요.
                         </School_content>
-                        <Input
+                        <Input_password
                             placeholder="비밀번호 입력"
-                            type = "password"
+                            type="password"
                             required
-                            value = {password}
-                            onChange = {e => setPassword(e.target.value)}
+                            value={password}
+                            onChange={handlePassChange}
                         />
-                        <p> {passwordError}</p>
+                        <Error_message_Password limitnum_C = {limitpassword_C} limitnum = {limitpassword}>
+                        {passwordError}
+                        </Error_message_Password>
                         <School_title>
                             비밀번호 확인
                         </School_title>
-                        <Input
-                            placeholder="비밀번호 입력"
-                            type = "password"
+                        <Input_password
+                            placeholder="비밀번호 재입력"
+                            type="password"
                             required
-                            value = {password}
-                            onChange = {e => setPassword(e.target.value)}
+                            value={password2}
+                            onChange={handlerePassChange}
                         />
-                        <p> {passwordError}</p>
+                        <Error_message limitnum = {correspass}>
+                        {repasswordError}
+                        </Error_message>
 
                     </Password_content>
-                    <RegButton onClick = {handleSignUp} register>
+                    <RegButton onClick={handleSignUp} register disabled = {canNext}>
                         회원가입 완료
                     </RegButton>
                 </Container>
+                </ThemeProvider>
             );
-            }
         }
+    }
 }
 
 export default LastRegister;
