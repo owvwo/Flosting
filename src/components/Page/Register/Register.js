@@ -100,8 +100,7 @@ const RegButton = styled.button`
 const Input = styled.input`
 
   border : ${props => props.limitnum ? '1px solid #A6A6A6' : '1px solid #EF0C00'};
-  background: ${props => props.limitnum ? '#EBEBEB' : 'white'};
-  color: ${props => props.limitnum ? (props.overlap ? '#A6A6A6' : 'black') : '#EF0C00'};
+  color: ${props => props.limitnum ? (props.overlap ? "#A6A6A6" : 'black') : '#EF0C00'};
   font-family: 'Noto Sans KR', sans-serif;
   type : text;
   line-height: 2rem;
@@ -180,6 +179,7 @@ const Register = (props) => {
         else
             setcanNext(true);
     }
+
     const handleClick = () => {
         set_auth_regis(true);
     }
@@ -234,11 +234,10 @@ const Register = (props) => {
                             onChange={handleNumChange}
                             disabled={overlap}
                         />
-                        <Overlapbtn overlap={overlap} onClick={handleoverlap}>
+                        <Overlapbtn overlap={overlap} onClick={handleoverlap} disabled = {overlap}>
                             중복 확인
                         </Overlapbtn>
                         <Dialog
-
                             open={open}
                             onClose={() => setOpen(false)}
                             aria-labelledby="responsive-dialog-title"
@@ -253,7 +252,7 @@ const Register = (props) => {
                                 <Button variant="contained" autoFocus onClick={overlapOk} color="primary">
                                     확인
                                 </Button>
-                                <Button variant="outlined" onClick={() => setOpen(false)} color="primary" autoFocus>
+                                <Button variant="outlined" onClick={() => setOpen(false)} color="primary">
                                     취소
                                 </Button>
                             </DialogActions>

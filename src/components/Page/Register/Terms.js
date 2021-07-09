@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component , useEffect} from 'react';
 import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
@@ -21,7 +21,8 @@ const Boldtheme = createMuiTheme({
     }
 
 })
-
+const Wrapper = styled.div`
+`;
 
 const Button = styled.button`
   font-family: 'Noto Sans KR', sans-serif;
@@ -55,6 +56,8 @@ const Button = styled.button`
 `;
 
 const Container = styled.div`
+    display: flex;
+    flex-direction: column;
     font-family: 'Noto Sans KR', sans-serif;
     font-weight: 400;
     margin: 3rem 2rem;
@@ -74,7 +77,6 @@ const Container = styled.div`
 const ScrollBox = styled.div`
     overflow: scroll;
     height: 150px;
-    width: 100%;
     border: 2px solid #D1D1D1;
     border-radius: 10px;
     padding : 8px;
@@ -82,6 +84,7 @@ const ScrollBox = styled.div`
 
     p{
         margin : 0px;
+        padding: 0px;
         font-size: 0.5rem;
     }
 
@@ -107,7 +110,7 @@ const CheckContainer = styled.div`
         font-size : 10px;
     }
 `
-function Register({ auth_regis, S_name, S_num }) {
+function Terms({ auth_regis, S_name, S_num }) {
 
     const [allchecked, setCheckedAll] = React.useState(false);
     const [achecked, setCheckedA] = React.useState(false);
@@ -117,11 +120,23 @@ function Register({ auth_regis, S_name, S_num }) {
 
     function goNext () {
         if(achecked && bchecked && cchecked)
-            setDC(true);
-        else
             setDC(false);
+        else
+            setDC(true);
     }
 
+    useEffect(() => {
+        goNext();
+    }, [achecked])
+    useEffect(() => {
+        goNext();
+    }, [bchecked])
+    useEffect(() => {
+        goNext();
+    }, [cchecked])
+    useEffect(() => {
+        goNext();
+    }, [allchecked])
     
     const handleallChecked = (event) => {
         setCheckedAll(!allchecked);
@@ -141,6 +156,7 @@ function Register({ auth_regis, S_name, S_num }) {
     if (!auth_regis) { return (<Redirect to='/register' />); }
     else {
         return (
+            <Wrapper>
             <ThemeProvider theme={Boldtheme}>
                 <Container>
                     <h1>
@@ -234,11 +250,11 @@ function Register({ auth_regis, S_name, S_num }) {
                 </NavLink>
                 </Container>
             </ThemeProvider>
-
+        </Wrapper>
 
         );
     }
 }
 
 
-export default Register;
+export default Terms;
