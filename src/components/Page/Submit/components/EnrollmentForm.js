@@ -53,7 +53,7 @@ const SubmitButton = styled.button`
   font-family: "Noto Sans KR", sans-serif;
   font-weight: 700;
   padding: 10px 15px;
-  background-color: #e0bcc1;
+  background-color: ${(props) => props.color};
   color: #ffffff;
   font-size: 2rem;
 `;
@@ -145,10 +145,8 @@ function EnrollmentForm() {
   const [lilacOn, setLilacOn] = useToggle();
   const [daisyOn, setDaisyOn] = useToggle();
   const [gayOn, setGayOn] = useToggle();
+  const [inputLilac, setInputLilac] = useState("");
 
-  // const handleGay = () => {
-  //   lialcEnable: !setGayEnable();
-  // };
   // redirect state
   const [redirect, setRedirect] = useState(false);
 
@@ -163,8 +161,8 @@ function EnrollmentForm() {
 
   // 유효성 검사
   const validationSchema = Yup.object({
-    userAge: Yup.string().required("Required"),
-    userSex: Yup.string().required("Required"),
+    userAge: Yup.string().required("필수항목을 입력해주세요"),
+    userSex: Yup.string().required("필수항목을 입력해주세요"),
   });
 
   // 데이터 베이스
@@ -208,6 +206,12 @@ function EnrollmentForm() {
     }
   }
 
+  const onChangeInput = (e) => {
+    setInputLilac(e.target.value);
+  };
+  const onReset = () => {
+    setInputLilac("");
+  };
   return (
     <ThemeProvider theme={Boldtheme}>
       <div>
@@ -250,6 +254,7 @@ function EnrollmentForm() {
                       name="otherAge.lilac"
                       options={ageOptions}
                       disabled={lilacOn}
+                      onChangeInput
                     />
                     {/* 학교 선택 */}
                     <FormikControl
@@ -268,8 +273,12 @@ function EnrollmentForm() {
                       options={ticketOptions}
                       disabled={lilacOn}
                     />
-                    <ToggleButton type="button" onClick={setLilacOn}>
-                      {lilacOn ? "신청하기" : "신청안하기"}
+                    <ToggleButton
+                      type="button"
+                      onClick={setLilacOn}
+                      color={lilacOn ? "#FFF5DE" : "#C6B4CE"}
+                    >
+                      {lilacOn ? "신청하기" : "신청취소"}
                     </ToggleButton>
                   </Wrap>
                   <Wrap>
@@ -300,8 +309,12 @@ function EnrollmentForm() {
                       options={ticketOptions}
                       disabled={daisyOn}
                     />
-                    <ToggleButton type="button" onClick={setDaisyOn}>
-                      {daisyOn ? "신청하기" : "신청안하기"}
+                    <ToggleButton
+                      type="button"
+                      onClick={setDaisyOn}
+                      color={daisyOn ? "#FFF5DE" : "#C6B4CE"}
+                    >
+                      {daisyOn ? "신청하기" : "신청취소"}
                     </ToggleButton>
                   </Wrap>
                   <Wrap>
@@ -334,17 +347,18 @@ function EnrollmentForm() {
                     <ToggleButton
                       type="button"
                       onClick={setGayOn}
-                      color={gayOn ? "red" : "blue"}
+                      color={gayOn ? "#FFF5DE" : "#C6B4CE"}
                     >
-                      {gayOn ? "신청하기" : "신청안하기"}
+                      {gayOn ? "신청하기" : "신청취소"}
                     </ToggleButton>
                   </Wrap>
                   <Wrap>
                     <Title>마지막!!</Title>
                     <SubmitButton
                       variant="contained"
-                      color="primary"
                       onClick={handleClickOpen}
+                      disabled={!formik.isValid}
+                      color={!formik.isValid ? "#423F3E" : "#C6B4CE"}
                     >
                       제출하기!!
                     </SubmitButton>

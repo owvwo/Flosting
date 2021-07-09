@@ -12,7 +12,6 @@ input[type=radio]{
 .error{
     font-family: 'Noto Sans KR', sans-serif;
     color: red;
-    margin: 1rem;
 }
 h1{
     font-family: 'Noto Sans KR', sans-serif;
