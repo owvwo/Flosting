@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 import fire from '../Register/LoginFire'
 
@@ -9,9 +9,8 @@ const Container = styled.div`
     align-items: center;
 `;
 
-const Input = styled.input.attrs(props => ({
-    type: "text",
-}))`
+const Input = styled.input`
+  font-family: 'Noto Sans KR', sans-serif;
   line-height: 3rem;
   padding-left: 10px;
   margin: 5px;
@@ -42,21 +41,45 @@ const Button = styled.button`
         if (props.register) return '#FFFFFF';
         else if (props.login) return '#828282';
     }};
+    opacity: ${props => {
+        if (props.disabled) return '0.5';
+        else return '1.0';
+    }};
   font-size: 15pt;
 `;
 
+const Error_message = styled.div`
+    font-family: 'Noto Sans KR', sans-serif;
+    margin-left : 0.2rem;
+    font-size: 0.8rem;
+    color: #EF0C00;
+`
 const Loginbar = () => {
 
-    const [passwordError, setPasswordError] = useState("");
     const [emailError, setEmailError] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    
+    const [limitID, setlimitID] = useState(false);
+    const [limitpassword, setlimitpassword] = useState(false);
+    const [canlogin, setcanlogin] = useState(true);
+
+    useEffect(() => {
+        cangoNext();
+    }, [limitID])
+    useEffect(() => {
+        cangoNext();
+    }, [limitpassword])
+
     const clearErrors = () => {
-        setPasswordError('');
         setEmailError('');
     }
 
+    const cangoNext = () =>{
+        if(limitID && limitpassword)
+            setcanlogin(false);
+        else
+            setcanlogin(true);
+    }
     const handleLogin = () => {
         clearErrors();
         fire
@@ -67,28 +90,51 @@ const Loginbar = () => {
                     case "auth/invalid-email":
                     case "auth/user-disabled":
                     case "auth/user-not-found":
-                        setEmailError(err.message);
+                        setEmailError("가입된 학번이 아니네요!");
                         break;
                     case "auth/wrong-password":
-                        setPasswordError(err.message);
+                        setEmailError("비밀번호가 틀렸어요!");
                         break;
                 }
             });
     };
 
+    const handlesetPassword = (e) => {
+        setPassword(e.target.value);
+        if ((e.target.value).length > 0) {
+            setlimitpassword(true);
+        } else {
+            setlimitpassword(false);
+        }
+    }
+    
+    const handlesetID = (e) =>{
+        let pattern = /[^0-9]/gi; // 숫자 입력 되게
+        e.target.value = e.target.value.replace(pattern, '');
+
+        setEmail(e.target.value + "@flosting.com");
+        if ((e.target.value).length > 0) {
+            setlimitID(true);
+        } else {
+            setlimitID(false);
+        }
+    }
     return (
         <Container>
             <Input
                 placeholder="학번"
-                onChange={(e) => {setEmail(e.target.value + "@flosting.com")}}
+                onChange={handlesetID}
             />
-            <p> {emailError}</p>
             <Input
+                type="password"
+                required
                 placeholder="비밀번호"
-                onChange={(e) => {setPassword(e.target.value)}}
+                onChange={handlesetPassword}
             />
-            <p> {passwordError}</p>
-            <Button register onClick={handleLogin}>
+            <Error_message>
+                {emailError}
+            </Error_message>
+            <Button register onClick={handleLogin} disabled={canlogin}>
                 로그인
             </Button>
         </Container>

@@ -4,7 +4,7 @@ import { Route, Switch, useLocation } from "react-router-dom";
 import "./Transitionpage.css";
 import Home_page from './Page/Home'
 import Login_page from './Page/Login/Login'
-import Submit_page from './Page/Submit'
+import Submit_page from './Page/Submit/Submit'
 import Confirm_page from './Page/Confirm'
 import Account_page from './Page/Account'
 import About_page from './Page/About'
@@ -13,10 +13,20 @@ import History_page from './Page/History'
 import Register_page from './Page/Register/Register'
 import Terms_page from './Page/Register/Terms'
 import LastRegister_page from './Page/Register/LastRegister'
+import My_page from './Page/Mypage/Mypage'
 import fire from './Page/Register/LoginFire'
+<<<<<<< HEAD
 import CurrentEvent from "./Page/CurrentEvent";
 import 건대 from "./Page/건대.js"
 import Alarm from "./Page/Alarm";
+=======
+
+import CurrentEvent from "./Page/CurrentEvent";
+import 건대 from "./Page/건대.js"
+import Alarm from "./Page/Alarm";
+
+
+>>>>>>> c6f19f288697c8db7b4d99a91867993370cfbc47
 const Transition = () => {
 
   const [auth_regis, set_auth_regis] = useState(false);
@@ -55,8 +65,10 @@ const Transition = () => {
           <Route path="/about" component={About_page} />
           <Route path="/history" component={History_page} />
           <Route path="/ad" component={AD_page} />
+          <Route path="/my" component ={My_page} />
           <Route exact path="/register" render={props => (
             <Register_page
+              S_num = {S_num}
               set_S_num={set_S_num}
               set_S_name={set_S_name}
               set_auth_regis={set_auth_regis}
