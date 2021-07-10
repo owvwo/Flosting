@@ -47,8 +47,8 @@ const Button = styled.button`
 const Login = () => {
 
     const [currentPage, handlePageChange] = useState(false);
-
     const [user, setUser] = useState('');
+
 
     const authListener = () => {
       fire.auth().onAuthStateChanged((user) => {
@@ -59,6 +59,7 @@ const Login = () => {
           }
       });
     };
+
     useEffect(()=>{
         authListener();
     }, []);

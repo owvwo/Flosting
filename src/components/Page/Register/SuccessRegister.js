@@ -14,6 +14,7 @@ const Container = styled.div`
         margin-bottom: 2rem;
     }
 `;
+
 const RegButton = styled.button`
   font-family: 'Noto Sans KR', sans-serif;
   font-weight: 700;
@@ -37,18 +38,38 @@ const RegButton = styled.button`
 `;
 
 const School_title = styled.div`
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 500;
     font-size: 1.0rem;
     color: '#828282';
-    margin: 0.5rem 0rem;
+    font-size: 0.8rem;
+    padding: 0.5rem 0rem;
     background: #FFEBF1;
+    border-radius: 10px 10px 0px 0px;
+    list-style: none;
+    li{
+        margin: 0rem 0.5rem;
+    }
 `;
 const Short_content = styled.div`
-    font-size: 0.8rem;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 400;
+    font-size: 1.0rem;
+    border-radius: 0px 0px 10px 10px;
+    background: white;
+    padding: 0.5rem 0rem;
+    margin : 0.5rem;
 `
 const Info_Container = styled.div`
     display: flex;
-    justify-content : center;
-    align-items : center;
+    flex-direction : column;
+`
+const Sub_Info_Container = styled.div`
+    display: flex;
+    flex-direction : column;
+    border : 1px solid #C9C9C9;
+    border-radius : 10px;
+    margin: 10px 0px;
 `
 
 
@@ -65,24 +86,32 @@ const SuccessRegister = (props) => {
                     아래는 회원가입하신 정보입니다.
                 </Short_content>
 
+        <Info_Container>
+            <Sub_Info_Container>
                 <School_title>
-                    ID(학번)
+                    <li>ID(학번)</li>
                 </School_title>
                 <Short_content>
                     {ID}
                 </Short_content>
+            </Sub_Info_Container>
+            <Sub_Info_Container>
                 <School_title>
-                    닉네임
+                    <li>닉네임</li>
                 </School_title>
                 <Short_content>
                     {Nickname}
                 </Short_content>
+            </Sub_Info_Container>
+            <Sub_Info_Container>
                 <School_title>
-                    학교
+                <li>학교</li>
                 </School_title>
                 <Short_content>
                     {School_name}
                 </Short_content>
+            </Sub_Info_Container>
+                </Info_Container>
                 <NavLink to='/'>
                     <RegButton register>
                         홈으로 이동
