@@ -23,7 +23,6 @@ font-size : 1.4rem;
 `
 
 const Confirm = () => {
-    console.log("Confirm")
     return (
         <Wrapper>
             <Title>신청이 완료되었습니다!!!</Title>
