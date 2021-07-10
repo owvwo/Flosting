@@ -19,6 +19,10 @@ const Logicon = styled.div`
 
 const Menutitle = styled.div`
   display: none;
+  list-style: none;
+  li{
+    font-size: 0.5rem;
+  }
   @media (max-width: 768px){
   display: flex;
   width: 1.5rem;
@@ -27,7 +31,6 @@ const Menutitle = styled.div`
   top: 35px;
   right: 60px;
   text-align: center;
-  font-size: 0.5rem;
   font-family: 'Nanum Gothic', sans-serif;
   }
 
@@ -70,7 +73,7 @@ const Loginicon = () => {
         </Logicon>
         </NavLink>
         <Menutitle>
-          로그아웃
+        <li>로그아웃</li>
         </Menutitle>
 
       </div>
@@ -84,7 +87,7 @@ const Loginicon = () => {
           </NavLink>
         </Logicon>
         <Menutitle>
-          로그인
+          <li>로그인</li>
         </Menutitle>
 
       </>

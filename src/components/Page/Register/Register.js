@@ -4,6 +4,9 @@ import './Searchbox.css'
 import fuzzySearch from './fuzzySearch';
 import { Schools } from './Schools';
 import styled from 'styled-components';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core';
+
+
 import { NavLink } from 'react-router-dom';
 import fire from './LoginFire'
 
@@ -13,7 +16,6 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 
 
 const Colortheme = createMuiTheme({

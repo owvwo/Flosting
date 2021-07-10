@@ -13,6 +13,7 @@ import History_page from './Page/History'
 import Register_page from './Page/Register/Register'
 import Terms_page from './Page/Register/Terms'
 import LastRegister_page from './Page/Register/LastRegister'
+import My_page from './Page/Mypage/Mypage'
 import fire from './Page/Register/LoginFire'
 
 const Transition = () => {
@@ -47,6 +48,7 @@ const Transition = () => {
           <Route path="/about" component={About_page} />
           <Route path="/history" component={History_page} />
           <Route path="/ad" component={AD_page} />
+          <Route path="/my" component ={My_page} />
           <Route exact path="/register" render={props => (
             <Register_page
               S_num = {S_num}
