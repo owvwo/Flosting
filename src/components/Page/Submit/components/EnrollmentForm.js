@@ -44,6 +44,22 @@ margin: 1rem;
     margin: 0px auto;
   }
 `;
+
+const Container = styled.div`
+width:  
+margin: 1rem;
+  text-align: center;
+  justify-content: center;
+  display: flex;
+  img {
+    width: 15rem;
+    margin: 0px auto;
+  }
+p{
+  margin : 1rem;
+}
+`;
+
 const SubmitButton = styled.button`
   margin: 1rem auto;
   text-align: center;
@@ -78,24 +94,6 @@ const ToggleButton = styled.button`
   background-color: ${(props) => props.color};
 `;
 
-const Container = styled.div`
-  fontfamily: "Noto Sans KR", sans-serif;
-  margin: 1rem;
-  text-algin: center;
-  justify-content: center;
-  img {
-    width: 20rem;
-    margin: 0px auto;
-  }
-  p {
-    inline: block;
-    margin: 1em;
-    text-align: center;
-    font-size: x-large;
-    length: 2rem;
-  }
-`;
-
 function useToggle(initialValue = true, values) {
   const [value, setValue] = useState(initialValue);
   const toggle = useCallback(() => {
@@ -106,13 +104,13 @@ function useToggle(initialValue = true, values) {
 }
 
 function EnrollmentForm(props) {
-  const ticketOptions = [
-    { key: "", value: "" },
-    { key: "0", value: "0" },
-    { key: "1", value: "1" },
-    { key: "2", value: "2" },
-    { key: "3", value: "3" },
-  ];
+  // const ticketOptions = [
+  //   { key: "", value: "" },
+  //   { key: "0", value: "0" },
+  //   { key: "1", value: "1" },
+  //   { key: "2", value: "2" },
+  //   { key: "3", value: "3" },
+  // ];
 
   // const sexOptions = [
   //   { key: "Girl", value: "girl" },
@@ -146,11 +144,11 @@ function EnrollmentForm(props) {
   const initialValues = {
     // userAge: "",
     // userSex: "",
-    ticket: {
-      lilac: "",
-      daisy: "",
-      clover: "",
-    },
+    // ticket: {
+    //   lilac: "",
+    //   daisy: "",
+    //   clover: "",
+    // },
     otherAge: {
       lilac: "",
       daisy: "",
@@ -164,12 +162,10 @@ function EnrollmentForm(props) {
   };
   // 신청자 정보
 
-  const { set_S_num, set_S_name, set_auth_regis } = props;
   // 신청페이지 활성화
   const [lilacOn, setLilacOn] = useToggle();
   const [daisyOn, setDaisyOn] = useToggle();
   const [cloverOn, setCloverOn] = useToggle();
-  const [inputLilac, setInputLilac] = useState("");
 
   // redirect state
   const [redirect, setRedirect] = useState(false);
@@ -198,7 +194,7 @@ function EnrollmentForm(props) {
       .add({
         // userAge: values.userAge,
         // userSex: values.userSex,
-        ticket: values.ticket,
+        // ticket: values.ticket,
         otherAge: values.otherAge,
         desiredUniv: values.desiredUniv,
       })
@@ -221,7 +217,6 @@ function EnrollmentForm(props) {
     slidesToShow: 1,
     slidesToScroll: 1,
     margin: 0,
-    outline: "none",
   };
 
   // 확인창
@@ -238,9 +233,7 @@ function EnrollmentForm(props) {
   const onChangeInput = (e) => {
     // const test = useRef(false);
   };
-  const onReset = () => {
-    setInputLilac("");
-  };
+
   return (
     <ThemeProvider theme={Boldtheme}>
       <div>
