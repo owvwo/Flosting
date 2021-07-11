@@ -13,7 +13,13 @@ import History_page from './Page/History'
 import Register_page from './Page/Register/Register'
 import Terms_page from './Page/Register/Terms'
 import LastRegister_page from './Page/Register/LastRegister'
+import My_page from './Page/Mypage/Mypage'
 import fire from './Page/Register/LoginFire'
+
+import CurrentEvent from "./Page/CurrentEvent";
+import 건대 from "./Page/건대.js"
+import Alarm from "./Page/Alarm";
+
 
 const Transition = () => {
 
@@ -40,6 +46,12 @@ const Transition = () => {
       <CSSTransition key={location.pathname} classNames="fade" timeout={500}>
         <Switch location={location}>
           <Route exact path="/" component={Home_page} />
+          <Route exact path="/currentevent" component={CurrentEvent} />
+          <Route exact path="/currentevent/alarm" component={Alarm} />
+          <Route exact path="/currentevent/event1" component={건대} />
+          <Route exact path="/currentevent/event2" component={건대} />
+          <Route exact path="/currentevent/event3" component={건대} />
+          <Route exact path="/currentevent/event4" component={건대} />
           <Route path="/login" component={Login_page} />
           <Route path="/submit" component={Submit_page} />
           <Route path="/confirm" component={Confirm_page} />
@@ -47,8 +59,10 @@ const Transition = () => {
           <Route path="/about" component={About_page} />
           <Route path="/history" component={History_page} />
           <Route path="/ad" component={AD_page} />
+          <Route path="/my" component ={My_page} />
           <Route exact path="/register" render={props => (
             <Register_page
+              S_num = {S_num}
               set_S_num={set_S_num}
               set_S_name={set_S_name}
               set_auth_regis={set_auth_regis}

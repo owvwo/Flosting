@@ -5,7 +5,9 @@ import SNSLink from './SNSLink.js'
 
 
 const Wrapper = styled.div`
-  text-align: center;`
+  text-align: center;
+  font-family: 'Noto Sans KR', sans-serif;
+  `
 
 const Account = () =>{
 

@@ -1,6 +1,6 @@
 import firebase from 'firebase';
 
-var firebaseConfig = {
+const firebaseConfig = {
     apiKey: "AIzaSyCjH_iDelWGBmEzHTKWDcJcr6DHnw4nlwI",
     authDomain: "flosting-65c9e.firebaseapp.com",
     projectId: "flosting-65c9e",
@@ -9,6 +9,7 @@ var firebaseConfig = {
     appId: "1:939483289297:web:da44110364931d4835d7f0",
     measurementId: "G-1Y7ZS38CNZ"
   };
-  
+
 const fire = firebase.initializeApp(firebaseConfig);
+
 export default fire;

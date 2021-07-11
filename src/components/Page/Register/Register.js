@@ -4,7 +4,33 @@ import './Searchbox.css'
 import fuzzySearch from './fuzzySearch';
 import { Schools } from './Schools';
 import styled from 'styled-components';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core';
+
+
 import { NavLink } from 'react-router-dom';
+import fire from './LoginFire'
+
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+
+
+const Colortheme = createMuiTheme({
+    palette: {
+        primary: {
+            main: '#E0BCC1'
+        }
+    },
+    typography: {
+        fontSize: 10,
+        fontWeightRegular: 700,
+        fontFamily: "Noto Sans KR"
+    }
+
+})
 
 const Container = styled.div`
     font-family: 'Noto Sans KR', sans-serif;
@@ -44,7 +70,7 @@ const Error_message = styled.div`
     color: ${props => props.limitnum ? '#00AB6F' : '#EF0C00'};
 `
 
-const Button = styled.button`
+const RegButton = styled.button`
   font-family: 'Noto Sans KR', sans-serif;
   font-weight: 700;
   padding: 10px 15px;
@@ -67,16 +93,17 @@ const Button = styled.button`
   opacity: ${props => {
         if (props.disabled) return '0.5';
         else return '1.0';
-      }};
+    }};
   cursor: ${props => {
         if (props.disabled) return 'default';
         else return 'pointer'
-      }};
+    }};
 `;
 const Input = styled.input`
+
   border : ${props => props.limitnum ? '1px solid #A6A6A6' : '1px solid #EF0C00'};
-  background: ${props => props.limitnum ? '#EBEBEB' : 'white'};
-  color: ${props => props.limitnum ? 'black' : '#EF0C00'};
+  color: ${props => props.limitnum ? (props.overlap ? "#A6A6A6" : 'black') : '#EF0C00'};
+  font-family: 'Noto Sans KR', sans-serif;
   type : text;
   line-height: 2rem;
   padding-left: 10px;
@@ -86,35 +113,86 @@ const Input = styled.input`
   font-size: 0.8rem;
   border-radius: 5px;
 `;
+const Overlapbtn = styled.button`
+    font-family: 'Noto Sans KR', sans-serif;
+    border-radius: 8px;
+    margin: 5px;
+    border : ${props => props.overlap ? '1px solid #00AB6F' : '1px solid #A6A6A6'};
+    color :  ${props => props.overlap ? '#00AB6F' : 'black'};
+    width: 4rem;
+    height: 2rem;
+    font-size: 0.7rem;
+`;
+
+const InputDiv = styled.div`
+    display : flex;
+    flex-direction: row;
+`
 
 
 const Register = (props) => {
 
-    const { set_S_num, set_S_name, set_auth_regis } = props
+    const { S_num, set_S_num, set_S_name, set_auth_regis } = props
 
     const [limitnum, setlimitnum] = useState(false); // 학번의 제한 체크 변수
     const [limitname, setlimitname] = useState(false); // 학교의 체크 변수
     const [limitnummessasge, setlimitnummessasge] = useState("숫자로 입력해주세요.");
     const [canNext, setcanNext] = useState(true); //다음으로 갈 수 있는지 체크해주는 변수
+    const [overlap, setoverLap] = useState(false);
+    const db = fire.firestore();
+
+    const [open, setOpen] = useState(false); // OK알람창
+    const [open2, setOpen2] = useState(false); //중복알람창
 
     useEffect(() => {
         cangoNext();
-    }, [limitnum])
+    }, [overlap])
     useEffect(() => {
         cangoNext();
     }, [limitname])
 
-    const cangoNext = () =>{
-        if(limitnum && limitname)
+    const handleoverlap = () => { //중복검사
+
+        if (limitnum) {
+            let Infodb = db.collection("회원정보");
+            let query = Infodb.where("ID", "==", S_num).get().then((querySnapshot) => {
+                if (querySnapshot.size) {
+                    setOpen2(true);
+                    setoverLap(false);
+                } else {
+                    setOpen(true); //alert창 띄우기
+                }
+            });
+        } else {
+            alert("알맞은 학번을 입력해주세요!")
+        }
+
+    }
+
+    const overlapOk = () => {
+        setlimitnummessasge("ID가 정해졌어요!")
+        setoverLap(true);
+        setOpen(false);
+    }
+
+    const cangoNext = () => {
+        if (limitnum && limitname && overlap)
             setcanNext(false);
         else
             setcanNext(true);
     }
+
     const handleClick = () => {
         set_auth_regis(true);
     }
 
     const handleNumChange = (e) => {
+        let pattern = /[^0-9]/gi; // 숫자 입력 되게
+        e.target.value = e.target.value.replace(pattern, '');
+        if (e.target.value.length > 15) //글자수 제한
+            e.target.value = e.target.value.slice(0, 15);
+
+
         set_S_num(e.target.value);
         if (((e.target.value).length <= 13 && (e.target.value).length >= 8)) {
             setlimitnum(true);
@@ -122,9 +200,9 @@ const Register = (props) => {
             setlimitnum(false);
         }
         if ((e.target.value).length <= 13 && (e.target.value).length >= 8) {
-            setlimitnummessasge("사용가능한 학번입니다!");
+            setlimitnummessasge("중복 확인 버튼을 눌러주세요!");
         }
-        else if((e.target.value).length == 0) {
+        else if ((e.target.value).length == 0) {
             setlimitnummessasge("숫자로 입력해주세요.");
         }
         else {
@@ -138,46 +216,90 @@ const Register = (props) => {
 
 
     return (
-        <Container>
-            <h1>
-                플로스팅 회원가입
-            </h1>
-            <School_number>
-                <School_title>
-                    학번
-                </School_title>
-                <School_content>
-                    ※ 년도가 아닌 8 ~ 13자리로 이루어진 본인의 고유학번을 입력해주세요.
-                </School_content>
-                <Input
-                    limitnum={limitnum}
-                    placeholder="학번을 입력하세요"
-                    onChange={handleNumChange}
-                />
-                <Error_message limitnum = {limitnum}>
-                    {limitnummessasge}
-                </Error_message>
+        <ThemeProvider theme={Colortheme}>
+            <Container>
+                <h1>
+                    플로스팅 회원가입
+                </h1>
+                <School_number>
+                    <School_title>
+                        학번
+                    </School_title>
+                    <School_content>
+                        ※ 년도가 아닌 8 ~ 13자리로 이루어진 본인의 고유학번을 입력해주세요.
+                    </School_content>
+                    <InputDiv>
+                        <Input
+                            overlap={overlap}
+                            limitnum={limitnum}
+                            placeholder="학번을 입력하세요"
+                            onChange={handleNumChange}
+                            disabled={overlap}
+                        />
+                        <Overlapbtn overlap={overlap} onClick={handleoverlap} disabled = {overlap}>
+                            중복 확인
+                        </Overlapbtn>
+                        <Dialog
+                            open={open}
+                            onClose={() => setOpen(false)}
+                            aria-labelledby="responsive-dialog-title"
+                        >
+                            <DialogTitle id="responsive-dialog-title">{S_num}</DialogTitle>
+                            <DialogContent>
+                                <DialogContentText>
+                                    위 학번으로 가입하시겠습니까?
+                                </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button variant="contained" autoFocus onClick={overlapOk} color="primary">
+                                    확인
+                                </Button>
+                                <Button variant="outlined" onClick={() => setOpen(false)} color="primary">
+                                    취소
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
+                        <Dialog
+                            open={open2}
+                            onClose={() => setOpen2(false)}
+                            aria-labelledby="responsive-dialog-title"
+                        >
+                            <DialogTitle id="responsive-dialog-title">{S_num}</DialogTitle>
+                            <DialogContent>
+                                다음 학번은 중복입니다!
+                            </DialogContent>
+                            <DialogActions>
+                                <Button variant="contained" autoFocus onClick={() => setOpen2(false)} color="primary">
+                                    확인
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
+                    </InputDiv>
+                    <Error_message limitnum={limitnum}>
+                        {limitnummessasge}
+                    </Error_message>
 
-            </School_number>
-            <School_name>
-                <School_title>
-                    학교
-                </School_title>
-                <SelectSearch
-                    options={Schools}
-                    search
-                    filterOptions={fuzzySearch}
-                    onChange={handleNameChange}
-                    emptyMessage="Not found"
-                    placeholder="학교 이름을 검색하세요."
-                />
-            </School_name>
-            <NavLink to="/register/terms">
-                <Button register onClick={handleClick} disabled = {canNext}>
-                    다음
-                </Button>
-            </NavLink>
-        </Container>
+                </School_number>
+                <School_name>
+                    <School_title>
+                        학교
+                    </School_title>
+                    <SelectSearch
+                        options={Schools}
+                        search
+                        filterOptions={fuzzySearch}
+                        onChange={handleNameChange}
+                        emptyMessage="Not found"
+                        placeholder="학교 이름을 검색하세요."
+                    />
+                </School_name>
+                <NavLink to="/register/terms">
+                    <RegButton register onClick={handleClick} disabled={canNext}>
+                        다음
+                    </RegButton>
+                </NavLink>
+            </Container>
+        </ThemeProvider>
     );
 }
 

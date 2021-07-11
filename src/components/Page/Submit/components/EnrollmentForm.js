@@ -6,9 +6,9 @@ import fire from "../../Register/LoginFire";
 import { Button } from "@material-ui/core";
 import Slider from "react-slick";
 import styled from "styled-components";
-import lilac from "../../../../images/002.png";
-import daisy from "../../../../images/004.png";
-import submitMain from "../../../../images/006.png";
+import lilac from "../../../../images/lilac.png";
+import daisy from "../../../../images/daisy.png";
+import submitMain from "../../../../images/violet.png";
 import clover from "../../../../images/clover.png";
 import "../FormikContainer.css";
 import Dialog from "@material-ui/core/Dialog";
@@ -34,9 +34,11 @@ const Boldtheme = createMuiTheme({
 });
 
 const InputContainer = styled.div`
-  margin: 1rem;
+width:  
+margin: 1rem;
   text-align: center;
   justify-content: center;
+  display: flex;
   img {
     width: 10rem;
     margin: 0px auto;
@@ -218,8 +220,8 @@ function EnrollmentForm(props) {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    prevArrow: <button type="button">이전</button>,
-    nextArrow: <button type="button">다음</button>,
+    margin: 0,
+    outline: "none",
   };
 
   // 확인창
