@@ -6,9 +6,10 @@ import fire from "../../Register/LoginFire";
 import { Button } from "@material-ui/core";
 import Slider from "react-slick";
 import styled from "styled-components";
-import img from "../../../../images/flosting-logo.png";
-// import female from "../../../../images/flosting-logo.png";
-// import male from "../../../../images/flosting-logo.png";
+import lilac from "../../../../images/002.png";
+import daisy from "../../../../images/004.png";
+import submitMain from "../../../../images/006.png";
+import clover from "../../../../images/clover.png";
 import "../FormikContainer.css";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -18,7 +19,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import Slide from "@material-ui/core/Slide";
 import { Redirect } from "react-router-dom";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
-
+import Fade from "react-reveal/Fade";
 const Boldtheme = createMuiTheme({
   palette: {
     primary: {
@@ -32,23 +33,21 @@ const Boldtheme = createMuiTheme({
   },
 });
 
-const Wrap = styled.div`
+const InputContainer = styled.div`
   margin: 1rem;
   text-align: center;
   justify-content: center;
   img {
     width: 10rem;
-    height: 10rem;
-    display: block;
     margin: 0px auto;
   }
 `;
 const SubmitButton = styled.button`
-  margin-top: 15rem;
+  margin: 1rem auto;
   text-align: center;
   justify-content: center;
   height: 5rem;
-  width: 15rem;
+  width: 70%;
   border-radius: 5px;
   font-family: "Noto Sans KR", sans-serif;
   font-weight: 700;
@@ -56,26 +55,47 @@ const SubmitButton = styled.button`
   background-color: ${(props) => props.color};
   color: #ffffff;
   font-size: 2rem;
+  display: block;
+  border: none;
 `;
 
 const Title = styled.h1`
   fontfamily: "Noto Sans KR", sans-serif;
-  font-size: xx-large;
+  font-size: x-large;
   color: #e0bcc1;
 `;
+
 const ToggleButton = styled.button`
   fontfamily: "Noto Sans KR", sans-serif;
   border-radius: 5px;
-  margin-left: 10.5rem;
+  margin: 1rem;
   padding: 10px 15px;
-  display: inline-block;
-  width: 10rem;
+  // border: none;
+  width: 20rem;
+  border-color: #e0bcc1;
   background-color: ${(props) => props.color};
+`;
+
+const Container = styled.div`
+  fontfamily: "Noto Sans KR", sans-serif;
+  margin: 1rem;
+  text-algin: center;
+  justify-content: center;
+  img {
+    width: 20rem;
+    margin: 0px auto;
+  }
+  p {
+    inline: block;
+    margin: 1em;
+    text-align: center;
+    font-size: x-large;
+    length: 2rem;
+  }
 `;
 
 function useToggle(initialValue = true, values) {
   const [value, setValue] = useState(initialValue);
-
   const toggle = useCallback(() => {
     setValue((v) => !v);
   }, []);
@@ -83,7 +103,7 @@ function useToggle(initialValue = true, values) {
   return [value, toggle];
 }
 
-function EnrollmentForm() {
+function EnrollmentForm(props) {
   const ticketOptions = [
     { key: "", value: "" },
     { key: "0", value: "0" },
@@ -92,21 +112,21 @@ function EnrollmentForm() {
     { key: "3", value: "3" },
   ];
 
-  const sexOptions = [
-    { key: "Girl", value: "girl" },
-    { key: "Boy", value: "boy" },
-  ];
+  // const sexOptions = [
+  //   { key: "Girl", value: "girl" },
+  //   { key: "Boy", value: "boy" },
+  // ];
 
-  const userAgeOptions = [
-    { key: "", value: "" },
-    { key: "20", value: "20" },
-    { key: "21", value: "21" },
-    { key: "22", value: "22" },
-    { key: "23", value: "23" },
-    { key: "24", value: "24" },
-    { key: "25", value: "25" },
-    { key: "26+", value: "26" },
-  ];
+  // const userAgeOptions = [
+  //   { key: "", value: "" },
+  //   { key: "20", value: "20" },
+  //   { key: "21", value: "21" },
+  //   { key: "22", value: "22" },
+  //   { key: "23", value: "23" },
+  //   { key: "24", value: "24" },
+  //   { key: "25", value: "25" },
+  //   { key: "26+", value: "26" },
+  // ];
 
   const ageOptions = [
     { key: "20", value: "20" },
@@ -122,29 +142,31 @@ function EnrollmentForm() {
   ];
   // props
   const initialValues = {
-    userAge: "",
-    userSex: "",
+    // userAge: "",
+    // userSex: "",
     ticket: {
       lilac: "",
       daisy: "",
-      gay: "",
+      clover: "",
     },
     otherAge: {
       lilac: "",
       daisy: "",
-      gay: "",
+      clover: "",
     },
     desiredUniv: {
       lilac: "",
       daisy: "",
-      gay: "",
+      clover: "",
     },
   };
+  // 신청자 정보
 
+  const { set_S_num, set_S_name, set_auth_regis } = props;
   // 신청페이지 활성화
   const [lilacOn, setLilacOn] = useToggle();
   const [daisyOn, setDaisyOn] = useToggle();
-  const [gayOn, setGayOn] = useToggle();
+  const [cloverOn, setCloverOn] = useToggle();
   const [inputLilac, setInputLilac] = useState("");
 
   // redirect state
@@ -161,8 +183,8 @@ function EnrollmentForm() {
 
   // 유효성 검사
   const validationSchema = Yup.object({
-    userAge: Yup.string().required("필수항목을 입력해주세요"),
-    userSex: Yup.string().required("필수항목을 입력해주세요"),
+    // userAge: Yup.string().required("필수항목을 입력해주세요"),
+    // userSex: Yup.string().required("필수항목을 입력해주세요"),
   });
 
   // 데이터 베이스
@@ -172,8 +194,8 @@ function EnrollmentForm() {
     console.log("Form data", values);
     db.collection("Flosting_7")
       .add({
-        userAge: values.userAge,
-        userSex: values.userSex,
+        // userAge: values.userAge,
+        // userSex: values.userSex,
         ticket: values.ticket,
         otherAge: values.otherAge,
         desiredUniv: values.desiredUniv,
@@ -188,11 +210,16 @@ function EnrollmentForm() {
   };
   // 슬라이더 세팅
   const settings = {
+    arrow: true,
     dots: true,
+    dotClass: "slick-dots",
+    draggable: true,
     infinite: false,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+    prevArrow: <button type="button">이전</button>,
+    nextArrow: <button type="button">다음</button>,
   };
 
   // 확인창
@@ -207,7 +234,7 @@ function EnrollmentForm() {
   }
 
   const onChangeInput = (e) => {
-    setInputLilac(e.target.value);
+    // const test = useRef(false);
   };
   const onReset = () => {
     setInputLilac("");
@@ -224,10 +251,19 @@ function EnrollmentForm() {
             return (
               <Form id="myForm">
                 <Slider {...settings}>
-                  <Wrap>
+                  <Container>
+                    <Fade bottom cascade>
+                      <Title>User Info</Title>
+                      <img src={submitMain}></img>
+                      <p>~~~ 님 안녕하세요 </p>
+                      <p>신청 할꺼면 오른쪽으로 넘겨라</p>
+                    </Fade>
+                  </Container>
+
+                  {/* <Wrap>
                     <Title>User Info</Title>
                     <div>
-                      <img src={img} />
+                      <img src={userInfo} />
                     </div>
                     <FormikControl
                       control="select"
@@ -236,18 +272,27 @@ function EnrollmentForm() {
                       options={userAgeOptions}
                     />
 
-                    {/* 유저 성별 */}
+                    유저 성별
                     <FormikControl
                       control="radio"
                       label="성별을 선택해 주세요"
                       name="userSex"
                       options={sexOptions}
                     />
-                  </Wrap>
-                  <Wrap>
+                  </Wrap> */}
+                  <InputContainer>
                     <Title>Lilac</Title>
-                    <img src={img} />
+                    <img src={lilac} />
+
                     {/* 라일락 나이 */}
+                    <ToggleButton
+                      type="button"
+                      onClick={setLilacOn}
+                      color={lilacOn ? "#FFF5DE" : "#C6B4CE"}
+                    >
+                      {lilacOn ? "신청하기" : "신청취소"}
+                    </ToggleButton>
+
                     <FormikControl
                       control="radio"
                       label="상대의 나이를 선택해주세요"
@@ -266,25 +311,25 @@ function EnrollmentForm() {
                     />
 
                     {/* 라일락 티켓 */}
-                    <FormikControl
+                    {/* <FormikControl
                       control="select"
                       label="LilacTicket"
                       name="ticket.lilac"
                       options={ticketOptions}
                       disabled={lilacOn}
-                    />
+                    /> */}
+                  </InputContainer>
+                  <InputContainer>
+                    <Title>Daisy</Title>
+                    <img src={daisy} />
+                    {/* 데이지 티켓 */}
                     <ToggleButton
                       type="button"
-                      onClick={setLilacOn}
-                      color={lilacOn ? "#FFF5DE" : "#C6B4CE"}
+                      onClick={setDaisyOn}
+                      color={daisyOn ? "#FFF5DE" : "#C6B4CE"}
                     >
-                      {lilacOn ? "신청하기" : "신청취소"}
+                      {daisyOn ? "신청하기" : "신청취소"}
                     </ToggleButton>
-                  </Wrap>
-                  <Wrap>
-                    <Title>Daisy</Title>
-                    <img src={img} />
-                    {/* 데이지 티켓 */}
                     <FormikControl
                       control="radio"
                       label="상대의 나이를 선택해주세요"
@@ -302,85 +347,84 @@ function EnrollmentForm() {
                     />
 
                     {/* 데이지 티켓 */}
-                    <FormikControl
+                    {/* <FormikControl
                       control="select"
                       label="DiasyTicket"
                       name="ticket.daisy"
                       options={ticketOptions}
                       disabled={daisyOn}
-                    />
+                    /> */}
+                  </InputContainer>
+                  <InputContainer>
+                    <Title>Clover</Title>
+                    <img src={clover} />
+                    {/* 게이 나이 */}
                     <ToggleButton
                       type="button"
-                      onClick={setDaisyOn}
-                      color={daisyOn ? "#FFF5DE" : "#C6B4CE"}
+                      onClick={setCloverOn}
+                      color={cloverOn ? "#FFF5DE" : "#C6B4CE"}
                     >
-                      {daisyOn ? "신청하기" : "신청취소"}
+                      {cloverOn ? "신청하기" : "신청취소"}
                     </ToggleButton>
-                  </Wrap>
-                  <Wrap>
-                    <Title>Gay</Title>
-                    <img src={img} />
-                    {/* 게이 나이 */}
                     <FormikControl
                       control="radio"
                       label="상대의 나이를 선택해주세요"
-                      name="otherAge.gay"
+                      name="otherAge.clover"
                       options={ageOptions}
-                      disabled={gayOn}
+                      disabled={cloverOn}
                     />
                     {/* 학교 선택 */}
                     <FormikControl
                       control="select"
                       label="학교 선택"
-                      name="desiredUniv.gay"
+                      name="desiredUniv.clover"
                       options={desiredUnivOptions}
-                      disabled={gayOn}
+                      disabled={cloverOn}
                     />
                     {/* 게이 티켓 */}
-                    <FormikControl
+                    {/* <FormikControl
                       control="select"
-                      label="GayTicket"
-                      name="ticket.gay"
+                      label="CloverTicket"
+                      name="ticket.clover"
                       options={ticketOptions}
-                      disabled={gayOn}
-                    />
-                    <ToggleButton
-                      type="button"
-                      onClick={setGayOn}
-                      color={gayOn ? "#FFF5DE" : "#C6B4CE"}
-                    >
-                      {gayOn ? "신청하기" : "신청취소"}
-                    </ToggleButton>
-                  </Wrap>
-                  <Wrap>
+                      disabled={cloverOn}
+                    /> */}
+                  </InputContainer>
+                  <Container>
                     <Title>마지막!!</Title>
-                    <SubmitButton
-                      variant="contained"
-                      onClick={handleClickOpen}
-                      disabled={!formik.isValid}
-                      color={!formik.isValid ? "#423F3E" : "#C6B4CE"}
-                    >
-                      제출하기!!
-                    </SubmitButton>
+                    <img src={submitMain} />
                     <div>
+                      <SubmitButton
+                        type="button"
+                        onClick={handleClickOpen}
+                        // disabled={!formik.isValid}
+                        // color={!formik.isValid ? "#423F3E" : "#C6B4CE"}
+                        color={"#C6B4CE"}
+                      >
+                        제출하기!!
+                      </SubmitButton>
+                    </div>
+                    {/* <div>
                       {formik.isValid === false ? (
-                        <div className="error">필수항목을 입력해주세요</div>
+                        <div className="error" style={{ display: "block" }}>
+                          필수항목을 입력해주세요
+                        </div>
                       ) : (
                         ""
                       )}
-                    </div>
-                    {/* <Dialog
+                    </div> */}
+                    <Dialog
                       open={open}
-                      TransitionComponent={Transition}
-                      keepMounted
                       onClose={handleClose}
+                      aria-labelledby="alert-dialog-title"
+                      aria-describedby="alert-dialog-description"
                     >
-                      <DialogTitle id="alert-dialog-slide-title">
-                        {"Alert"}
+                      <DialogTitle id="alert-dialog-title">
+                        {"신청하시겠습니까?"}
                       </DialogTitle>
                       <DialogContent>
-                        <DialogContentText id="alert-dialog-slide-description">
-                          정말 신청할꺼냐?
+                        <DialogContentText id="alert-dialog-description">
+                          리얼로 신청할꺼임??
                         </DialogContentText>
                       </DialogContent>
                       <DialogActions>
@@ -389,24 +433,16 @@ function EnrollmentForm() {
                         </Button>
                         <Button
                           form="myForm"
-                          variant="contained"
+                          type="submit"
+                          onClick={handleClose}
                           color="primary"
-                          // type="submit"
-                          // disabled={!formik.isValid}
+                          autoFocus
                         >
-                          Submit
+                          Agree
                         </Button>
                       </DialogActions>
-                    </Dialog> */}
-                    {/* <Button
-                      variant="contained"
-                      color="primary"
-                      type="submit"
-                      disabled={!formik.isValid}
-                    >
-                      Submit
-                    </Button> */}
-                  </Wrap>
+                    </Dialog>
+                  </Container>
                 </Slider>
               </Form>
             );
