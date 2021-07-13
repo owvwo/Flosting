@@ -1,12 +1,12 @@
 import React from "react";
 import { Field, ErrorMessage } from "formik";
 import TextError from "./TextError";
-
+import { InputLabel } from "@material-ui/core";
 function CheckboxGroup(props) {
   const { label, name, options, ...rest } = props;
   return (
     <div className="form-control">
-      <label>{label}</label>
+      <InputLabel>{label}</InputLabel>
       <Field name={name}>
         {({ field }) => {
           return options.map((option) => {

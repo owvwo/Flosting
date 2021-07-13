@@ -4,11 +4,13 @@ import styled from 'styled-components';
 import Avatar from '@material-ui/core/Avatar';
 import { makeStyles } from '@material-ui/core/styles';
 import MannerInfo from './MannerInfo';
+import profile_boy_default from '../../../images/profile_boy_default.png';
 
 const useStyles = makeStyles((theme) => ({
     largeavatar: {
       width: theme.spacing(15),
       height: theme.spacing(15),
+      border: "1px solid rgb(0,0,0,0.2)",
     }
   }));
 
@@ -24,20 +26,6 @@ const NicknameBox = styled.div`
     font-weight: 400;
     font-size: 2rem;
 `
-const MannerContainer = styled.div`
-    border-top: 1px solid rgb(0,0,0,0.1);
-    margin-top: 20px;
-`
-const MannerBox = styled.button`
-    margin-top: 5px;
-
-    font-size : 0.8rem;
-    border : none;
-    text-decoration: underline;
-    width: 100px;
-    background : white;
-
-`
 const MyInfo = (props) => {
     const classes = useStyles();
     const {user} = props;
@@ -52,11 +40,10 @@ const MyInfo = (props) => {
     useEffect(() => {
         const s_id = user.email.split('@');
         setID(s_id[0]);
-
         let Infodb = db.collection("회원정보");
         let query = Infodb.where("ID", "==", s_id[0]).get().then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                setNickname(doc.data().Nickname);
+               setNickname(doc.data().User.Nick);
             });
         });
 
@@ -64,7 +51,7 @@ const MyInfo = (props) => {
 
     return (
         <Container>
-            <Avatar alt={Nickname} src="https://placeimg.com/128/128/any" className={classes.largeavatar}/>
+            <Avatar alt={Nickname} src={profile_boy_default} className={classes.largeavatar}/>
             <NicknameBox>
                 {Nickname}
             </NicknameBox>

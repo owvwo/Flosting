@@ -6,19 +6,14 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 import MannerTierList from './MannerTierList';
+import MannerBar from './MannerBar';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
-        border: '1px solid rgb(0,0,0,0.1)',
-        padding: theme.spacing(1),
+        paddingLeft: theme.spacing(3),
         width: theme.spacing(40)
         // backgroundColor: 'primary'
-    },
-    title: {
-        fontSize: 8
     }
 }));
 
@@ -26,6 +21,12 @@ const useStyles = makeStyles((theme) => ({
 const MannerContainer = styled.div`
     border-top: 1px solid rgb(0,0,0,0.1);
     margin-top: 20px;
+`
+const Box_content = styled.div`
+    list-style: none;
+    li{
+    font-size: 0.5rem;
+    }
 `
 const MannerBox = styled.button`
     margin-top: 5px;
@@ -37,6 +38,13 @@ const MannerBox = styled.button`
     background : white;
 
 `
+const NowTemperature = styled.div`
+    list-style: none;
+    display :flex;
+    align-items : center;
+    justify-content : flex-end;
+    width: 100%
+`
 
 const MannerInfo = () => {
     const classes = useStyles();
@@ -47,6 +55,7 @@ const MannerInfo = () => {
     };
 
     const open = Boolean(anchorEl);
+    const nowtemp = 36.5;
 
 
     return (
@@ -54,15 +63,18 @@ const MannerInfo = () => {
             <MannerBox onClick={handleClick} >
                 매너온도
             </MannerBox>
+            <NowTemperature>
+                <li>{nowtemp + '°C'} </li>
+            </NowTemperature>
             <Popper className = {classes.paper} open={open} anchorEl={anchorEl} transition>
                 {({ TransitionProps }) => (
                     <Fade {...TransitionProps} timeout={350}>
                         <Card>
                             <CardContent>
-                                <Typography className={classes.title} color="textSecondary" gutterBottom>
-                                    매너온도는 플로스팅 이용 후 상대방으로부터 받은 후기를 종합해서 만든 매너 지표입니다.<br/>
-                                    온도에 따른 티어를 확인해보세요!
-                                </Typography>
+                                <Box_content>
+                                    <li>매너온도는 플로스팅 이용 후 상대방으로부터 받은 후기를 종합해서 만든 매너 지표입니다.</li>
+                                    <li>온도에 따른 티어를 확인해보세요!</li>
+                                </Box_content>
                                 <MannerTierList>
 
                                 </MannerTierList>
@@ -71,6 +83,9 @@ const MannerInfo = () => {
                     </Fade>
                 )}
             </Popper>
+            <MannerBar>
+
+            </MannerBar>
 
         </MannerContainer>
     );
