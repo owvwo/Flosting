@@ -162,9 +162,23 @@ const LastRegister = (props) => {
     const [canNext, setcanNext] = useState(true); //다음으로 갈 수 있는지 체크해주는 변수
     const db = fire.firestore();
 
+    let DBForm ={
+        ID : "",
+        User : {
+            Age : "",
+            Gender : "",
+            Manner : "",
+            Nick: "",
+            Phone: "",
+            Univ: ""
+        }
+    }
     const clearErrors = () => {
         setPasswordError('');
     }
+    useEffect(() => {
+        authListener();
+    }, []);
     useEffect(() => {
         cangoNext();
     }, [overlap])
@@ -287,14 +301,20 @@ const LastRegister = (props) => {
     }
     
     const saveDB = () =>{
+        DBForm.ID = S_num;
+        DBForm.User.Age = 20;
+        DBForm.User.Gender = "boy";
+        DBForm.User.Manner = 36.5;
+        DBForm.User.Nick = nickname;
+        DBForm.User.Phone = "01099999999"
+        DBForm.User.Univ = S_name;
+
         fire
         .firestore()
         .collection("회원정보")
         .add({
-            ID: S_num,
-            Password: password,
-            School_name: S_name,
-            Nickname: nickname
+            ID : DBForm.ID,
+            User : DBForm.User
         })
         .then(() => {
 
@@ -303,10 +323,6 @@ const LastRegister = (props) => {
             alert(error.message);
         });
     }
-
-    useEffect(() => {
-        authListener();
-    }, []);
 
 
     if (!auth_regis) { return (<Redirect to='/register' />); }
