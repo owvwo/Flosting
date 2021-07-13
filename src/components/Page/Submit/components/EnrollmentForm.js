@@ -1,29 +1,133 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import FormikControl from "./FormikControl";
 import fire from "../../Register/LoginFire";
+import { Button } from "@material-ui/core";
+import Slider from "react-slick";
+import styled from "styled-components";
+import lilac from "../../../../images/lilac.png";
+import daisy from "../../../../images/daisy.png";
+import submitMain from "../../../../images/violet.png";
+import clover from "../../../../images/clover.png";
+import "../FormikContainer.css";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Slide from "@material-ui/core/Slide";
+import { Redirect } from "react-router-dom";
+import { createMuiTheme, ThemeProvider } from "@material-ui/core";
+import Fade from "react-reveal/Fade";
 
-function EnrollmentForm() {
-  const db = fire.firestore();
+const Boldtheme = createMuiTheme({
+  palette: {
+    primary: {
+      main: "#E0BCC1",
+    },
+  },
+  typography: {
+    fontSize: 10,
+    fontWeightRegular: 700,
+    fontFamily: "Noto Sans KR",
+  },
+});
 
-  const ticketOptions = [
-    { key: "Select your Ticket", value: "" },
-    { key: "0", value: "0" },
-    { key: "1", value: "1" },
-    { key: "2", value: "2" },
-  ];
+const InputContainer = styled.div`
+width:  
+margin: 1rem;
+  text-align: center;
+  justify-content: center;
+  display: flex;
+  img {
+    width: 10rem;
+    margin: 0px auto;
+  }
+`;
 
-  const ticketTypeOptions = [
-    { key: "Lilac", value: "lilac" },
-    { key: "Daisy", value: "daisy" },
-    { key: "DaisyGay", value: "daisy_gay" },
-  ];
+const Container = styled.div`
+width:  
+margin: 1rem;
+  text-align: center;
+  justify-content: center;
+  display: flex;
+  img {
+    width: 15rem;
+    margin: 0px auto;
+  }
+p{
+  margin : 1rem;
+}
+`;
 
-  const sexOptions = [
-    { key: "Girl", value: "girl" },
-    { key: "Boy", value: "boy" },
-  ];
+const SubmitButton = styled.button`
+  margin: 1rem auto;
+  text-align: center;
+  justify-content: center;
+  height: 5rem;
+  width: 70%;
+  border-radius: 5px;
+  font-family: "Noto Sans KR", sans-serif;
+  font-weight: 700;
+  padding: 10px 15px;
+  background-color: ${(props) => props.color};
+  color: #ffffff;
+  font-size: 2rem;
+  display: block;
+  border: none;
+`;
+
+const Title = styled.h1`
+  fontfamily: "Noto Sans KR", sans-serif;
+  font-size: x-large;
+  color: #e0bcc1;
+`;
+
+const ToggleButton = styled.button`
+  fontfamily: "Noto Sans KR", sans-serif;
+  border-radius: 5px;
+  margin: 1rem;
+  padding: 10px 15px;
+  // border: none;
+  width: 20rem;
+  border-color: #e0bcc1;
+  background-color: ${(props) => props.color};
+`;
+
+function useToggle(initialValue = true, values) {
+  const [value, setValue] = useState(initialValue);
+  const toggle = useCallback(() => {
+    setValue((v) => !v);
+  }, []);
+
+  return [value, toggle];
+}
+
+function EnrollmentForm(props) {
+  // const ticketOptions = [
+  //   { key: "", value: "" },
+  //   { key: "0", value: "0" },
+  //   { key: "1", value: "1" },
+  //   { key: "2", value: "2" },
+  //   { key: "3", value: "3" },
+  // ];
+
+  // const sexOptions = [
+  //   { key: "Girl", value: "girl" },
+  //   { key: "Boy", value: "boy" },
+  // ];
+
+  // const userAgeOptions = [
+  //   { key: "", value: "" },
+  //   { key: "20", value: "20" },
+  //   { key: "21", value: "21" },
+  //   { key: "22", value: "22" },
+  //   { key: "23", value: "23" },
+  //   { key: "24", value: "24" },
+  //   { key: "25", value: "25" },
+  //   { key: "26+", value: "26" },
+  // ];
 
   const ageOptions = [
     { key: "20", value: "20" },
@@ -31,140 +135,368 @@ function EnrollmentForm() {
     { key: "24+", value: "24+" },
   ];
 
+  const desiredUnivOptions = [
+    { key: "", value: "" },
+    { key: "우리학교만", value: "myUniv" },
+    { key: "타학교만", value: "otherUniv" },
+    { key: "상관없음", value: "dnt_M" },
+  ];
+  // props
   const initialValues = {
-    nicName: "",
-    userAge: "",
-    sex: "",
-    ticket: {
-      lilac: "",
-      daisy: "",
-      gay: "",
+    User: {
+      Age: "",
+      Gender: "",
+      Manner: "",
+      Nick: "",
+      Phone: "",
+      Univ: "",
     },
-    matchingTypes: [],
-    otherAge: {
-      lilac: "",
-      daisy: "",
-      gay: "",
+    Diasy: {
+      Ticket: false,
+      Univ: "",
+      Age: "",
     },
+    Lilac: {
+      Ticket: false,
+      Univ: "",
+      Age: "",
+    },
+    Clover: {
+      Ticket: false,
+      Univ: "",
+      Age: "",
+    },
+    // otherAge: {
+    //   lilac: null,
+    //   daisy: "",
+    //   clover: "",
+    // },
+    // desiredUniv: {
+    //   lilac: "",
+    //   daisy: "",
+    //   clover: "",
+    // },
+  };
+  // 신청자 정보
+
+  // 신청페이지 활성화
+  const [lilacOn, setLilacOn] = useToggle();
+  const [daisyOn, setDaisyOn] = useToggle();
+  const [cloverOn, setCloverOn] = useToggle();
+
+  // redirect state
+  const [redirect, setRedirect] = useState(false);
+
+  // alert Dialog Message
+  const [open, setOpen] = useState(false);
+  // const [currentPage, handlepageChange] = useState(false);
+  // const [user, setUser] = useState("");
+
+  // 아이디 정보
+  // 저장될 유저의 DB
+  const [userSchool, setUserSchool] = useState("");
+
+  const [ID, setID] = useState("");
+  const [userUniv, setUserUiv] = useState("");
+
+  useEffect(() => {
+    const user = fire.auth().currentUser;
+    if (user) {
+      const s_id = user.email.split("@");
+      setID(s_id[0]);
+    } else {
+    }
+    let Infodb = db
+      .collection("Flosting_7")
+      .where("otherAge.daisy", "==", "24+")
+      .get()
+      .then((querySnapshot) => {
+        console.log(querySnapshot.size);
+        if (querySnapshot) {
+          querySnapshot.forEach((doc) => {
+            console.log(doc.data().desiredUniv.daisy);
+            // console.log(doc.data().School_name);
+            // setUserSchool(doc.data().School_name);
+          });
+          // console.log(querySnapshot);
+        } else {
+          console.log("데이터없어");
+        }
+      });
+  }, []);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
   };
 
+  // 유효성 검사
   const validationSchema = Yup.object({
-    // nicName: Yup.string().required("Required"),
-    // ticket: Yup.string().required("Required"),
-    // sex: Yup.string().required("Required"),
-    // ticket: Yup.string().required("Required"),
+    // userAge: Yup.string().required("필수항목을 입력해주세요"),
+    // userSex: Yup.string().required("필수항목을 입력해주세요"),
   });
+
+  // 데이터 베이스
+  const db = fire.firestore();
+
+  // Submit Handler
 
   const onSubmit = (values) => {
     console.log("Form data", values);
     db.collection("Flosting_7")
       .add({
-        nicName: values.nicName,
-        userAge: values.userAge,
-        sex: values.sex,
-        ticket: values.ticket,
-        matchingTypes: values.matchingTypes,
-        otherAge: values.otherAge,
+        User: values.User,
+        Lilac: values.Lilac,
+        Diasy: values.Diasy,
+        Clover: values.Clover,
       })
       .then(() => {
+        setUserSchool("");
         alert("success");
+        setRedirect(true);
       })
       .catch((error) => {
         alert(error.message);
       });
   };
+  // 슬라이더 세팅
+  const settings = {
+    arrow: true,
+    dots: true,
+    dotClass: "slick-dots",
+    draggable: true,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    margin: 0,
+  };
 
-  return (
-    <div>
-      <h1>참가신청서</h1>
-      <h1>이미지</h1>
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={onSubmit}
-      >
-        {(formik) => {
-          return (
-            <Form>
-              {/* 닉네임 */}
-              <FormikControl
-                control="input"
-                type="text"
-                label="NicName"
-                name="nicName"
-              />
-              {/* 유저 나이 */}
-              <FormikControl
-                control="radio"
-                label="Choose your age"
-                name="userAge"
-                options={ageOptions}
-              />
-              {/* 유저 성별 */}
-              <FormikControl
-                control="radio"
-                label="Choose your Sex"
-                name="sex"
-                options={sexOptions}
-              />
-              {/* 매칭타입 */}
-              <FormikControl
-                control="checkbox"
-                label="MatchingType"
-                name="matchingTypes"
-                options={ticketTypeOptions}
-              />
-              {/* 라일락 나이 */}
-              <FormikControl
-                control="radio"
-                label="Lilac Age"
-                name="otherAge.lilac"
-                options={ageOptions}
-              />
-              {/* 라일락 티켓 */}
-              <FormikControl
-                control="select"
-                label="LilacTicket"
-                name="ticket.lilac"
-                options={ticketOptions}
-              />
-              {/* 데이지 나이 */}
-              <FormikControl
-                control="radio"
-                label="Daisy Age"
-                name="otherAge.daisy"
-                options={ageOptions}
-              />
-              {/* 데이지 티켓 */}
-              <FormikControl
-                control="select"
-                label="DaisyTicket"
-                name="ticket.daisy"
-                options={ticketOptions}
-              />
-              {/* 게이 나이 */}
-              <FormikControl
-                control="radio"
-                label="Gay age"
-                name="otherAge.gay"
-                options={ageOptions}
-              />
-              {/* 게이 티켓 */}
-              <FormikControl
-                control="select"
-                label="GayTicket"
-                name="ticket.gay"
-                options={ticketOptions}
-              />
-              <button type="submit" disabled={!formik.isValid}>
-                Submit
-              </button>
-            </Form>
-          );
-        }}
-      </Formik>
-    </div>
-  );
+  // 확인창
+  const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+  });
+
+  if (redirect) {
+    {
+      return <Redirect to="/confirm" />;
+    }
+  } else {
+    return (
+      <ThemeProvider theme={Boldtheme}>
+        <div>
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={onSubmit}
+          >
+            {(formik) => {
+              return (
+                <Form id="myForm">
+                  <Slider {...settings}>
+                    <Container>
+                      <Fade bottom cascade>
+                        <Title>User Info</Title>
+                        <img src={submitMain}></img>
+                        <p>{ID}님 안녕하세요 </p>
+                        <p>신청 할꺼면 오른쪽으로 넘겨라</p>
+                      </Fade>
+                    </Container>
+
+                    {/* <Wrap>
+                      <Title>User Info</Title>
+                      <div>
+                        <img src={userInfo} />
+                      </div>
+                      <FormikControl
+                        control="select"
+                        label="나이를 선택해주세요"
+                        name="userAge"
+                        options={userAgeOptions}
+                      />
+  
+                      유저 성별
+                      <FormikControl
+                        control="radio"
+                        label="성별을 선택해 주세요"
+                        name="userSex"
+                        options={sexOptions}
+                      />
+                    </Wrap> */}
+                    <InputContainer>
+                      <Title>Lilac</Title>
+                      <img src={lilac} />
+
+                      {/* 라일락 나이 */}
+                      <ToggleButton
+                        type="button"
+                        onClick={setLilacOn}
+                        color={lilacOn ? "#FFF5DE" : "#C6B4CE"}
+                      >
+                        {lilacOn ? "신청하기" : "신청취소"}
+                      </ToggleButton>
+
+                      <FormikControl
+                        control="radio"
+                        label="상대의 나이를 선택해주세요"
+                        name="Lilac.Age"
+                        options={ageOptions}
+                        disabled={lilacOn}
+                        onChangeInput
+                      />
+                      {/* 학교 선택 */}
+                      <FormikControl
+                        control="select"
+                        label="학교 선택"
+                        name="Lilac.Univ"
+                        options={desiredUnivOptions}
+                        disabled={lilacOn}
+                      />
+
+                      {/* 라일락 티켓 */}
+                      {/* <FormikControl
+                        control="select"
+                        label="LilacTicket"
+                        name="ticket.lilac"
+                        options={ticketOptions}
+                        disabled={lilacOn}
+                      /> */}
+                    </InputContainer>
+                    <InputContainer>
+                      <Title>Daisy</Title>
+                      <img src={daisy} />
+                      {/* 데이지 티켓 */}
+                      <ToggleButton
+                        type="button"
+                        onClick={setDaisyOn}
+                        color={daisyOn ? "#FFF5DE" : "#C6B4CE"}
+                      >
+                        {daisyOn ? "신청하기" : "신청취소"}
+                      </ToggleButton>
+                      <FormikControl
+                        control="radio"
+                        label="상대의 나이를 선택해주세요"
+                        name="Daisy.Age"
+                        options={ageOptions}
+                        disabled={daisyOn}
+                      />
+                      {/* 학교 선택 */}
+                      <FormikControl
+                        control="select"
+                        label="학교 선택"
+                        name="Daisy.Age"
+                        options={desiredUnivOptions}
+                        disabled={daisyOn}
+                      />
+
+                      {/* 데이지 티켓 */}
+                      {/* <FormikControl
+                        control="select"
+                        label="DiasyTicket"
+                        name="ticket.daisy"
+                        options={ticketOptions}
+                        disabled={daisyOn}
+                      /> */}
+                    </InputContainer>
+                    <InputContainer>
+                      <Title>Clover</Title>
+                      <img src={clover} />
+                      {/* 게이 나이 */}
+                      <ToggleButton
+                        type="button"
+                        onClick={setCloverOn}
+                        color={cloverOn ? "#FFF5DE" : "#C6B4CE"}
+                      >
+                        {cloverOn ? "신청하기" : "신청취소"}
+                      </ToggleButton>
+                      <FormikControl
+                        control="radio"
+                        label="상대의 나이를 선택해주세요"
+                        name="Clover.Age"
+                        options={ageOptions}
+                        disabled={cloverOn}
+                      />
+                      {/* 학교 선택 */}
+                      <FormikControl
+                        control="select"
+                        label="학교 선택"
+                        name="Clover.Univ"
+                        options={desiredUnivOptions}
+                        disabled={cloverOn}
+                      />
+                      {/* 게이 티켓 */}
+                      {/* <FormikControl
+                        control="select"
+                        label="CloverTicket"
+                        name="ticket.clover"
+                        options={ticketOptions}
+                        disabled={cloverOn}
+                      /> */}
+                    </InputContainer>
+                    <Container>
+                      <Title>마지막!!</Title>
+                      <img src={submitMain} />
+                      <div>
+                        <SubmitButton
+                          type="button"
+                          onClick={handleClickOpen}
+                          // disabled={!formik.isValid}
+                          // color={!formik.isValid ? "#423F3E" : "#C6B4CE"}
+                          color={"#C6B4CE"}
+                        >
+                          제출하기!!
+                        </SubmitButton>
+                      </div>
+                      {/* <div>
+                        {formik.isValid === false ? (
+                          <div className="error" style={{ display: "block" }}>
+                            필수항목을 입력해주세요
+                          </div>
+                        ) : (
+                          ""
+                        )}
+                      </div> */}
+                      <Dialog
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="alert-dialog-title"
+                        aria-describedby="alert-dialog-description"
+                      >
+                        <DialogTitle id="alert-dialog-title">
+                          {"신청하시겠습니까?"}
+                        </DialogTitle>
+                        <DialogContent>
+                          <DialogContentText id="alert-dialog-description">
+                            리얼로 신청할꺼임??
+                          </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                          <Button onClick={handleClose} color="primary">
+                            Disagree
+                          </Button>
+                          <Button
+                            form="myForm"
+                            type="submit"
+                            onClick={handleClose}
+                            color="primary"
+                            autoFocus
+                          >
+                            Agree
+                          </Button>
+                        </DialogActions>
+                      </Dialog>
+                    </Container>
+                  </Slider>
+                </Form>
+              );
+            }}
+          </Formik>
+        </div>
+      </ThemeProvider>
+    );
+  }
 }
 
 export default EnrollmentForm;

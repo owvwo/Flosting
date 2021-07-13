@@ -9,6 +9,7 @@ import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 
+
 import tier_mi1 from '../../../images/tier_mi1.png';
 import tier_zero from '../../../images/tier_zero.png';
 import tier_plus1 from '../../../images/tier_plus1.png';
@@ -48,7 +49,7 @@ const TierImg = styled.div`
 const MannerTierList = () => {
 
     const classes = useStyles();
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = useState(false);
 
     const handleClick = () => {
         setOpen(!open);

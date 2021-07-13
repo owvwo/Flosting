@@ -12,7 +12,7 @@ const Logicon = styled.div`
   height: 1.5rem;
   position: fixed;
   top: 10px;
-  right: 60px;
+  right: 63px;
   }
 `;
 
@@ -25,12 +25,13 @@ const Menutitle = styled.div`
   }
   @media (max-width: 768px){
   display: flex;
-  width: 1.5rem;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
   height: 1rem;
   position: fixed;
-  top: 35px;
-  right: 60px;
-  text-align: center;
+  top: 33px;
+  right: 55px;
   font-family: 'Nanum Gothic', sans-serif;
   }
 
