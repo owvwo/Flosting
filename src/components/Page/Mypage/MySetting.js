@@ -35,7 +35,7 @@ const MySetting = (props) => {
                 <h1>
                     내 정보변경
                 </h1>
-
+                
             </Container>
         </ThemeProvider>
     );

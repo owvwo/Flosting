@@ -160,17 +160,30 @@ function EnrollmentForm(props) {
     console.log("User", User);
     console.log("Form data", values);
 
+    
     if (lilacOn) {
       values.Lilac.Age = "";
       values.Lilac.Univ = "";
+    } else {
+      if (values.Lilac.Age === "" || values.Lilac.Univ === "") {
+        values.Lilac.Ticket = false;
+      }
     }
     if (daisyOn) {
       values.Daisy.Age = "";
       values.Daisy.Univ = "";
+    } else {
+      if (values.Daisy.Age === "" || values.Daisy.Univ === "") {
+        values.Daisy.Ticket = false;
+      }
     }
     if (cloverOn) {
       values.Clover.Age = "";
       values.Clover.Univ = "";
+    } else {
+      if (values.Clover.Age === "" || values.Clover.Univ === "") {
+        values.Clover.Ticket = false;
+      }
     }
     const db = fire.firestore();
 

@@ -144,7 +144,7 @@ const Error_message_Password = styled.div`
 
 const LastRegister = (props) => {
 
-    const { auth_regis, S_name, S_num, user, authListener } = props
+    const { auth_regis, S_name, S_num, user} = props
     const email = S_num + "@flosting.com";
     const [password, setPassword] = useState(''); // 패스워드
     const [password2, setPassword2] = useState(''); //패스워드 확인
@@ -176,9 +176,6 @@ const LastRegister = (props) => {
     const clearErrors = () => {
         setPasswordError('');
     }
-    useEffect(() => {
-        authListener();
-    }, []);
     useEffect(() => {
         cangoNext();
     }, [overlap])

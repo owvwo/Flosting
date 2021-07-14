@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useState, useEffect}from 'react';
 
 import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
@@ -78,9 +78,15 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const FullWidthTabs = () => {
+const Mypage = (props) => {
 
-    const user = fire.auth().currentUser;
+    const [User, setUser] = useState(props.User);
+
+    useEffect(() => {
+        setUser(props.User);
+    }, [props]);
+
+    console.log(User);
 
     const classes = useStyles();
     const theme = useTheme();
@@ -94,7 +100,9 @@ const FullWidthTabs = () => {
         setValue(index);
     };
 
-    if (!user) { return (<Redirect to='/login' />); }
+
+
+    if (!JSON.parse(localStorage.getItem('user'))) { return (<Redirect to='/login' />); }
     else {
         return (
             <ThemeProvider theme={Colortheme}>
@@ -119,17 +127,17 @@ const FullWidthTabs = () => {
                         onChangeIndex={handleChangeIndex}
                     >
                         <TabPanel value={value} index={0} dir={theme.direction}>
-                            <MyInfo user ={user}>
+                            <MyInfo user ={User}>
 
                             </MyInfo>
                         </TabPanel>
                         <TabPanel value={value} index={1} dir={theme.direction}>
-                            <MySetting user = {user}>
+                            <MySetting user = {User}>
 
                             </MySetting>
                         </TabPanel>
                         <TabPanel value={value} index={2} dir={theme.direction}>
-                            <MyUsage_History user = {user}>
+                            <MyUsage_History user = {User}>
                                 
                             </MyUsage_History>
                         </TabPanel>
@@ -140,4 +148,4 @@ const FullWidthTabs = () => {
     }
 }
 
-export default FullWidthTabs;
+export default Mypage;

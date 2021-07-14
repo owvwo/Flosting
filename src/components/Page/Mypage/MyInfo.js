@@ -43,19 +43,16 @@ const SchoolNumBox = styled.div`
 `
 const MyInfo = (props) => {
     const classes = useStyles();
-    const {user} = props;
-
+    const user = props.user;
     const db = fire.firestore();
     const [ID, setID] = useState('');
     const [Manner, setManner] = useState('');
     const [Nickname, setNickname] = useState('');
     const [NextTier, setNextTier] = useState('');
 
-    
-
-
     useEffect(() => {
-        const s_id = user.email.split('@');
+        if(user){
+        let s_id = user.email.split('@');
         setID(s_id[0]);
         let Infodb = db.collection("회원정보");
         let query = Infodb.where("ID", "==", s_id[0]).get().then((querySnapshot) => {
@@ -67,9 +64,8 @@ const MyInfo = (props) => {
                setNextTier(Till - mannertemp);
             });
         });
-
-
-    }, []);
+    }
+    }, [user]);
 
     return (
         <Container>
