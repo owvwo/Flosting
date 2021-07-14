@@ -37,26 +37,12 @@ const Menutitle = styled.div`
 
 `;
 
-const Loginicon = () => {
-  const [user, setUser] = useState('');
+const Loginicon = (props) => {
 
-  const authListener = () => {
-    fire.auth().onAuthStateChanged((user) => {
-      if (user) {
-        setUser(user);
-      } else {
-        setUser("");
-      }
-    });
-  };
-
+  const user = props.User
   const handleLogout = () => {
     fire.auth().signOut();
   }
-
-  useEffect(() => {
-    authListener();
-  }, []);
 
   const activeStyle = {
     color: '#000000'

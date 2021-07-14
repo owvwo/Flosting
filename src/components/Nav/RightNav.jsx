@@ -119,6 +119,13 @@ const RightNav = (props) => {
             </NavLink>
           </RowDiv>
           <RowDiv>
+            <NavLink to="/editsubmit" activeStyle={activeStyle} style={noneactiveStyle}>
+              <li onClick={() => props.setOpen(!props.open)}>
+                신청서 수정
+              </li>
+            </NavLink>
+          </RowDiv>
+          <RowDiv>
             <NavLink to="/confirm" activeStyle={activeStyle} style={noneactiveStyle}>
               <li onClick={() => props.setOpen(!props.open)}>
                 플로스팅 확인
@@ -154,7 +161,7 @@ const RightNav = (props) => {
         </RowParrent>
         <RightContentDiv>
           <RowDiv>
-            <NavLink to="/submit" activeStyle={activeStyle} style={noneactiveStyle}>
+            <NavLink to="/currentevent" activeStyle={activeStyle} style={noneactiveStyle}>
               <li onClick={() => props.setOpen(!props.open)}>
                 진행중인 이벤트
               </li>
