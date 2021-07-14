@@ -26,7 +26,9 @@ const Nav = styled.nav`
   }
 `
 
-const Navbar = () => {
+const Navbar = (props) => {
+
+  const user = props.User
   const activeStyle = {
     color: '#000000'
   };
@@ -42,8 +44,8 @@ const Navbar = () => {
           Flosting
         </NavLink>
       </div>
-      <Navicon />
-      <Loginicon />
+      <Navicon/>
+      <Loginicon User = {user} />
     </Nav>
   )
 }

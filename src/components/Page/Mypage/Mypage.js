@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useState, useEffect}from 'react';
 
 import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
@@ -15,6 +15,8 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import { Redirect } from 'react-router-dom';
 import fire from '../Register/LoginFire'
 import MyInfo from './MyInfo'
+import MySetting from './MySetting';
+import MyUsage_History from './MyUsage_History/Usage_main'
 
 
 const Colortheme = createMuiTheme({
@@ -76,8 +78,15 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const FullWidthTabs = () => {
-    const user = fire.auth().currentUser;
+const Mypage = (props) => {
+
+    const [User, setUser] = useState(props.User);
+
+    useEffect(() => {
+        setUser(props.User);
+    }, [props]);
+
+    console.log(User);
 
     const classes = useStyles();
     const theme = useTheme();
@@ -91,7 +100,9 @@ const FullWidthTabs = () => {
         setValue(index);
     };
 
-    if (!user) { return (<Redirect to='/login' />); }
+
+
+    if (!JSON.parse(localStorage.getItem('user'))) { return (<Redirect to='/login' />); }
     else {
         return (
             <ThemeProvider theme={Colortheme}>
@@ -116,15 +127,19 @@ const FullWidthTabs = () => {
                         onChangeIndex={handleChangeIndex}
                     >
                         <TabPanel value={value} index={0} dir={theme.direction}>
-                            <MyInfo user ={user}>
+                            <MyInfo user ={User}>
 
                             </MyInfo>
                         </TabPanel>
                         <TabPanel value={value} index={1} dir={theme.direction}>
-                            Item Two
+                            <MySetting user = {User}>
+
+                            </MySetting>
                         </TabPanel>
                         <TabPanel value={value} index={2} dir={theme.direction}>
-                            Item Three
+                            <MyUsage_History user = {User}>
+                                
+                            </MyUsage_History>
                         </TabPanel>
                     </SwipeableViews>
                 </Container>
@@ -133,4 +148,4 @@ const FullWidthTabs = () => {
     }
 }
 
-export default FullWidthTabs;
+export default Mypage;

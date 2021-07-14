@@ -1,5 +1,5 @@
 import './App.css';
-import React, {Component} from 'react';
+import React, {Component, useState, useEffect} from 'react';
 import {
   BrowserView,
   MobileView,
@@ -7,10 +7,31 @@ import {
 import Navbar from './components/Nav/Navbar';
 import Transition from './components/Transitionpage';
 import ScrollToTop from './components/ScrollToTop';
+import fire from './components/Page/Register/LoginFire'
 
 
-class App extends Component {
-  render(){
+function App(){
+
+  const [User, setUser] = useState('');
+
+  useEffect(() => {
+    authListener();
+  }, []);
+
+
+  const authListener = () => {
+    fire.auth().onAuthStateChanged(user=>{
+      if (user) {
+          // store the user on local storage
+          localStorage.setItem('user', true);
+          setUser(user);
+      } else {
+          // removes the user from local storage on logOut
+          localStorage.removeItem('user');
+          setUser("");
+      }
+  })
+  };
 
     return(
       <div>
@@ -20,12 +41,11 @@ class App extends Component {
           <p>박정부</p>
         </BrowserView>
         <MobileView>
-          <Navbar />
-          <Transition />
+          <Navbar User = {User}/>
+          <Transition User = {User}/>
         </MobileView>
       </div>
     );
-  }
 
 }
 

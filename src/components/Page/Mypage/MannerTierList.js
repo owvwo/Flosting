@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     nested: {
         paddingLeft: theme.spacing(3),
     },
-    CList:{
+    CList: {
         padding: 0,
         margin: 0
     }
@@ -31,19 +31,24 @@ const TierContent = styled.div`
 `
 const Tiermessage = styled.div`
     font-family: 'Noto Sans KR', sans-serif;
-    font-size: 0.8rem;
+    font-size: ${props => props.fontsize};
     margin-left: 10px;
     height: 30px;
     display: flex;
-    flex-direction: row;
     justify-content: center;
     align-items: center;
-`
+`;
 const TierImg = styled.div`
     img{
         width: 30px;
         height: 30px;
     }
+`;
+
+const FlexRow = styled.div`
+    width: 15rem;
+    display : flex;
+    justify-content : space-between;
 `
 
 const MannerTierList = () => {
@@ -57,41 +62,56 @@ const MannerTierList = () => {
 
 
     return (
-        <List className ={classes.CList}>
-            <ListItem className ={classes.CList} button onClick={handleClick}>
+        <List className={classes.CList}>
+            <ListItem className={classes.CList} button onClick={handleClick}>
                 <ListItemText primary="티어 보기" />
                 {open ? <ExpandLess /> : <ExpandMore />}
             </ListItem>
             <Collapse in={open} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                    <ListItem button className ={classes.CList}>
+                    <ListItem button className={classes.CList}>
                         <TierContent>
                             <TierImg>
                                 <img src={tier_mi1} />
                             </TierImg>
-                            <Tiermessage>
-                                깨진 씨앗
-                            </Tiermessage>
+                            <FlexRow>
+                                <Tiermessage fontsize={'0.8rem'}>
+                                    깨진 씨앗
+                                </Tiermessage>
+                                <Tiermessage fontsize={'0.6rem'}>
+                                    20°C ~ 30°C
+                                </Tiermessage>
+                            </FlexRow>
                         </TierContent>
                     </ListItem>
-                    <ListItem button className ={classes.CList}>
+                    <ListItem button className={classes.CList}>
                         <TierContent>
                             <TierImg>
                                 <img src={tier_zero} />
                             </TierImg>
-                            <Tiermessage>
-                                씨앗
-                            </Tiermessage>
+                            <FlexRow>
+                                <Tiermessage fontsize={'0.8rem'}>
+                                    씨앗
+                                </Tiermessage>
+                                <Tiermessage fontsize={'0.6rem'}>
+                                    30°C ~ 40°C
+                                </Tiermessage>
+                            </FlexRow>
                         </TierContent>
                     </ListItem>
-                    <ListItem button className ={classes.CList}>
+                    <ListItem button className={classes.CList}>
                         <TierContent>
                             <TierImg>
                                 <img src={tier_plus1} />
                             </TierImg>
-                            <Tiermessage>
-                                새싹
-                            </Tiermessage>
+                            <FlexRow>
+                                <Tiermessage fontsize={'0.8rem'}>
+                                    새싹
+                                </Tiermessage>
+                                <Tiermessage fontsize={'0.6rem'}>
+                                    40°C ~ 50°C
+                                </Tiermessage>
+                            </FlexRow>
                         </TierContent>
                     </ListItem>
                 </List>

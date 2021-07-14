@@ -19,7 +19,7 @@ const Label = styled.label`
 `;
 
 function Select(props) {
-  const { label, name, options, ...rest } = props;
+  const { blockSubmit, label, name, options, ...rest } = props;
   return (
     <div className="formik-control">
       <InputLabel htmlFor={name}>
