@@ -30,7 +30,7 @@ const RadioLabel = styled.label`
 `;
 
 function RadioButtons(props) {
-  const { label, name, options, ...rest } = props;
+  const { label, name, options, blockSubmit, ...rest } = props;
   return (
     <div className="formik-container">
       <InputLabel>
@@ -43,11 +43,11 @@ function RadioButtons(props) {
               <React.Fragment key={option.key}>
                 <RadioButton
                   type="radio"
-                  id={option.value}
+                  id={blockSubmit ? "" : option.value}
                   {...field}
                   {...rest}
-                  value={option.value}
-                  checked={field.value === option.value}
+                  value={blockSubmit ? "" : option.value}
+                  checked={blockSubmit ? false : field.value === option.value}
                 />
                 <RadioLabel htmlFor={option.value}>{option.key}</RadioLabel>
               </React.Fragment>
