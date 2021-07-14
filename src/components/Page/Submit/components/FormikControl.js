@@ -6,14 +6,15 @@ import RadioButtons from "./RadioButtons";
 // import CheckboxGroup from "./CheckboxGroup";
 
 function FormikControl(props) {
-  const { control, ...rest } = props;
+  const { blockSubmit, control, ...rest } = props;
+
   switch (control) {
     // case "input":
     //   return <Input {...rest} />;
     case "select":
-      return <Select {...rest} />;
+      return <Select blockSubmit={blockSubmit} {...rest} />;
     case "radio":
-      return <RadioButtons {...rest} />;
+      return <RadioButtons blockSubmit={blockSubmit} {...rest} />;
     // case "checkbox":
     //   return <CheckboxGroup {...rest} />;
     default:

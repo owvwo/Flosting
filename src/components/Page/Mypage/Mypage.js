@@ -15,6 +15,8 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import { Redirect } from 'react-router-dom';
 import fire from '../Register/LoginFire'
 import MyInfo from './MyInfo'
+import MySetting from './MySetting';
+import MyUsage_History from './MyUsage_History/Usage_main'
 
 
 const Colortheme = createMuiTheme({
@@ -77,6 +79,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const FullWidthTabs = () => {
+
     const user = fire.auth().currentUser;
 
     const classes = useStyles();
@@ -121,10 +124,14 @@ const FullWidthTabs = () => {
                             </MyInfo>
                         </TabPanel>
                         <TabPanel value={value} index={1} dir={theme.direction}>
-                            Item Two
+                            <MySetting user = {user}>
+
+                            </MySetting>
                         </TabPanel>
                         <TabPanel value={value} index={2} dir={theme.direction}>
-                            Item Three
+                            <MyUsage_History user = {user}>
+                                
+                            </MyUsage_History>
                         </TabPanel>
                     </SwipeableViews>
                 </Container>

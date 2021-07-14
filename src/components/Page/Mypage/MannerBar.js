@@ -1,5 +1,6 @@
 import React, { Component, useState, useEffect } from 'react';
 import styled from 'styled-components';
+import Fade from 'react-reveal/Fade';
 
 const Container = styled.div`
     display: flex;
@@ -20,11 +21,10 @@ const NowMannerBar = styled.div`
     width: ${props => props.temperature + '%'};
 `
 
-const MannerBar = () => {
-
+const MannerBar = (props) => {
+    const {Manner} = props
     const [open, setOpen] = useState(false);
 
-    const nowtemp = 36.5;
 
     const handleClick = () => {
         setOpen(!open);
@@ -34,9 +34,11 @@ const MannerBar = () => {
     return (
         <Container>
             <BackgroundBar>
-                <NowMannerBar temperature = {36.5}>
+                <Fade left>
+                <NowMannerBar temperature = {Manner}>
 
                 </NowMannerBar>
+                </Fade>
             </BackgroundBar>
         </Container>
     );

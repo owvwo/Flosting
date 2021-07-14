@@ -4,11 +4,11 @@ import Popper from '@material-ui/core/Popper';
 import Fade from '@material-ui/core/Fade';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import MannerTierList from './MannerTierList';
-import MannerBar from './MannerBar';
-
+import tier_mi1 from '../../../images/tier_mi1.png';
+import tier_zero from '../../../images/tier_zero.png';
+import tier_plus1 from '../../../images/tier_plus1.png';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -27,8 +27,7 @@ const MannerContainer = styled.div`
 const RowFlexBox = styled.div`
     display: flex;
     flex-direction: row;
-    justify-content : space-between;
-
+    align-items: flex-end;
 `
 const Box_content = styled.div`
     list-style: none;
@@ -47,13 +46,45 @@ const MannerBox = styled.button`
 const NowTemperature = styled.div`
     list-style: none;
     display :flex;
+    align-items : center;
+    justify-content : flex-end;
+    width: 100%
+`
+const TierBox = styled.div`
+    margin-top: 10px;
+    width : 6rem;
+    height : 6rem;
+    border : 1px solid rgb(0,0,0,0.1);
+        img{
+            width : 6rem;
+            height : 6rem;
+        }
+`
+const TierNameBox = styled.div`
+    display:flex;
     justify-content : center;
     align-items : center;
-    
+    margin-top: 10px;
+    width : 6rem;
+    height : 3rem;
 `
 
+const Tiermessage = styled.div`
+    margin-top: 10px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: ${props => props.fontsize};
+    display: flex;
+    align-items: center;
+    color : rgb(0, 0, 0, 0.7);
+    a{
+        color : rgb(0, 0, 0, 0.9);
+        font-weight : 700;
+        font-size: ${props => props.fontsize};
+    }
+`;
+
 const MannerInfo = (props) => {
-    const {Manner} = props
+    const {Manner, NextTier} = props
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -65,35 +96,33 @@ const MannerInfo = (props) => {
 
     return (
         <MannerContainer>
-            <RowFlexBox>
             <MannerBox onClick={handleClick} >
-                매너온도
+                티어
             </MannerBox>
-            <NowTemperature>
-                <li>{Manner + '°C'} </li>
-            </NowTemperature>
-            </RowFlexBox>
             <Popper className = {classes.paper} open={open} anchorEl={anchorEl} transition>
                 {({ TransitionProps }) => (
                     <Fade {...TransitionProps} timeout={350}>
                         <Card>
                             <CardContent>
                                 <Box_content>
-                                    <li>매너온도는 플로스팅 이용 후 상대방으로부터 받은 후기를 종합해서 만든 매너 지표입니다.</li>
-                                    <li>온도에 따른 티어를 확인해보세요!</li>
+                                    <li>매너온도에 따라 티어가 변경됩니다!</li>
                                 </Box_content>
-                                <MannerTierList>
-
-                                </MannerTierList>
                             </CardContent>
                         </Card>
                     </Fade>
                 )}
             </Popper>
-            <MannerBar Manner = {Manner}>
-
-            </MannerBar>
-
+        <RowFlexBox>
+        <TierBox>
+            <img src={tier_zero} />
+        </TierBox>
+        <TierNameBox>
+            씨앗
+        </TierNameBox>
+        </RowFlexBox>
+        <Tiermessage fontsize={'0.8rem'}>
+            다음승급까지&nbsp; <a>{NextTier}°C</a> &nbsp;남았습니다.
+        </Tiermessage>
         </MannerContainer>
     );
 };
