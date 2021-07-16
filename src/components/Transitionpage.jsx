@@ -14,28 +14,15 @@ import Register_page from './Page/Register/Register'
 import Terms_page from './Page/Register/Terms'
 import LastRegister_page from './Page/Register/LastRegister'
 import My_page from './Page/Mypage/Mypage'
-import fire from './Page/Register/LoginFire'
-<<<<<<< HEAD
-<<<<<<< HEAD
 import CurrentEvent from "./Page/CurrentEvent";
 import 건대 from "./Page/건대.js"
 import Alarm from "./Page/Alarm";
-=======
+import SelectResult from '../components/Page/Matched/SelectResult.js';
+import LilacResult from '../components/Page/Matched/LilacResult.js';
+import CloverResult from '../components/Page/Matched/CloverResult.js';
+import DasiyResult from '../components/Page/Matched/DasiyResult.js';
 
-=======
-import ShowingResult from './Page/Matched/ShowingResult'
->>>>>>> f2ed8beea582aa98a465c7b8e4771662fc8b9e50
-import CurrentEvent from "./Page/CurrentEvent";
-import 건대 from "./Page/건대.js"
-import Alarm from "./Page/Alarm";
-
-
-<<<<<<< HEAD
->>>>>>> c6f19f288697c8db7b4d99a91867993370cfbc47
-const Transition = () => {
-=======
 const Transition = (props) => {
->>>>>>> f2ed8beea582aa98a465c7b8e4771662fc8b9e50
 
   const [auth_regis, set_auth_regis] = useState(false);
   const [S_num, set_S_num] = useState("");
@@ -62,7 +49,10 @@ const Transition = (props) => {
           <Route path="/about" component={About_page} />
           <Route path="/history" component={History_page} />
           <Route path="/ad" component={AD_page} />
-          <Route path="/showingresult"><ShowingResult User = {user}/></Route>
+          <Route path="/selectresult"><SelectResult User = {user}/></Route>
+          <Route path="/lilacresult"><LilacResult User = {user}/></Route>
+          <Route path="/cloverresult"><CloverResult User = {user}/></Route>
+          <Route path="/daisyresult"><DasiyResult User = {user}/></Route>
           <Route path="/my"><My_page User = {user} /></Route>
           <Route exact path="/register" render={props => (
             <Register_page

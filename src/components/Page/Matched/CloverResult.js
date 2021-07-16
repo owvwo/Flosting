@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import firebase from '../Register/LoginFire.js'
 
-import Footer from '../Footer';
 import StageZero from './StageZero.js';
 import StageHalf from './StageHalf.js';
 import StageSuccess from './StageSuccess.js';
+import ReceivePerson from './ReceivePerson.js'
 
 
 
-function ShowingResult(props){
+function CloverResult(props){
     const db = firebase.firestore()
     const user = props.User;
 
@@ -22,6 +22,8 @@ function ShowingResult(props){
     let [유저1, 유저1변경] = useState('');
     let [유저2, 유저2변경] = useState('');
     let [몇회차,몇회차변경] = useState();
+    let [컬렉션, 컬렉션변경] = useState();
+    let [문서번호,문서번호변경] = useState();
 
     useEffect(()=>{
         if(user){
@@ -55,7 +57,8 @@ function ShowingResult(props){
         })
 
         Promise.all([promise_닉네임,promise_몇회차]).then((value) => {
-            const collectionName = String(value[1]) 
+            const collectionName = String(value[1]+'clover') 
+            컬렉션변경(collectionName)
             const Nickname = value[0]
 
             console.log(Nickname)
@@ -66,6 +69,7 @@ function ShowingResult(props){
             .then((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
                     console.log(doc.data());
+                    문서번호변경(doc.id)
                     유저1변경(doc.data()['userOne'])
                     유저2변경(doc.data()['userTwo'])
                     발전단계변경(doc.data()['stage'])
@@ -81,6 +85,8 @@ function ShowingResult(props){
                 .then((querySnapshot)=>{
                     querySnapshot.forEach((doc)=>{
                         console.log(doc.data());
+                        console.log(doc.id)
+                        문서번호변경(doc.id)
                         유저1변경(doc.data()['userOne'])
                         유저2변경(doc.data()['userTwo'])
                         발전단계변경(doc.data()['stage'])
@@ -98,67 +104,51 @@ function ShowingResult(props){
     
     return(
         <div>
+            {/* 신청 안한 사람한테 보여지는 화면 */}
             {
-                발전단계 === 'zero' && <StageZero 유저1={유저1} 유저2={유저2}/>
+                발전단계 === '' && <div>신청 안했자나</div>
             }
 
+            {/* 초기화면 */}
             {
-                발전단계 === 'half' && <StageHalf/>
+                발전단계 === 'zero' 
+                && <StageZero 
+                    유저1={유저1} 
+                    유저2={유저2} 
+                    컬렉션={컬렉션} 
+                    문서번호={문서번호}
+                    닉네임={닉네임}/>
             }
+
+            {/* 메세지를 먼저 보낸사람한테 보여지는 화면 */}
+            {
+                발전단계 === 'half' && 메세지보낸사람 === 닉네임
+                && <StageHalf 
+                    유저1={유저1}  
+                    유저2={유저2} 
+                    컬렉션={컬렉션} 
+                    문서번호={문서번호} 
+                    닉네임={닉네임}
+                    메세지보낸사람={메세지보낸사람}/>
+            }
+
+            {/* 메세지를 먼저 받은 사람한테 보여지는 화면 */}
+            {
+                발전단계 === 'half' && 메세지보낸사람 != 닉네임
+                && <ReceivePerson 
+                    유저1={유저1}  
+                    유저2={유저2} 
+                    컬렉션={컬렉션} 
+                    문서번호={문서번호} 
+                    닉네임={닉네임}
+                    메세지보낸사람={메세지보낸사람}/>
+            }
+
+            {/* 매칭 성공 화면 */}
             {
                 발전단계 === 'success' && <StageSuccess/>
             }
         </div>
     )
 }
-export default ShowingResult;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // function 닉네임호출(){
-    //     db.collection("회원정보").where("ID", "==", 유저아이디)
-    //     .get()
-    //     .then((querySnapshot) => {
-    //         querySnapshot.forEach((doc) => {
-    //             console.log(doc.id, " => ", doc.data()['User']['Nick']);
-    //             유저닉네임 = doc.data()['User']['Nick']
-    //         });
-    //     })
-    //     .catch((error) => {
-    //         console.log("Error getting documents: ", error);
-    //     });
-    // }
-
-
-
-    // const promise = new Promise((resolve, reject) => {
-    //     db.collection("회원정보").where("ID", "==", '32164205')
-    //     .get()
-    //     .then((querySnapshot) => {
-    //         querySnapshot.forEach((doc) => {
-    //             닉네임변경(doc.data()['User']['Nick'])
-    //         });
-    //     })
-    //         resolve(닉네임);
-    // })
-    // promise.then((닉네임) => {
-    //     db.collection("매칭결과").where("userOne.Nick", "==", 닉네임)
-    //     .get()
-    //     .then((querySnapshot) => {
-    //         querySnapshot.forEach((doc) => {
-    //             console.log(doc.data());
-    //         });
-    //     })
-    // })
+export default CloverResult;

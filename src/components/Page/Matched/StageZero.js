@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-// import { useSpring, animated } from 'react-spring'
+import { useSpring, animated } from 'react-spring'
 import Footer from '../Footer';
 import TimerComponent from './Timer.js'
 import fire from '../Register/LoginFire.js'
@@ -16,7 +16,11 @@ flex-direction: column;
     }
 `
 
-const TimerWrap = styled.div``
+const TimerWrap = styled.div`
+text-align: center;
+color: red;
+margin-top: 1rem;
+`
 
 const TitleWrap = styled.div`
 color: white;
@@ -24,7 +28,7 @@ background-color: grey;
 width: 20rem;
 font-size : 2rem;
 text-align : center;
-margin-top: 2rem;
+margin-top: 1rem;
 font-weight : bolder
 `
 const LeftProfileWrap = styled.div`
@@ -95,57 +99,37 @@ background-color: red;
 `
 
 
-function ResultInit(){
-
-    let[결정상태,결정상태변경] = useState('결정중');
-    let[연락상태, 연락상태변경] = useState(false);
-    let[매칭진행단계, 매칭진행단계변경] = useState('초기상태');
-    useEffect(()=>{
-        db.collection('매칭결과').add(
-            {
-                userOne : {
-                    Nick: '왕발',
-                    Age : 25,
-                    Univ : 'dku',
-                    Phone : '01099202603',
-                    Manner : 36.5,
-                },
-                userTwo : {
-                    Nick: '미나',
-                    Age : 26,
-                    Univ : 'dku',
-                    Phone : '01038555555',
-                    Manner : 38.5,
-                },
-                stage : 'zero',
-                메세지보낸사람 : '',
-                거절한사람 : ''
-
-            }
-        ).then(()=>{
-            alert('알림 신청이 완료되었습니다!')
-        })
-
-    },[])
+function StageZero(props){
+    const 유저1 = props.유저1
+    const 유저2 = props.유저2
+    const 닉네임 = props.닉네임
+    const 발전단계 = props.발전단계
+    const 발전단계변경 = props.발전단계변경
+    const 남은시간 = props.남은시간
+    const 메세지보낸사람 = props.메세지보낸사람
 
     return(
         <Container>
-            <TimerComponent/>
+            <Timer/>
             <Title/>
             <div className='ProfileWrap'>
-                <LeftProfile 결정상태={결정상태}/>
-                <RightProfile />
+                <LeftProfile 유저1={유저1} />
+                <RightProfile 유저2={유저2}/>
             </div>
-            <Button 연락상태변경={연락상태변경} 매칭진행단계변경={매칭진행단계변경}/>
+            <Button 컬렉션={props.컬렉션} 문서번호={props.문서번호} 닉네임={props.닉네임}/>
             <Footer/>
         </Container>
     )
 }
-export default ResultInit;
+export default StageZero;
 
 function Timer(){
     return(
         <TimerWrap>
+            <div>
+                플로스팅 종료까지
+            </div>
+            <TimerComponent/>
         </TimerWrap>
     )
 }
@@ -158,51 +142,63 @@ function Title(){
     )
 }
 
-function LeftProfile({결정상태}){
+function LeftProfile({유저1}){
     return(
             <LeftProfileWrap>
-                <div>{결정상태}</div>
+                <div>결정중</div>
                 <div className='defaultPic'></div>
                 <div className='profileInfo'>
-                    로그인 한 사람<br/>
-                    이름(나이)<br/>
-                    학교<br/>
-                    전화번호<br/>
+                    {유저1['Nick']}({유저1['Age']})<br/>
+                    {유저1['Univ']}<br/>
+                    {유저1['Manner']}<br/>
+                    {유저1['Phone']}<br/>
+
                 </div>
             </LeftProfileWrap>
     )
 }
 
-function RightProfile(){
+function RightProfile({유저2}){
     return(
         <RightProfileWrap>
             <div>결정중</div>
             <div className='defaultPic'></div>
             <div className='profileInfo'>
-                로그인 한 사람과 <br/>
-                매칭된 사람(나이)<br/>
-                학교<br/>
-                전화번호<br/>
+                {유저2['Nick']}({유저2['Age']})<br/>
+                {유저2['Univ']}<br/>
+                {유저2['Manner']}<br/>
+                {유저2['Phone']}<br/>
             </div>
         </RightProfileWrap>
     )
 }
 
-function Button({연락상태변경, 매칭진행단계변경}){
+function Button(props){
     function onClick_sendMessage(){
         const result = window.confirm('정말로 먼저 연락을 보내셨나요?');
         if(result){
-            연락상태변경(true);
-            매칭진행단계변경('')
+            // console.log(props.컬렉션)
+            // console.log(props.닉네임)
+            db.collection(props.컬렉션).doc(props.문서번호).update({
+                stage: 'half'
+            })
+            db.collection(props.컬렉션).doc(props.문서번호).update({
+                메세지보낸사람: props.닉네임
+            })
             alert('용기있는 당신 매너온도가 상승했습니다!')
-        }else{연락상태변경(false)}
+        }else{}
     }
     function onClick_refuse(){
-        const result = window.confirm('정말로 거절하실건가요? 매너온도가 차감됩니다.');
+        const result = window.confirm('정말로 거절하실건가요?');
         if(result){
-            연락상태변경(true)
-            alert('매칭을 거절하셨습니다. 매너온도가 차감되었습니다.')
-        }else{연락상태변경(false)}
+            db.collection(props.컬렉션).doc(props.문서번호).update({
+                stage: 'end'
+            })
+            db.collection(props.컬렉션).doc(props.문서번호).update({
+                거절한사람: props.닉네임
+            })
+            alert('매칭을 거절하셨습니다.')
+        }else{}
     }
 
     return(
@@ -219,24 +215,29 @@ function Button({연락상태변경, 매칭진행단계변경}){
 
 
 
+        // db.collection('7daisy').add(
+        //     {
+        //         userOne : {
+        //             Nick: '테스트일번',
+        //             Gender: 'boy',
+        //             Age : 25,
+        //             Univ : '단국대학교 죽전캠퍼스',
+        //             Phone : '01099202603',
+        //             Manner : 36.5,
+        //         },
+        //         userTwo : {
+        //             Nick: '테스트이번',
+        //             Gender: 'girl',
+        //             Age : 26,
+        //             Univ : '강남대학교',
+        //             Phone : '01038555555',
+        //             Manner : 38.5,
+        //         },
+        //         stage : 'zero',
+        //         메세지보낸사람 : '',
+        //         거절한사람 : ''
 
-
-// function LoopObject() {
-//     // const styles = useSpring({
-//     //   loop: { reverse: true },
-//     //   from: { x: 0 },
-//     //   to: { x: 100 },
-//     // })
-  
-//     return (
-//       <animated.div
-//         style={{
-//           width: 80,
-//           height: 80,
-//           backgroundColor: '#46e891',
-//           borderRadius: 16,
-//           ...styles,
-//         }}
-//       />
-//     )
-//   }
+        //     }
+        // ).then(()=>{
+        //     alert('알림 신청이 완료되었습니다!')
+        // })

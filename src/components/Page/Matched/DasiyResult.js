@@ -2,14 +2,13 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import firebase from '../Register/LoginFire.js'
 
-import Footer from '../Footer';
 import StageZero from './StageZero.js';
 import StageHalf from './StageHalf.js';
 import StageSuccess from './StageSuccess.js';
 
 
 
-function ShowingResult(props){
+function DasiyResult(props){
     const db = firebase.firestore()
     const user = props.User;
 
@@ -55,7 +54,7 @@ function ShowingResult(props){
         })
 
         Promise.all([promise_닉네임,promise_몇회차]).then((value) => {
-            const collectionName = String(value[1]) 
+            const collectionName = String(value[1]+'daisy') 
             const Nickname = value[0]
 
             console.log(Nickname)
@@ -99,6 +98,10 @@ function ShowingResult(props){
     return(
         <div>
             {
+                발전단계 === '' && <div>신청 안했자나</div>
+            }
+
+            {
                 발전단계 === 'zero' && <StageZero 유저1={유저1} 유저2={유저2}/>
             }
 
@@ -111,54 +114,4 @@ function ShowingResult(props){
         </div>
     )
 }
-export default ShowingResult;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // function 닉네임호출(){
-    //     db.collection("회원정보").where("ID", "==", 유저아이디)
-    //     .get()
-    //     .then((querySnapshot) => {
-    //         querySnapshot.forEach((doc) => {
-    //             console.log(doc.id, " => ", doc.data()['User']['Nick']);
-    //             유저닉네임 = doc.data()['User']['Nick']
-    //         });
-    //     })
-    //     .catch((error) => {
-    //         console.log("Error getting documents: ", error);
-    //     });
-    // }
-
-
-
-    // const promise = new Promise((resolve, reject) => {
-    //     db.collection("회원정보").where("ID", "==", '32164205')
-    //     .get()
-    //     .then((querySnapshot) => {
-    //         querySnapshot.forEach((doc) => {
-    //             닉네임변경(doc.data()['User']['Nick'])
-    //         });
-    //     })
-    //         resolve(닉네임);
-    // })
-    // promise.then((닉네임) => {
-    //     db.collection("매칭결과").where("userOne.Nick", "==", 닉네임)
-    //     .get()
-    //     .then((querySnapshot) => {
-    //         querySnapshot.forEach((doc) => {
-    //             console.log(doc.data());
-    //         });
-    //     })
-    // })
+export default DasiyResult;
