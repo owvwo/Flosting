@@ -16,35 +16,32 @@ import LastRegister_page from './Page/Register/LastRegister'
 import My_page from './Page/Mypage/Mypage'
 import fire from './Page/Register/LoginFire'
 <<<<<<< HEAD
+<<<<<<< HEAD
 import CurrentEvent from "./Page/CurrentEvent";
 import 건대 from "./Page/건대.js"
 import Alarm from "./Page/Alarm";
 =======
 
+=======
+import ShowingResult from './Page/Matched/ShowingResult'
+>>>>>>> f2ed8beea582aa98a465c7b8e4771662fc8b9e50
 import CurrentEvent from "./Page/CurrentEvent";
 import 건대 from "./Page/건대.js"
 import Alarm from "./Page/Alarm";
 
 
+<<<<<<< HEAD
 >>>>>>> c6f19f288697c8db7b4d99a91867993370cfbc47
 const Transition = () => {
+=======
+const Transition = (props) => {
+>>>>>>> f2ed8beea582aa98a465c7b8e4771662fc8b9e50
 
   const [auth_regis, set_auth_regis] = useState(false);
   const [S_num, set_S_num] = useState("");
   const [S_name, set_S_name] = useState("");
-  const [user, setUser] = useState('');
 
-
-  const authListener = () => {
-    fire.auth().onAuthStateChanged((user) => {
-        if(user){
-            setUser(user);
-        }else{
-            setUser("");
-        }
-    });
-  };
-
+  const user = props.User;
   const location = useLocation();
 
   return (
@@ -59,13 +56,14 @@ const Transition = () => {
           <Route exact path="/currentevent/event3" component={건대} />
           <Route exact path="/currentevent/event4" component={건대} />
           <Route path="/login" component={Login_page} />
-          <Route path="/submit" component={Submit_page} />
+          <Route path="/submit"><Submit_page User = {user}/></Route>
           <Route path="/confirm" component={Confirm_page} />
           <Route path="/account" component={Account_page} />
           <Route path="/about" component={About_page} />
           <Route path="/history" component={History_page} />
           <Route path="/ad" component={AD_page} />
-          <Route path="/my" component ={My_page} />
+          <Route path="/showingresult"><ShowingResult User = {user}/></Route>
+          <Route path="/my"><My_page User = {user} /></Route>
           <Route exact path="/register" render={props => (
             <Register_page
               S_num = {S_num}
@@ -87,7 +85,6 @@ const Transition = () => {
               S_num={S_num}
               S_name={S_name}
               user = {user}
-              authListener = {authListener}
               {...props} />
           )} />
         </Switch>

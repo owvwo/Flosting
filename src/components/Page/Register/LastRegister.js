@@ -134,7 +134,7 @@ const Error_message = styled.div`
     font-size: 0.5rem;
     color: ${props => props.limitnum ? '#00AB6F' : '#EF0C00'};
 `
-const Error_message_Password= styled.div`
+const Error_message_Password = styled.div`
     margin-left : 0.2rem;
     font-size: 0.5rem;
     color: ${props => props.limitnum ? (props.limitnum_C ? '#00AB6F' : '#F55C29') : '#EF0C00'};
@@ -144,7 +144,7 @@ const Error_message_Password= styled.div`
 
 const LastRegister = (props) => {
 
-    const { auth_regis, S_name, S_num, user, authListener } = props
+    const { auth_regis, S_name, S_num, user} = props
     const email = S_num + "@flosting.com";
     const [password, setPassword] = useState(''); // 패스워드
     const [password2, setPassword2] = useState(''); //패스워드 확인
@@ -162,6 +162,17 @@ const LastRegister = (props) => {
     const [canNext, setcanNext] = useState(true); //다음으로 갈 수 있는지 체크해주는 변수
     const db = fire.firestore();
 
+    let DBForm = {
+        ID: "",
+        User: {
+            Age: "",
+            Gender: "",
+            Manner: "",
+            Nick: "",
+            Phone: "",
+            Univ: ""
+        }
+    }
     const clearErrors = () => {
         setPasswordError('');
     }
@@ -207,16 +218,16 @@ const LastRegister = (props) => {
     }
     const handlerePassChange = (e) => {
         if (e.target.value.length > 20) //글자수 제한
-        e.target.value = e.target.value.slice(0, 20);
+            e.target.value = e.target.value.slice(0, 20);
         setPassword2(e.target.value);
 
         if ((e.target.value).length == 0) {
             setrepasswordError("패스워드를 입력해주세요.");
             setcorrespass(false);
-        }else if ((e.target.value) == password){
+        } else if ((e.target.value) == password) {
             setrepasswordError("패스워드 일치!");
             setcorrespass(true);
-        }else{
+        } else {
             setrepasswordError("패스워드 불일치!");
             setcorrespass(false);
         }
@@ -229,14 +240,14 @@ const LastRegister = (props) => {
         if ((e.target.value).length == 0) {
             setPasswordError("패스워드를 입력해주세요.");
             setlimitpassword(false);
-        }else if((e.target.value).length <6){
+        } else if ((e.target.value).length < 6) {
             setPasswordError("글자 부족!");
             setlimitpassword(false);
-        }else if((e.target.value).length <10){
+        } else if ((e.target.value).length < 10) {
             setPasswordError("안전");
             setlimitpassword(true);
             setlimitpassword_C(false);
-        }else if((e.target.value).length <20){
+        } else if ((e.target.value).length < 20) {
             setPasswordError("매우 안전");
             setlimitpassword_C(true);
         }
@@ -255,7 +266,7 @@ const LastRegister = (props) => {
             setlimitnick(false);
         }
         if ((e.target.value).length >= 2) {
-            
+
             setlimitnickmessage("중복 확인 버튼을 눌러주세요!");
         }
         else if ((e.target.value).length == 0) {
@@ -270,7 +281,7 @@ const LastRegister = (props) => {
         fire
             .auth()
             .createUserWithEmailAndPassword(email, password)
-            .then((user) =>{
+            .then((user) => {
                 saveDB();
             })
             .catch(err => {
@@ -285,35 +296,37 @@ const LastRegister = (props) => {
                 }
             });
     }
-    
-    const saveDB = () =>{
+
+    const saveDB = () => {
+        DBForm.ID = S_num;
+        DBForm.User.Age = 20;
+        DBForm.User.Gender = "boy";
+        DBForm.User.Manner = 36.5;
+        DBForm.User.Nick = nickname;
+        DBForm.User.Phone = "01099999999"
+        DBForm.User.Univ = S_name;
+
         fire
-        .firestore()
-        .collection("회원정보")
-        .add({
-            ID: S_num,
-            Password: password,
-            School_name: S_name,
-            Nickname: nickname
-        })
-        .then(() => {
+            .firestore()
+            .collection("회원정보")
+            .add({
+                ID: DBForm.ID,
+                User: DBForm.User
+            })
+            .then(() => {
 
-        })
-        .catch((error) => {
-            alert(error.message);
-        });
+            })
+            .catch((error) => {
+                alert(error.message);
+            });
     }
-
-    useEffect(() => {
-        authListener();
-    }, []);
 
 
     if (!auth_regis) { return (<Redirect to='/register' />); }
     else {
         if (user) {
             return (
-                <SuccessRegister ID = {S_num} Nickname = {nickname} School_name = {S_name}>
+                <SuccessRegister ID={S_num} Nickname={nickname} School_name={S_name}>
 
                 </SuccessRegister>
             );
@@ -321,106 +334,106 @@ const LastRegister = (props) => {
         else {
             return (
                 <ThemeProvider theme={Colortheme}>
-                <Container>
-                    <h1>
-                        플로스팅 회원가입
-                    </h1>
-                    <Nicname_content>
-                        <School_title>
-                            닉네임
-                        </School_title>
-                        <School_content>
-                            ※ 한글과 영어로 이루어진 문자열로, 2~6글자로 설정해주세요.
-                        </School_content>
-                        <InputDiv>
-                        <Input
-                            overlap = {overlap}
-                            limitnum = {limitnick}
-                            placeholder="닉네임 입력"
-                            type="text"
-                            required
-                            value={nickname}
-                            onChange={handleNicChange}
-                        />
-                        <Overlapbtn overlap={overlap} onClick={handleoverlap} disabled = {overlap}>
-                            중복 확인
-                        </Overlapbtn>
-                        </InputDiv>
-                        <Error_message limitnum={limitnick}>
-                        {limitnickmessage}
-                        </Error_message>
-                        <Dialog
-                            open={open}
-                            onClose={() => setOpen(false)}
-                            aria-labelledby="responsive-dialog-title"
-                        >
-                            <DialogTitle id="responsive-dialog-title">{nickname}</DialogTitle>
-                            <DialogContent>
-                                <DialogContentText>
-                                    위 닉네임으로 설정하시겠습니까?
-                                </DialogContentText>
-                            </DialogContent>
-                            <DialogActions>
-                                <Button variant="contained" autoFocus onClick={overlapOk} color="primary">
-                                    확인
-                                </Button>
-                                <Button variant="outlined" onClick={() => setOpen(false)} color="primary" autoFocus>
-                                    취소
-                                </Button>
-                            </DialogActions>
-                        </Dialog>
-                        <Dialog
-                            open={open2}
-                            onClose={() => setOpen2(false)}
-                            aria-labelledby="responsive-dialog-title"
-                        >
-                            <DialogTitle id="responsive-dialog-title">{nickname}</DialogTitle>
-                            <DialogContent>
-                                다음 닉네임은 이미 사용중이네요!
-                            </DialogContent>
-                            <DialogActions>
-                                <Button variant="contained" autoFocus onClick={() => setOpen2(false)} color="primary">
-                                    확인
-                                </Button>
-                            </DialogActions>
-                        </Dialog>
-                    </Nicname_content>
-                    <Password_content>
-                        <School_title>
-                            비밀번호
-                        </School_title>
-                        <School_content>
-                            ※ 최소 6글자 이상 문자로 이루어진 문자열로 입력해주세요.
-                        </School_content>
-                        <Input_password
-                            placeholder="비밀번호 입력"
-                            type="password"
-                            required
-                            value={password}
-                            onChange={handlePassChange}
-                        />
-                        <Error_message_Password limitnum_C = {limitpassword_C} limitnum = {limitpassword}>
-                        {passwordError}
-                        </Error_message_Password>
-                        <School_title>
-                            비밀번호 확인
-                        </School_title>
-                        <Input_password
-                            placeholder="비밀번호 재입력"
-                            type="password"
-                            required
-                            value={password2}
-                            onChange={handlerePassChange}
-                        />
-                        <Error_message limitnum = {correspass}>
-                        {repasswordError}
-                        </Error_message>
+                    <Container>
+                        <h1>
+                            플로스팅 회원가입
+                        </h1>
+                        <Nicname_content>
+                            <School_title>
+                                닉네임
+                            </School_title>
+                            <School_content>
+                                ※ 한글과 영어로 이루어진 문자열로, 2~6글자로 설정해주세요.
+                            </School_content>
+                            <InputDiv>
+                                <Input
+                                    overlap={overlap}
+                                    limitnum={limitnick}
+                                    placeholder="닉네임 입력"
+                                    type="text"
+                                    required
+                                    value={nickname}
+                                    onChange={handleNicChange}
+                                />
+                                <Overlapbtn overlap={overlap} onClick={handleoverlap} disabled={overlap}>
+                                    중복 확인
+                                </Overlapbtn>
+                            </InputDiv>
+                            <Error_message limitnum={limitnick}>
+                                {limitnickmessage}
+                            </Error_message>
+                            <Dialog
+                                open={open}
+                                onClose={() => setOpen(false)}
+                                aria-labelledby="responsive-dialog-title"
+                            >
+                                <DialogTitle id="responsive-dialog-title">{nickname}</DialogTitle>
+                                <DialogContent>
+                                    <DialogContentText>
+                                        위 닉네임으로 설정하시겠습니까?
+                                    </DialogContentText>
+                                </DialogContent>
+                                <DialogActions>
+                                    <Button variant="contained" autoFocus onClick={overlapOk} color="primary">
+                                        확인
+                                    </Button>
+                                    <Button variant="outlined" onClick={() => setOpen(false)} color="primary" autoFocus>
+                                        취소
+                                    </Button>
+                                </DialogActions>
+                            </Dialog>
+                            <Dialog
+                                open={open2}
+                                onClose={() => setOpen2(false)}
+                                aria-labelledby="responsive-dialog-title"
+                            >
+                                <DialogTitle id="responsive-dialog-title">{nickname}</DialogTitle>
+                                <DialogContent>
+                                    다음 닉네임은 이미 사용중이네요!
+                                </DialogContent>
+                                <DialogActions>
+                                    <Button variant="contained" autoFocus onClick={() => setOpen2(false)} color="primary">
+                                        확인
+                                    </Button>
+                                </DialogActions>
+                            </Dialog>
+                        </Nicname_content>
+                        <Password_content>
+                            <School_title>
+                                비밀번호
+                            </School_title>
+                            <School_content>
+                                ※ 최소 6글자 이상 문자로 이루어진 문자열로 입력해주세요.
+                            </School_content>
+                            <Input_password
+                                placeholder="비밀번호 입력"
+                                type="password"
+                                required
+                                value={password}
+                                onChange={handlePassChange}
+                            />
+                            <Error_message_Password limitnum_C={limitpassword_C} limitnum={limitpassword}>
+                                {passwordError}
+                            </Error_message_Password>
+                            <School_title>
+                                비밀번호 확인
+                            </School_title>
+                            <Input_password
+                                placeholder="비밀번호 재입력"
+                                type="password"
+                                required
+                                value={password2}
+                                onChange={handlerePassChange}
+                            />
+                            <Error_message limitnum={correspass}>
+                                {repasswordError}
+                            </Error_message>
 
-                    </Password_content>
-                    <RegButton onClick={handleSignUp} register disabled = {canNext}>
-                        회원가입 완료
-                    </RegButton>
-                </Container>
+                        </Password_content>
+                        <RegButton onClick={handleSignUp} register disabled={canNext}>
+                            회원가입 완료
+                        </RegButton>
+                    </Container>
                 </ThemeProvider>
             );
         }
