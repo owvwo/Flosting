@@ -15,10 +15,12 @@ import Register_page from './Page/Register/Register'
 import Terms_page from './Page/Register/Terms'
 import LastRegister_page from './Page/Register/LastRegister'
 import My_page from './Page/Mypage/Mypage'
-import fire from './Page/Register/LoginFire'
 import ShowingResult from './Page/Matched/ShowingResult'
-import CurrentEvent from "./Page/CurrentEvent";
-import 건대 from "./Page/건대.js"
+import CurrentEvent from "./Page/CurrentEvent/CurrentEvent";
+import EP1 from "./Page/CurrentEvent/EP1.js"
+import EP2 from "./Page/CurrentEvent/EP2.js"
+import EP3 from "./Page/CurrentEvent/EP3.js"
+import EP4 from "./Page/CurrentEvent/EP4.js"
 import Alarm from "./Page/Alarm";
 
 
@@ -30,20 +32,19 @@ const Transition = (props) => {
 
   const user = props.User;
   const location = useLocation();
-
   return (
     <TransitionGroup className="transition-group">
       <CSSTransition key={location.pathname} classNames="fade" timeout={500}>
         <Switch location={location}>
           <Route exact path="/" component={Home_page} />
-          <Route exact path="/currentevent" component={CurrentEvent} />
+          <Route exact path="/currentevent" component={CurrentEvent}/>
           <Route exact path="/currentevent/alarm" component={Alarm} />
-          <Route exact path="/currentevent/event1" component={건대} />
-          <Route exact path="/currentevent/event2" component={건대} />
-          <Route exact path="/currentevent/event3" component={건대} />
-          <Route exact path="/currentevent/event4" component={건대} />
+          <Route exact path="/currentevent/EP1"><EP1 User = {user}/></Route>
+          <Route exact path="/currentevent/EP2"><EP2 User = {user}/></Route>
+          <Route exact path="/currentevent/EP3"><EP3 User = {user} /></Route>
+          <Route exact path="/currentevent/EP4"><EP4 User = {user} /></Route>
           <Route path="/login" component={Login_page} />
-          <Route path="/submit"><Submit_page User = {user}/></Route>
+          <Route path="/submit"><Submit_page User = {user} /></Route>
           <Route path="/editsubmit"><EditSubmit_page User = {user}/></Route>
           <Route path="/confirm" component={Confirm_page} />
           <Route path="/account" component={Account_page} />

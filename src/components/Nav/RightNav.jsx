@@ -112,13 +112,6 @@ const RightNav = (props) => {
         </RowParrent>
         <RightContentDiv>
           <RowDiv>
-            <NavLink to="/submit" activeStyle={activeStyle} style={noneactiveStyle}>
-              <li onClick={() => props.setOpen(!props.open)}>
-                플로스팅 신청
-              </li>
-            </NavLink>
-          </RowDiv>
-          <RowDiv>
             <NavLink to="/editsubmit" activeStyle={activeStyle} style={noneactiveStyle}>
               <li onClick={() => props.setOpen(!props.open)}>
                 신청서 수정

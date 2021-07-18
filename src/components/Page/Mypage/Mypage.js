@@ -82,7 +82,6 @@ const Mypage = (props) => {
   useEffect(() => {
     setUser(props.User);
   }, [props]);
-
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = useState(0);
