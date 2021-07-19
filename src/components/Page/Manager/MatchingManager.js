@@ -820,7 +820,7 @@ const MatchingManager = (props) => {
                     매니저
                 </h1>
                 <MatchButton onClick={handlematch}>
-                    <h2>ㄱㄱ</h2>
+                    <h2>LilacMatching</h2>
                 </MatchButton>
             </Container>
         </ThemeProvider>
