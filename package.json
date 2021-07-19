@@ -27,7 +27,11 @@
     "react-select": "^4.3.1",
     "react-select-search": "^3.0.8",
     "react-slick": "^0.28.1",
+<<<<<<< HEAD
     "react-spring": "^9.2.3",
+=======
+    "react-spring": "^9.2.4",
+>>>>>>> ede429411ca0dd97c0351c81afc1119d9c6d6fff
     "react-swipeable-views": "^0.14.0",
     "react-transition-group": "^4.4.2",
     "react-useragent": "^1.1.2",
