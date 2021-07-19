@@ -21,10 +21,7 @@ import SelectResult from '../components/Page/Matched/SelectResult.js';
 import LilacResult from '../components/Page/Matched/LilacResult.js';
 import CloverResult from '../components/Page/Matched/CloverResult.js';
 import DasiyResult from '../components/Page/Matched/DasiyResult.js';
-import EP1 from "./Page/CurrentEvent/EP1.js"
-import EP2 from "./Page/CurrentEvent/EP2.js"
-import EP3 from "./Page/CurrentEvent/EP3.js"
-import EP4 from "./Page/CurrentEvent/EP4.js"
+import EPall from './Page/CurrentEvent/EPAll';
 import Alarm from "./Page/Alarm";
 
 
@@ -33,6 +30,12 @@ const Transition = (props) => {
   const [auth_regis, set_auth_regis] = useState(false);
   const [S_num, set_S_num] = useState("");
   const [S_name, set_S_name] = useState("");
+  const [EP_School_Name, setEP_School_Name] = useState([]);
+  const [EP_Num, setEP_Num] = useState('');
+  const [EP_Start_Day, setEP_Start_Day] = useState('');
+  const [EP_End_Day, setEP_End_Day] = useState('');
+  const [EP_Result_Day, setEP_Result_Day] = useState('');
+
 
   const user = props.User;
   const location = useLocation();
@@ -42,14 +45,24 @@ const Transition = (props) => {
       <CSSTransition key={location.pathname} classNames="fade" timeout={500}>
         <Switch location={location}>
           <Route exact path="/" component={Home_page} />
-          <Route exact path="/currentevent" component={CurrentEvent}/>
+          <Route exact path="/currentevent"><CurrentEvent 
+          setEP_School_Name = {setEP_School_Name}
+          setEP_Num = {setEP_Num}
+          setEP_Start_Day = {setEP_Start_Day}
+          setEP_End_Day = {setEP_End_Day}
+          setEP_Result_Day = {setEP_Result_Day}
+          /></Route>
+          <Route exact path="/currentevent/EP"><EPall
+          User = {user}
+          EP_School_Name = {EP_School_Name}
+          EP_Num = {EP_Num}
+          EP_Start_Day = {EP_Start_Day}
+          EP_End_Day = {EP_End_Day}
+          EP_Result_Day = {EP_Result_Day}
+          /></Route>
           <Route exact path="/currentevent/alarm" component={Alarm} />
-          <Route exact path="/currentevent/EP1"><EP1 User = {user}/></Route>
-          <Route exact path="/currentevent/EP2"><EP2 User = {user}/></Route>
-          <Route exact path="/currentevent/EP3"><EP3 User = {user} /></Route>
-          <Route exact path="/currentevent/EP4"><EP4 User = {user} /></Route>
           <Route path="/login" component={Login_page} />
-          <Route path="/submit"><Submit_page User = {user}/></Route>
+          <Route path="/submit"><Submit_page EP_Num = {EP_Num} User = {user}/></Route>
           <Route path="/confirm" component={Confirm_page} />
           <Route path="/account" component={Account_page} />
           <Route path="/about" component={About_page} />
