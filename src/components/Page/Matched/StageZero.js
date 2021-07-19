@@ -4,6 +4,8 @@ import { useSpring, animated } from 'react-spring'
 import Footer from '../Footer';
 import TimerComponent from './Timer.js'
 import fire from '../Register/LoginFire.js'
+import profileImageBoy from '../../../images/profile_boy_default.png';
+import profileImageGirl from '../../../images/profile_girl_default.png';
 const db = fire.firestore()
 
 const Container = styled.div`
@@ -38,14 +40,12 @@ justify-content: center;
 align-items: center;
 flex-direction: column;
 margin-right: 1.5rem;
-
     .defaultPic{
         width: 6rem;
         height: 6rem;
         background-color: grey;
         border-radius: 50%;
     }
-
     .profileInfo{
         width: 8rem;
     }
@@ -58,14 +58,12 @@ justify-content: center;
 align-items: center;
 flex-direction: column;
 margin-left: 1.5rem;
-
     .defaultPic{
         width: 6rem;
         height: 6rem;
         background-color: grey;
         border-radius: 50%;
     }
-
     .profileInfo{
         width: 8rem;
     }
@@ -143,14 +141,24 @@ function Title(){
 }
 
 function LeftProfile({유저1}){
+
+    let profileImage=null;
+
+    if(유저1['Gender'] === 'boy'){
+        profileImage = profileImageBoy
+    }else if(유저1['Gender'] === 'girl') {
+        profileImage = profileImageGirl
+    }
     return(
             <LeftProfileWrap>
                 <div>결정중</div>
-                <div className='defaultPic'></div>
+                <div>
+                    <img src={profileImage} className='defaultPic'/>
+                </div>
                 <div className='profileInfo'>
                     {유저1['Nick']}({유저1['Age']})<br/>
                     {유저1['Univ']}<br/>
-                    {유저1['Manner']}<br/>
+                    매너온도: {유저1['Manner']}<br/>
                     {유저1['Phone']}<br/>
 
                 </div>
@@ -159,14 +167,25 @@ function LeftProfile({유저1}){
 }
 
 function RightProfile({유저2}){
+
+    let profileImage=null;
+
+    if(유저2['Gender'] === 'boy'){
+        profileImage = profileImageBoy
+    }else if(유저2['Gender'] === 'girl') {
+        profileImage = profileImageGirl
+    }
+
     return(
         <RightProfileWrap>
             <div>결정중</div>
-            <div className='defaultPic'></div>
+            <div className='defaultPicBox'>
+                <img src={profileImage} className='defaultPic'/>
+            </div>
             <div className='profileInfo'>
                 {유저2['Nick']}({유저2['Age']})<br/>
                 {유저2['Univ']}<br/>
-                {유저2['Manner']}<br/>
+                매너온도: {유저2['Manner']}<br/>
                 {유저2['Phone']}<br/>
             </div>
         </RightProfileWrap>

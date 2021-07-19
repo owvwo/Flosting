@@ -12,7 +12,7 @@ function Timer(props){
 
     const 현재까지 = Date.now()
     
-    const 마감시간 = new Date('2021-07-16T10:00:00');
+    const 마감시간 = new Date('2021-07-19T15:00:00');
     const 마감까지 = 마감시간.getTime()
     const 남은시간 = 마감까지 - 현재까지
   
