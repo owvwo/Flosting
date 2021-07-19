@@ -203,7 +203,7 @@ const LastRegister = (props) => {
 
         if (limitnick) {
             let Infodb = db.collection("회원정보");
-            let query = Infodb.where("Nickname", "==", nickname).get().then((querySnapshot) => {
+            let query = Infodb.where("User.Nick", "==", nickname).get().then((querySnapshot) => {
                 if (querySnapshot.size) {
                     setOpen2(true);
                     setoverLap(false);
@@ -311,6 +311,7 @@ const LastRegister = (props) => {
             .collection("회원정보")
             .add({
                 ID: DBForm.ID,
+                Ongoing: "",
                 User: DBForm.User
             })
             .then(() => {

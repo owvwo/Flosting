@@ -51,9 +51,9 @@ display: none;
 }
 
 `;
-const Navicon = () => {
+const Navicon = (props) => {
   const [open, setOpen] = useState(false);
-  
+  const user = props.User;
   return (
     <>
       <Styledicon open={open} onClick={() => setOpen(!open)}>
@@ -64,7 +64,7 @@ const Navicon = () => {
       <Menutitle>
         메뉴
       </Menutitle>
-      <RightNav open={open} setOpen = {setOpen}/>
+      <RightNav User = {user} open={open} setOpen = {setOpen}/>
     </>
   )
 }

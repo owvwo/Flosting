@@ -11,11 +11,11 @@ import { Link } from "react-router-dom";
 import fire from "../../Register/LoginFire";
 
 const CheckDbData = (props) => {
-  const { User, ID } = props;
+  const { User, ID, EP_Num } = props;
   const [DocID, setDocID] = useState("");
   const db = fire.firestore();
   useEffect(() => {
-    db.collection("Flosting_7")
+    db.collection("Flosting_" + EP_Num)
       .where("ID", "==", ID)
       .get()
       .then((querySnapshot) => {
@@ -29,7 +29,7 @@ const CheckDbData = (props) => {
   }, []);
 
   const resetSubmit = () => {
-    db.collection("Flosting_7")
+    db.collection("Flosting_"+EP_Num)
       .doc(DocID)
       .delete()
       .then(() => {

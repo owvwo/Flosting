@@ -27,8 +27,8 @@ function App(){
           setUser(user);
       } else {
           // removes the user from local storage on logOut
-          localStorage.removeItem('user');
           setUser("");
+          localStorage.removeItem('user');
       }
   })
   };
