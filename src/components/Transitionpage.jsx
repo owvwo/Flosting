@@ -23,6 +23,7 @@ import CloverResult from '../components/Page/Matched/CloverResult.js';
 import DasiyResult from '../components/Page/Matched/DasiyResult.js';
 import EPall from './Page/CurrentEvent/EPAll';
 import Alarm from "./Page/Alarm";
+import Admin_page from "./Page/Manager/Admin";
 
 
 const Transition = (props) => {
@@ -67,7 +68,8 @@ const Transition = (props) => {
           <Route path="/account" component={Account_page} />
           <Route path="/about" component={About_page} />
           <Route path="/history" component={History_page} />
-          <Route path="/ad" component={AD_page} />
+          <Route exact path="/ad" component={AD_page} />
+          <Route exact path="/admin" component={Admin_page} />
           <Route path="/selectresult"><SelectResult User = {user}/></Route>
           <Route path="/lilacresult"><LilacResult User = {user}/></Route>
           <Route path="/cloverresult"><CloverResult User = {user}/></Route>
