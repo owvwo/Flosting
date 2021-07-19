@@ -86,8 +86,6 @@ const Mypage = (props) => {
         setUser(props.User);
     }, [props]);
 
-    console.log(User);
-
     const classes = useStyles();
     const theme = useTheme();
     const [value, setValue] = useState(0);

@@ -12,71 +12,153 @@ import StageSuccess from './StageSuccess.js';
 function ShowingResult(props){
     const db = firebase.firestore()
     const user = props.User;
-    const loggedEmail = user.email
 
-    const stage = 'success'
-    const [유저닉네임, 유저닉네임변경] = useState(null);
-    const [로그인상태, 로그인상태변경] = useState(false);
-    const [유저정보, 유저정보변경] = useState(null);
-    let 유저이메일 = ''
-    let 유저아이디 = ''
-    // const [유저이메일, 유저이메일변경] = useState(null);
-    // const [유저아이디, 유저아이디변경] = useState(null);
+    let 유저이메일 = null
+    let 유저아이디 = null
+    let [닉네임, 닉네임변경] = useState('');
+    let [발전단계, 발전단계변경] = useState('');
+    let [메세지보낸사람, 메세지보낸사람변경] = useState('');
+    let [거절한사람, 거절한사람변경] = useState('');
+    let [유저1, 유저1변경] = useState('');
+    let [유저2, 유저2변경] = useState('');
+    let [몇회차,몇회차변경] = useState();
 
     useEffect(()=>{
         if(user){
-        // 유저아이디알아내기()
-        // 유저닉네임호출()
-        }
-    }, [user]);
-      
-    function 유저아이디알아내기() {
-        firebase.auth().onAuthStateChanged(function(user){
-            유저이메일 = user.email
-            유저아이디 = 유저이메일.split('@')[0]
-            console.log(유저아이디)
-            return 유저아이디;
-        });
-    }
+        유저이메일 = user.email
+        console.log(user)
+        유저아이디 = 유저이메일.split('@')[0];
+        console.log(유저아이디)
 
-    // async function getUserNick() {
+        const promise_몇회차 = new Promise((resolve, reject) => {
 
-        // console.log(유저아이디)
-        // const userEmail = User.email;
-        // console.log(User.email)
-
-        // const userId = userEmail.split('@')[0]
-        // console.log(userId)
-
-    function getFrom매칭결과() {
-        const snapshot = db.collection('매칭결과').where('userOne.Nick', '==', '왕발').get()
-        snapshot.forEach( (doc)=>{
-            console.log(doc.data());
+            db.collection("회원정보").where("ID", "==", 유저아이디)
+            .get()
+            .then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    몇회차변경(doc.data()['Ongoing'])
+                });
+            })
+                resolve(몇회차);
         })
-    }
 
-    function 유저닉네임호출() {
-        const snapshot = db.collection('회원정보').where('ID', '==', 유저아이디).get()
-        snapshot.forEach( (doc)=>{
-            console.log(doc.data());
+        const promise_닉네임 = new Promise((resolve, reject) => {
+
+            db.collection("회원정보").where("ID", "==", 유저아이디)
+            .get()
+            .then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    닉네임변경(doc.data()['User']['Nick'])
+                });
+            })
+                resolve(닉네임);
         })
-    }
+
+        Promise.all([promise_닉네임,promise_몇회차]).then((value) => {
+            const collectionName = String(value[1]) 
+            const Nickname = value[0]
+
+            console.log(Nickname)
+            console.log(collectionName)
+
+            db.collection(collectionName).where("userOne.Nick", "==", Nickname)
+            .get()
+            .then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    console.log(doc.data());
+                    유저1변경(doc.data()['userOne'])
+                    유저2변경(doc.data()['userTwo'])
+                    발전단계변경(doc.data()['stage'])
+                    메세지보낸사람변경(doc.data()['메세지보낸사람'])
+                    거절한사람변경(doc.data()['거절한사람'])
+                
+                });
+            })
+            if(발전단계 === ''){
+                console.log('oo')
+                db.collection(collectionName).where("userTwo.Nick", "==", Nickname)
+                .get()
+                .then((querySnapshot)=>{
+                    querySnapshot.forEach((doc)=>{
+                        console.log(doc.data());
+                        유저1변경(doc.data()['userOne'])
+                        유저2변경(doc.data()['userTwo'])
+                        발전단계변경(doc.data()['stage'])
+                        메세지보낸사람변경(doc.data()['메세지보낸사람'])
+                        거절한사람변경(doc.data()['거절한사람'])
+    
+                    })
+                })
+            }
+        })
+    
+        } // if문 끝
+    }, [user, 닉네임])
 
     
     return(
         <div>
             {
-                stage === 'zero' && <StageZero/>
+                발전단계 === 'zero' && <StageZero 유저1={유저1} 유저2={유저2}/>
             }
 
             {
-                stage === 'half' && <StageHalf/>
+                발전단계 === 'half' && <StageHalf/>
             }
             {
-                stage === 'success' && <StageSuccess/>
+                발전단계 === 'success' && <StageSuccess/>
             }
-            <Footer/>
         </div>
     )
 }
 export default ShowingResult;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // function 닉네임호출(){
+    //     db.collection("회원정보").where("ID", "==", 유저아이디)
+    //     .get()
+    //     .then((querySnapshot) => {
+    //         querySnapshot.forEach((doc) => {
+    //             console.log(doc.id, " => ", doc.data()['User']['Nick']);
+    //             유저닉네임 = doc.data()['User']['Nick']
+    //         });
+    //     })
+    //     .catch((error) => {
+    //         console.log("Error getting documents: ", error);
+    //     });
+    // }
+
+
+
+    // const promise = new Promise((resolve, reject) => {
+    //     db.collection("회원정보").where("ID", "==", '32164205')
+    //     .get()
+    //     .then((querySnapshot) => {
+    //         querySnapshot.forEach((doc) => {
+    //             닉네임변경(doc.data()['User']['Nick'])
+    //         });
+    //     })
+    //         resolve(닉네임);
+    // })
+    // promise.then((닉네임) => {
+    //     db.collection("매칭결과").where("userOne.Nick", "==", 닉네임)
+    //     .get()
+    //     .then((querySnapshot) => {
+    //         querySnapshot.forEach((doc) => {
+    //             console.log(doc.data());
+    //         });
+    //     })
+    // })

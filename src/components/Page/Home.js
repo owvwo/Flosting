@@ -154,6 +154,10 @@ function Jumbotron({CurrentButton, 버튼타이머}){
                 <img src={logo} className='logogif' />
             </div>
 
+            <NavLink to='/selectresult'>
+                    <button>매칭결과보기</button>
+            </NavLink>
+
             {
             버튼타이머 === true
             ? <div className='jb_link'>

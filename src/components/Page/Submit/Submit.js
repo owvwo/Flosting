@@ -5,7 +5,7 @@ import fire from "../Register/LoginFire";
 import { Redirect } from 'react-router-dom';
 
 function Submit(props) {
-  const Use2r = [
+  const dbUser = [
     {
       Age: "",
       Gender: "",
@@ -16,7 +16,7 @@ function Submit(props) {
     },
   ];
   const [ID, setID] = useState("");
-  const [User, setUser] = useState(Use2r);
+  const [User, setUser] = useState(dbUser);
 
   const db = fire.firestore();
   const user = props.User
