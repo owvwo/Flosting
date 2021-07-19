@@ -16,13 +16,6 @@ flex-direction: column;
     .ProfileWrap{
         display: flex;
     }
-    .text{
-        height: 12rem;
-        text-align: center;
-        margin-top: 3rem;
-        font-size: 1.1rem;
-    }
-
 `
 
 const TimerWrap = styled.div`
@@ -81,8 +74,47 @@ margin-left: 1.5rem;
     }
 `
 
+const ButtonWrap = styled.div`
+text-align:center;
+margin-top: 2rem;
+`
+const NotYet = styled.button`
+margin-bottom: 1rem;
+width: 13rem;
+height: 3rem;
+border : 1px solid yellow;
+border-radius: 40px;
+background-color: pink;
+&:hover{
+    background-color: yellow;
+    color: pink;
+`
+const ReplyMessage = styled.button`
+margin-bottom: 1rem;
+width: 13rem;
+height: 3rem;
+border : 1px solid yellow;
+border-radius: 40px;
+background-color: pink;
+&:hover{
+    background-color: yellow;
+    color: pink;
+`
 
-function StageHalf(props){
+const Refuse = styled.button`
+margin-bottom: 1rem;
+width: 13rem;
+height: 3rem;
+border : 1px solid yellow;
+border-radius: 40px;
+background-color: red;
+&:hover{
+    background-color: grey;
+    color: pink;
+`
+
+
+function ReceivePerson(props){
     const 유저1 = props.유저1
     const 유저2 = props.유저2
     const 닉네임 = props.닉네임
@@ -91,9 +123,7 @@ function StageHalf(props){
 
     console.log(props.컬렉션)
     console.log(props.문서번호)
-    let[연락상태, 연락상태변경] = useState(false);
-    useEffect(()=>{
-    },[])
+    console.log(props.닉네임)
 
     return(
         <Container>
@@ -103,17 +133,12 @@ function StageHalf(props){
                 <LeftProfile 유저1={유저1} 메세지보낸사람={메세지보낸사람}/>
                 <RightProfile 유저2={유저2} 메세지보낸사람={메세지보낸사람}/>
             </div>
-            <div className='text'>
-                서로 연락중인데 계속 이 화면이 지속되면<br/>
-                상대방에게 매칭결과 탭에서 '답장했어요' 버튼을<br/>
-                눌러 매칭 성공화면으로 넘어가도록 하셔야<br/>
-                매너온도에 악영향을 미치지 않습니다.<br/>
-            </div>
+            <Button 컬렉션={props.컬렉션} 문서번호={props.문서번호} 닉네임={props.닉네임}/>
             <Footer/>
         </Container>
     )
 }
-export default StageHalf;
+export default ReceivePerson;
 
 function Timer(){
     return(
@@ -178,6 +203,7 @@ function RightProfile({유저2, 메세지보낸사람}){
     }else if(유저2['Gender'] === 'girl') {
         profileImage = profileImageGirl
     }
+
     return(
         <RightProfileWrap>
             <div className='decisionState'>
@@ -187,9 +213,9 @@ function RightProfile({유저2, 메세지보낸사람}){
                 : <div>결정중</div>
                 }
             </div>
-            <div>
-                    <img src={profileImage} className='defaultPic'/>
-                </div>
+            <div className='defaultPicBox'>
+                <img src={profileImage} className='defaultPic'/>
+            </div>
             <div className='profileInfo'>
                 {유저2['Nick']}({유저2['Age']})<br/>
                 {유저2['Univ']}<br/>
@@ -197,6 +223,43 @@ function RightProfile({유저2, 메세지보낸사람}){
                 {유저2['Phone']}<br/>
             </div>
         </RightProfileWrap>
+    )
+}
+
+function Button(props){
+
+    function onClick_sendMessage(){
+        const result = window.confirm('정말로 답장을 보내셨나요?');
+        if(result){
+            console.log(props.컬렉션)
+            console.log(props.문서번호)
+            db.collection(props.컬렉션).doc(props.문서번호).update({
+                stage: 'success'
+            })
+            alert('좋은 인연이 되시길 기원합니다!')
+        }else{}
+    }
+
+    function onClick_refuse(){
+        const result = window.confirm('정말로 거절하실건가요?');
+        console.log(result)
+        if(result){
+            db.collection(props.컬렉션).doc(props.문서번호).update({
+                stage: 'end'
+            })
+            db.collection(props.컬렉션).doc(props.문서번호).update({
+                거절한사람: props.닉네임
+            })
+            alert('매칭을 거절하셨습니다.')
+        }else{}
+    }
+
+    return(
+        <ButtonWrap>
+            <NotYet>아직 연락 안왔어요</NotYet>
+            <ReplyMessage onClick={onClick_sendMessage}>답장했어요</ReplyMessage>
+            <Refuse onClick={onClick_refuse}>매칭 거절할게요</Refuse>
+        </ButtonWrap>
     )
 }
 

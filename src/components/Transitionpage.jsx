@@ -5,7 +5,6 @@ import "./Transitionpage.css";
 import Home_page from './Page/Home'
 import Login_page from './Page/Login/Login'
 import Submit_page from './Page/Submit/Submit'
-import EditSubmit_page from './Page/Submit/components/EditSubmit'
 import Confirm_page from './Page/Confirm'
 import Account_page from './Page/Account'
 import About_page from './Page/About'
@@ -17,11 +16,14 @@ import LastRegister_page from './Page/Register/LastRegister'
 import My_page from './Page/Mypage/Mypage'
 import ShowingResult from './Page/Matched/ShowingResult'
 import CurrentEvent from "./Page/CurrentEvent/CurrentEvent";
-import EP1 from "./Page/CurrentEvent/EP1.js"
-import EP2 from "./Page/CurrentEvent/EP2.js"
-import EP3 from "./Page/CurrentEvent/EP3.js"
-import EP4 from "./Page/CurrentEvent/EP4.js"
+import 건대 from "./Page/건대.js"
+import SelectResult from '../components/Page/Matched/SelectResult.js';
+import LilacResult from '../components/Page/Matched/LilacResult.js';
+import CloverResult from '../components/Page/Matched/CloverResult.js';
+import DasiyResult from '../components/Page/Matched/DasiyResult.js';
+import EPall from './Page/CurrentEvent/EPAll';
 import Alarm from "./Page/Alarm";
+import Admin_page from "./Page/Manager/Admin";
 
 
 const Transition = (props) => {
@@ -29,29 +31,49 @@ const Transition = (props) => {
   const [auth_regis, set_auth_regis] = useState(false);
   const [S_num, set_S_num] = useState("");
   const [S_name, set_S_name] = useState("");
+  const [EP_School_Name, setEP_School_Name] = useState([]);
+  const [EP_Num, setEP_Num] = useState('');
+  const [EP_Start_Day, setEP_Start_Day] = useState('');
+  const [EP_End_Day, setEP_End_Day] = useState('');
+  const [EP_Result_Day, setEP_Result_Day] = useState('');
+
 
   const user = props.User;
   const location = useLocation();
+
   return (
     <TransitionGroup className="transition-group">
       <CSSTransition key={location.pathname} classNames="fade" timeout={500}>
         <Switch location={location}>
           <Route exact path="/" component={Home_page} />
-          <Route exact path="/currentevent" component={CurrentEvent}/>
+          <Route exact path="/currentevent"><CurrentEvent 
+          setEP_School_Name = {setEP_School_Name}
+          setEP_Num = {setEP_Num}
+          setEP_Start_Day = {setEP_Start_Day}
+          setEP_End_Day = {setEP_End_Day}
+          setEP_Result_Day = {setEP_Result_Day}
+          /></Route>
+          <Route exact path="/currentevent/EP"><EPall
+          User = {user}
+          EP_School_Name = {EP_School_Name}
+          EP_Num = {EP_Num}
+          EP_Start_Day = {EP_Start_Day}
+          EP_End_Day = {EP_End_Day}
+          EP_Result_Day = {EP_Result_Day}
+          /></Route>
           <Route exact path="/currentevent/alarm" component={Alarm} />
-          <Route exact path="/currentevent/EP1"><EP1 User = {user}/></Route>
-          <Route exact path="/currentevent/EP2"><EP2 User = {user}/></Route>
-          <Route exact path="/currentevent/EP3"><EP3 User = {user} /></Route>
-          <Route exact path="/currentevent/EP4"><EP4 User = {user} /></Route>
           <Route path="/login" component={Login_page} />
-          <Route path="/submit"><Submit_page User = {user} /></Route>
-          <Route path="/editsubmit"><EditSubmit_page User = {user}/></Route>
+          <Route path="/submit"><Submit_page EP_Num = {EP_Num} User = {user}/></Route>
           <Route path="/confirm" component={Confirm_page} />
           <Route path="/account" component={Account_page} />
           <Route path="/about" component={About_page} />
           <Route path="/history" component={History_page} />
-          <Route path="/ad" component={AD_page} />
-          <Route path="/showingresult"><ShowingResult User = {user}/></Route>
+          <Route exact path="/ad" component={AD_page} />
+          <Route exact path="/admin" component={Admin_page} />
+          <Route path="/selectresult"><SelectResult User = {user}/></Route>
+          <Route path="/lilacresult"><LilacResult User = {user}/></Route>
+          <Route path="/cloverresult"><CloverResult User = {user}/></Route>
+          <Route path="/daisyresult"><DasiyResult User = {user}/></Route>
           <Route path="/my"><My_page User = {user} /></Route>
           <Route exact path="/register" render={props => (
             <Register_page
