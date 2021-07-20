@@ -24,7 +24,8 @@ import DasiyResult from '../components/Page/Matched/DasiyResult.js';
 import EPall from './Page/CurrentEvent/EPAll';
 import Alarm from "./Page/Alarm";
 import Admin_page from "./Page/Manager/Admin";
-
+import SubEvent from "./Page/subEvent/EventMain"
+import NoticeDetail from "./Page/subEvent/NoticeDetail";
 
 const Transition = (props) => {
 
@@ -65,6 +66,9 @@ const Transition = (props) => {
           <Route path="/login" component={Login_page} />
           <Route path="/submit"><Submit_page EP_Num = {EP_Num} User = {user}/></Route>
           <Route path="/confirm" component={Confirm_page} />
+          <Route exact path="/subevent" component={SubEvent} />
+          <Route exact path="/subevent/notice" component={NoticeDetail} />
+          <Route exact path="/subevent/event" component={NoticeDetail} />
           <Route path="/account" component={Account_page} />
           <Route path="/about" component={About_page} />
           <Route path="/history" component={History_page} />

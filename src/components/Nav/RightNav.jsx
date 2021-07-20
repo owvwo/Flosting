@@ -188,9 +188,9 @@ const RightNav = (props) => {
         </RowParrent>
         <RightContentDiv>
           <RowDiv>
-            <NavLink to="/currentevent" activeStyle={activeStyle} style={noneactiveStyle}>
+            <NavLink to="/subevent" activeStyle={activeStyle} style={noneactiveStyle}>
               <li onClick={() => props.setOpen(!props.open)}>
-                플로스팅 이벤트
+                이벤트 및 공지사항
               </li>
             </NavLink>
           </RowDiv>
@@ -201,13 +201,6 @@ const RightNav = (props) => {
           <img src={Flostinglogo}></img>
         </RowParrent>
         <RightContentDiv>
-          <RowDiv>
-            <NavLink to="/ad" activeStyle={activeStyle} style={noneactiveStyle}>
-              <li onClick={() => props.setOpen(!props.open)}>
-                공지사항
-              </li>
-            </NavLink>
-          </RowDiv>
           <RowDiv>
             <NavLink to="/ad" activeStyle={activeStyle} style={noneactiveStyle}>
               <li onClick={() => props.setOpen(!props.open)}>
