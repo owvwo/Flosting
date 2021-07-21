@@ -12,6 +12,7 @@ import AD_page from './Page/Ad'
 import History_page from './Page/History'
 import Register_page from './Page/Register/Register'
 import Terms_page from './Page/Register/Terms'
+import Certification_page from './Page/Register/Certification'
 import LastRegister_page from './Page/Register/LastRegister'
 import My_page from './Page/Mypage/Mypage'
 import ShowingResult from './Page/Matched/ShowingResult'
@@ -31,6 +32,10 @@ const Transition = (props) => {
   const [auth_regis, set_auth_regis] = useState(false);
   const [S_num, set_S_num] = useState("");
   const [S_name, set_S_name] = useState("");
+  const [U_name, setU_name] = useState("");
+  const [U_Age, setU_Age] = useState("");
+  const [U_Gender, setU_Gender] = useState("");
+  const [U_Phone, setU_Phone] = useState("");
   const [EP_School_Name, setEP_School_Name] = useState([]);
   const [EP_Num, setEP_Num] = useState('');
   const [EP_Start_Day, setEP_Start_Day] = useState('');
@@ -86,8 +91,15 @@ const Transition = (props) => {
           <Route path="/register/terms" render={props => (
             <Terms_page
               auth_regis={auth_regis}
-              S_num={S_num}
-              S_name={S_name}
+              {...props} />
+          )} />
+          <Route path="/register/certification" render={props => (
+            <Certification_page
+              auth_regis={auth_regis}
+              setU_name ={setU_name}
+              setU_Age = {setU_Age}
+              setU_Gender = {setU_Gender}
+              setU_Phone = {setU_Phone}
               {...props} />
           )} />
           <Route path="/register/last" render={props => (

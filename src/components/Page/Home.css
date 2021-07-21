@@ -1,6 +1,19 @@
 .jb_wrap{
     position: relative;
 }
+.video_wrap{
+    overflow : hidden;
+    width: auto;
+    height: 100vh;
+}
+.video_Tag{
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    display: block;
+    backface-visibility: hidden;
+}
+
 
 .jb_link{
     display: inline-flex;

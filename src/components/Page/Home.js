@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Certification from './Register/Certification'
 import logo from '../../images/giphy.gif'
 import './Home.css';
 import { NavLink } from "react-router-dom";
@@ -12,6 +11,7 @@ import 참여방법Slider from './HowToSubmitSlider.js'
 import 데이지배경 from '../../images/daisy.png'
 import 라일락배경 from '../../images/lilac.png'
 import 클로버배경 from '../../images/clover.png'
+import sample from '../../images/sample.mp4';
 
 const Container = styled.div`
   font-family: 'Noto Sans KR', sans-serif;
@@ -119,26 +119,26 @@ const CurrentButton = styled.button`
 
 
 
-const Home = () =>{
-    let[버튼타이머,버튼타이머변경] = useState(false);
+const Home = () => {
+    let [버튼타이머, 버튼타이머변경] = useState(false);
 
 
-    useEffect(()=>{
-        setTimeout(function(){
+    useEffect(() => {
+        setTimeout(function () {
             버튼타이머변경(true);
-        },3000)
+        }, 3000)
     })
 
 
-    return(
+    return (
         <Container>
             <Jumbotron CurrentButton={CurrentButton} 버튼타이머={버튼타이머} />
-            <WhatIsFlosting WhatIsFlostingWrap={WhatIsFlostingWrap}/>  
+            <WhatIsFlosting WhatIsFlostingWrap={WhatIsFlostingWrap} />
             <div className='parent'>
-                <LilacTing LilacTingWrap={LilacTingWrap}/>
-                <DaisyTing DaisyTingWrap={DaisyTingWrap}/>
-                <CloverTing CloverTingWrap={CloverTingWrap}/>
-            </div>   
+                <LilacTing LilacTingWrap={LilacTingWrap} />
+                <DaisyTing DaisyTingWrap={DaisyTingWrap} />
+                <CloverTing CloverTingWrap={CloverTingWrap} />
+            </div>
             <참여방법 참여방법Wrap={참여방법Wrap}></참여방법>
             <Footer></Footer>
         </Container>
@@ -147,42 +147,44 @@ const Home = () =>{
 };
 
 
-function Jumbotron({CurrentButton, 버튼타이머}){
+function Jumbotron({ CurrentButton, 버튼타이머 }) {
     return (
         <div className='jb_wrap'>
-            <div className='jb_gif'>
-                <img src={logo} className='logogif' />
+            <div className = 'video_wrap'>
+            <video playsInline muted autoPlay className='video_Tag'>
+                <source src={sample} type='video/mp4' />
+            </video>
             </div>
 
             <NavLink to='/selectresult'>
-                    <button>매칭결과보기</button>
+                <button>매칭결과보기</button>
             </NavLink>
 
             {
-            버튼타이머 === true
-            ? <div className='jb_link'>
-                <NavLink to='/currentevent'>
-                    <CurrentButton>현재 진행 중</CurrentButton>
-                </NavLink>
-              </div>
+                버튼타이머 === true
+                    ? <div className='jb_link'>
+                        <NavLink to='/currentevent'>
+                            <CurrentButton>현재 진행 중</CurrentButton>
+                        </NavLink>
+                    </div>
 
-            : null
+                    : null
             }
 
         </div>
     )
 }
 
-function WhatIsFlosting({WhatIsFlostingWrap}){
+function WhatIsFlosting({ WhatIsFlostingWrap }) {
 
-    return(
+    return (
         <WhatIsFlostingWrap>
             <Fade bottom>
                 <div className='intro_title'>Flosting이란?</div>
             </Fade>
             <Flip left>
                 <div className='logoimg_wrap'>
-                    <img src={logoimg} className='logoimg'/>
+                    <img src={logoimg} className='logoimg' />
                 </div>
             </Flip>
             <Fade bottom>
@@ -201,15 +203,15 @@ function WhatIsFlosting({WhatIsFlostingWrap}){
     )
 }
 
-function DaisyTing({DaisyTingWrap}){
+function DaisyTing({ DaisyTingWrap }) {
 
-    return(
+    return (
         <DaisyTingWrap>
             <Fade bottom>
                 <div className='내용'>
                     <span className="highlight">'이성친구'를</span><br />
                     원하시나요?
-                    </div>
+                </div>
                 <div className='daisy'>
                     데이지의 꽃말은 '우정'입니다.<br />
                     데이지팅을 통해서<br />
@@ -217,7 +219,7 @@ function DaisyTing({DaisyTingWrap}){
                     같은 학교 뿐만 아니라 인근 학교까지!!<br />
                 </div>
                 <div className='배경이미지'>
-                    <img src={데이지배경}/>
+                    <img src={데이지배경} />
                 </div>
 
             </Fade>
@@ -225,22 +227,22 @@ function DaisyTing({DaisyTingWrap}){
 
     )
 }
-function CloverTing({CloverTingWrap}){
+function CloverTing({ CloverTingWrap }) {
 
-    return(
+    return (
         <CloverTingWrap>
             <Fade bottom>
                 <div className='내용'>
-                <span className="highlight">'동성친구'를</span><br />
+                    <span className="highlight">'동성친구'를</span><br />
                     원하시나요?
-                    </div>
+                </div>
                 <div className='daisy'>
                     클로버의 꽃말은 '행복'입니다.<br />
                     클로버팅을 통해서<br />
                     행복을 나눌 동성 친구를 만들어 보세요!!<br />
                 </div>
                 <div className='배경이미지'>
-                    <img src={클로버배경}/>
+                    <img src={클로버배경} />
                 </div>
 
             </Fade>
@@ -249,15 +251,15 @@ function CloverTing({CloverTingWrap}){
     )
 }
 
-function LilacTing({LilacTingWrap}){
+function LilacTing({ LilacTingWrap }) {
 
-    return(
+    return (
         <LilacTingWrap>
             <Fade bottom>
                 <div className='내용'>
-                <span className="highlight">'연인'을</span><br />
+                    <span className="highlight">'연인'을</span><br />
                     원하시나요?
-                    </div>
+                </div>
                 <div className='daisy'>
                     라일락의 꽃말은 <br />
                     '새로운 사랑의 싹이 트다'입니다.<br />
@@ -265,7 +267,7 @@ function LilacTing({LilacTingWrap}){
                     운명의 상대를 만나보세요!!<br />
                 </div>
                 <div className='배경이미지'>
-                    <img src={라일락배경}/>
+                    <img src={라일락배경} />
                 </div>
 
             </Fade>
@@ -274,8 +276,8 @@ function LilacTing({LilacTingWrap}){
     )
 }
 
-function 참여방법({참여방법Wrap}){
-    return(
+function 참여방법({ 참여방법Wrap }) {
+    return (
         <Fade bottom>
             <참여방법Wrap>
                 <div className='참여방법제목'>
