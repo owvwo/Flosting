@@ -128,32 +128,33 @@ const Certification = (props) => {
   }
   function testaxios() {
     let testdata;
-    const getToken = axios({
-      url: "https://api.iamport.kr/users/getToken",
-      method: "post", // POST method
-      headers: { "Content-Type": "application/json" }, // "Content-Type": "application/json"
-      data: {
-        imp_key: "1493803405522148", // REST API키
-        imp_secret: "b9cb96c92d43544b6f2b2b155d961903edd5419f750454e7321e5235438e1476c0030cfca8db3ac4" // REST API Secret
-      }
-    });
-
-    // axios({
-    //   url : "https://api.iamport.kr/users/getToken",
+    
+    // const getToken = axios({
+    //   url: "https://api.iamport.kr/users/getToken",
     //   method: "post", // POST method
     //   headers: { "Content-Type": "application/json" }, // "Content-Type": "application/json"
     //   data: {
     //     imp_key: "1493803405522148", // REST API키
     //     imp_secret: "b9cb96c92d43544b6f2b2b155d961903edd5419f750454e7321e5235438e1476c0030cfca8db3ac4" // REST API Secret
     //   }
-    // }).then(function (response){
-    //     testdata = response;
-    //     console.log(testdata);
-    // }).catch(function (error){
-    //   console.log(error);
-    // }).then(function () {
-    //   console.log('always');
     // });
+
+    axios({
+      url : "https://api.iamport.kr/users/getToken",
+      method: "post", // POST method
+      headers: { "Content-Type": "application/json" }, // "Content-Type": "application/json"
+      data: {
+        imp_key: "1493803405522148", // REST API키
+        imp_secret: "b9cb96c92d43544b6f2b2b155d961903edd5419f750454e7321e5235438e1476c0030cfca8db3ac4" // REST API Secret
+      }
+    }).then(function (response){
+        testdata = response;
+        console.log(testdata);
+    }).catch(function (error){
+      console.log(error);
+    }).then(function () {
+      console.log('always');
+    });
     // axios.get("https://api.iamport.kr/users/getToken",{
     //   method: "post", // POST method
     //   headers: { "Content-Type": "application/json" }, // "Content-Type": "application/json"
