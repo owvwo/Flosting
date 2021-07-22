@@ -4,7 +4,6 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
 
-
 const Colortheme = createMuiTheme({
   palette: {
     primary: {
@@ -127,62 +126,23 @@ const Certification = (props) => {
 
   }
   function testaxios() {
-    let testdata;
-    
-    // const getToken = axios({
-    //   url: "https://api.iamport.kr/users/getToken",
-    //   method: "post", // POST method
-    //   headers: { "Content-Type": "application/json" }, // "Content-Type": "application/json"
-    //   data: {
-    //     imp_key: "1493803405522148", // REST API키
-    //     imp_secret: "b9cb96c92d43544b6f2b2b155d961903edd5419f750454e7321e5235438e1476c0030cfca8db3ac4" // REST API Secret
-    //   }
-    // });
-
-    axios({
-      url : "https://api.iamport.kr/users/getToken",
-      method: "post", // POST method
-      headers: { "Content-Type": "application/json" }, // "Content-Type": "application/json"
-      data: {
-        imp_key: "1493803405522148", // REST API키
-        imp_secret: "b9cb96c92d43544b6f2b2b155d961903edd5419f750454e7321e5235438e1476c0030cfca8db3ac4" // REST API Secret
-      }
-    }).then(function (response){
-        testdata = response;
-        console.log(testdata);
-    }).catch(function (error){
-      console.log(error);
-    }).then(function () {
-      console.log('always');
-    });
-    // axios.get("https://api.iamport.kr/users/getToken",{
-    //   method: "post", // POST method
-    //   headers: { "Content-Type": "application/json" }, // "Content-Type": "application/json"
-    //   data: {
-    //     imp_key: "1493803405522148", // REST API키
-    //     imp_secret: "b9cb96c92d43544b6f2b2b155d961903edd5419f750454e7321e5235438e1476c0030cfca8db3ac4" // REST API Secret
-    //   }
-    // }).then(function (response){
-    //   testdata = response;
-    //   console.log(testdata);
-    // }).catch(function (error){
-    //   console.log(error);
-    // }).then(function () {
-    //   console.log('always');
+    axios.post("https://veygeyobj2.execute-api.ap-northeast-2.amazonaws.com/default/OwvwO_test_1", {
+      imp_uid: 'test'
+  })
+  .then(function (response) {
+       // response  
+  }).catch(function (error) {
+      // 오류발생시 실행
+  }).then(function() {
+      // 항상 실행
+  });
+    // jQuery.ajax({
+    //   url: "https://veygeyobj2.execute-api.ap-northeast-2.amazonaws.com/default/OwvwO_test_1", // 서비스 웹서버
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   data: { imp_uid: 'test' }
     // });
   }
-
-
-
-  //   {
-  //   url: "https://api.iamport.kr/users/getToken",
-  //   method: "post", // POST method
-  //   headers: { "Content-Type": "application/json" }, // "Content-Type": "application/json"
-  //   data: {
-  //     imp_key: "1493803405522148", // REST API키
-  //     imp_secret: "b9cb96c92d43544b6f2b2b155d961903edd5419f750454e7321e5235438e1476c0030cfca8db3ac4" // REST API Secret
-  //   }
-  // });
 
   function onClickCertification() {
     /* 1. 가맹점 식별하기 */

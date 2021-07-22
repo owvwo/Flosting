@@ -11,7 +11,7 @@
     "antd": "^4.16.6",
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
-    "firebase": "^8.7.0",
+    "firebase": "^8.7.1",
     "formik": "^2.2.9",
     "jQuery": "^1.7.4",
     "open-color": "^1.8.0",
