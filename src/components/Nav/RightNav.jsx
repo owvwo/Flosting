@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import styled, { withTheme } from 'styled-components';
 import { NavLink } from 'react-router-dom';
+import Flostinglogo from '../../images/Flosting_Logo.png'
+import fire from '../Page/Register/LoginFire';
+
 
 //카테고리별
 const ContentDiv = styled.div`
@@ -27,11 +30,15 @@ const RowDiv = styled.div`
 const RowParrent = styled.div`
   color: rgb(0,0,0, 0.7);
   background : #F5E9E9;
-  text-align : center;
+  display: flex;
+  justify-content : center;
   font-family: 'Noto Sans KR', sans-serif;
   font-weight: 500;
   width: 75px;
-  padding: 15px 0px;
+  img{
+    width: 50px;
+    height: 50px;
+  }
 `
 const Ul = styled.ul`
   overflow-y: auto;
@@ -71,6 +78,27 @@ const Ul = styled.ul`
 
 const RightNav = (props) => {
 
+  const user = props.User;
+  const db = fire.firestore();
+  const [isManager, setisManager] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      let s_id = user.email.split('@');
+      let Infodb = db.collection('Admin');
+      let query = Infodb.where("ID", "==", s_id[0]).get().then((querySnapshot) => {
+        if (querySnapshot.size) {
+          setisManager(true);
+        }
+        else{
+          setisManager(false);
+        }
+      });
+    }else{
+      setisManager(false);
+    }
+  }, [user]);
+  
   const activeStyle = {
     color: '#2B2A28',
     background: '#F2F2F2'
@@ -97,24 +125,51 @@ const RightNav = (props) => {
       <ContentDiv>
         <RowDiv>
           <RowParrent>
-            회원
+            <img src={Flostinglogo}></img>
           </RowParrent>
-          <NavLink to="/my" activeStyle={activeStyle} style={noneactiveStyle}>
-            <li onClick={() => props.setOpen(!props.open)}>
-              마이페이지
-            </li>
-          </NavLink>
+          <RightContentDiv>
+            {isManager ? (
+              <RowDiv>
+                <NavLink to="/admin" activeStyle={activeStyle} style={noneactiveStyle}>
+                  <li onClick={() => props.setOpen(!props.open)}>
+                    관리자페이지
+                  </li>
+                </NavLink>
+              </RowDiv>
+            ) : ""}
+            <RowDiv>
+              <NavLink to="/my" activeStyle={activeStyle} style={noneactiveStyle}>
+                <li onClick={() => props.setOpen(!props.open)}>
+                  마이페이지
+                </li>
+              </NavLink>
+            </RowDiv>
+            <RowDiv>
+              <NavLink to="/currentevent" activeStyle={activeStyle} style={noneactiveStyle}>
+                <li onClick={() => props.setOpen(!props.open)}>
+                  플로스팅 신청하기
+                </li>
+              </NavLink>
+            </RowDiv>
+          </RightContentDiv>
         </RowDiv>
       </ContentDiv>
       <ContentDiv>
         <RowParrent>
-          플로스팅
+          <img src={Flostinglogo}></img>
         </RowParrent>
         <RightContentDiv>
           <RowDiv>
-            <NavLink to="/confirm" activeStyle={activeStyle} style={noneactiveStyle}>
+            <NavLink to="/about" activeStyle={activeStyle} style={noneactiveStyle}>
               <li onClick={() => props.setOpen(!props.open)}>
-                플로스팅 확인
+                플로스팅 소개
+              </li>
+            </NavLink>
+          </RowDiv>
+          <RowDiv>
+            <NavLink to="/history" activeStyle={activeStyle} style={noneactiveStyle}>
+              <li onClick={() => props.setOpen(!props.open)}>
+                플로스팅 연혁
               </li>
             </NavLink>
           </RowDiv>
@@ -125,31 +180,17 @@ const RightNav = (props) => {
               </li>
             </NavLink>
           </RowDiv>
-          <RowDiv>
-            <NavLink to="/history" activeStyle={activeStyle} style={noneactiveStyle}>
-              <li onClick={() => props.setOpen(!props.open)}>
-                플로스팅 역사
-              </li>
-            </NavLink>
-          </RowDiv>
-          <RowDiv>
-            <NavLink to="/about" activeStyle={activeStyle} style={noneactiveStyle}>
-              <li onClick={() => props.setOpen(!props.open)}>
-                제작 기획
-              </li>
-            </NavLink>
-          </RowDiv>
         </RightContentDiv>
       </ContentDiv>
       <ContentDiv>
         <RowParrent>
-          이벤트
+          <img src={Flostinglogo}></img>
         </RowParrent>
         <RightContentDiv>
           <RowDiv>
             <NavLink to="/currentevent" activeStyle={activeStyle} style={noneactiveStyle}>
               <li onClick={() => props.setOpen(!props.open)}>
-                진행중인 이벤트
+                플로스팅 이벤트
               </li>
             </NavLink>
           </RowDiv>
@@ -157,20 +198,20 @@ const RightNav = (props) => {
       </ContentDiv>
       <ContentDiv>
         <RowParrent>
-          문의
+          <img src={Flostinglogo}></img>
         </RowParrent>
         <RightContentDiv>
           <RowDiv>
             <NavLink to="/ad" activeStyle={activeStyle} style={noneactiveStyle}>
               <li onClick={() => props.setOpen(!props.open)}>
-                광고 문의
+                공지사항
               </li>
             </NavLink>
           </RowDiv>
           <RowDiv>
-            <NavLink to="/ad" activeStyle={activeStyle} style={noneactiveStyle}>
+            <NavLink to="/qna" activeStyle={activeStyle} style={noneactiveStyle}>
               <li onClick={() => props.setOpen(!props.open)}>
-                오프라인 문의
+                질의응답
               </li>
             </NavLink>
           </RowDiv>
@@ -183,7 +224,7 @@ const RightNav = (props) => {
           </RowDiv>
         </RightContentDiv>
         <BlankDiv>
-        
+
         </BlankDiv>
       </ContentDiv>
     </Ul>

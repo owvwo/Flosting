@@ -20,6 +20,7 @@ function Submit(props) {
 
   const db = fire.firestore();
   const user = props.User
+  const EP_Num = props.EP_Num;
 
   useEffect(() => {
     if(user){
@@ -45,7 +46,7 @@ function Submit(props) {
   else {
     return (
       <div>
-        <EnrollmentForm User={User} ID={ID} />
+        <EnrollmentForm EP_Num = {EP_Num} User={User} ID={ID} />
       </div>
     );
   }

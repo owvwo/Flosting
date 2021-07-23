@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^12.1.10",
     "antd": "^4.16.6",
     "bootstrap": "^4.6.0",
+    "dotenv": "^10.0.0",
     "firebase": "^8.7.0",
     "formik": "^2.2.9",
     "jQuery": "^1.7.4",

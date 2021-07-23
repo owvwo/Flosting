@@ -14,14 +14,14 @@ import 라일락배경 from '../../images/lilac.png'
 import 클로버배경 from '../../images/clover.png'
 
 const Container = styled.div`
-  font-family: 'Noto Sans KR', sans-serif;
-  left: 0;
-  width: 100%;
-  height: calc(100%-50px);
-  overflow: scroll;
-  align-items: center;
-  background-color: white;
-  position : relative;
+font-family: 'Noto Sans KR', sans-serif;
+left: 0;
+width: 100%;
+height: calc(100%-50px);
+overflow: scroll;
+align-items: center;
+background-color: white;
+position : relative;
 `;
 const WhatIsFlostingWrap = styled.div`
 display: flex
@@ -71,7 +71,6 @@ margin-top: 3rem;
         }
 
 `
-// background-color: rgb(215,174,232,0.2);
 const CloverTingWrap = styled.div`
 background-color: rgb(179,214,189,0.2);
 width: 20rem;

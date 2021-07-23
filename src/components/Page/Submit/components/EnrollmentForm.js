@@ -111,7 +111,7 @@ function useToggle(initialValue = true, values) {
 
 function EnrollmentForm(props, match) {
   // User ID
-  const { User, ID } = props;
+  const { User, ID, EP_Num } = props;
   // const EP = match.params.EP;
   // console.log(EP);
   // formik 초기 값
@@ -165,7 +165,7 @@ function EnrollmentForm(props, match) {
   // 이벤트 신청 중복검사
   useEffect(() => {
     if (User) {
-      db.collection("Flosting_7")
+      db.collection("Flosting_" + EP_Num)
         .where("ID", "==", ID)
         .get()
         .then((querySnapshot) => {
@@ -211,7 +211,7 @@ function EnrollmentForm(props, match) {
       }
     }
 
-    db.collection("Flosting_7")
+    db.collection("Flosting_"+EP_Num)
       .add({
         ID: ID,
         User: User,
@@ -225,6 +225,27 @@ function EnrollmentForm(props, match) {
       })
       .catch((error) => {
         alert(error.message);
+      });
+
+    
+    db.collection("회원정보")
+      .where("ID", "==", ID)
+      .get()
+      .then((querySnapshot) => {
+
+        let docID;
+
+        if (querySnapshot) {
+          querySnapshot.forEach((doc) => {
+            docID = doc.id;
+          });
+        }
+        let batch = db.batch();
+        let updatedb = db.collection("회원정보").doc(docID);
+        batch.update(updatedb,{"Ongoing": String(EP_Num)});
+        batch.commit().then(()=>{
+          console.log("good")
+        })
       });
     console.log("ID", ID);
     console.log("User", User);
@@ -242,7 +263,7 @@ function EnrollmentForm(props, match) {
       <ThemeProvider theme={Boldtheme}>
         {IsSubmit ? (
           <div>
-            <CheckDbData User={User} ID={ID} />
+            <CheckDbData EP_Num = {EP_Num} User={User} ID={ID} />
           </div>
         ) : (
           <div>
