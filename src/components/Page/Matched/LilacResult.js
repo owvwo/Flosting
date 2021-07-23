@@ -25,8 +25,10 @@ function LilacResult(props){
     let [진행중회차,진행중회차변경] = useState();
     let [지난회차,지난회차변경] = useState();
     let [컬렉션, 컬렉션변경] = useState();
+    let [회원정보문서아이디,회원정보문서아이디변경] = useState();
     let [문서번호,문서번호변경] = useState();
     let [남은시간, 남은시간변경] = useState();
+    let [유저정보, 유저정보변경] = useState();
     let [Ongoing,setOngoing]= useState();
     let [time,setTime]= useState();
 
@@ -46,9 +48,8 @@ function LilacResult(props){
         const snapShot = await db.collection('회원정보').where("ID","==",user.email.split('@')[0]).get()
         try{
             snapShot.forEach((doc)=>{
-
-                console.log(doc.data()['Ongoing'])
-                console.log('지난회차:',지난회차)
+                회원정보문서아이디변경(doc.id)
+                유저정보변경(doc.data()['User'])
                 setOngoing(doc.data()['Ongoing'])
                 닉네임변경(doc.data()['User']['Nick'])
             })
@@ -156,6 +157,8 @@ function LilacResult(props){
                     남은시간={남은시간}
                     발전단계={발전단계}
                     메세지보낸사람={메세지보낸사람}
+                    회원정보문서아이디={회원정보문서아이디}
+                    유저정보={유저정보}
                     />
             }
 

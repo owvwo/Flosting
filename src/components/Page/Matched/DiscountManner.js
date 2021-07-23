@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import firebase from '../Register/LoginFire.js'
 const db = firebase.firestore()
 
@@ -6,40 +6,50 @@ function DiscountManner(){
 
     let[stageZero, setStageZero] = useState([]);
     let[chewerList, setChewerList] = useState([]);
+    let [지난회차,지난회차변경] = useState();
     let stageZeroSum = []
     let chewerSum = []
     let chewer = null
 
+    const getVariableInfo = async() => {
+        const snapShot = await db.collection('매칭결과변수').doc('variableInfo').get()
+        try{
+            지난회차변경(snapShot.data()['진행중회차']-1)
+        }catch(err){console.log(err)}
+    }
+    useEffect(()=>{
+        getVariableInfo();
+    },[])
     function findStageZero(){
-        db.collection("7lilac").where("stage", "==", 'zero')
+        db.collection(`${지난회차}lilac`).where("stage", "==", 'zero')
             .get()
             .then((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
                     stageZeroSum.push(doc.data().userOne['Nick'], doc.data().userTwo['Nick'])
                 });
-                db.collection("7daisy").where("stage", "==", 'zero')
+                db.collection(`${지난회차}daisy`).where("stage", "==", 'zero')
                 .get()
                 .then((querySnapshot)=>{
                     querySnapshot.forEach((doc)=>{
                         stageZeroSum.push(doc.data().userOne['Nick'], doc.data().userTwo['Nick'])
                         })
-                    db.collection("7clover").where("stage", "==", 'zero')
+                    db.collection(`${지난회차}clover`).where("stage", "==", 'zero')
                     .get()
                     .then((querySnapshot)=>{
                         querySnapshot.forEach((doc)=>{
                             stageZeroSum.push(doc.data().userOne['Nick'], doc.data().userTwo['Nick'])
                         })
                         setStageZero(stageZeroSum);
-                        console.log(stageZeroSum)
+                        console.log(stageZero)
+                        alert('잠수부추출완료')
                     })
                 })
             })
-            .catch(console.log('검색결과없음'))
     }
 
 
     function findChewer(){
-        db.collection("7lilac").where("stage", "==", 'half').get().then((querySnapshot) => {
+        db.collection(`${지난회차}lilac`).where("stage", "==", 'half').get().then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
                 if(doc.data().userOne['Nick'] === doc.data().메세지보낸사람){
                     chewer = doc.data().userTwo['Nick'];
@@ -49,7 +59,7 @@ function DiscountManner(){
                     chewerSum.push(chewer)
                 }
             });
-            db.collection("7daisy").where("stage", "==", "half").get().then((querySnapshot) => {
+            db.collection(`${지난회차}daisy`).where("stage", "==", "half").get().then((querySnapshot) => {
                 querySnapshot.forEach((doc)=>{
                     if(doc.data().userOne['Nick'] === doc.data().메세지보낸사람){
                         chewer = doc.data().userTwo['Nick'];
@@ -59,7 +69,7 @@ function DiscountManner(){
                         chewerSum.push(chewer)
                     }
                 })
-                db.collection("7clover").where("stage", "==", "half").get().then((querySnapshot)=>{
+                db.collection(`${지난회차}clover`).where("stage", "==", "half").get().then((querySnapshot)=>{
                     querySnapshot.forEach((doc)=>{
                         if(doc.data().userOne['Nick'] === doc.data().메세지보낸사람){
                             chewer = doc.data().userTwo['Nick'];
@@ -71,10 +81,10 @@ function DiscountManner(){
                         }    
                     })
                     setChewerList(chewerSum);
+                    alert('씹은애들 추출완료')
                 })
             })
         })
-            .catch(console.log('검색결과없음'))
     }
 
     function mannerDown(){

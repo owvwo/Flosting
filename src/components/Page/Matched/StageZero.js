@@ -107,7 +107,7 @@ function StageZero(props){
                 <LeftProfile 유저1={props.유저1} />
                 <RightProfile 유저2={props.유저2}/>
             </div>
-            <Button 컬렉션={props.컬렉션} 문서번호={props.문서번호} 닉네임={props.닉네임}/>
+            <Button 컬렉션={props.컬렉션} 문서번호={props.문서번호} 닉네임={props.닉네임} 회원정보문서아이디={props.회원정보문서아이디} 유저정보={props.유저정보}/>
             <Footer/>
         </Container>
     )
@@ -195,7 +195,17 @@ function Button(props){
             db.collection(props.컬렉션).doc(props.문서번호).update({
                 메세지보낸사람: props.닉네임
             })
-            alert('좋은 결과 기원합니다 :)')
+            db.collection('회원정보').doc(props.회원정보문서아이디).update({
+                User:{
+                    'Age': props.유저정보['Age'],
+                    'Gender':props.유저정보['Gender'],
+                    'Manner': props.유저정보['Manner']+1,
+                    'Nick': props.유저정보['Nick'],
+                    'Phone': props.유저정보['Phone'],
+                    'Univ': props.유저정보['Univ']
+                }
+            })
+            alert('매너온도가 상승했습니다! 좋은 결과 기원합니다 :)')
         }else{}
     }
     function onClick_refuse(){
