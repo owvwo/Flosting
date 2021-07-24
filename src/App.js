@@ -16,8 +16,13 @@ import { red } from '@material-ui/core/colors';
 
 const TransferMobile = styled.div`
   .inner{
-    width:25rem;
+    width:40rem;
     margin: 0 auto;
+  }
+  .warning{
+    font-size: 2rem;
+    text-align:center;
+    background-color: red;
   }
 `
 
@@ -51,7 +56,7 @@ function App(){
         <BrowserView>
           <TransferMobile>
             <div className='inner'>
-              <div>데스크탑에서 보여지는 화면입니다</div>
+              <div className='warning'>본 홈페이지는 모바일에 최적화 되어 있습니다.</div>
               <Navbar User = {User}/>
               <Transition User = {User}/>
             </div>

@@ -41,6 +41,7 @@ const Container = styled.div`
         border-radius: 15px;
         padding: 0.5rem;
         margin-bottom: 1rem; 
+        margin-top: 0.5rem; 
     }
     .daisyTingBox{
         color: rgb(0,0,0,0.8);
@@ -73,7 +74,17 @@ function MyRecentSubmit(props) {
     let[lilacUniv,setLilacUniv]=useState();
     let[memberInfoDocId,setMemberInfoDocId]=useState();
     let[submitDocId,setSubmitDocId]=useState();
+    let[버튼상태,버튼상태변경]=useState(false);
+    let 신청중회차=[];
 
+    // DB 현재 신청 중인 회차 변수 불러오는 함수
+    const getVariableInfo = async() => {
+        const snapShot = await db.collection('매칭결과변수').doc('variableInfo').get()
+        try{
+            신청중회차 = snapShot.data()['신청중'].split(" ")
+            버튼상태변경(신청중회차.includes(몇회차))
+        }catch(err){console.log(err)}
+    }
     const findInSubmit = async() => {
         const snapShot = await db.collection(`Flosting_${몇회차}`).where("ID", "==", props.user.email.split('@')[0]).get()
         try{
@@ -114,6 +125,7 @@ function MyRecentSubmit(props) {
     }
 
     useEffect(()=>{
+        getVariableInfo();
         findInSubmit();
         prepareDelete();
     },[cloverAge, daisyAge, lilacAge, cloverUniv, daisyUniv, lilacUniv, 몇회차])
@@ -124,6 +136,7 @@ function MyRecentSubmit(props) {
                 <h1>
                     최근신청내역
                 </h1><br/>
+                <h2>{몇회차}회차 신청 내역</h2>
                 <div>
                     <div className='cloverTingBox'>
                         <h2>클로버팅</h2>
@@ -185,17 +198,15 @@ function MyRecentSubmit(props) {
                         && <div>매칭 상대 학교: 같은 학교만</div>
                         }
                     </div>
-
-                </div>
                 {
-                    cloverAge === '' && lilacAge==='' && daisyAge===''
-                    ? null
-                    : 
+                    버튼상태
+                    ? 
                     <div>
-                        <button onClick={onClick} className='resubmitButton'>재신청하기</button>
+                        <button onClick={onClick} className='resubmitButton'>신청취소</button>
                     </div>
-
+                    : null
                 }
+                </div>
             </Container>
         </ThemeProvider>
     );

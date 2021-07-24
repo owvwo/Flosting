@@ -7,6 +7,7 @@ function DiscountManner(){
     let[stageZero, setStageZero] = useState([]);
     let[chewerList, setChewerList] = useState([]);
     let [지난회차,지난회차변경] = useState();
+    let [진행중회차,진행중회차변경] = useState();
     let stageZeroSum = []
     let chewerSum = []
     let chewer = null
@@ -15,6 +16,7 @@ function DiscountManner(){
         const snapShot = await db.collection('매칭결과변수').doc('variableInfo').get()
         try{
             지난회차변경(snapShot.data()['진행중회차']-1)
+            진행중회차변경(snapShot.data()['진행중회차'])
         }catch(err){console.log(err)}
     }
     useEffect(()=>{
@@ -127,10 +129,16 @@ function DiscountManner(){
 
     return(
         <div>
-            <button onClick={()=>{findStageZero()}}>잠수탄애들잡아내기</button>
-            <button onClick={()=>{findChewer()}}>선톡씹은애들잡아내기</button>     
-            <button onClick={()=>{mannerDown()}}>매너온도 차감 버튼</button>      
-
+            <h2>{지난회차}회차에서 매너온도 차감</h2>
+            <div>
+                <button onClick={()=>{findStageZero()}}>잠수탄애들잡아내기</button>
+            </div>
+            <div>
+                <button onClick={()=>{findChewer()}}>선톡씹은애들잡아내기</button>     
+            </div>
+            <div>
+                <button onClick={()=>{mannerDown()}}>매너온도 차감 버튼</button>      
+            </div>
         </div>
     )
 }

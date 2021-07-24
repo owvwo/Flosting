@@ -39,7 +39,6 @@ const 푸터 = styled.div`
             display:flex;
             justify-content: center;
             align-items: center;
-      
             img{
                 height: 1rem;
                 width: 1rem;

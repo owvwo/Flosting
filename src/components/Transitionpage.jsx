@@ -23,6 +23,7 @@ import DasiyResult from '../components/Page/Matched/DasiyResult.js';
 import EPall from './Page/CurrentEvent/EPAll';
 import Alarm from "./Page/Alarm";
 import Admin_page from "./Page/Manager/Admin";
+import AdminBigFoot from "./Page/Manager/AdminBigFoot.js";
 import QnaMain from '../components/Page/QNA/QnaMain.js';
 import AnswerOne from '../components/Page/QNA/AnswerOne.js';
 import AnswerTwo from '../components/Page/QNA/AnswerTwo.js';
@@ -53,7 +54,7 @@ const Transition = (props) => {
     <TransitionGroup className="transition-group">
       <CSSTransition key={location.pathname} classNames="fade" timeout={500}>
         <Switch location={location}>
-          <Route exact path="/" component={Home_page} />
+          <Route exact path="/"><Home_page User = {user}/></Route>
           <Route exact path="/currentevent"><CurrentEvent 
           setEP_School_Name = {setEP_School_Name}
           setEP_Num = {setEP_Num}
@@ -69,7 +70,7 @@ const Transition = (props) => {
           EP_End_Day = {EP_End_Day}
           EP_Result_Day = {EP_Result_Day}
           /></Route>
-          <Route exact path="/currentevent/alarm" component={Alarm} />
+          <Route path="/currentevent/alarm"><Alarm User = {user}/></Route>
           <Route path="/login" component={Login_page} />
           <Route path="/submit"><Submit_page EP_Num = {EP_Num} User = {user}/></Route>
           <Route path="/confirm" component={Confirm_page} />
@@ -78,6 +79,7 @@ const Transition = (props) => {
           <Route path="/history" component={History_page} />
           <Route exact path="/ad" component={AD_page} />
           <Route exact path="/admin" component={Admin_page} />
+          <Route exact path="/admin/bigfoot" component={AdminBigFoot} />
           <Route path="/timer"><Timer User = {user}/></Route>
           <Route path="/selectresult"><SelectResult User = {user}/></Route>
           <Route path="/lilacresult"><LilacResult User = {user}/></Route>

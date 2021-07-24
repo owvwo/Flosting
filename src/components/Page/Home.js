@@ -12,6 +12,8 @@ import 참여방법Slider from './HowToSubmitSlider.js'
 import 데이지배경 from '../../images/daisy.png'
 import 라일락배경 from '../../images/lilac.png'
 import 클로버배경 from '../../images/clover.png'
+import firebase from './Register/LoginFire.js'
+const db = firebase.firestore()
 
 const Container = styled.div`
 font-family: 'Noto Sans KR', sans-serif;
@@ -104,7 +106,20 @@ width:100%;
 
 const CurrentButton = styled.button`
     font-size: 2rem;
-    background-color: rgb(179,214,189,0.2);
+    background-color: rgb(255,180,224,0.2);
+    color: white;
+    border: rgb(179,214,189,0.3);
+    width: 14rem;
+    border-radius: 12px;
+    padding: 5px;
+    &:hover{
+        background-color:white;
+        color: yellow;
+    }
+`
+const ResultButton = styled.button`
+    font-size: 2rem;
+    background-color: rgb(238,236,142,0.2);
     color: white;
     border: rgb(179,214,189,0.3);
     width: 14rem;
@@ -118,20 +133,44 @@ const CurrentButton = styled.button`
 
 
 
-const Home = () =>{
-    let[버튼타이머,버튼타이머변경] = useState(false);
+const Home = (props) =>{
+    let user = props.User;
+    let [버튼타이머,버튼타이머변경] = useState(false);
+    let [매칭결과조회여부,매칭결과조회여부변경] = useState(false);
+    let [지난회차,지난회차변경] = useState();
+    let [진행중회차,진행중회차변경] = useState();
+    let [Ongoing,setOngoing] = useState();
 
+    const getVariableInfo = async() => {
+        const snapShot = await db.collection('매칭결과변수').doc('variableInfo').get()
+        try{
+            지난회차변경(snapShot.data()['진행중회차']-1)
+            진행중회차변경(snapShot.data()['진행중회차'])
+        }catch(err){console.log(err)}
+    }
+    const getUserOngoing = async() => {
+        const getDocIdFromMemberInfo = await db.collection('회원정보').where("ID", "==", props.User.email.split('@')[0]).get()
+        getDocIdFromMemberInfo.forEach((doc)=>{
+            setOngoing(doc.data()['Ongoing'])
+        })
 
+    }
     useEffect(()=>{
+        if(user){
+            getVariableInfo();
+            getUserOngoing();
+            if(Number(Ongoing)===진행중회차){매칭결과조회여부변경(true)}
+            else if(Number(Ongoing)===지난회차){매칭결과조회여부변경(true)}
+        }
         setTimeout(function(){
             버튼타이머변경(true);
-        },3000)
+        },2500)
     })
 
 
     return(
         <Container>
-            <Jumbotron CurrentButton={CurrentButton} 버튼타이머={버튼타이머} />
+            <Jumbotron CurrentButton={CurrentButton} 버튼타이머={버튼타이머} 매칭결과조회여부={매칭결과조회여부}/>
             <WhatIsFlosting WhatIsFlostingWrap={WhatIsFlostingWrap}/>  
             <div className='parent'>
                 <LilacTing LilacTingWrap={LilacTingWrap}/>
@@ -146,24 +185,37 @@ const Home = () =>{
 };
 
 
-function Jumbotron({CurrentButton, 버튼타이머}){
+function Jumbotron({CurrentButton, 버튼타이머, 매칭결과조회여부}){
     return (
         <div className='jb_wrap'>
             <div className='jb_gif'>
                 <img src={logo} className='logogif' />
             </div>
+            {
+            버튼타이머 === true && 매칭결과조회여부 === true
+            ?
+            <div className='result_link'>
+                <NavLink to='/selectresult'>
+                    <Fade bottom>
+                        <ResultButton>매칭결과보기</ResultButton>
+                    </Fade>
+                </NavLink>
+            </div>
 
-            <NavLink to='/selectresult'>
-                    <button>매칭결과보기</button>
-            </NavLink>
+            :
+            null
+            }
 
             {
             버튼타이머 === true
-            ? <div className='jb_link'>
+            ? 
+            <div className='jb_link'>
                 <NavLink to='/currentevent'>
+                <Fade bottom>
                     <CurrentButton>현재 진행 중</CurrentButton>
+                </Fade>
                 </NavLink>
-              </div>
+            </div>
 
             : null
             }
