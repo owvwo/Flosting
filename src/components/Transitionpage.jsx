@@ -24,8 +24,9 @@ import DasiyResult from '../components/Page/Matched/DasiyResult.js';
 import EPall from './Page/CurrentEvent/EPAll';
 import Alarm from "./Page/Alarm";
 import Admin_page from "./Page/Manager/Admin";
-import SubEvent from "./Page/subEvent/EventMain"
+import EventMain from "./Page/subEvent/EventMain"
 import NoticeDetail from "./Page/subEvent/NoticeDetail";
+import EventDetail from "./Page/subEvent/EventDetail";
 
 const Transition = (props) => {
 
@@ -38,6 +39,7 @@ const Transition = (props) => {
   const [EP_End_Day, setEP_End_Day] = useState('');
   const [EP_Result_Day, setEP_Result_Day] = useState('');
 
+  const [S_Event, setS_Event] = useState("");
 
   const user = props.User;
   const location = useLocation();
@@ -48,6 +50,7 @@ const Transition = (props) => {
         <Switch location={location}>
           <Route exact path="/" component={Home_page} />
           <Route exact path="/currentevent"><CurrentEvent 
+          User = {user}
           setEP_School_Name = {setEP_School_Name}
           setEP_Num = {setEP_Num}
           setEP_Start_Day = {setEP_Start_Day}
@@ -66,9 +69,9 @@ const Transition = (props) => {
           <Route path="/login" component={Login_page} />
           <Route path="/submit"><Submit_page EP_Num = {EP_Num} User = {user}/></Route>
           <Route path="/confirm" component={Confirm_page} />
-          <Route exact path="/subevent" component={SubEvent} />
+          <Route exact path="/subevent" component={EventMain} />
           <Route exact path="/subevent/notice" component={NoticeDetail} />
-          <Route exact path="/subevent/event" component={NoticeDetail} />
+          <Route exact path="/subevent/event" component={EventDetail}/>
           <Route path="/account" component={Account_page} />
           <Route path="/about" component={About_page} />
           <Route path="/history" component={History_page} />

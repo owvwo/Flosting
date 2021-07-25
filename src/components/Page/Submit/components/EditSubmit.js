@@ -89,7 +89,6 @@ function EditSubmit(props) {
         .where("ID", "==", s_id[0])
         .get()
         .then((querySnapshot) => {
-          // console.log(querySnapshot.size);
           if (querySnapshot) {
             querySnapshot.forEach((doc) => {
               setDocID(doc.id);

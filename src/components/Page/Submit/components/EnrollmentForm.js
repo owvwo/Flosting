@@ -26,6 +26,8 @@ import { ageOptions } from "../components/Options/AgeOptions";
 import { desiredUnivOptions } from "./Options/DesiredUnivOptions";
 import { settings } from "./SlickSliderSetting";
 import CheckDbData from "./CheckDbData";
+import firebase from "firebase/app";
+
 const Boldtheme = createMuiTheme({
   palette: {
     primary: {
@@ -38,6 +40,10 @@ const Boldtheme = createMuiTheme({
     fontFamily: "Noto Sans KR",
   },
 });
+
+const ErrorMsg = styled.div`
+  color: red;
+`;
 
 const InputContainer = styled.div`
 width:  
@@ -192,6 +198,8 @@ function EnrollmentForm(props, match) {
     } else {
       if (values.Lilac.Age === "" || values.Lilac.Univ === "") {
         values.Lilac.Ticket = false;
+        values.Lilac.Age = "";
+        values.Lilac.Univ = "";
       }
     }
     if (daisyOn) {
@@ -200,6 +208,8 @@ function EnrollmentForm(props, match) {
     } else {
       if (values.Daisy.Age === "" || values.Daisy.Univ === "") {
         values.Daisy.Ticket = false;
+        values.Daisy.Age = "";
+        values.Daisy.Univ = "";
       }
     }
     if (cloverOn) {
@@ -208,6 +218,8 @@ function EnrollmentForm(props, match) {
     } else {
       if (values.Clover.Age === "" || values.Clover.Univ === "") {
         values.Clover.Ticket = false;
+        values.Clover.Age = "";
+        values.Lilac.Univ = "";
       }
     }
 
@@ -238,8 +250,12 @@ function EnrollmentForm(props, match) {
             docID = doc.id;
           });
         }
+
         let batch = db.batch();
         let updatedb = db.collection("회원정보").doc(docID);
+        batch.update(updatedb, {
+          My_Usage_History: firebase.firestore.FieldValue.arrayUnion(EP_Num),
+        });
         batch.update(updatedb, { Ongoing: String(EP_Num) });
         batch.commit().then(() => {
           console.log("good");
@@ -392,44 +408,59 @@ function EnrollmentForm(props, match) {
                       <Container>
                         <Title>마지막!!</Title>
                         <img src={submitMain} />
-                        <div>
-                          <SubmitButton
-                            type="button"
-                            onClick={handleClickOpen}
-                            color={"#C6B4CE"}
-                          >
-                            제출하기!!
-                          </SubmitButton>
-                        </div>
-                        <Dialog
-                          open={open}
-                          onClose={handleClose}
-                          aria-labelledby="alert-dialog-title"
-                          aria-describedby="alert-dialog-description"
-                        >
-                          <DialogTitle id="alert-dialog-title">
-                            {"신청하시겠습니까?"}
-                          </DialogTitle>
-                          <DialogContent>
-                            <DialogContentText id="alert-dialog-description">
-                              리얼로 신청할꺼임??
-                            </DialogContentText>
-                          </DialogContent>
-                          <DialogActions>
-                            <Button onClick={handleClose} color="primary">
-                              Disagree
-                            </Button>
-                            <Button
-                              form="myForm"
-                              type="submit"
-                              onClick={handleClose}
-                              color="primary"
-                              autoFocus
+                        {lilacOn && daisyOn && cloverOn ? (
+                          <div>
+                            <SubmitButton
+                              type="button"
+                              onClick={handleClickOpen}
+                              color={"#8F8F8F"}
+                              disabled={true}
                             >
-                              Agree
-                            </Button>
-                          </DialogActions>
-                        </Dialog>
+                              제출하기!!
+                            </SubmitButton>
+                            <ErrorMsg>최소 하나의 타입을 선택해주세요</ErrorMsg>
+                          </div>
+                        ) : (
+                          <div>
+                            <SubmitButton
+                              type="button"
+                              onClick={handleClickOpen}
+                              color={"#C6B4CE"}
+                            >
+                              제출하기!!
+                            </SubmitButton>
+
+                            <Dialog
+                              open={open}
+                              onClose={handleClose}
+                              aria-labelledby="alert-dialog-title"
+                              aria-describedby="alert-dialog-description"
+                            >
+                              <DialogTitle id="alert-dialog-title">
+                                {"신청하시겠습니까?"}
+                              </DialogTitle>
+                              <DialogContent>
+                                <DialogContentText id="alert-dialog-description">
+                                  리얼로 신청할꺼임??
+                                </DialogContentText>
+                              </DialogContent>
+                              <DialogActions>
+                                <Button onClick={handleClose} color="primary">
+                                  Disagree
+                                </Button>
+                                <Button
+                                  form="myForm"
+                                  type="submit"
+                                  onClick={handleClose}
+                                  color="primary"
+                                  autoFocus
+                                >
+                                  Agree
+                                </Button>
+                              </DialogActions>
+                            </Dialog>
+                          </div>
+                        )}
                       </Container>
                     </Slider>
                   </Form>

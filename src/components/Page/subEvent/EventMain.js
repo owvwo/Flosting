@@ -1,6 +1,7 @@
 import { React, useState, useEffect } from "react";
 import Footer from "../Footer";
 import EventList from "./EventList";
+import NoticeList from "./NoticeList";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
@@ -10,8 +11,12 @@ import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
-import NoticeList from "./NoticeList";
 import styled from "styled-components";
+
+const Container = styled.div`
+  font-family: "Noto Sans KR", sans-serif;
+  font-weight: 400;
+`;
 
 const Title = styled.h1`
   fontfamily: "Noto Sans KR", sans-serif;
@@ -33,7 +38,7 @@ const Colortheme = createMuiTheme({
   },
 });
 
-function TabPanel(props) {
+const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
 
   return (
@@ -45,13 +50,13 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box p={3}>
+        <Box p={1}>
           <Typography>{children}</Typography>
         </Box>
       )}
     </div>
   );
-}
+};
 
 TabPanel.propTypes = {
   children: PropTypes.node,
@@ -66,12 +71,12 @@ function a11yProps(index) {
   };
 }
 
-// const useStyles = makeStyles((theme) => ({
-//   root: {
-//     backgroundColor: theme.palette.background.paper,
-//     width: 500,
-//   },
-// }));
+const useStyles = makeStyles((theme) => ({
+  root: {
+    backgroundColor: theme.palette.background.paper,
+    width: 500,
+  },
+}));
 
 function EventMain(props) {
   const theme = useTheme();
@@ -86,33 +91,35 @@ function EventMain(props) {
   };
   return (
     <ThemeProvider theme={Colortheme}>
-      {/* <Title>이벤트 및 공지사항</Title> */}
-      <AppBar position="static" color="default">
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          indicatorColor="primary"
-          textColor="primary"
-          variant="fullWidth"
-          aria-label="full width tabs example"
+      <Container>
+        <Title>이벤트 및 공지사항</Title>
+        <AppBar position="static" color="default">
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            indicatorColor="primary"
+            textColor="primary"
+            variant="fullWidth"
+            aria-label="full width tabs example"
+          >
+            <Tab label="이벤트" {...a11yProps(0)} />
+            <Tab label="공지사항" {...a11yProps(1)} />
+          </Tabs>
+        </AppBar>
+        <SwipeableViews
+          axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+          index={value}
+          onChangeIndex={handleChangeIndex}
         >
-          <Tab label="이벤트" {...a11yProps(0)} />
-          <Tab label="공지사항" {...a11yProps(1)} />
-        </Tabs>
-      </AppBar>
-      <SwipeableViews
-        axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-        index={value}
-        onChangeIndex={handleChangeIndex}
-      >
-        <TabPanel value={value} index={0} dir={theme.direction}>
-          <EventList></EventList>
-        </TabPanel>
-        <TabPanel value={value} index={1} dir={theme.direction}>
-          <NoticeList></NoticeList>
-        </TabPanel>
-      </SwipeableViews>
-      <Footer></Footer>
+          <TabPanel value={value} index={0} dir={theme.direction}>
+            <EventList />
+          </TabPanel>
+          <TabPanel value={value} index={1} dir={theme.direction}>
+            <NoticeList />
+          </TabPanel>
+        </SwipeableViews>
+        <Footer></Footer>
+      </Container>
     </ThemeProvider>
   );
 }

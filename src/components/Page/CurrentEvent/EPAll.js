@@ -7,6 +7,29 @@ import { Link, Redirect } from "react-router-dom";
 import Notice from "./Notice";
 import Period from "./Period";
 import fire from "../Register/LoginFire";
+import {
+  createMuiTheme,
+  ThemeProvider,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Button,
+} from "@material-ui/core";
+
+const Boldtheme = createMuiTheme({
+  palette: {
+    primary: {
+      main: "#E0BCC1",
+    },
+  },
+  typography: {
+    fontSize: 10,
+    fontWeightRegular: 700,
+    fontFamily: "Noto Sans KR",
+  },
+});
 
 const Container = styled.div`
   text-align: center;
@@ -31,16 +54,10 @@ const Container = styled.div`
 `;
 
 function EP1(props) {
-
-  const {
-    EP_School_Name,
-    EP_Num,
-    EP_Start_Day,
-    EP_End_Day,
-    EP_Result_Day
-  } = props;
+  const { EP_School_Name, EP_Num, EP_Start_Day, EP_End_Day, EP_Result_Day } =
+    props;
   const user = props.User;
-  const period = EP_Start_Day +  "~" + EP_End_Day;
+  const period = EP_Start_Day + "~" + EP_End_Day;
   const ep = EP_Num;
   const eventUniv = EP_School_Name;
   const dbUser = [
@@ -53,6 +70,17 @@ function EP1(props) {
       Univ: "",
     },
   ];
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const [checkUserUniv, setCheckUserUniv] = useState("");
+  const [open, setOpen] = useState(false);
   const [User, setUser] = useState(dbUser);
   const db = fire.firestore();
   useEffect(() => {
@@ -74,10 +102,9 @@ function EP1(props) {
   }, [user]);
 
   let index = eventUniv.indexOf(User.Univ);
-  const EP = "EP1";
   if (!JSON.parse(localStorage.getItem("user"))) {
     return <Redirect to="/login" />;
-  }else if(!EP_End_Day){
+  } else if (!EP_End_Day) {
     return <Redirect to="/currentevent" />;
   } else {
     return (
@@ -89,9 +116,40 @@ function EP1(props) {
             {eventUniv[0]} & {eventUniv[1]}
           </div>
           <img src={Logo} />
-          <Link to={index === -1 ? "/currentevent" : "/submit"}>
-            <button className="submitBtn">신청하기</button>
-          </Link>
+          {index === -1 ? (
+            <ThemeProvider theme={Boldtheme}>
+              <div>
+                <button className="submitBtn" onClick={handleOpen}>
+                  신청하기
+                </button>
+                <Dialog
+                  open={open}
+                  onClose={handleClose}
+                  aria-labelledby="alert-dialog-title"
+                  aria-describedby="alert-dialog-description"
+                >
+                  <DialogTitle id="alert-dialog-title">
+                    {"학교 오류"}
+                  </DialogTitle>
+                  <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                      해당 이벤트 참여 대상자가 아닙니다.
+                    </DialogContentText>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={handleClose} color="primary">
+                      창 닫기
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+              </div>
+            </ThemeProvider>
+          ) : (
+            <Link to="/submit">
+              <button className="submitBtn">신청하기</button>
+            </Link>
+          )}
+
           <Fade bottom>
             <Period period={period}></Period>
             <Notice />
