@@ -22,57 +22,57 @@ const Colortheme = createMuiTheme({
 const Container = styled.div`
   font-family: "Noto Sans KR", sans-serif;
   font-weight: 400;
-
-  h1 {
-    font-size: 1.5rem;
-  }
 `;
 
 const Usage_main = (props) => {
-  const docID = props.DocID;
+  const UserID = props.ID;
+  const UserHistory = props.UserHistory;
+  const User = props.User;
+
+  const [ID, setID] = useState("");
+  const [DocID, setDocID] = useState("");
   const db = fire.firestore();
-
-  const [lilacCheck, setLilacCheck] = useState("");
-  const [daisyCheck, setDaisyCheck] = useState("");
-  const [cloverCheck, setCloverCheck] = useState("");
   const [userHistory, setUserHistory] = useState();
-  // console.log(docID);
-
-  useEffect(() => {
-    var docRef = db.collection("회원정보").doc(docID);
-    docRef
-      .get()
-      .then((doc) => {
-        if (doc.exists) {
-          console.log("Document data:", doc.data().My_Usage_History);
-          setUserHistory(doc.data().My_Usage_History);
-          // console.log(userHistory[0]);
-        } else {
-          // doc.data() will be undefined in this case
-          console.log("No such document!");
-        }
-      })
-      .catch((error) => {
-        console.log("Error getting document:", error);
-      });
-  }, [docID]);
 
   // useEffect(() => {
-  //   console.log(userHistory[0]);
-  // }, [userHistory]);
+  //   if (User) {
+  //     const s_id = User.email.split("@");
+  //     db.collection("회원정보")
+  //       .where("ID", "==", s_id[0])
+  //       .get()
+  //       .then((querySnapshot) => {
+  //         if (querySnapshot) {
+  //           querySnapshot.forEach((doc) => {
+  //             setID(s_id[0]);
+  //             setDocID(doc.id);
+  //             // console.log(DocID);
+  //             var docRef = db.collection("회원정보").doc(doc.id);
+  //             docRef
+  //               .get()
+  //               .then((doc) => {
+  //                 if (doc.exists) {
+  //                   console.log("Document data:", doc.data().My_Usage_History);
+  //                   setUserHistory(doc.data().My_Usage_History);
+  //                 } else {
+  //                   // doc.data() will be undefined in this case
+  //                   console.log("No such document!");
+  //                 }
+  //               })
+  //               .catch((error) => {
+  //                 console.log("Error getting document:", error);
+  //               });
+  //           });
+  //         } else {
+  //           console.log("데이터 없음");
+  //         }
+  //       });
+  //   }
+  // }, [User]);
 
   return (
     <ThemeProvider theme={Colortheme}>
       <Container>
-        <h1>내 이용내역</h1>
-        {/* <Lilac_Table Type="Lilac"></Lilac_Table> */}
-        <Table
-          lilac={lilacCheck}
-          daisy={daisyCheck}
-          clover={cloverCheck}
-        ></Table>
-        {/* <Lilac_Table Type="Daisy"></Lilac_Table> */}
-        {/* <Lilac_Table Type="Clover"></Lilac_Table> */}
+        <Table User={User} UserID={UserID} UserHistory={UserHistory}></Table>
       </Container>
     </ThemeProvider>
   );

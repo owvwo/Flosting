@@ -73,13 +73,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function findUsage() {}
-
 const Mypage = (props) => {
   const User = props.User;
   const [ID, setID] = useState("");
   const [DocID, setDocID] = useState("");
   const db = fire.firestore();
+  const [userHistory, setUserHistory] = useState();
+  const [row, setrow] = useState({});
 
   useEffect(() => {
     if (User) {
@@ -90,8 +90,24 @@ const Mypage = (props) => {
         .then((querySnapshot) => {
           if (querySnapshot) {
             querySnapshot.forEach((doc) => {
+              setID(s_id[0]);
               setDocID(doc.id);
-              console.log(DocID);
+              // console.log(DocID);
+              var docRef = db.collection("회원정보").doc(doc.id);
+              docRef
+                .get()
+                .then((doc) => {
+                  if (doc.exists) {
+                    console.log("Document data:", doc.data().My_Usage_History);
+                    setUserHistory(doc.data().My_Usage_History);
+                  } else {
+                    // doc.data() will be undefined in this case
+                    console.log("No such document!");
+                  }
+                })
+                .catch((error) => {
+                  console.log("Error getting document:", error);
+                });
             });
           } else {
             console.log("데이터 없음");
@@ -144,7 +160,12 @@ const Mypage = (props) => {
               <MySetting user={User}></MySetting>
             </TabPanel>
             <TabPanel value={value} index={2} dir={theme.direction}>
-              <MyUsage_History user={User} DocID={DocID}></MyUsage_History>
+              <MyUsage_History
+                User={User}
+                ID={ID}
+                DocID={DocID}
+                UserHistory={userHistory}
+              ></MyUsage_History>
             </TabPanel>
           </SwipeableViews>
         </Container>

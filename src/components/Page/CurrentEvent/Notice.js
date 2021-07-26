@@ -10,7 +10,7 @@ const Container = styled.div`
   }
   .안내사항_내용 {
     font-size: 0.8rem;
-    text-align: left;
+    text-align: center;
     margin-left: 1rem;
   }
   .highlight {

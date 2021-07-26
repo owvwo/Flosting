@@ -44,6 +44,7 @@ const Container = styled.div`
     margin-top: 10px;
   }
   img {
+    text-align: center;
     width: 15rem;
   }
   .submitBtn {
