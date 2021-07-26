@@ -20,11 +20,21 @@ font-family: 'Noto Sans KR', sans-serif;
 left: 0;
 width: 100%;
 height: calc(100%-50px);
-overflow: scroll;
 align-items: center;
 background-color: white;
 position : relative;
 `;
+const Center = styled.div`
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+`
+const ContentWrap = styled.div`
+width: 23rem;
+`
+
+
 const WhatIsFlostingWrap = styled.div`
 display: flex
 justify-content: center;
@@ -185,15 +195,19 @@ const Home = (props) => {
     return (
         <Container>
             <Jumbotron CurrentButton={CurrentButton} 버튼타이머={버튼타이머} 매칭결과조회여부={매칭결과조회여부} />
-            <WhatIsFlosting WhatIsFlostingWrap={WhatIsFlostingWrap} />
-            <div className='parent'>
-                <LilacTing LilacTingWrap={LilacTingWrap} />
-                <DaisyTing DaisyTingWrap={DaisyTingWrap} />
-                <CloverTing CloverTingWrap={CloverTingWrap} />
-            </div>
-            <참여방법 참여방법Wrap={참여방법Wrap}></참여방법>
-            <매칭방법 참여방법Wrap={참여방법Wrap} />
-            <추후업데이트 참여방법Wrap={참여방법Wrap}></추후업데이트>
+            <Center>
+                <ContentWrap>
+                    <WhatIsFlosting WhatIsFlostingWrap={WhatIsFlostingWrap} />
+                    <div className='parent'>
+                        <LilacTing LilacTingWrap={LilacTingWrap} />
+                        <DaisyTing DaisyTingWrap={DaisyTingWrap} />
+                        <CloverTing CloverTingWrap={CloverTingWrap} />
+                    </div>
+                    <참여방법 참여방법Wrap={참여방법Wrap}></참여방법>
+                    <매칭방법 참여방법Wrap={참여방법Wrap} />
+                    <추후업데이트 참여방법Wrap={참여방법Wrap}></추후업데이트>
+                </ContentWrap>
+            </Center>
             <Footer></Footer>
         </Container>
 
@@ -203,7 +217,7 @@ export default Home;
 
 
 function Jumbotron({ CurrentButton, 버튼타이머, 매칭결과조회여부 }) {
-    
+
     const mp4link = "https://firebasestorage.googleapis.com/v0/b/flosting-65c9e.appspot.com/o/flostingmain.mp4?alt=media&token=" + process.env.REACT_APP_LINK_TOKEN
     return (
         <div className='jb_wrap'>

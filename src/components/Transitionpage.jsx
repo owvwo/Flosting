@@ -27,6 +27,9 @@ import AdminBigFoot from "./Page/Manager/AdminBigFoot.js";
 import EPall from './Page/CurrentEvent/EPAll';
 import Alarm from "./Page/Alarm";
 import Admin_page from "./Page/Manager/Admin";
+import EventMain from "./Page/subEvent/EventMain"
+import NoticeDetail from "./Page/subEvent/NoticeDetail";
+import EventDetail from "./Page/subEvent/EventDetail";
 import QnaMain from '../components/Page/QNA/QnaMain.js';
 import AnswerOne from '../components/Page/QNA/AnswerOne.js';
 import AnswerTwo from '../components/Page/QNA/AnswerTwo.js';
@@ -54,7 +57,7 @@ const Transition = (props) => {
   const [EP_Start_Day, setEP_Start_Day] = useState('');
   const [EP_End_Day, setEP_End_Day] = useState('');
   const [EP_Result_Day, setEP_Result_Day] = useState('');
-
+  const [S_Event, setS_Event] = useState("");
 
 
   const user = props.User;
@@ -65,7 +68,8 @@ const Transition = (props) => {
       <CSSTransition key={location.pathname} classNames="fade" timeout={500}>
         <Switch location={location}>
         <Route exact path="/"><Home_page User = {user}/></Route>
-          <Route exact path="/currentevent"><CurrentEvent 
+          <Route exact path="/currentevent"><CurrentEvent
+           User = {user}
           setEP_School_Name = {setEP_School_Name}
           setEP_Num = {setEP_Num}
           setEP_Start_Day = {setEP_Start_Day}
@@ -84,6 +88,9 @@ const Transition = (props) => {
           <Route path="/login" component={Login_page} />
           <Route path="/submit"><Submit_page EP_Num = {EP_Num} User = {user}/></Route>
           <Route path="/confirm" component={Confirm_page} />
+          <Route exact path="/subevent" component={EventMain} />
+          <Route exact path="/subevent/notice" component={NoticeDetail} />
+          <Route exact path="/subevent/event" component={EventDetail}/>
           <Route path="/account" component={Account_page} />
           <Route path="/about" component={About_page} />
           <Route path="/history" component={History_page} />

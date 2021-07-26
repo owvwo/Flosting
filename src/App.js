@@ -16,7 +16,7 @@ import { red } from '@material-ui/core/colors';
 
 const TransferMobile = styled.div`
   .inner{
-    width:100%;
+    width:40rem;
     margin: 0 auto;
   }
   .warning{
@@ -26,14 +26,10 @@ const TransferMobile = styled.div`
   }
 `
 
-const Testtransition = styled.div`
-  
-`
-
 function App(){
 
   const [User, setUser] = useState('');
-
+  
   useEffect(() => {
     authListener();
   }, []);
@@ -53,18 +49,20 @@ function App(){
   })
   };
 
+    
     return(
       <div>
         <ScrollToTop></ScrollToTop>
         <BrowserView>
-        <TransferMobile>
+            <Navbar User = {User}/>
+            <Transition User = {User}/>
+          {/* <TransferMobile>
             <div className='inner'>
+              <div className='warning'>본 홈페이지는 모바일에 최적화 되어 있습니다.</div>
               <Navbar User = {User}/>
-              <Testtransition>
               <Transition User = {User}/>
-              </Testtransition>
             </div>
-          </TransferMobile>
+          </TransferMobile> */}
         </BrowserView>
         <MobileView>
           <Navbar User = {User}/>
