@@ -9,6 +9,7 @@ import logoimg from '../../images/플로스팅 로고.png'
 import Fade from 'react-reveal/Fade';
 import Flip from 'react-reveal/Flip';
 import 참여방법Slider from './HowToSubmitSlider.js'
+import 매칭진행Slider from './MatchingStageSlider.js'
 import 데이지배경 from '../../images/daisy.png'
 import 라일락배경 from '../../images/lilac.png'
 import 클로버배경 from '../../images/clover.png'
@@ -102,8 +103,22 @@ width:100%;
     justify-content: center;
     align-items: center;
 }
+.middleText{
+    text-align:center;
+    font-weight: bolder;
+    font-size: 1.1rem;
+    margin-bottom: 5rem;
+}
+ul{
+    margin-top: 1rem;
+    margin-left: 4rem;
+    margin-bottom: 1rem;
+}
+.text{
+    text-align: center;
+    margin-bottom: 1rem;
+}
 `
-
 const CurrentButton = styled.button`
     font-size: 2rem;
     background-color: rgb(255,180,224,0.2);
@@ -114,7 +129,7 @@ const CurrentButton = styled.button`
     padding: 5px;
     &:hover{
         background-color:white;
-        color: yellow;
+        color: green;
     }
 `
 const ResultButton = styled.button`
@@ -127,7 +142,7 @@ const ResultButton = styled.button`
     padding: 5px;
     &:hover{
         background-color:white;
-        color: yellow;
+        color: green;
     }
 `
 
@@ -178,11 +193,14 @@ const Home = (props) =>{
                 <CloverTing CloverTingWrap={CloverTingWrap}/>
             </div>   
             <참여방법 참여방법Wrap={참여방법Wrap}></참여방법>
+            <매칭방법 참여방법Wrap={참여방법Wrap}/>
+            <추후업데이트 참여방법Wrap={참여방법Wrap}></추후업데이트>
             <Footer></Footer>
         </Container>
 
     );
 };
+export default Home;
 
 
 function Jumbotron({CurrentButton, 버튼타이머, 매칭결과조회여부}){
@@ -329,8 +347,8 @@ function 참여방법({참여방법Wrap}){
     return(
         <Fade bottom>
             <참여방법Wrap>
-                <div className='참여방법제목'>
-                    참여방법
+                <div className='목차제목'>
+                    <span className='highlight'>참여방법</span>
                 </div>
                 <div className='silderDiv'>
                     <참여방법Slider />
@@ -339,5 +357,65 @@ function 참여방법({참여방법Wrap}){
         </Fade>
     )
 }
-
-export default Home;
+function 매칭방법({참여방법Wrap}){
+    return(
+        
+            <참여방법Wrap>
+                <Fade bottom>
+                    <div className='잠깐'>
+                        <span className='잠깐highlight'>잠깐!</span>
+                    </div>
+                </Fade>
+                <Fade bottom>
+                    <div className='middleText'>
+                        매칭은 되었지만 상대방에서 <br/>
+                        아무런 반응이 없다구요?<br/>
+                        또는 사정이 생겨 매칭 거절 <br/>
+                        의사를 표하고 싶으시다구요?<br/><br/>
+                        플로스팅에서는 매칭이 이루어지면 특별한<br/>
+                        화면으로 매칭 진행 상황을 보실 수 있습니다.
+                    </div>
+                </Fade>
+                <Fade bottom>
+                    <div className='목차제목'>
+                        <span className='highlight'>매칭 단계 진행 방법</span>
+                    </div>
+                    <div className='silderDiv'>
+                        <매칭진행Slider />
+                    </div>
+                </Fade>
+            </참여방법Wrap>
+        
+    )
+}
+function 추후업데이트({참여방법Wrap}){
+    return(
+        <참여방법Wrap>
+            <Fade bottom>
+                <div className='목차제목'>
+                    <span className='highlight'>추후 업데이트 예정</span>
+                </div>
+                <ul className='updateList'>
+                    <li>
+                        매너온도에 따른 티어별 매칭
+                    </li>
+                    <li>
+                        MBTI 조건에 따른 매칭   
+                    </li>
+                    <li>
+                        매칭 성공에 따른 이벤트 진행 예정
+                    </li>
+                    <li>
+                        거짓 정보를 이용한 사용자 신고접수 기능 추가
+                    </li>
+                </ul>
+                <div className='text'>
+                    오로지 대학생을 위하여 출발하게된 플로스팅은<br/>
+                    대학생이라면 누구나 다같이 만들어가고자 모든<br/>
+                    피드백과 의견수렴에 대해 환영하고 있습니다<br/>
+                    무료 서비스인만큼 많은 참여와 의견 부탁드립니다 :)
+                </div>
+            </Fade>
+        </참여방법Wrap>
+    )
+}
