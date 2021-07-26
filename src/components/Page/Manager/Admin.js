@@ -2,6 +2,7 @@ import React, { Component, useState, useEffect } from 'react'
 import styled from 'styled-components';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import SelectEPlist from './SelectEPlist'
+import { NavLink } from 'react-router-dom';
 
 
 const Colortheme = createMuiTheme({
@@ -132,6 +133,7 @@ const Admin = (props) => {
                 
             </SelectEPlist>
             </Container>
+            <NavLink to ='/admin/bigfoot'><button>왕발 기능</button></NavLink>
         </ThemeProvider>
     );
 }

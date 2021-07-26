@@ -1,8 +1,14 @@
 import React, { Component, useState, useEffect } from 'react'
 import styled from 'styled-components';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
-import { NavLink } from 'react-router-dom';
-import axios from 'axios';
+import { NavLink, Redirect } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import fire from './LoginFire'
 
 const Colortheme = createMuiTheme({
   palette: {
@@ -33,7 +39,7 @@ const Container = styled.div`
     }
 `;
 
-const Button = styled.button`
+const NextButton = styled.button`
   font-family: 'Noto Sans KR', sans-serif;
   font-weight: 700;
   padding: 10px 15px;
@@ -58,13 +64,21 @@ const PhoneButton = styled.button`
   font-family: 'Noto Sans KR', sans-serif;
   font-weight: 700;
   padding: 10px 15px;
-  margin: 0rem 0rem 2rem 0rem;
+  margin: 0rem 0rem 1rem 0rem;
   border: none;
   border-radius: 5px;
   height: 3rem;
   width: 100%;
   background-color: #E0BCC1;
   color: #FFFFFF;
+  opacity: ${props => {
+    if (props.disabled) return '0.5';
+    else return '1.0';
+  }};
+  cursor: ${props => {
+    if (props.disabled) return 'default';
+    else return 'pointer'
+  }};
 `;
 
 const School_title = styled.div`
@@ -78,19 +92,52 @@ const School_content = styled.div`
     else return '#00AB6F';
   }};
     font-size: 0.5rem;
-    margin : 1rem 0rem 1rem 0rem;
+    margin : 0rem 0rem 1rem 0rem;
+`;
+
+const Input = styled.input`
+
+  border : ${props => props.limitnum ? '1px solid #A6A6A6' : '1px solid #EF0C00'};
+  color: ${props => props.limitnum ? (props.overlap ? "#A6A6A6" : 'black') : '#EF0C00'};
+  font-family: 'Noto Sans KR', sans-serif;
+  type : text;
+  line-height: 2rem;
+  padding-left: 10px;
+  margin: 5px;
+  height: 2rem;
+  width: 200px;
+  font-size: 0.8rem;
+  border-radius: 5px;
 `;
 
 
 
-
-
 const Certification = (props) => {
+  const [limitnum, setlimitnum] = useState(false); // 학번의 제한 체크 변수
+  const [limitnummessasge, setlimitnummessasge] = useState("숫자로 입력해주세요.");
+  const [overlap, setoverLap] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [open2, setOpen2] = useState(false);
   const [canNext, setcanNext] = useState(true);
-  const [goMessage, setgoMessage] = useState('아래 버튼을 눌러 휴대폰 인증을 완료해주세요.');
+  const [goMessage, setgoMessage] = useState('위 버튼을 눌러 휴대폰 인증을 완료해주세요.');
+  const db = fire.firestore();
 
+  const {
+    auth_regis,
+    U_Phone,
+    setU_name,
+    setU_Age,
+    setU_Gender,
+    setU_Phone,
+    setU_unique_key } = props
+
+  const noneactiveStyle = {
+    textDecoration: 'none'
+  }
+  //넘어온 데이터
+  let confirmdata;
   //본인인증 화면에 채워넣을 데이터
-  let data = {
+  let earlydata = {
     company: '플로스 컴패니',            // 회사명 또는 URL
     name: '',                           // 이름
     phone: '',                          // 전화번호
@@ -99,8 +146,29 @@ const Certification = (props) => {
     min_age: '18'                        //최소 만 나이                       
   };
 
-  let getdatatest;
+  const handleNumChange = (e) => {
+    let pattern = /[^0-9]/gi; // 숫자 입력 되게
+    e.target.value = e.target.value.replace(pattern, '');
+    if (e.target.value.length > 11) //글자수 제한
+      e.target.value = e.target.value.slice(0, 11);
+    setU_Phone(e.target.value);
 
+    if ((e.target.value).length == 11) {
+      setlimitnum(true);
+    } else {
+      setlimitnum(false);
+    }
+    if ((e.target.value).length == 11) {
+      setlimitnummessasge("입력 완료!");
+    }
+    else if ((e.target.value).length == 0) {
+      setlimitnummessasge("숫자로 입력해주세요.");
+    }
+    else {
+      setlimitnummessasge("번호가 너무 짧아요!");
+    }
+
+  }
   /* 3. 콜백 함수 정의하기 */
   function callback(response) {
     const {
@@ -111,74 +179,141 @@ const Certification = (props) => {
     } = response;
 
     if (success) {
-
-      // <-- 이부분에서, 인증 data값을 받아올 수 있는 방법 ??
-
-
-      setgoMessage('본인인증이 완료되었습니다! 다음으로 넘어가주세요.')
-      console.log('imp_uid = ' + imp_uid);
-      console.log('merchant_uid = ' + merchant_uid);
-      console.log("성공");
-      setcanNext(false);
+      fetchdata(imp_uid);
     } else {
-      alert(`본인인증 실패: ${error_msg}`);
+      setOpen(true);
     }
 
   }
-  function testaxios() {
-    axios.post("https://veygeyobj2.execute-api.ap-northeast-2.amazonaws.com/default/OwvwO_test_1", {
-      imp_uid: 'test'
-  })
-  .then(function (response) {
-       // response  
-  }).catch(function (error) {
-      // 오류발생시 실행
-  }).then(function() {
-      // 항상 실행
-  });
-    // jQuery.ajax({
-    //   url: "https://veygeyobj2.execute-api.ap-northeast-2.amazonaws.com/default/OwvwO_test_1", // 서비스 웹서버
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   data: { imp_uid: 'test' }
-    // });
+  function fetchdata(imp_uid) {
+    fetch("https://bjvy462n18.execute-api.ap-northeast-2.amazonaws.com/flosting/test", {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: JSON.stringify({
+        'imp_uid': imp_uid,
+      })
+    }).then(res => res.json())
+      .then(data => {
+        confirmdata = data;
+      })
+      .then(_ => {
+        const { birthday, certified, gender, name, unique_key } = confirmdata;
+        if (certified) {
+          let Infodb = db.collection("회원정보");
+          let query = Infodb.where("User.Unique_key", "==", unique_key).get().then((querySnapshot) => {
+            if (querySnapshot.size) {
+              setOpen2(true);
+            } else {
+              let agearray = birthday.split('-');
+              let nowTime = new Date();
+              let nowyear = nowTime.getFullYear();
+              let age = nowyear - agearray[0] + 1;
+              setU_Age(age);
+              if (gender == "male") {
+                setU_Gender("boy");
+              } else {
+                setU_Gender("girl");
+              }
+              setU_unique_key(unique_key);
+              setU_name(name);
+              setgoMessage('본인인증이 완료되었습니다! 다음으로 넘어가주세요.')
+              setcanNext(false);
+              setlimitnum(false);
+            }
+          });
+        } else {
+          setOpen(true); //본인확인 실패
+        }
+      })
+      .catch(err => console.error(err))
   }
 
   function onClickCertification() {
+    setoverLap(true);
+    earlydata.phone = U_Phone;
     /* 1. 가맹점 식별하기 */
     const { IMP } = window;
     IMP.init('imp73280791');
 
 
     /* 4. 본인인증 창 호출하기 */
-    IMP.certification(data, callback);
+    IMP.certification(earlydata, callback);
   }
+  if (!auth_regis) { return (<Redirect to='/register' />); }
+  else {
+    return (
+      <ThemeProvider theme={Colortheme}>
+        <Wrapper>
+          <Container>
+            <h1>
+              휴대폰 인증
+            </h1>
+            <School_title>
+              한 사람당 하나의 계정을 가지기 위함이에요!
+            </School_title>
 
-  return (
-    <ThemeProvider theme={Colortheme}>
-      <Wrapper>
-        <Container>
-          <h1>
-            휴대폰 인증
-          </h1>
-          <School_title>
-            한 사람당 하나의 계정을 가지기 위함이에요!
-          </School_title>
-          <School_content canNext={canNext}>
-            {goMessage}
-          </School_content>
-          <PhoneButton onClick={testaxios} >
-            휴대폰 인증
-          </PhoneButton>
-          <NavLink to="/register/last">
-            <Button disabled={canNext}>
-              다음
-            </Button>
-          </NavLink>
-        </Container>
-      </Wrapper>
-    </ThemeProvider>
-  );
+            <Input
+              overlap={overlap}
+              limitnum={limitnum}
+              placeholder="핸드폰 번호를 입력해주세요."
+              onChange={handleNumChange}
+              disabled={overlap}
+            />
+            <School_content canNext={!limitnum}>
+              {limitnummessasge}
+            </School_content>
+            <PhoneButton disabled={!limitnum} onClick={onClickCertification} >
+              휴대폰 인증
+            </PhoneButton>
+            <School_content canNext={canNext}>
+              {goMessage}
+            </School_content>
+            <Dialog
+              open={open}
+              onClose={() => setOpen(false)}
+              aria-labelledby="responsive-dialog-title"
+            >
+              <DialogTitle id="responsive-dialog-title">본인인증에 실패하였습니다.</DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  다시 진행해주세요!
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button variant="contained" onClick={() => setOpen(false)} color="primary">
+                  확인
+                </Button>
+              </DialogActions>
+            </Dialog>
+            <Dialog
+              open={open2}
+              onClose={() => setOpen2(false)}
+              aria-labelledby="responsive-dialog-title"
+            >
+              <DialogTitle id="responsive-dialog-title">등록한 휴대폰으로 가입한 이력이 있네요!</DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  로그인페이지로 이동합니다!
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <NavLink to='/login' style={noneactiveStyle}>
+                  <Button variant="contained" onClick={() => setOpen(false)} color="primary">
+                    이동
+                  </Button>
+                </NavLink>
+              </DialogActions>
+            </Dialog>
+            <NavLink to="/register/last">
+              <NextButton disabled={canNext}>
+                다음
+              </NextButton>
+            </NavLink>
+          </Container>
+        </Wrapper>
+      </ThemeProvider>
+    );
+  }
 }
 
 export default Certification;

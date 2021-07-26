@@ -39,8 +39,7 @@ const RegButton = styled.button`
 
 const School_title = styled.div`
     font-family: 'Noto Sans KR', sans-serif;
-    font-weight: 500;
-    font-size: 1.0rem;
+    font-weight: 400;
     color: '#828282';
     font-size: 0.8rem;
     padding: 0.5rem 0rem;
@@ -48,17 +47,24 @@ const School_title = styled.div`
     border-radius: 10px 10px 0px 0px;
     list-style: none;
     li{
+        font-size: 0.7rem;
         margin: 0rem 0.5rem;
     }
 `;
+const Infor_content = styled.div`
+list-style : none;
+font-family: 'Noto Sans KR', sans-serif;
+font-weight: 400;
+`
 const Short_content = styled.div`
+    list-style : none;
     font-family: 'Noto Sans KR', sans-serif;
     font-weight: 400;
-    font-size: 1.0rem;
+    font-size: 0.8rem;
     border-radius: 0px 0px 10px 10px;
     background: white;
-    padding: 0.5rem 0rem;
-    margin : 0.5rem;
+    padding: 0rem 0rem;
+    margin : 0.4rem;
 `
 const Info_Container = styled.div`
     display: flex;
@@ -74,17 +80,23 @@ const Sub_Info_Container = styled.div`
 
 
 const SuccessRegister = (props) => {
-    const {ID, Nickname, School_name} = props
+    const {ID, Nickname, 
+    School_name,
+    U_unique_key,
+    U_name,
+    U_Age,
+    U_Gender,
+    U_Phone} = props
     return (
         <div>
             <Container>
                 <h1>
                     회원가입 완료
                 </h1>
-                <p>플로스팅에 가입해주셔서 감사합니다.</p>
-                <Short_content>
-                    아래는 회원가입하신 정보입니다.
-                </Short_content>
+                <Infor_content>
+                <li>{U_name}님! 플로스팅에 가입해주셔서 감사합니다.</li>
+                <li>아래는 회원가입하신 정보입니다.</li>
+                </Infor_content>
 
         <Info_Container>
             <Sub_Info_Container>

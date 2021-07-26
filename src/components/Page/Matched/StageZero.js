@@ -98,23 +98,16 @@ background-color: red;
 
 
 function StageZero(props){
-    const 유저1 = props.유저1
-    const 유저2 = props.유저2
-    const 닉네임 = props.닉네임
-    const 발전단계 = props.발전단계
-    const 발전단계변경 = props.발전단계변경
-    const 남은시간 = props.남은시간
-    const 메세지보낸사람 = props.메세지보낸사람
 
     return(
         <Container>
             <Timer/>
             <Title/>
             <div className='ProfileWrap'>
-                <LeftProfile 유저1={유저1} />
-                <RightProfile 유저2={유저2}/>
+                <LeftProfile 유저1={props.유저1} />
+                <RightProfile 유저2={props.유저2}/>
             </div>
-            <Button 컬렉션={props.컬렉션} 문서번호={props.문서번호} 닉네임={props.닉네임}/>
+            <Button 컬렉션={props.컬렉션} 문서번호={props.문서번호} 닉네임={props.닉네임} 회원정보문서아이디={props.회원정보문서아이디} 유저정보={props.유저정보}/>
             <Footer/>
         </Container>
     )
@@ -196,15 +189,23 @@ function Button(props){
     function onClick_sendMessage(){
         const result = window.confirm('정말로 먼저 연락을 보내셨나요?');
         if(result){
-            // console.log(props.컬렉션)
-            // console.log(props.닉네임)
             db.collection(props.컬렉션).doc(props.문서번호).update({
                 stage: 'half'
             })
             db.collection(props.컬렉션).doc(props.문서번호).update({
                 메세지보낸사람: props.닉네임
             })
-            alert('용기있는 당신 매너온도가 상승했습니다!')
+            db.collection('회원정보').doc(props.회원정보문서아이디).update({
+                User:{
+                    'Age': props.유저정보['Age'],
+                    'Gender':props.유저정보['Gender'],
+                    'Manner': props.유저정보['Manner']+1,
+                    'Nick': props.유저정보['Nick'],
+                    'Phone': props.유저정보['Phone'],
+                    'Univ': props.유저정보['Univ']
+                }
+            })
+            alert('매너온도가 상승했습니다! 좋은 결과 기원합니다 :)')
         }else{}
     }
     function onClick_refuse(){
@@ -234,29 +235,3 @@ function Button(props){
 
 
 
-        // db.collection('7daisy').add(
-        //     {
-        //         userOne : {
-        //             Nick: '테스트일번',
-        //             Gender: 'boy',
-        //             Age : 25,
-        //             Univ : '단국대학교 죽전캠퍼스',
-        //             Phone : '01099202603',
-        //             Manner : 36.5,
-        //         },
-        //         userTwo : {
-        //             Nick: '테스트이번',
-        //             Gender: 'girl',
-        //             Age : 26,
-        //             Univ : '강남대학교',
-        //             Phone : '01038555555',
-        //             Manner : 38.5,
-        //         },
-        //         stage : 'zero',
-        //         메세지보낸사람 : '',
-        //         거절한사람 : ''
-
-        //     }
-        // ).then(()=>{
-        //     alert('알림 신청이 완료되었습니다!')
-        // })

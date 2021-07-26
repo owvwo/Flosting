@@ -7,6 +7,37 @@ import { Redirect } from 'react-router-dom';
 
 const Wrapper = styled.div`
 `;
+
+const Forgotlinkbox = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-direction: row;
+    width: 300px;
+    list-style : none;
+    li{
+        font-size: 0.8rem;
+    }
+`
+const Registerlinkbox = styled.div`
+    margin : 1rem 0rem 0rem 0rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    width: 300px;
+    list-style : none;
+    font-family: 'Noto Sans KR', sans-serif;
+    li{
+        font-size: 1.0rem;
+    }
+    .li1{
+        color : rgb(0,0,0,0.5);
+    }
+    .li2{
+        font-weight: 500;
+    }
+`
 const Container = styled.div`
     display : flex;
     flex-direction: column;
@@ -45,10 +76,13 @@ const Button = styled.button`
 `;
 
 const Login = () => {
-
+    const noneactiveStyle = {
+        color: '#000000',
+        textDecoration: 'none'
+      }
+    
     const [currentPage, handlePageChange] = useState(false);
     const [user, setUser] = useState('');
-
 
     const authListener = () => {
       fire.auth().onAuthStateChanged((user) => {
@@ -84,9 +118,27 @@ const Login = () => {
                                 회원가입
                             </Button>
                         </NavLink>
+                        <Forgotlinkbox>
+                            <NavLink to ="/forgot" style={noneactiveStyle}>
+                            <li>아이디/비밀번호 찾기</li>
+                            </NavLink>
+                        </Forgotlinkbox>
                     </Container>
                 ) : (
-                    <LoginBar />
+                    <div>
+                        <LoginBar />
+                        <Forgotlinkbox>
+                        <NavLink to ="/forgot" style={noneactiveStyle}>
+                            <li>아이디/비밀번호 찾기</li>
+                            </NavLink>
+                        </Forgotlinkbox>
+                        <Registerlinkbox>
+                            <li className = "li1">플로스팅이 처음이신가요?&nbsp;</li>
+                            <NavLink to="/register" style={noneactiveStyle}>
+                            <li className = "li2">회원가입</li>
+                            </NavLink>
+                        </Registerlinkbox>
+                    </div>
                 )
                 }
             </Container>

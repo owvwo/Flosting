@@ -17,6 +17,7 @@ import fire from '../Register/LoginFire'
 import MyInfo from './MyInfo'
 import MySetting from './MySetting';
 import MyUsage_History from './MyUsage_History/Usage_main'
+import MyRecentSubmit from './MyRecentSubmit';
 
 
 const Colortheme = createMuiTheme({
@@ -50,7 +51,7 @@ const TabPanel = (props) => {
             {...other}
         >
             {value === index && (
-                <Box p={3}>
+                <Box p={4}>
                     <Typography>{children}</Typography>
                 </Box>
             )}
@@ -117,6 +118,7 @@ const Mypage = (props) => {
                             <Tab label="내 정보" {...a11yProps(0)} />
                             <Tab label="내 설정" {...a11yProps(1)} />
                             <Tab label="이용 내역" {...a11yProps(2)} />
+                            <Tab label="최근신청" {...a11yProps(3)} />
                         </Tabs>
                     </AppBar>
                     <SwipeableViews
@@ -138,6 +140,11 @@ const Mypage = (props) => {
                             <MyUsage_History user = {User}>
                                 
                             </MyUsage_History>
+                        </TabPanel>
+                        <TabPanel value={value} index={3} dir={theme.direction}>
+                            <MyRecentSubmit user = {User}>
+
+                            </MyRecentSubmit>
                         </TabPanel>
                     </SwipeableViews>
                 </Container>

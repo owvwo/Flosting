@@ -35,7 +35,8 @@ function Refused(){
         <Container>
             <Title/>
             <div className='text'>
-                상대방께서 거절을 하셔서 <br/>
+                상대방께서 사정에 의해 <br/>
+                거절 의사를 표하여 <br/>
                 매칭이 종료되었습니다.<br/>
                 저희 플로스팅이<br/>
                 다음 매칭에 더 힘쓰도록 하겠습니다<br/>

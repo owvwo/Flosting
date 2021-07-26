@@ -49,7 +49,7 @@ const Ul = styled.ul`
   li{
     padding: 15px 10px;
   }
-  @media (max-width: 768px) {
+
     flex-flow: column nowrap;
     background: white;
     position: fixed;
@@ -57,7 +57,7 @@ const Ul = styled.ul`
     opacity: ${({ open }) => open ? '1.0' : '0.8'};
     top: 0;
     right: 0;
-    max-height: 90vh;
+    max-height: 100vh;
     width: 300px;
     padding-top: 3.5rem;
     transition: transform 0.3s ease-in-out;
@@ -70,7 +70,6 @@ const Ul = styled.ul`
       text-align: right;
       font-size: 1rem;
     }
-  }
 `;
 
 

@@ -9,12 +9,9 @@ const Styledicon = styled.div`
   top: 10px;
   right: 20px;
   z-index: 20;
-  display: none;
-  @media (max-width: 768px) {
-    display: flex;
-    justify-content: space-around;
-    flex-flow: column nowrap;
-  }
+  display: flex;
+  justify-content: space-around;
+  flex-flow: column nowrap;
   div {
     width: 1.5rem;
     height: 0.1rem;
@@ -36,8 +33,6 @@ const Styledicon = styled.div`
 `;
 
 const Menutitle = styled.div`
-display: none;
-@media (max-width: 768px){
   display : flex;
   width: 1.5rem;
   height: 1rem;
@@ -48,7 +43,6 @@ display: none;
   justify-content : center;
   font-size: 0.5rem;
   font-family: 'Nanum Gothic', sans-serif;
-}
 
 `;
 const Navicon = (props) => {

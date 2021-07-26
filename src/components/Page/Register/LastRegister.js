@@ -144,11 +144,11 @@ const Error_message_Password = styled.div`
 
 const LastRegister = (props) => {
 
-    const { auth_regis, S_name, S_num, user} = props
+    const { auth_regis, S_name, S_num, user,  U_unique_key, U_name, U_Age, U_Gender,  U_Phone} = props
     const email = S_num + "@flosting.com";
+    const [nickname, setnickname] = useState(''); // 닉네임
     const [password, setPassword] = useState(''); // 패스워드
     const [password2, setPassword2] = useState(''); //패스워드 확인
-    const [nickname, setnickname] = useState(''); // 닉네임
     const [passwordError, setPasswordError] = useState("패스워드를 입력해주세요.");
     const [repasswordError, setrepasswordError] = useState("패스워드를 재입력해주세요.");
     const [correspass, setcorrespass] = useState(false); //패스워드 일치 불일치
@@ -168,9 +168,11 @@ const LastRegister = (props) => {
             Age: "",
             Gender: "",
             Manner: "",
+            Name: "",
             Nick: "",
             Phone: "",
-            Univ: ""
+            Univ: "",
+            Unique_key: ""
         }
     }
     const clearErrors = () => {
@@ -299,11 +301,13 @@ const LastRegister = (props) => {
 
     const saveDB = () => {
         DBForm.ID = S_num;
-        DBForm.User.Age = 20;
-        DBForm.User.Gender = "boy";
+        DBForm.User.Name = U_name;
+        DBForm.User.Age = U_Age;
+        DBForm.User.Gender = U_Gender;
         DBForm.User.Manner = 36.5;
         DBForm.User.Nick = nickname;
-        DBForm.User.Phone = "01099999999"
+        DBForm.User.Phone = U_Phone;
+        DBForm.User.Unique_key = U_unique_key;
         DBForm.User.Univ = S_name;
 
         fire
@@ -327,8 +331,15 @@ const LastRegister = (props) => {
     else {
         if (user) {
             return (
-                <SuccessRegister ID={S_num} Nickname={nickname} School_name={S_name}>
-
+                <SuccessRegister 
+                U_unique_key = {U_unique_key}
+                U_name = {U_name}
+                U_Age = {U_Age}
+                U_Gender = {U_Gender}
+                U_Phone={U_Phone}
+                ID={S_num}
+                Nickname={nickname}
+                School_name={S_name}>
                 </SuccessRegister>
             );
         }

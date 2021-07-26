@@ -4,7 +4,9 @@ import { NavLink } from "react-router-dom";
 import Fade from 'react-reveal/Fade';
 import Flip from 'react-reveal/Flip';
 import Footer from '../Footer';
-import DiscountManner from './DiscountManner';
+import firebase from '../Register/LoginFire.js'
+const db = firebase.firestore()
+
 const ButtonDiv = styled.div`
 display: flex;
 flex-direction: column;
@@ -49,18 +51,33 @@ font-size : 1rem;
 text-align : center;
 margin-top: 1rem;
 font-weight : bolder
-
 `
+
 function SelectResult(){
+
+    let [진행중회차,진행중회차변경] = useState();
+    let [지난회차,지난회차변경] = useState();
+
+    // DB에서 필요한 변수 불러오는 함수
+    const getVariableInfo = async() => {
+        const snapShot = await db.collection('매칭결과변수').doc('variableInfo').get()
+        try{
+            진행중회차변경(snapShot.data()['진행중회차'])
+            지난회차변경(snapShot.data()['진행중회차']-1)
+        }catch(err){console.log(err)}
+    }
+    useEffect(()=>{
+        getVariableInfo()
+    }, [])
+
     return(
         <div>
             <Title>
-                신청 결과 확인하기
+                매칭 결과 확인하기
             </Title>
             <Subtitle>
-                플로스팅 1회차<br/>
-                건국대학교 & 세종대학교만<br/>
-                확인 가능합니다<br/>
+                현재 플로스팅 {지난회차}, {진행중회차}회차<br/>
+                매칭 결과가 확인 가능합니다<br/>
             </Subtitle>
             <Flip left>
             <ButtonDiv>
@@ -75,7 +92,6 @@ function SelectResult(){
                 </NavLink>
             </ButtonDiv>
             </Flip>
-            <DiscountManner/>
             <Footer/>
         </div>
     )
