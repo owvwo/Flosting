@@ -1,18 +1,27 @@
 import React, { useState, useEffect } from "react";
+import firebase from '../Register/LoginFire.js'
 
-function Timer(props){
-  const 남은시간 = props.남은시간
+const db = firebase.firestore()
+
+function Timer(){
   const [days, setDays] = useState()
   const [hours, setHours] = useState()
   const [minutes, setMinutes] = useState();
   const [seconds, setSeconds] = useState();
   const [지금까지, 지금까지변경] = useState();
+  const [time,setTime] = useState();
+
+  const getVariableInfo = async() => {
+    const snapShot = await db.collection('매칭결과변수').doc('variableInfo').get()
+    try{
+        setTime(snapShot.data()['마감시간'])
+    }catch(err){console.log(err)}
+}
 
   useEffect(()=>{
-
+    getVariableInfo();
     const 현재까지 = Date.now()
-    
-    const 마감시간 = new Date('2021-07-19T15:00:00');
+    const 마감시간 = new Date(time);
     const 마감까지 = 마감시간.getTime()
     const 남은시간 = 마감까지 - 현재까지
   
@@ -28,10 +37,10 @@ function Timer(props){
     setInterval(() => {
       지금까지변경(Date.now())
     }, 1000);
-  },[지금까지])
+  },[지금까지,time])
   return(
     <div>
-      {days}일 {hours}시간 {minutes}분 {seconds}초 남음
+      {hours}시간 {minutes}분 {seconds}초 남았습니다!!
     </div>
   )
 }

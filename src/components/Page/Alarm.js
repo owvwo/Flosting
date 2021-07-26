@@ -50,8 +50,8 @@ height: 37rem;
     }
 `
 const db = fire.firestore()
-function Alarm(){
-
+function Alarm(props){
+    let user = props.User; 
     let[본인학교,본인학교변경]=useState();
     let[전화번호,전화번호변경]=useState();
     let[희망학교,희망학교변경]=useState();
@@ -66,21 +66,40 @@ function Alarm(){
     const onSubmit = (event) => {
         event.preventDefault();
         db.collection('Alarm').add({
-            alarmTarget: 본인학교,
+            alarmUniv: 본인학교,
             alarmPhone: 전화번호,
-            alarmHope: 희망학교
+            alarmHopeUniv: 희망학교
         }).then(()=>{
             alert('알림 신청이 완료되었습니다!')
+            window.location.href='/'
         })
     }
+    const getUserInfo = async() => {
+        const snapShot = await db.collection('회원정보').where("ID","==",user.email.split('@')[0]).get()
+        try{
+            snapShot.forEach((doc)=>{
+                본인학교변경(doc.data()['User']['Univ'])
+                전화번호변경(doc.data()['User']['Phone'])
+            })
+        }catch(err){console.log(err)}
+        
+    }
 
+    useEffect(()=>{
+    if(user){
+        getUserInfo();
+    }else{
+        alert('로그인이 필요한 서비스입니다.')
+        window.location.href='/login'
+    }
+    })
     return(
         <div>
             <Container>
                 <div className='title'>우리학교 알림 신청하기</div>
                 <div className='title_sub'>
                     본인 학교에서 플로스팅이 진행될 때<br/> 
-                    신청하신 번호로 알려드립니다 :)
+                    문자로 일정을 안내를 해드립니다 :)
                 </div>
                 <div className='form_div'>
                     <form onSubmit={onSubmit}>
@@ -88,8 +107,9 @@ function Alarm(){
                             <div>본인 학교(*)</div>
                             <input
                                 name='본인학교'
-                                required
+                                disabled={true}
                                 value={본인학교}
+                                required
                                 onChange={onChange}
                                 placeholder="캠퍼스 구분"
                             ></input>
@@ -98,8 +118,9 @@ function Alarm(){
                             <div>알림받으실 전화번호(*)</div>
                             <input
                                 name='전화번호'
-                                required
+                                disabled={true}
                                 value={전화번호}
+                                required
                                 onChange={onChange}
                                 placeholder="'-'제외 기입"
                             ></input>
@@ -117,7 +138,7 @@ function Alarm(){
 
                             ></input>
                         </div>
-                        <button onClick={onclick}>알림 신청하기</button>
+                        <button>알림 신청하기</button>
                     </form>
                 </div>
             </Container>

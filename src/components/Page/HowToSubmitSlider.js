@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import Slider from "react-slick";
 import './Home.css';
 
-import pic_4 from '../../images/pic_4.png';
-import pic_3 from '../../images/pic_3.png';
-import pic_2 from '../../images/pic_2.png';
-import pic_1 from '../../images/pic_1.png';
+import 방법1 from '../../images/방법1.png';
+import 방법2 from '../../images/방법2.png';
+import 방법3 from '../../images/방법3.png';
+import 방법4 from '../../images/방법4.png';
 
 
 const Wrap = styled.div`
@@ -32,7 +32,7 @@ const Wrap = styled.div`
 export default class 참여방법Slider extends Component {
   render() {
     const settings = {
-      dots: true,
+      dots: false,
       infinite: true,
       speed: 500,
       slidesToShow: 1,
@@ -44,48 +44,31 @@ export default class 참여방법Slider extends Component {
         <Slider {...settings}>
 
           <Wrap>
-
             <h3>
               STEP 1
             </h3>
-
-            <img className='사진' src={pic_4} />
-            <div>
-              로그인하고
-            </div>
+            <img className='사진' src={방법1} />
           </Wrap>
 
           <Wrap>
             <h3>
               STEP 2
             </h3>
-            <img className='사진' src={pic_3} />
-            <div>
-              참가신청서 작성
-            </div>
-
+            <img className='사진' src={방법2} />
           </Wrap>
 
           <Wrap>
             <h3>
               STEP 3
             </h3>
-            <img className='사진' src={pic_2} />
-            <div>
-              지급받기까지 존버하기
-            </div>
-
+            <img className='사진' src={방법3} />
           </Wrap>
 
           <Wrap>
             <h3>
               STEP 4
             </h3>
-            <img className='사진' src={pic_1} />
-            <div>
-              달달한 후기 들려줘
-            </div>
-
+            <img className='사진' src={방법4} />
           </Wrap>
         </Slider>
       </div>

@@ -256,7 +256,7 @@ function Button(props){
 
     return(
         <ButtonWrap>
-            <NotYet>아직 연락 안왔어요</NotYet>
+            {/* <NotYet>아직 연락 안왔어요</NotYet> */}
             <ReplyMessage onClick={onClick_sendMessage}>답장했어요</ReplyMessage>
             <Refuse onClick={onClick_refuse}>매칭 거절할게요</Refuse>
         </ButtonWrap>
