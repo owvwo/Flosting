@@ -54,13 +54,15 @@ function App(){
       <div>
         <ScrollToTop></ScrollToTop>
         <BrowserView>
-          <TransferMobile>
+            <Navbar User = {User}/>
+            <Transition User = {User}/>
+          {/* <TransferMobile>
             <div className='inner'>
               <div className='warning'>본 홈페이지는 모바일에 최적화 되어 있습니다.</div>
               <Navbar User = {User}/>
               <Transition User = {User}/>
             </div>
-          </TransferMobile>
+          </TransferMobile> */}
         </BrowserView>
         <MobileView>
           <Navbar User = {User}/>

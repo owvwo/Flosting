@@ -10,16 +10,16 @@ const 푸터 = styled.div`
     background: rgb(255,180,224,0.2);
     padding: 5px;
     display: flex;
+    justify-content: center;
+    align-items: center;
         .left{
-            width: 220px;
-            flex: 7
-            padding: 10px;
+            width: 60%;
                 .info{
-                    padding: 10px;
+                    padding: 5px;
                 }
         }
         .right{
-            flex:3
+            flex:1
         }
         .hashTag{
             text-align: center;
@@ -57,9 +57,10 @@ function Footer(){
             <푸터>
                 <div className='left'>
                     <div className='info'>
-                        플로스 컴패니 대표이사: 이상민<br/>
+                        사업자 등록번호 : 899-33-01066 | 플로스 컴패니 <br/>
+                        대표이사: 이상민 | 전화번호: 010-8284-9782<br/>
                         경기도 용인시 수지구 정평로 89, 202 1001<br/>
-                        사업자 등록번호 : 899-33-01066<br/>                       
+                        E-mail: flosting874@gmail.com<br/>                       
                     </div>
                 </div>
                 <div className='right'>
