@@ -1,4 +1,4 @@
-import React, {useState, useEffect}from 'react';
+import React, { useState, useEffect } from 'react';
 
 import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
@@ -82,10 +82,49 @@ const useStyles = makeStyles((theme) => ({
 const Mypage = (props) => {
 
     const [User, setUser] = useState(props.User);
+    const [ID, setID] = useState("");
+    const [DocID, setDocID] = useState("");
+    const db = fire.firestore();
+    const [userHistory, setUserHistory] = useState();
+    const [row, setrow] = useState({});
 
     useEffect(() => {
         setUser(props.User);
     }, [props]);
+
+    useEffect(() => {
+        if (User) {
+            const s_id = User.email.split("@");
+            db.collection("회원정보")
+                .where("ID", "==", s_id[0])
+                .get()
+                .then((querySnapshot) => {
+                    if (querySnapshot) {
+                        querySnapshot.forEach((doc) => {
+                            setID(s_id[0]);
+                            setDocID(doc.id);
+                            var docRef = db.collection("회원정보").doc(doc.id);
+                            docRef
+                                .get()
+                                .then((doc) => {
+                                    if (doc.exists) {
+                                        console.log("Document data:", doc.data().My_Usage_History);
+                                        setUserHistory(doc.data().My_Usage_History);
+                                    } else {
+                                        // doc.data() will be undefined in this case
+                                        console.log("No such document!");
+                                    }
+                                })
+                                .catch((error) => {
+                                    console.log("Error getting document:", error);
+                                });
+                        });
+                    } else {
+                        console.log("데이터 없음");
+                    }
+                });
+        }
+    }, [User]);
 
     const classes = useStyles();
     const theme = useTheme();
@@ -127,22 +166,25 @@ const Mypage = (props) => {
                         onChangeIndex={handleChangeIndex}
                     >
                         <TabPanel value={value} index={0} dir={theme.direction}>
-                            <MyInfo user ={User}>
+                            <MyInfo user={User}>
 
                             </MyInfo>
                         </TabPanel>
                         <TabPanel value={value} index={1} dir={theme.direction}>
-                            <MySetting user = {User}>
+                            <MySetting user={User}>
 
                             </MySetting>
                         </TabPanel>
                         <TabPanel value={value} index={2} dir={theme.direction}>
-                            <MyUsage_History user = {User}>
-                                
-                            </MyUsage_History>
+                            <MyUsage_History
+                                User={User}
+                                ID={ID}
+                                DocID={DocID}
+                                UserHistory={userHistory}
+                            ></MyUsage_History>
                         </TabPanel>
                         <TabPanel value={value} index={3} dir={theme.direction}>
-                            <MyRecentSubmit user = {User}>
+                            <MyRecentSubmit user={User}>
 
                             </MyRecentSubmit>
                         </TabPanel>

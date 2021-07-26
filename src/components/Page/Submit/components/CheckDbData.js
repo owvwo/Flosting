@@ -9,6 +9,7 @@ import {
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import fire from "../../Register/LoginFire";
+import firebase from "firebase/app";
 
 const CheckDbData = (props) => {
   const { User, ID, EP_Num } = props;
@@ -29,7 +30,7 @@ const CheckDbData = (props) => {
   }, []);
 
   const resetSubmit = () => {
-    db.collection("Flosting_"+EP_Num)
+    db.collection("Flosting_" + EP_Num)
       .doc(DocID)
       .delete()
       .then(() => {
@@ -37,6 +38,27 @@ const CheckDbData = (props) => {
       })
       .catch((error) => {
         console.log("Error removing document : ", error);
+      });
+    db.collection("회원정보")
+      .where("ID", "==", ID)
+      .get()
+      .then((querySnapshot) => {
+        let docID;
+
+        if (querySnapshot) {
+          querySnapshot.forEach((doc) => {
+            docID = doc.id;
+          });
+        }
+
+        let batch = db.batch();
+        let updatedb = db.collection("회원정보").doc(docID);
+        batch.update(updatedb, {
+          My_Usage_History: firebase.firestore.FieldValue.arrayRemove(EP_Num),
+        });
+        batch.commit().then(() => {
+          console.log("good");
+        });
       });
   };
   return (
