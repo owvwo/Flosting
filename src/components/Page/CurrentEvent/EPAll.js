@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from "react";
 import styled from "styled-components";
-import Logo from "./../../../images/플로스팅 로고.png";
+import Logo from "./../../../images/001.png";
 import Footer from "../Footer";
 import Fade from "react-reveal/Fade";
 import { Link, Redirect } from "react-router-dom";
@@ -46,6 +46,7 @@ const Container = styled.div`
   img {
     text-align: center;
     width: 15rem;
+    margin-bottom: -10%;
   }
   .submitBtn {
     width: 80%;

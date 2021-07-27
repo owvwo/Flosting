@@ -11,15 +11,16 @@ const Label = styled.label`
   border: 1.5px solid;
   padding: 5px;
   margin: 5px;
-  border-radius: 5px;
+  border-radius: 10px;
   color: #ffffff;
-  background-color: #e0bcc1;
+  background-color: #f7bb9e;
   display: inline-block;
   width: 20rem;
 `;
 
 const RadioButton = styled.input`
-  width: 1.7rem;
+  margin: 1rem;
+  width: 4rem;
   height: 1.7rem;
 `;
 

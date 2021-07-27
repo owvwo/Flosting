@@ -5,10 +5,11 @@ import FormikControl from "./FormikControl";
 import fire from "../../Register/LoginFire";
 import Slider from "react-slick";
 import styled from "styled-components";
-import lilac from "../../../../images/lilac.png";
-import daisy from "../../../../images/daisy.png";
-import submitMain from "../../../../images/violet.png";
-import clover from "../../../../images/clover.png";
+import lilac from "../../../../images/003.png";
+import daisy from "../../../../images/004.png";
+import submitMain from "../../../../images/002.png";
+import submitFinal from "../../../../images/006.png";
+import clover from "../../../../images/005.png";
 import "../FormikContainer.css";
 import { Redirect, Link } from "react-router-dom";
 import {
@@ -46,15 +47,20 @@ const ErrorMsg = styled.div`
 `;
 
 const InputContainer = styled.div`
-width:  
-margin: 1rem;
+  z-index: 10;
+  margin: 1rem;
   text-align: center;
   justify-content: center;
   display: flex;
+`;
+
+const TypeImage = styled.div`
   img {
-    width: 10rem;
+    width: ${(props) => (props.Size ? "20rem" : "10rem")};
     margin: 0px auto;
+    margin-top: ${(props) => (props.Size ? "-10rem" : "-7rem")};
   }
+  margin: 1rem;
 `;
 
 const Container = styled.div`
@@ -64,8 +70,9 @@ margin: 1rem;
   justify-content: center;
   display: flex;
   img {
-    width: 15rem;
+    width: 20rem;
     margin: 0px auto;
+    margin-bottom : -3rem;
   }
 p{
   margin : 1rem;
@@ -74,38 +81,56 @@ p{
 
 const SubmitButton = styled.button`
   margin: 1rem auto;
-  text-align: center;
-  justify-content: center;
   height: 5rem;
-  width: 70%;
-  border-radius: 5px;
-  font-family: "Noto Sans KR", sans-serif;
+  width: 20rem;
+  border-radius: 10px;
   font-weight: 700;
-  padding: 10px 15px;
   background-color: ${(props) => props.color};
   color: #ffffff;
   font-size: 2rem;
-  display: block;
   border: none;
 `;
 
 const Title = styled.h1`
   fontfamily: "Noto Sans KR", sans-serif;
   font-size: x-large;
-  color: #e0bcc1;
+  color: #f7bb9e;
 `;
 
 const ToggleButton = styled.button`
   fontfamily: "Noto Sans KR", sans-serif;
-  border-radius: 5px;
+  border-radius: 10px;
   margin: 1rem;
   padding: 10px 15px;
   // border: none;
   width: 20rem;
-  border-color: #e0bcc1;
+  border: none;
   background-color: ${(props) => props.color};
 `;
 
+const SubText = styled.div`
+  z-index: 20;
+  margin: 1rem;
+  p {
+    font-size: ${(props) => (props.setFont ? "15px" : "10px")};
+  }
+  b {
+    font-size: ${(props) => (props.setFont ? "15px" : "10px")};
+  }
+`;
+
+const MainText = styled.div`
+  margin: 1rem;
+`;
+
+const Zindex = styled.div`
+  .Title {
+    z-index: 10;
+  }
+  .TypeImage {
+    z-index: 5;
+  }
+`;
 function useToggle(initialValue = true, values) {
   const [value, setValue] = useState(initialValue);
   const toggle = useCallback(() => {
@@ -293,22 +318,42 @@ function EnrollmentForm(props, match) {
                       <Container>
                         <Fade bottom cascade>
                           <Title>User Info</Title>
+
                           <img src={submitMain}></img>
-                          <p>{ID}님 안녕하세요 </p>
-                          <p>신청 할꺼면 오른쪽으로 넘겨라</p>
+                          <MainText>
+                            <p>{ID}님 안녕하세요. </p>
+                            <p>신청을 계속해서 진행하실 분은</p>
+                            <p>페이지를 넘겨주세요.</p>
+                          </MainText>
                         </Fade>
                       </Container>
 
                       <InputContainer>
                         <Title>Lilac</Title>
-                        <img src={lilac} />
+                        <Zindex>
+                          <SubText setFont={lilacOn}>
+                            <p>라일락의 꽃말</p>
+                            <p>
+                              <b>'새로운 사랑의 싹이 트다'</b>
+                            </p>
+                            <br></br>
+                            <p>
+                              라일락팅을 통해 새로운 <b>이성</b>과
+                            </p>
+                            <p>소중한 인연을 가져보세요.</p>
+                            <br></br>
+                          </SubText>
+                          <TypeImage Size={lilacOn}>
+                            <img src={lilac} />
+                          </TypeImage>
+                        </Zindex>
                         {/* 라일락 나이 */}
                         <ToggleButton
                           type="button"
                           onClick={handleLilac}
-                          color={lilacOn ? "#FFF5DE" : "#C6B4CE"}
+                          color={lilacOn ? "#F7F494" : "#D0AED1"}
                         >
-                          {lilacOn ? "신청하기" : "신청취소"}
+                          {lilacOn ? "신청 하기" : "신청 취소"}
                         </ToggleButton>
                         {!lilacOn ? (
                           <div>
@@ -336,14 +381,32 @@ function EnrollmentForm(props, match) {
                       </InputContainer>
                       <InputContainer>
                         <Title>Daisy</Title>
-                        <img src={daisy} />
+                        <Zindex>
+                          <SubText setFont={daisyOn}>
+                            <p>
+                              데이지의 꽃말 <b>'우정'</b>
+                            </p>
+                            <br></br>
+                            <p>데이지팅을 통해</p>
+                            <p>
+                              <b>이성</b> 사람과 새로운
+                            </p>
+                            <p>
+                              <b>친구</b>가 되어보세요
+                            </p>
+                            <br></br>
+                          </SubText>
+                          <TypeImage Size={daisyOn}>
+                            <img src={daisy} />
+                          </TypeImage>
+                        </Zindex>
                         {/* 라일락 나이 */}
                         <ToggleButton
                           type="button"
                           onClick={handleDaisy}
-                          color={daisyOn ? "#FFF5DE" : "#C6B4CE"}
+                          color={daisyOn ? "#F7F494" : "#D0AED1"}
                         >
-                          {daisyOn ? "신청하기" : "신청취소"}
+                          {daisyOn ? "신청 하기" : "신청 취소"}
                         </ToggleButton>
                         {!daisyOn ? (
                           <div>
@@ -371,14 +434,28 @@ function EnrollmentForm(props, match) {
                       </InputContainer>
                       <InputContainer>
                         <Title>Clover</Title>
-                        <img src={clover} />
+                        <SubText setFont={cloverOn}>
+                          <p>클로버의 꽃말</p>
+                          <p>
+                            <b>'약속, 행운'</b>
+                          </p>
+                          <br></br>
+                          <p>클로버팅을 통해</p>
+                          <p>우정을 약속할</p>
+                          <p>
+                            <b>동성</b> 친구를 만들어봐요!
+                          </p>
+                        </SubText>
+                        <TypeImage Size={cloverOn}>
+                          <img src={clover} />
+                        </TypeImage>
                         {/* 게이 나이 */}
                         <ToggleButton
                           type="button"
                           onClick={handleClover}
-                          color={cloverOn ? "#FFF5DE" : "#C6B4CE"}
+                          color={cloverOn ? "#F7F494" : "#D0AED1"}
                         >
-                          {cloverOn ? "신청하기" : "신청취소"}
+                          {cloverOn ? "신청 하기" : "신청 취소"}
                         </ToggleButton>
                         {!cloverOn ? (
                           <div>
@@ -407,7 +484,7 @@ function EnrollmentForm(props, match) {
                       </InputContainer>
                       <Container>
                         <Title>마지막!!</Title>
-                        <img src={submitMain} />
+                        <img src={submitFinal} width={"100%"} />
                         {lilacOn && daisyOn && cloverOn ? (
                           <div>
                             <SubmitButton
@@ -437,17 +514,14 @@ function EnrollmentForm(props, match) {
                               aria-describedby="alert-dialog-description"
                             >
                               <DialogTitle id="alert-dialog-title">
-                                {"신청하시겠습니까?"}
+                                {"신청을 완료 하시겠습니까?"}
                               </DialogTitle>
                               <DialogContent>
                                 <DialogContentText id="alert-dialog-description">
-                                  리얼로 신청할꺼임??
+                                  참가 신청서는 마이 페이지에서 수정 가능합니다.
                                 </DialogContentText>
                               </DialogContent>
                               <DialogActions>
-                                <Button onClick={handleClose} color="primary">
-                                  Disagree
-                                </Button>
                                 <Button
                                   form="myForm"
                                   type="submit"
@@ -455,7 +529,10 @@ function EnrollmentForm(props, match) {
                                   color="primary"
                                   autoFocus
                                 >
-                                  Agree
+                                  네
+                                </Button>
+                                <Button onClick={handleClose} color="primary">
+                                  아니오
                                 </Button>
                               </DialogActions>
                             </Dialog>
