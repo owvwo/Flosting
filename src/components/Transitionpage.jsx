@@ -30,15 +30,9 @@ import EventMain from "./Page/subEvent/EventMain"
 import NoticeDetail from "./Page/subEvent/NoticeDetail";
 import EventDetail from "./Page/subEvent/EventDetail";
 import QnaMain from '../components/Page/QNA/QnaMain.js';
-import AnswerOne from '../components/Page/QNA/AnswerOne.js';
-import AnswerTwo from '../components/Page/QNA/AnswerTwo.js';
-import AnswerThree from '../components/Page/QNA/AnswerTwo.js';
-import AnswerFour from '../components/Page/QNA/AnswerTwo.js';
-import AnswerFive from '../components/Page/QNA/AnswerTwo.js';
-import AnswerSix from '../components/Page/QNA/AnswerTwo.js';
-import AnswerSeven from '../components/Page/QNA/AnswerTwo.js';
-import AnswerEight from '../components/Page/QNA/AnswerTwo.js';
 import Timer from "./Page/Matched/Timer";
+import Report from "../components/Page/Report";
+import Plan from "../components/Page/Plan";
 
 
 const Transition = (props) => {
@@ -95,20 +89,14 @@ const Transition = (props) => {
           <Route exact path="/ad" component={AD_page} />
           <Route exact path="/admin" component={Admin_page} />
           <Route exact path="/admin/bigfoot" component={AdminBigFoot} />
+          <Route path="/plan"><Plan /></Route>
           <Route path="/timer"><Timer User = {user}/></Route>
           <Route path="/selectresult"><SelectResult User = {user}/></Route>
           <Route path="/lilacresult"><LilacResult User = {user}/></Route>
           <Route path="/cloverresult"><CloverResult User = {user}/></Route>
           <Route path="/daisyresult"><DasiyResult User = {user}/></Route>
-          <Route path="/qna"><QnaMain/></Route>
-          <Route path="/answer1"><AnswerOne/></Route>
-          <Route path="/answer2"><AnswerTwo/></Route>
-          <Route path="/answer3"><AnswerThree/></Route>
-          <Route path="/answer4"><AnswerFour/></Route>
-          <Route path="/answer5"><AnswerFive/></Route>
-          <Route path="/answer6"><AnswerSix/></Route>
-          <Route path="/answer7"><AnswerSeven/></Route>
-          <Route path="/answer8"><AnswerEight/></Route>
+          <Route path="/report"><Report User = {user}/></Route>
+          <Route path="/qna"><QnaMain User = {user}/></Route>
           <Route path="/forgot"><Forgot_page /></Route>
           <Route path="/my"><My_page User = {user} /></Route>
           <Route exact path="/register" render={props => (

@@ -38,8 +38,22 @@ width: 23rem;
 `
 
 const WhatIsFlostingWrap = styled.div`
-display: flex
-justify-content: center;
+margin-top: 3rem;
+height: 20rem;
+    .highlight{
+        box-shadow: inset 0 -20px 0 #FBF38A;
+        margin-top: 1rem;
+        text-align: left;
+        font-size: 1.8rem;
+        font-weight: bold;
+    }
+    .로고배경{
+            width:20rem;
+            position: relative;
+            right: -2rem;
+            top:-13rem;
+            opacity: 0.2;
+    }
 `
 const DaisyTingWrap = styled.div`
 background-color: rgb(238,236,142,0.2);
@@ -132,9 +146,9 @@ ul{
 `
 const CurrentButton = styled.button`
     font-size: 2rem;
-    background-color: rgb(255,180,224,0.2);
+    background-color: rgb(255,180,224,0.8);
     color: white;
-    border: rgb(179,214,189,0.3);
+    border: rgb(179,214,189,0.9);
     width: 14rem;
     border-radius: 12px;
     padding: 5px;
@@ -145,9 +159,9 @@ const CurrentButton = styled.button`
 `
 const ResultButton = styled.button`
     font-size: 2rem;
-    background-color: rgb(238,236,142,0.2);
+    background-color: rgb(238,236,142,0.8);
     color: white;
-    border: rgb(179,214,189,0.3);
+    border: rgb(179,214,189,0.9);
     width: 14rem;
     border-radius: 12px;
     padding: 5px;
@@ -190,7 +204,7 @@ const Home = (props) => {
         }
         setTimeout(function () {
             버튼타이머변경(true);
-        }, 2500)
+        }, 4000)
     })
 
 
@@ -222,8 +236,6 @@ export default Home;
 function Jumbotron({ CurrentButton, 버튼타이머, 매칭결과조회여부 }) {
 
     const mp4link = "https://firebasestorage.googleapis.com/v0/b/flosting-65c9e.appspot.com/o/flostingmain.mp4?alt=media&token=" + process.env.REACT_APP_LINK_TOKEN
-    console.log(process.env.REACT_APP_LINK_TOKEN)
-    console.log(process.env.REACT_APP_MEASUR_ID)
     return (
         <div className='jb_wrap'>
             <div className='video_wrap'>
@@ -271,29 +283,23 @@ function WhatIsFlosting({ WhatIsFlostingWrap }) {
     return (
         <WhatIsFlostingWrap>
             <Fade bottom>
-                <div className='intro_title'>Flosting이란?</div>
-            </Fade>
-            <Flip left>
-                <div className='logoimg_wrap'>
-                    <img src={logoimg} className='logoimg' />
+                <div className='daisy'>
+                    <div><span className='mainTitleHighlight'>Flosting이란?</span></div>
+                    <div className='intro_sh'>Flos<span>라틴어로 '꽃'</span> + Meeting</div>
+                    <div className='aboutName'>
+                        Flos는 라틴어로 '꽃'을 의미합니다.<br />
+                        '꽃'을 주요 테마로 하여 여러 꽃의 <br />
+                        꽃말을 적용한 저희 만의 이벤트 이름입니다
+                    </div>
                 </div>
-            </Flip>
-            <Fade bottom>
-                <div className='intro_sh'>Flos<span>라틴어로 '꽃'</span> + Meeting</div>
-            </Fade>
-            <Fade bottom>
-                <div className='aboutName'>
-                    Flos는 라틴어로 '꽃'을 의미합니다.<br />
-                    데이지와 라일락의 '꽃말'을 <br />
-                    적용한 저희 만의 이벤트 이름입니다
+                <div>
+                    <img src={logoimg} className='로고배경'/>
                 </div>
             </Fade>
-
         </WhatIsFlostingWrap>
 
     )
 }
-
 function DaisyTing({ DaisyTingWrap }) {
 
     return (
@@ -328,14 +334,13 @@ function CloverTing({ CloverTingWrap }) {
                     원하시나요?
                 </div>
                 <div className='daisy'>
-                    클로버의 꽃말은 '행복'입니다.<br />
+                    클로버의 꽃말은 '행운, 약속'입니다.<br />
                     클로버팅을 통해서<br />
-                    행복을 나눌 동성 친구를 만들어 보세요!!<br />
+                    우정을 약속할 동성 친구를 만들어 보세요!!<br />
                 </div>
                 <div className='배경이미지'>
                     <img src={클로버배경} />
                 </div>
-
             </Fade>
         </CloverTingWrap>
 

@@ -173,9 +173,9 @@ const RightNav = (props) => {
             </NavLink>
           </RowDiv>
           <RowDiv>
-            <NavLink to="/account" activeStyle={activeStyle} style={noneactiveStyle}>
+            <NavLink to="/plan" activeStyle={activeStyle} style={noneactiveStyle}>
               <li onClick={() => props.setOpen(!props.open)}>
-                결제 안내
+                일정 안내
               </li>
             </NavLink>
           </RowDiv>
@@ -201,14 +201,14 @@ const RightNav = (props) => {
         </RowParrent>
         <RightContentDiv>
           <RowDiv>
-            <NavLink to="/ad" activeStyle={activeStyle} style={noneactiveStyle}>
+            <NavLink to="/qna" activeStyle={activeStyle} style={noneactiveStyle}>
               <li onClick={() => props.setOpen(!props.open)}>
                 질의응답
               </li>
             </NavLink>
           </RowDiv>
           <RowDiv>
-            <NavLink to="/ad" activeStyle={activeStyle} style={noneactiveStyle}>
+            <NavLink to="/report" activeStyle={activeStyle} style={noneactiveStyle}>
               <li onClick={() => props.setOpen(!props.open)}>
                 신고 접수
               </li>

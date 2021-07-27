@@ -3,7 +3,9 @@ import styled from 'styled-components'
 import kakaochannel from '../../images/kakaochannel.png';
 import instaIcon_1 from '../../images/insta.png';
 import instaIcon_2 from '../../images/insta_2.png';
+const CopyrigntZone = styled.div`
 
+`
 const 푸터 = styled.div`
     font-family: 'Noto Sans KR', sans-serif;
     color: grey;
@@ -78,9 +80,9 @@ function Footer(){
                     </div>            
                 </div>  
             </푸터>
-            <div>
+            <CopyrigntZone>
                 <div style={{ textAlign: 'center', fontSize: '0.5rem' }}>Copyright © Flos company All rights reserved.</div>
-            </div>
+            </CopyrigntZone>
 
         </div>
     

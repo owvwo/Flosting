@@ -48,7 +48,7 @@ function SNSLink(){
                     <img className='icon'src={kakaochannel} />
                 </div>
                 <div className='text'>
-                  카카오 채널로 문의하기
+                  플로스팅 카카오 채널
                 </div>
               </div>
 
@@ -58,7 +58,7 @@ function SNSLink(){
                     <img className='icon'src={instaIcon_1} />
                 </div>
                 <div className='text'>
-                  인스타그램으로 문의하기
+                  플로스팅 인스타그램
                 </div>
               </div>
         </Wrapper>
