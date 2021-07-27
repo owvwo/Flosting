@@ -8,8 +8,7 @@ select{
 }
 input[type=radio]{
     font-family: 'Noto Sans KR', sans-serif;
-    margin-top: 1rem;
-    margin-bottom: 2rem;
+    margin: 1rem;
 }
 .error{
     font-family: 'Noto Sans KR', sans-serif;

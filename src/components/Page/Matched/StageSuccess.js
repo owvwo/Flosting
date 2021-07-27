@@ -27,7 +27,7 @@ flex-direction: column;
 
 const TitleWrap = styled.div`
 color: white;
-background-color: grey;
+background-color: pink;
 width: 20rem;
 font-size : 2rem;
 text-align : center;

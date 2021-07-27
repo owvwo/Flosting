@@ -9,8 +9,8 @@ const Nav = styled.nav`
   position: fixed;
   z-index: 20;
   top: 0px;
+  left: 0px;
   background-color: white;
-
   width: 100%;
   height: 50px;
   border-bottom: 2px solid #f1f1f1;
