@@ -49,7 +49,7 @@ const Ul = styled.ul`
   li{
     padding: 15px 10px;
   }
-  @media (max-width: 768px) {
+
     flex-flow: column nowrap;
     background: white;
     position: fixed;
@@ -57,7 +57,7 @@ const Ul = styled.ul`
     opacity: ${({ open }) => open ? '1.0' : '0.8'};
     top: 0;
     right: 0;
-    max-height: 90vh;
+    max-height: 100vh;
     width: 300px;
     padding-top: 3.5rem;
     transition: transform 0.3s ease-in-out;
@@ -70,7 +70,6 @@ const Ul = styled.ul`
       text-align: right;
       font-size: 1rem;
     }
-  }
 `;
 
 
@@ -188,9 +187,9 @@ const RightNav = (props) => {
         </RowParrent>
         <RightContentDiv>
           <RowDiv>
-            <NavLink to="/currentevent" activeStyle={activeStyle} style={noneactiveStyle}>
+            <NavLink to="/subevent" activeStyle={activeStyle} style={noneactiveStyle}>
               <li onClick={() => props.setOpen(!props.open)}>
-                플로스팅 이벤트
+                이벤트 및 공지사항
               </li>
             </NavLink>
           </RowDiv>
@@ -203,13 +202,6 @@ const RightNav = (props) => {
         <RightContentDiv>
           <RowDiv>
             <NavLink to="/ad" activeStyle={activeStyle} style={noneactiveStyle}>
-              <li onClick={() => props.setOpen(!props.open)}>
-                공지사항
-              </li>
-            </NavLink>
-          </RowDiv>
-          <RowDiv>
-            <NavLink to="/qna" activeStyle={activeStyle} style={noneactiveStyle}>
               <li onClick={() => props.setOpen(!props.open)}>
                 질의응답
               </li>

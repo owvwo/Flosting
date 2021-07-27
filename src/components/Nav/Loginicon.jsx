@@ -5,25 +5,20 @@ import { NavLink } from 'react-router-dom'
 import fire from '../Page/Register/LoginFire'
 
 const Logicon = styled.div`
-  display: none;
-  @media (max-width: 768px){
   display: flex;  
   width: 1.5rem;
   height: 1.5rem;
   position: fixed;
   top: 10px;
   right: 63px;
-  }
 `;
 
 
 const Menutitle = styled.div`
-  display: none;
   list-style: none;
   li{
     font-size: 0.5rem;
   }
-  @media (max-width: 768px){
   display: flex;
   align-items: center;
   justify-content: center;
@@ -33,7 +28,6 @@ const Menutitle = styled.div`
   top: 33px;
   right: 55px;
   font-family: 'Nanum Gothic', sans-serif;
-  }
 
 `;
 
