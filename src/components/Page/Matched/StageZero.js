@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useSpring, animated } from 'react-spring'
 import Footer from '../Footer';
 import TimerComponent from './Timer.js'
 import fire from '../Register/LoginFire.js'
 import profileImageBoy from '../../../images/profile_boy_default.png';
 import profileImageGirl from '../../../images/profile_girl_default.png';
+import { NavLink,Link } from 'react-router-dom';
 const db = fire.firestore()
 
 const Container = styled.div`
@@ -99,13 +99,14 @@ background-color: red;
 
 function StageZero(props){
 
+    
     return(
         <Container>
             <Timer/>
             <Title/>
             <div className='ProfileWrap'>
                 <LeftProfile 유저1={props.유저1} />
-                <RightProfile 유저2={props.유저2}/>
+                <RightProfile 유저2={props.유저2} />
             </div>
             <Button 컬렉션={props.컬렉션} 문서번호={props.문서번호} 닉네임={props.닉네임} 회원정보문서아이디={props.회원정보문서아이디} 유저정보={props.유저정보}/>
             <Footer/>
@@ -142,6 +143,9 @@ function LeftProfile({유저1}){
     }else if(유저1['Gender'] === 'girl') {
         profileImage = profileImageGirl
     }
+
+    let profileNickName = 유저1['Nick']
+
     return(
             <LeftProfileWrap>
                 <div>결정중</div>
@@ -149,16 +153,12 @@ function LeftProfile({유저1}){
                     <img src={profileImage} className='defaultPic'/>
                 </div>
                 <div className='profileInfo'>
-                    {유저1['Nick']}({유저1['Age']})<br/>
-                    {유저1['Univ']}<br/>
-                    매너온도: {유저1['Manner']}<br/>
-                    {유저1['Phone']}<br/>
-
+                    {유저1['Nick']}님<br/>
+                    <Link to = {`/userprofile/${profileNickName}`}><div>프로필 보기</div></Link>
                 </div>
             </LeftProfileWrap>
     )
 }
-
 function RightProfile({유저2}){
 
     let profileImage=null;
@@ -169,6 +169,8 @@ function RightProfile({유저2}){
         profileImage = profileImageGirl
     }
 
+    let profileNickName = 유저2['Nick']
+
     return(
         <RightProfileWrap>
             <div>결정중</div>
@@ -176,14 +178,64 @@ function RightProfile({유저2}){
                 <img src={profileImage} className='defaultPic'/>
             </div>
             <div className='profileInfo'>
-                {유저2['Nick']}({유저2['Age']})<br/>
-                {유저2['Univ']}<br/>
-                매너온도: {유저2['Manner']}<br/>
-                {유저2['Phone']}<br/>
+                {유저2['Nick']}님<br/>
+                <Link to = {`/userprofile/${profileNickName}`}><div>프로필 보기</div></Link>
             </div>
         </RightProfileWrap>
     )
 }
+
+// function LeftProfile({유저1}){
+
+//     let profileImage=null;
+
+//     if(유저1['Gender'] === 'boy'){
+//         profileImage = profileImageBoy
+//     }else if(유저1['Gender'] === 'girl') {
+//         profileImage = profileImageGirl
+//     }
+//     return(
+//             <LeftProfileWrap>
+//                 <div>결정중</div>
+//                 <div>
+//                     <img src={profileImage} className='defaultPic'/>
+//                 </div>
+//                 <div className='profileInfo'>
+//                     {유저1['Nick']}({유저1['Age']})<br/>
+//                     {유저1['Univ']}<br/>
+//                     매너온도: {유저1['Manner']}<br/>
+//                     {유저1['Phone']}<br/>
+
+//                 </div>
+//             </LeftProfileWrap>
+//     )
+// }
+
+// function RightProfile({유저2}){
+
+//     let profileImage=null;
+
+//     if(유저2['Gender'] === 'boy'){
+//         profileImage = profileImageBoy
+//     }else if(유저2['Gender'] === 'girl') {
+//         profileImage = profileImageGirl
+//     }
+
+//     return(
+//         <RightProfileWrap>
+//             <div>결정중</div>
+//             <div className='defaultPicBox'>
+//                 <img src={profileImage} className='defaultPic'/>
+//             </div>
+//             <div className='profileInfo'>
+//                 {유저2['Nick']}({유저2['Age']})<br/>
+//                 {유저2['Univ']}<br/>
+//                 매너온도: {유저2['Manner']}<br/>
+//                 {유저2['Phone']}<br/>
+//             </div>
+//         </RightProfileWrap>
+//     )
+// }
 
 function Button(props){
     function onClick_sendMessage(){

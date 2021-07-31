@@ -76,12 +76,6 @@ const useStyles = makeStyles((theme) => ({
 const Forgot = (props) => {
 
     const [User, setUser] = useState(props.User);
-
-    useEffect(() => {
-        setUser(props.User);
-
-    }, [props]);
-
     const [limitnum, setlimitnum] = useState(false); // 학번의 제한 체크 변수
     const theme = useTheme();
     const [value, setValue] = useState(0);
@@ -91,7 +85,7 @@ const Forgot = (props) => {
     const [Phone_num_msg, setPhone_num_msg] = useState('휴대폰 숫자는 11자리란 사실!');
     const [ID_msg,setID_msg] = useState('학번은 숫자로 이루어져 있답니다.')
     const [limitID, setlimitID] =useState(true);
-    const [goNext, setgoNext] = useState(true);
+    const [goNext, setgoNext] = useState(false);
     const [password, setPassword] = useState(''); // 패스워드
     const [password2, setPassword2] = useState(''); //패스워드 확인
     const [passwordError, setPasswordError] = useState("패스워드를 입력해주세요.");
@@ -99,6 +93,24 @@ const Forgot = (props) => {
     const [correspass, setcorrespass] = useState(false); //패스워드 일치 불일치
     const [limitpassword, setlimitpassword] = useState(false); // 패스워드 글자 수 통과
     const [limitpassword_C, setlimitpassword_C] = useState(false); //패스워드 안전, 매우안전
+    const [canchangePW, setcanchangePW] = useState(false);
+
+
+    useEffect(() => {
+        changecanPW();
+
+    }, [correspass, limitpassword]);
+    useEffect(() => {
+        setUser(props.User);
+
+    }, [props]);
+
+    function changecanPW(){
+        if(correspass&& limitpassword)
+            setcanchangePW(true);
+        else
+        setcanchangePW(false);
+    }
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -163,6 +175,7 @@ const Forgot = (props) => {
                             setID_msg = {setID_msg}
                             limitID ={limitID}
                             setlimitID = {setlimitID}
+                            canchangePW={canchangePW}
                             goNext = {goNext}
                             setgoNext = {setgoNext}
                             ></ForgotPW>

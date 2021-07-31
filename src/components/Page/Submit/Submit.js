@@ -11,6 +11,7 @@ function Submit(props) {
       Gender: "",
       Manner: "",
       Nick: "",
+      Mbti: "",
       Phone: "",
       Univ: "",
     },
