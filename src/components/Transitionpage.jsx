@@ -33,7 +33,7 @@ import QnaMain from '../components/Page/QNA/QnaMain.js';
 import Timer from "./Page/Matched/Timer";
 import Report from "../components/Page/Report";
 import Plan from "../components/Page/Plan";
-
+import UserProfile from "./Page/Matched/UserProfile";
 
 const Transition = (props) => {
 
@@ -95,6 +95,7 @@ const Transition = (props) => {
           <Route path="/lilacresult"><LilacResult User = {user}/></Route>
           <Route path="/cloverresult"><CloverResult User = {user}/></Route>
           <Route path="/daisyresult"><DasiyResult User = {user}/></Route>
+          <Route path="/userprofile/:Nick"><UserProfile User = {user}/></Route>
           <Route path="/report"><Report User = {user}/></Route>
           <Route path="/qna"><QnaMain User = {user}/></Route>
           <Route path="/forgot"><Forgot_page /></Route>

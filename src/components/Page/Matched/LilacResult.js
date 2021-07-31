@@ -121,7 +121,6 @@ function LilacResult(props){
         userTwoChecker();
         지난회차참여자userOneChecker();
         지난회차참여자userTwoChecker();
-        console.log(남은시간)
         }
     }, [user, 닉네임, 발전단계, 진행중회차, time])
 
