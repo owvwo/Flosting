@@ -27,7 +27,6 @@ import { desiredUnivOptions } from "./Options/DesiredUnivOptions";
 import { settings } from "./SlickSliderSetting";
 import CheckDbData from "./CheckDbData";
 import firebase from "firebase/app";
-
 const Boldtheme = createMuiTheme({
   palette: {
     primary: {
@@ -40,10 +39,10 @@ const Boldtheme = createMuiTheme({
     fontFamily: "Noto Sans KR",
   },
 });
-
 const ErrorMsg = styled.div`
   color: red;
 `;
+
 
 const InputContainer = styled.div`
 width:  
@@ -223,7 +222,7 @@ function EnrollmentForm(props, match) {
       }
     }
 
-    db.collection("Flosting_" + EP_Num)
+    db.collection("Flosting_"+EP_Num)
       .add({
         ID: ID,
         User: User,
@@ -239,10 +238,12 @@ function EnrollmentForm(props, match) {
         alert(error.message);
       });
 
+    
     db.collection("회원정보")
       .where("ID", "==", ID)
       .get()
       .then((querySnapshot) => {
+
         let docID;
 
         if (querySnapshot) {
@@ -250,16 +251,12 @@ function EnrollmentForm(props, match) {
             docID = doc.id;
           });
         }
-
         let batch = db.batch();
         let updatedb = db.collection("회원정보").doc(docID);
-        batch.update(updatedb, {
-          My_Usage_History: firebase.firestore.FieldValue.arrayUnion(EP_Num),
-        });
-        batch.update(updatedb, { Ongoing: String(EP_Num) });
-        batch.commit().then(() => {
-          console.log("good");
-        });
+        batch.update(updatedb,{"Ongoing": String(EP_Num)});
+        batch.commit().then(()=>{
+          console.log("good")
+        })
       });
     console.log("ID", ID);
     console.log("User", User);
@@ -277,7 +274,7 @@ function EnrollmentForm(props, match) {
       <ThemeProvider theme={Boldtheme}>
         {IsSubmit ? (
           <div>
-            <CheckDbData EP_Num={EP_Num} User={User} ID={ID} />
+            <CheckDbData EP_Num = {EP_Num} User={User} ID={ID} />
           </div>
         ) : (
           <div>
@@ -408,59 +405,44 @@ function EnrollmentForm(props, match) {
                       <Container>
                         <Title>마지막!!</Title>
                         <img src={submitMain} />
-                        {lilacOn && daisyOn && cloverOn ? (
-                          <div>
-                            <SubmitButton
-                              type="button"
-                              onClick={handleClickOpen}
-                              color={"#8F8F8F"}
-                              disabled={true}
+                        <div>
+                          <SubmitButton
+                            type="button"
+                            onClick={handleClickOpen}
+                            color={"#C6B4CE"}
+                          >
+                            제출하기!!
+                          </SubmitButton>
+                        </div>
+                        <Dialog
+                          open={open}
+                          onClose={handleClose}
+                          aria-labelledby="alert-dialog-title"
+                          aria-describedby="alert-dialog-description"
+                        >
+                          <DialogTitle id="alert-dialog-title">
+                            {"신청하시겠습니까?"}
+                          </DialogTitle>
+                          <DialogContent>
+                            <DialogContentText id="alert-dialog-description">
+                              리얼로 신청할꺼임??
+                            </DialogContentText>
+                          </DialogContent>
+                          <DialogActions>
+                            <Button onClick={handleClose} color="primary">
+                              Disagree
+                            </Button>
+                            <Button
+                              form="myForm"
+                              type="submit"
+                              onClick={handleClose}
+                              color="primary"
+                              autoFocus
                             >
-                              제출하기!!
-                            </SubmitButton>
-                            <ErrorMsg>최소 하나의 타입을 선택해주세요</ErrorMsg>
-                          </div>
-                        ) : (
-                          <div>
-                            <SubmitButton
-                              type="button"
-                              onClick={handleClickOpen}
-                              color={"#C6B4CE"}
-                            >
-                              제출하기!!
-                            </SubmitButton>
-
-                            <Dialog
-                              open={open}
-                              onClose={handleClose}
-                              aria-labelledby="alert-dialog-title"
-                              aria-describedby="alert-dialog-description"
-                            >
-                              <DialogTitle id="alert-dialog-title">
-                                {"신청하시겠습니까?"}
-                              </DialogTitle>
-                              <DialogContent>
-                                <DialogContentText id="alert-dialog-description">
-                                  리얼로 신청할꺼임??
-                                </DialogContentText>
-                              </DialogContent>
-                              <DialogActions>
-                                <Button onClick={handleClose} color="primary">
-                                  Disagree
-                                </Button>
-                                <Button
-                                  form="myForm"
-                                  type="submit"
-                                  onClick={handleClose}
-                                  color="primary"
-                                  autoFocus
-                                >
-                                  Agree
-                                </Button>
-                              </DialogActions>
-                            </Dialog>
-                          </div>
-                        )}
+                              Agree
+                            </Button>
+                          </DialogActions>
+                        </Dialog>
                       </Container>
                     </Slider>
                   </Form>

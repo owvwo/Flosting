@@ -2,7 +2,7 @@ import React, { Component, useState, useEffect } from 'react'
 import styled from 'styled-components';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import fire from '../Register/LoginFire'
-import { Phone } from '@material-ui/icons';
+
 
 const Colortheme = createMuiTheme({
     palette: {
@@ -121,6 +121,7 @@ const forgotPW = (props) => {
 
     const db = fire.firestore();
     const { 
+        canchangePW,
         setlimitpassword_C, limitpassword_C,
         setlimitpassword, limitpassword,
         setcorrespass, correspass, 
@@ -190,6 +191,16 @@ const forgotPW = (props) => {
             setlimitpassword_C(true);
         }
 
+        if ((e.target.value).length == 0) {
+            setrepasswordError("패스워드를 입력해주세요.");
+            setcorrespass(false);
+        } else if ((e.target.value) == password2) {
+            setrepasswordError("패스워드 일치!");
+            setcorrespass(true);
+        } else {
+            setrepasswordError("패스워드 불일치!");
+            setcorrespass(false);
+        }
     }
 
     const handlerePassChange = (e) => {
@@ -227,17 +238,23 @@ const forgotPW = (props) => {
     }
 
     const handleChangePassword = () =>{
-        fire.auth().languageCode = 'ko';
-        fire.auth().sendPasswordResetEmail('201611240@flosting.com')
-        .then(() => {
-        console.log("이메일 보냄")
-    })
-        .catch((error) => {
-            console.log("이메일 안보냄")
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    // ..
-         });
+
+        const letID = ID+'@flosting.com'
+        console.log(letID);
+        console.log(password);
+        fetch("https://bjvy462n18.execute-api.ap-northeast-2.amazonaws.com/0727/chps", {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: JSON.stringify({
+        'email' : letID,
+        'changepassword' : password
+      })
+    }).then(res => res.json())
+      .then(data => {
+          alert('성공적으로 비밀번호가 변경되었습니다.');
+          window.location.href = '/login';
+      })
+      .catch(err => console.error(err))
     }
 
     function callback(response) {
@@ -310,7 +327,7 @@ const forgotPW = (props) => {
                         <Error_message limitnum={correspass}>
                             {repasswordError}
                         </Error_message>
-                        <PhoneButton disabled={!correspass} onClick={handleChangePassword}>
+                        <PhoneButton disabled={!canchangePW} onClick={handleChangePassword}>
                             비밀번호 변경
                         </PhoneButton>
                     </Container>

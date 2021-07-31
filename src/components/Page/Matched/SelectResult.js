@@ -5,6 +5,8 @@ import Fade from 'react-reveal/Fade';
 import Flip from 'react-reveal/Flip';
 import Footer from '../Footer';
 import firebase from '../Register/LoginFire.js'
+import AdfitWebComponent from 'react-adfit-web-component'
+
 const db = firebase.firestore()
 
 const ButtonDiv = styled.div`
@@ -79,6 +81,8 @@ function SelectResult(){
                 현재 플로스팅 {지난회차}, {진행중회차}회차<br/>
                 매칭 결과가 확인 가능합니다<br/>
             </Subtitle>
+            <AdfitWebComponent adUnit="DAN-Vs8rNxQiL53hwAhs" />
+
             <Flip left>
             <ButtonDiv>
                 <NavLink to='/lilacresult'>

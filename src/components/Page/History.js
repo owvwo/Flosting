@@ -16,6 +16,21 @@ text-align:center;
         justify-content: center;
         align-items: center;
     }
+    .히스토리내용{
+        div{        
+            font-size: 2rem;
+        }
+        margin-top: 1rem;
+    }
+    .표{
+        div{font-size: 1.5rem;}
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        div{
+            margin : 2rem;
+        }
+    }
 `
 
 
@@ -23,6 +38,13 @@ const History = () =>{
     return(
         <Container>
             <div className='title'>히스토리</div>
+            <div className='히스토리내용'>
+                <div>총 누적 2019명!!</div>
+                <div className='표'>
+                    <div>남자<br/>939명</div>
+                    <div>여자<br/>1080명</div>
+                </div>
+            </div>
             <div className='sliderDiv'>
                 <SimpleSlider/>
             </div>
