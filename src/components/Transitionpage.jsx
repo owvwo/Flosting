@@ -90,7 +90,7 @@ const Transition = (props) => {
           <Route path="/about" component={About_page} />
           <Route path="/history" component={History_page} />
           <Route exact path="/ad" component={AD_page} />
-          <Route exact path="/admin" component={Admin_page} />
+          <Route exact path="/admin"><Admin_page User = {user}/></Route>
           <Route exact path="/admin/bigfoot" component={AdminBigFoot} />
           <Route path="/plan"><Plan /></Route>
           <Route path="/timer"><Timer User = {user}/></Route>

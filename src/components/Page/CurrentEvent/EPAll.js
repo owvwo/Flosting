@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from "react";
 import styled from "styled-components";
-import Logo from "./../../../images/플로스팅 로고.png";
+import Logo from "./../../../images/001.png";
 import Footer from "../Footer";
 import Fade from "react-reveal/Fade";
 import { Link, Redirect } from "react-router-dom";
@@ -46,13 +46,16 @@ const Container = styled.div`
   img {
     text-align: center;
     width: 15rem;
+    margin-bottom: -2rem;
   }
   .submitBtn {
-    width: 80%;
+    width: 23rem;
     height: 3rem;
     background-color: ;
   }
 `;
+
+const ButtonContainer = styled.div``;
 
 function EP1(props) {
   const { EP_School_Name, EP_Num, EP_Start_Day, EP_End_Day, EP_Result_Day } =
@@ -119,7 +122,7 @@ function EP1(props) {
           <img src={Logo} />
           {index === -1 ? (
             <ThemeProvider theme={Boldtheme}>
-              <div>
+              <ButtonContainer>
                 <button className="submitBtn" onClick={handleOpen}>
                   신청하기
                 </button>
@@ -143,12 +146,14 @@ function EP1(props) {
                     </Button>
                   </DialogActions>
                 </Dialog>
-              </div>
+              </ButtonContainer>
             </ThemeProvider>
           ) : (
-            <Link to="/submit">
-              <button className="submitBtn">신청하기</button>
-            </Link>
+            <ButtonContainer>
+              <Link to="/submit">
+                <button className="submitBtn">신청하기</button>
+              </Link>
+            </ButtonContainer>
           )}
 
           <Fade bottom>

@@ -103,10 +103,12 @@ function AdminBigFoot(){
         }catch(err){console.log(err)}
     }
     function getAlarmExcel(){
-        const dataWS = xlsx.utils.json_to_sheet(alarmList);
-        const wb = xlsx.utils.book_new();
-        xlsx.utils.book_append_sheet(wb, dataWS, "알람신청리스트");
-        xlsx.writeFile(wb, "Alarm.xlsx");
+        getData().then(_=>{
+            const dataWS = xlsx.utils.json_to_sheet(alarmList);
+            const wb = xlsx.utils.book_new();
+            xlsx.utils.book_append_sheet(wb, dataWS, "알람신청리스트");
+            xlsx.writeFile(wb, "Alarm.xlsx");  
+        })
     }
     const 회차업데이트 = (event) => {
         const{target:{name, value}} = event;
@@ -161,7 +163,6 @@ function AdminBigFoot(){
     }
     useEffect(()=>{
         getVariableInfo();
-        getData();
     },[])
     return(
         <Container>

@@ -2,9 +2,7 @@ import React, { Component, useState, useEffect } from 'react'
 import styled from 'styled-components';
 import { createMuiTheme, responsiveFontSizes, ThemeProvider } from '@material-ui/core';
 import fire from '../Register/LoginFire';
-import { ControlPointDuplicate } from '@material-ui/icons';
-import PickerButton from 'antd/lib/date-picker/PickerButton';
-import { Footer } from 'antd/lib/layout/layout';
+import xlsx from "xlsx";
 
 
 
@@ -25,30 +23,75 @@ const Colortheme = createMuiTheme({
 const Container = styled.div`
     font-family: 'Noto Sans KR', sans-serif;
     font-weight: 400;
-
+    display: flex;
+    flex-directcion : row;
     h1{
         font-size: 1.5rem;
     }
 `;
 
+const ExcelBtn = styled.button`
+font-family: 'Noto Sans KR', sans-serif;
+font-weight: 700;
+border-radius: 8px;
+margin: 5px;
+border : 1px solid #A6A6A6;
+font-size : 1rem;
+color :  rgb(0,0,0,0.7);
+background : rgb(225,241,245,0.8);
+width: 10rem;
+height: 3rem;
+
+`
 const MatchButton = styled.button`
     font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 700;
     border-radius: 8px;
     margin: 5px;
     border : 1px solid #A6A6A6;
-    color :  black;
-    background : red;
+    font-size : 1rem;
+    color :  rgb(0,0,0,0.7);
+    background : rgb(245,241,220,0.8);
     width: 10rem;
-    height: 5rem;
+    height: 3rem;
     h2{
         font-size: 2rem;
     }
 `
 
+const MatchingBox = styled.div`
+    display : flex;
+    flex-direction : column;
+    list-style : none;
+    li{
+        font-family: 'Noto Sans KR', sans-serif;
+        font-size : 0.7rem;
+    }
+`
 const MatchingManager = (props) => {
 
+    const { nowCount } = props;
     const user = props.user;
     const db = fire.firestore();
+    //Lilac 정보
+    const [L_user,setL_user] = useState("");
+    const [L_boy,setL_boy] = useState("");
+    const [L_girl,setL_girl] = useState("");
+    const [L_couple,setL_couple] = useState("");
+    const [L_trash,setL_trash] = useState("");
+
+    const [D_user,setD_user] = useState("");
+    const [D_boy,setD_boy] = useState("");
+    const [D_girl,setD_girl] = useState("");
+    const [D_couple,setD_couple] = useState("");
+    const [D_trash,setD_trash] = useState("");
+
+    const [C_user,setC_user] = useState("");
+    const [C_boy,setC_boy] = useState("");
+    const [C_girl,setC_girl] = useState("");
+    const [C_couple,setC_couple] = useState("");
+    const [C_trash,setC_trash] = useState("");
+
 
     //DB에서 우선순위배열에 추가하는 함수
     function DBtoPriority_Array(Priority_Array, Priority, MatchingType, data) {
@@ -682,69 +725,144 @@ const MatchingManager = (props) => {
         db.collection(CollectionName).where(MatchingType + ".Ticket", "==", true)
             .get()
             .then((querySnapshot) => {
-                querySnapshot.forEach((doc) => {
-                    if (doc.data().Lilac.Age == "Dnt_M" && doc.data().Lilac.Univ == "Dnt_M") {
-                        //1순위 매칭 우선배열
-                        DBtoPriority_Array(Priority_Array, 0, MatchingType, doc.data());
-                    } else if (doc.data().Lilac.Age == "Dnt_M" || doc.data().Lilac.Univ == "Dnt_M") {
-                        //2순위 매칭 우선배열
-                        DBtoPriority_Array(Priority_Array, 1, MatchingType, doc.data());
-                    } else {
-                        //3순위 매칭 우선배열
-                        DBtoPriority_Array(Priority_Array, 2, MatchingType, doc.data());
-                    }
-                })
+                if (!querySnapshot.size) {
+                    alert(nowCount + "회차_" + MatchingType + "데이터가 없음.")
+                } else {
 
-                // 각 우선순위 배열을 셔플하고 차곡차곡 쌓음.
-                for (let i = 0; i < 3; i++) {
-                    shuffleArray(Priority_Array[i]);
-                    Alluser.push(...Priority_Array[i]);
-                }
+                    let boynum = 0;
+                    let girlnum = 0;
 
-                //전체 유저의 수
-                let User_Num = Alluser.length;
-
-                for (let i = 0; i < User_Num; i++) {
-                    if (i == User_Num - 1) {
-                        //마지막한사람은 ㅂㅂ
-                        break;
-                    }
-                    //PickUser = 매칭중인 유저
-                    let PickUser = Alluser[i];
-                    //Pick이 된지 먼저 검증
-                    if (PickUser.Pick) {
-                        continue;
-                        //이미 커플
-                    } else {
-                        //나 다음부터 커플을 찾아보자
-                        for (let j = i + 1; j < User_Num; j++) {
-                            //OtherUser = 상대 유저
-                            let OtherUser = Alluser[j];
-                            if (OtherUser.Pick) {
-                                //이미 커플
-                                continue;
+                    if(MatchingType == "Lilac"){
+                        querySnapshot.forEach((doc) => {
+                            if (doc.data().Lilac.Age == "Dnt_M" && doc.data().Lilac.Univ == "Dnt_M") {
+                                //1순위 매칭 우선배열
+                                DBtoPriority_Array(Priority_Array, 0, MatchingType, doc.data());
+                            } else if (doc.data().Lilac.Age == "Dnt_M" || doc.data().Lilac.Univ == "Dnt_M") {
+                                //2순위 매칭 우선배열
+                                DBtoPriority_Array(Priority_Array, 1, MatchingType, doc.data());
                             } else {
-                                if (CheckCanCouple(PickUser, OtherUser, MatchingType)) {
-                                    PickUser.Pick = true;
-                                    OtherUser.Pick = true;
-                                    couple[0].push(PickUser);
-                                    couple[1].push(OtherUser);
-                                    break;
+                                //3순위 매칭 우선배열
+                                DBtoPriority_Array(Priority_Array, 2, MatchingType, doc.data());
+                            }
+
+                            if(doc.data().User.Gender == "boy"){
+                                boynum++;
+                            }else{
+                                girlnum++;
+                            }
+                        })
+                    }else if(MatchingType == "Daisy"){
+                        querySnapshot.forEach((doc) => {
+                            if (doc.data().Daisy.Age == "Dnt_M" && doc.data().Daisy.Univ == "Dnt_M") {
+                                //1순위 매칭 우선배열
+                                DBtoPriority_Array(Priority_Array, 0, MatchingType, doc.data());
+                            } else if (doc.data().Daisy.Age == "Dnt_M" || doc.data().Daisy.Univ == "Dnt_M") {
+                                //2순위 매칭 우선배열
+                                DBtoPriority_Array(Priority_Array, 1, MatchingType, doc.data());
+                            } else {
+                                //3순위 매칭 우선배열
+                                DBtoPriority_Array(Priority_Array, 2, MatchingType, doc.data());
+                            }
+
+                            if(doc.data().User.Gender == "boy"){
+                                boynum++;
+                            }else{
+                                girlnum++;
+                            }
+                        })
+                    }else if(MatchingType == "Clover"){
+                        querySnapshot.forEach((doc) => {
+                            if (doc.data().Clover.Age == "Dnt_M" && doc.data().Clover.Univ == "Dnt_M") {
+                                //1순위 매칭 우선배열
+                                DBtoPriority_Array(Priority_Array, 0, MatchingType, doc.data());
+                            } else if (doc.data().Clover.Age == "Dnt_M" || doc.data().Clover.Univ == "Dnt_M") {
+                                //2순위 매칭 우선배열
+                                DBtoPriority_Array(Priority_Array, 1, MatchingType, doc.data());
+                            } else {
+                                //3순위 매칭 우선배열
+                                DBtoPriority_Array(Priority_Array, 2, MatchingType, doc.data());
+                            }
+
+                            if(doc.data().User.Gender == "boy"){
+                                boynum++;
+                            }else{
+                                girlnum++;
+                            }
+                        })
+                    }
+
+                    // 각 우선순위 배열을 셔플하고 차곡차곡 쌓음.
+                    for (let i = 0; i < 3; i++) {
+                        shuffleArray(Priority_Array[i]);
+                        Alluser.push(...Priority_Array[i]);
+                    }
+
+                    //전체 유저의 수
+                    let User_Num = Alluser.length;
+
+                    for (let i = 0; i < User_Num; i++) {
+                        if (i == User_Num - 1) {
+                            //마지막한사람은 ㅂㅂ
+                            break;
+                        }
+                        //PickUser = 매칭중인 유저
+                        let PickUser = Alluser[i];
+                        //Pick이 된지 먼저 검증
+                        if (PickUser.Pick) {
+                            continue;
+                            //이미 커플
+                        } else {
+                            //나 다음부터 커플을 찾아보자
+                            for (let j = i + 1; j < User_Num; j++) {
+                                //OtherUser = 상대 유저
+                                let OtherUser = Alluser[j];
+                                if (OtherUser.Pick) {
+                                    //이미 커플
+                                    continue;
+                                } else {
+                                    if (CheckCanCouple(PickUser, OtherUser, MatchingType)) {
+                                        PickUser.Pick = true;
+                                        OtherUser.Pick = true;
+                                        couple[0].push(PickUser);
+                                        couple[1].push(OtherUser);
+                                        break;
+                                    }
                                 }
                             }
                         }
                     }
-                }
-                for (let i = 0; i < User_Num; i++) {
-                    if (!Alluser[i].Pick) {
-                        //커플안된놈들
-                        trash.push(Alluser[i]);
+                    for (let i = 0; i < User_Num; i++) {
+                        if (!Alluser[i].Pick) {
+                            //커플안된놈들
+                            trash.push(Alluser[i]);
+                        }
                     }
-                }
 
-                PushCoupletoDB("Lilac", couple);
-                console.table(couple);
-                console.table(trash);
+                    if (MatchingType == "Lilac") {
+                        PushCoupletoDB("lilac", couple);;
+                        setL_user(User_Num);
+                        setL_boy(boynum);
+                        setL_girl(girlnum);
+                        setL_couple(couple.size);
+                        setL_trash(trash.size);
+                    } else if (MatchingType == "Daisy") {
+                        PushCoupletoDB("daisy", couple);
+                        setD_user(User_Num);
+                        setD_boy(boynum);
+                        setD_girl(girlnum);
+                        setD_couple(couple.size);
+                        setD_trash(trash.size);
+                    } else {
+                        PushCoupletoDB("clover", couple);
+                        setC_user(User_Num);
+                        setC_boy(boynum);
+                        setC_girl(girlnum);
+                        setC_couple(couple.size);
+                        setC_trash(trash.size);
+                    }
+                    console.table(couple);
+                    console.table(trash);
+                }
             });
     }
     //DB에 push해주는 함수
@@ -752,20 +870,20 @@ const MatchingManager = (props) => {
         const couplelength = couple[0].length;
         for (let i = 0; i < couplelength; i++) {
             let userOne = {
-                Age : couple[0][i].Age,
-                Gender : couple[0][i].Gender,
-                Manner : couple[0][i].Manner,
-                Nick : couple[0][i].Nick,
-                Phone : couple[0][i].Phone,
-                Univ : couple[0][i].Univ,
+                Age: couple[0][i].Age,
+                Gender: couple[0][i].Gender,
+                Manner: couple[0][i].Manner,
+                Nick: couple[0][i].Nick,
+                Phone: couple[0][i].Phone,
+                Univ: couple[0][i].Univ,
             };
             let userTwo = {
-                Age : couple[1][i].Age,
-                Gender : couple[1][i].Gender,
-                Manner : couple[1][i].Manner,
-                Nick : couple[1][i].Nick,
-                Phone : couple[1][i].Phone,
-                Univ : couple[1][i].Univ,
+                Age: couple[1][i].Age,
+                Gender: couple[1][i].Gender,
+                Manner: couple[1][i].Manner,
+                Nick: couple[1][i].Nick,
+                Phone: couple[1][i].Phone,
+                Univ: couple[1][i].Univ,
             };
             db.collection("test" + MatchingType)
                 .add({
@@ -782,6 +900,7 @@ const MatchingManager = (props) => {
                     alert(error.message);
                 });
         }
+        alert(MatchingType + " 매칭 끝")
     };
     // Array비우는 함수
     const clearArray = (Alluser, Priority_Array, couple, trash) => {
@@ -790,38 +909,211 @@ const MatchingManager = (props) => {
         couple = [[], []];
         trash = [];
     }
-    const handlematch = () => {
+    const handleLilacmatch = () => {
 
+        //이미 매칭되어있으면 하지말기
+        const MatchingCollection_DB = String(nowCount) + "lilac"
+        const MatchingCollection_Flosting = "Flosting_" + String(nowCount)
 
-        if (user) {
-            let Alluser = [];
-            let Priority_Array = [[], [], []]; //우선순위를 3단계로 둠.
-            let couple = [[], []];
-            let trash = [];
+        db.collection(MatchingCollection_DB).get().then((querySnapshot) => {
+            if (querySnapshot.size)
+                alert("이미 매칭이 되어있음. DB확인해봐")
+            else {
+                let Alluser = [];
+                let Priority_Array = [[], [], []]; //우선순위를 3단계로 둠.
+                let couple = [[], []];
+                let trash = [];
+                MatchingSystem(MatchingCollection_Flosting, "Lilac", Alluser, Priority_Array, couple, trash);
+            }
+        })
 
-            const LilacMatching = new Promise((resolve, reject) => {
-                MatchingSystem("Flosting_test삭제ㄴㄴ", "Lilac", Alluser, Priority_Array, couple, trash);
-                resolve(true);
-            });
+    }
+    const handleDaisymatch = () => {
 
-            // LilacMatching.then(() => {
-            //     let a = 5;
-            //     PushCoupletoDB("Lilac", couple);
-            // })
-        }
+        //이미 매칭되어있으면 하지말기
+        const MatchingCollection_DB = String(nowCount) + "daisy"
+        const MatchingCollection_Flosting = "Flosting_" + String(nowCount)
+
+        db.collection(MatchingCollection_DB).get().then((querySnapshot) => {
+            if (querySnapshot.size)
+                alert("이미 매칭이 되어있음. DB확인해봐")
+            else {
+                let Alluser = [];
+                let Priority_Array = [[], [], []]; //우선순위를 3단계로 둠.
+                let couple = [[], []];
+                let trash = [];
+                MatchingSystem(MatchingCollection_Flosting, "Daisy", Alluser, Priority_Array, couple, trash);
+            }
+        })
+
+    }
+    const handleClovermatch = () => {
+
+        //이미 매칭되어있으면 하지말기
+        const MatchingCollection_DB = String(nowCount) + "clover"
+        const MatchingCollection_Flosting = "Flosting_" + String(nowCount)
+
+        db.collection(MatchingCollection_DB).get().then((querySnapshot) => {
+            if (querySnapshot.size)
+                alert("이미 매칭이 되어있음. DB확인해봐")
+            else {
+                let Alluser = [];
+                let Priority_Array = [[], [], []]; //우선순위를 3단계로 둠.
+                let couple = [[], []];
+                let trash = [];
+                MatchingSystem(MatchingCollection_Flosting, "Clover", Alluser, Priority_Array, couple, trash);
+            }
+        })
+
     }
 
+    let lilaclist = [];
+    let daisylist = [];
+    let cloverlist = [];
 
+    async function getlilacData(){
+        const LilacCollection_DB = String(nowCount) + "lilac"
+
+        const lilacdiv = await db.collection(LilacCollection_DB).get()
+        try{
+            lilacdiv.forEach((doc)=>{
+                let tempdic = {
+                    userOne: doc.data().userOne.Nick,
+                    userOnePhone: doc.data().userOne.Phone,
+                    userTwo: doc.data().userTwo.Nick,
+                    userTwoPhone: doc.data().userTwo.Phone
+                }
+                lilaclist.push(tempdic)
+            })
+        }catch(err){console.log(err)}
+    }
+    async function getdaisyData(){
+        const DaisyCollection_DB = String(nowCount) + "daisy"
+
+        const daisydiv = await db.collection(DaisyCollection_DB).get()
+        try{
+            daisydiv.forEach((doc)=>{
+                let tempdic = {
+                    userOne: doc.data().userOne.Nick,
+                    userOnePhone: doc.data().userOne.Phone,
+                    userTwo: doc.data().userTwo.Nick,
+                    userTwoPhone: doc.data().userTwo.Phone
+                }
+                daisylist.push(tempdic)
+            })
+        }catch(err){console.log(err)}
+    }
+    async function getcloverData(){
+        const CloverCollection_DB = String(nowCount) + "clover"
+
+        const cloverdiv = await db.collection(CloverCollection_DB).get()
+        try{
+            cloverdiv.forEach((doc)=>{
+                let tempdic = {
+                    userOne: doc.data().userOne.Nick,
+                    userOnePhone: doc.data().userOne.Phone,
+                    userTwo: doc.data().userTwo.Nick,
+                    userTwoPhone: doc.data().userTwo.Phone
+                }
+                cloverlist.push(tempdic)
+            })
+        }catch(err){console.log(err)}
+    }
+
+    async function getallData(){
+        const LilacCollection_DB = String(nowCount) + "lilac"
+
+        const lilacdiv = await db.collection(LilacCollection_DB).get()
+        try{
+            lilacdiv.forEach((doc)=>{
+                let tempdic = {
+                    userOne: doc.data().userOne.Nick,
+                    userOnePhone: doc.data().userOne.Phone,
+                    userTwo: doc.data().userTwo.Nick,
+                    userTwoPhone: doc.data().userTwo.Phone
+                }
+                lilaclist.push(tempdic)
+            })
+        }catch(err){console.log(err)}
+        const DaisyCollection_DB = String(nowCount) + "daisy"
+
+        const daisydiv = await db.collection(DaisyCollection_DB).get()
+        try{
+            daisydiv.forEach((doc)=>{
+                let tempdic = {
+                    userOne: doc.data().userOne.Nick,
+                    userOnePhone: doc.data().userOne.Phone,
+                    userTwo: doc.data().userTwo.Nick,
+                    userTwoPhone: doc.data().userTwo.Phone
+                }
+                daisylist.push(tempdic)
+            })
+        }catch(err){console.log(err)}
+        const CloverCollection_DB = String(nowCount) + "clover"
+
+        const cloverdiv = await db.collection(CloverCollection_DB).get()
+        try{
+            cloverdiv.forEach((doc)=>{
+                let tempdic = {
+                    userOne: doc.data().userOne.Nick,
+                    userOnePhone: doc.data().userOne.Phone,
+                    userTwo: doc.data().userTwo.Nick,
+                    userTwoPhone: doc.data().userTwo.Phone
+                }
+                cloverlist.push(tempdic)
+            })
+        }catch(err){console.log(err)}
+    }
+    const excelDownhandle = () =>{
+
+        getallData().then(_=>{
+            const dataWS = xlsx.utils.json_to_sheet(lilaclist);
+            const dataWS2 = xlsx.utils.json_to_sheet(daisylist);
+            const dataWS3 = xlsx.utils.json_to_sheet(cloverlist);
+            const wb = xlsx.utils.book_new();
+            xlsx.utils.book_append_sheet(wb, dataWS, "Lilac");
+            xlsx.utils.book_append_sheet(wb, dataWS2, "Daisy");
+            xlsx.utils.book_append_sheet(wb, dataWS3, "Clover");
+            xlsx.writeFile(wb, "Alarm.xlsx");
+        })
+    }
 
     return (
         <ThemeProvider theme={Colortheme}>
             <Container>
-                <h1>
-                    매니저
-                </h1>
-                <MatchButton onClick={handlematch}>
-                    <h2>LilacMatching</h2>
-                </MatchButton>
+                <MatchingBox>
+                    <MatchButton onClick={handleLilacmatch}>
+                        LilacMatching
+                    </MatchButton>
+                    <li>남자 : {L_boy}</li>
+                    <li>여자 : {L_girl}</li>
+                    <li>총 인원 : {L_user}</li>
+                    <li>커플 : {L_couple}</li>
+                    <li>트레쉬행 : {L_trash}</li>
+                </MatchingBox>
+                <MatchingBox>
+                    <MatchButton onClick={handleDaisymatch}>
+                        DaisyMatching
+                    </MatchButton>
+                    <li>남자 : {D_boy}</li>
+                    <li>여자 : {D_girl}</li>
+                    <li>총 인원 : {D_user}</li>
+                    <li>커플 : {D_couple}</li>
+                    <li>트레쉬행 : {D_trash}</li>
+                </MatchingBox>
+                <MatchingBox>
+                    <MatchButton onClick={handleClovermatch}>
+                        CloverMatching
+                    </MatchButton>
+                    <li>남자 : {C_boy}</li>
+                    <li>여자 : {C_girl}</li>
+                    <li>총 인원 : {C_user}</li>
+                    <li>커플 : {C_couple}</li>
+                    <li>트레쉬행 : {C_trash}</li>
+                </MatchingBox>
+                <ExcelBtn onClick = {excelDownhandle}>
+                    {nowCount}회차 결과 다운
+                </ExcelBtn>
             </Container>
         </ThemeProvider>
     );
