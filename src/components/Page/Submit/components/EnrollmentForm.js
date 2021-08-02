@@ -47,7 +47,6 @@ const ErrorMsg = styled.div`
 `;
 
 const InputContainer = styled.div`
-  z-index: 10;
   margin: 1rem;
   text-align: center;
   justify-content: center;
@@ -55,6 +54,8 @@ const InputContainer = styled.div`
 `;
 
 const TypeImage = styled.div`
+  position: relative;
+  z-index: 1;
   img {
     width: ${(props) => (props.Size ? "20rem" : "10rem")};
     margin: 0px auto;
@@ -109,7 +110,8 @@ const ToggleButton = styled.button`
 `;
 
 const SubText = styled.div`
-  z-index: 20;
+  position: relative;
+  z-index: 2;
   margin: 1rem;
   p {
     font-size: ${(props) => (props.setFont ? "15px" : "10px")};
@@ -123,14 +125,6 @@ const MainText = styled.div`
   margin: 1rem;
 `;
 
-const Zindex = styled.div`
-  .Title {
-    z-index: 10;
-  }
-  .TypeImage {
-    z-index: 5;
-  }
-`;
 function useToggle(initialValue = true, values) {
   const [value, setValue] = useState(initialValue);
   const toggle = useCallback(() => {
@@ -330,23 +324,21 @@ function EnrollmentForm(props, match) {
 
                       <InputContainer>
                         <Title>Lilac</Title>
-                        <Zindex>
-                          <SubText setFont={lilacOn}>
-                            <p>라일락의 꽃말</p>
-                            <p>
-                              <b>'새로운 사랑의 싹이 트다'</b>
-                            </p>
-                            <br></br>
-                            <p>
-                              라일락팅을 통해 새로운 <b>이성</b>과
-                            </p>
-                            <p>소중한 인연을 가져보세요.</p>
-                            <br></br>
-                          </SubText>
-                          <TypeImage Size={lilacOn}>
-                            <img src={lilac} />
-                          </TypeImage>
-                        </Zindex>
+                        <SubText setFont={lilacOn}>
+                          <p>라일락의 꽃말</p>
+                          <p>
+                            <b>'새로운 사랑의 싹이 트다'</b>
+                          </p>
+                          <br></br>
+                          <p>
+                            라일락팅을 통해 새로운 <b>이성</b>과
+                          </p>
+                          <p>소중한 인연을 가져보세요.</p>
+                          <br></br>
+                        </SubText>
+                        <TypeImage Size={lilacOn}>
+                          <img src={lilac} />
+                        </TypeImage>
                         {/* 라일락 나이 */}
                         <ToggleButton
                           type="button"
@@ -373,7 +365,7 @@ function EnrollmentForm(props, match) {
                               name="Lilac.Univ"
                               options={desiredUnivOptions}
                               disabled={lilacOn}
-                            />{" "}
+                            />
                           </div>
                         ) : (
                           ""
@@ -381,25 +373,23 @@ function EnrollmentForm(props, match) {
                       </InputContainer>
                       <InputContainer>
                         <Title>Daisy</Title>
-                        <Zindex>
-                          <SubText setFont={daisyOn}>
-                            <p>
-                              데이지의 꽃말 <b>'우정'</b>
-                            </p>
-                            <br></br>
-                            <p>데이지팅을 통해</p>
-                            <p>
-                              <b>이성</b> 사람과 새로운
-                            </p>
-                            <p>
-                              <b>친구</b>가 되어보세요
-                            </p>
-                            <br></br>
-                          </SubText>
-                          <TypeImage Size={daisyOn}>
-                            <img src={daisy} />
-                          </TypeImage>
-                        </Zindex>
+                        <SubText setFont={daisyOn}>
+                          <p>
+                            데이지의 꽃말 <br />
+                            <b>'우정'</b>
+                          </p>
+                          <br></br>
+                          <p>데이지팅을 통해</p>
+                          <p>
+                            <b>이성</b> 사람과 새로운
+                          </p>
+                          <p>
+                            <b>친구</b>가 되어보세요
+                          </p>
+                        </SubText>
+                        <TypeImage Size={daisyOn}>
+                          <img src={daisy} />
+                        </TypeImage>
                         {/* 라일락 나이 */}
                         <ToggleButton
                           type="button"

@@ -37,8 +37,8 @@ const NoticeItem = (props) => {
   return (
     <Container>
       <NavContainer>
-        <ListItem alignItems="flex-start" button>
-          <NavLink to="/subevent/notice">
+        <NavLink to="/subevent/notice">
+          <ListItem alignItems="flex-start" button>
             <ListItemText
               primary={Title}
               secondary={
@@ -53,8 +53,8 @@ const NoticeItem = (props) => {
                 </React.Fragment>
               }
             />
-          </NavLink>
-        </ListItem>
+          </ListItem>
+        </NavLink>
       </NavContainer>
     </Container>
   );

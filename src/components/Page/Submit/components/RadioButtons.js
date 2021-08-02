@@ -20,14 +20,14 @@ const Label = styled.label`
 
 const RadioButton = styled.input`
   margin: 1rem;
-  width: 4rem;
+  width: 1rem;
   height: 1.7rem;
 `;
 
 const RadioLabel = styled.label`
-  width: 1.7rem;
+  width: 1rem;
   height: 1.7rem;
-  font-size: 1.5rem;
+  font-size: 1rem;
 `;
 
 function RadioButtons(props) {
