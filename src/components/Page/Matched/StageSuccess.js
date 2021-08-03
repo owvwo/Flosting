@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Footer from '../Footer';
+import {NavLink} from 'react-router-dom';
 import TimerComponent from './Timer.js'
 import fire from '../Register/LoginFire.js'
 import profileImageBoy from '../../../images/profile_boy_default.png';
@@ -17,24 +18,47 @@ flex-direction: column;
         display: flex;
     }
     .text{
+        font-family: 'Do Hyeon', sans-serif;
+        border-top: 3px solid rgb(218,219,247, 0.8);
         height: 15rem;
         text-align: center;
         margin-top: 4rem;
-        font-size: 1.2rem;
+        font-size: 1.5rem;
     }
 
 `
 
-const TitleWrap = styled.div`
-color: white;
-background-color: pink;
-width: 20rem;
-font-size : 2rem;
-text-align : center;
-margin-top: 2rem;
-margin-bottom: 2rem;
-font-weight : bolder
+const NoticeMessage = styled.div`
+ list-style: none;
+ li{
+     font-size: 0.6rem;
+     margin-bottom: 2rem;
+ }
 `
+const TitleWrap = styled.div`
+
+    color: rgb(0,0,0, 0.75);
+    background: rgb(0,0,0, 0.05);
+    width: 20rem;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content : center;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 700;
+
+    font-size : 2rem;
+    text-align : center;
+    margin-top: 1rem;
+`
+const TitleContainer = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content : center;
+    flex-direction: column;
+
+`
+
 const LeftProfileWrap = styled.div`
 text-align : center;
 display: flex;
@@ -43,6 +67,18 @@ align-items: center;
 flex-direction: column;
 margin-right: 1.5rem;
 
+    .defaultPicBox{
+        list-style: none;
+        a{
+            
+            .LookProfile{
+                font-family: 'Do Hyeon', sans-serif;
+                margin-bottom: 5px;
+                border-radius : 5px;
+                background: rgb(0,0,0, 0.1);
+            }
+        }
+    }
     .defaultPic{
         width: 6rem;
         height: 6rem;
@@ -51,7 +87,23 @@ margin-right: 1.5rem;
     }
 
     .profileInfo{
+        list-style: none;
         width: 8rem;
+        .UserNick{
+            font-weight: 700;
+        }
+        .UserUniv{
+            font-size: 0.5rem;
+        }
+        .UserManner{
+            font-size: 0.5rem;
+        }
+        .UserPhone{
+            background: rgb(209,240,228,0.8);
+            font-size: 0.9rem;
+            font-weight: 700;
+            
+        }
     }
 `
 
@@ -63,16 +115,44 @@ align-items: center;
 flex-direction: column;
 margin-left: 1.5rem;
 
-    .defaultPic{
-        width: 6rem;
-        height: 6rem;
-        background-color: grey;
-        border-radius: 50%;
+.defaultPicBox{
+    list-style: none;
+    a{
+        
+        .LookProfile{
+            font-family: 'Do Hyeon', sans-serif;
+            margin-bottom: 5px;
+            border-radius : 5px;
+            background: rgb(0,0,0, 0.1);
+        }
     }
+}
+.defaultPic{
+    width: 6rem;
+    height: 6rem;
+    background-color: grey;
+    border-radius: 50%;
+}
 
-    .profileInfo{
-        width: 8rem;
+.profileInfo{
+    list-style: none;
+    width: 8rem;
+    .UserNick{
+        font-weight: 700;
     }
+    .UserUniv{
+        font-size: 0.5rem;
+    }
+    .UserManner{
+        font-size: 0.5rem;
+    }
+    .UserPhone{
+        background: rgb(209,240,228,0.8);
+        font-size: 0.9rem;
+        font-weight: 700;
+        
+    }
+}
 `
 
 
@@ -97,7 +177,7 @@ function StageSuccess(props){
                 <RightProfile 유저2={유저2} 메세지보낸사람={메세지보낸사람}/>
             </div>
             <div className='text'>
-                플로스팅을 이용해주셔서 감사합니다. :)<br/>
+                플로스팅을 이용해주셔서 감사합니다 :)<br/>
             </div>
             <Footer/>
         </Container>
@@ -108,15 +188,22 @@ export default StageSuccess;
 
 function Title(){
     return(
-        <TitleWrap>
-            매칭 성공!!
-        </TitleWrap>
+        <TitleContainer>
+            <TitleWrap>
+            매칭 완료!
+            </TitleWrap>
+            <NoticeMessage><li>표시와 다르게 연락이 진행되지 않았다면 카카오 채널을 통해 문의해주세요!</li></NoticeMessage>
+        </TitleContainer>
     )
 }
 
 function LeftProfile({유저1, 메세지보낸사람}){
-    // console.log(메세지보낸사람)
-    // console.log(유저1['Nick'])
+
+    const noneactiveStyle = {
+        textDecoration: 'none',
+        color: '#2B2A28'
+      }
+
     let profileImage=null;
 
     if(유저1['Gender'] === 'boy'){
@@ -128,22 +215,25 @@ function LeftProfile({유저1, 메세지보낸사람}){
     return(
             <LeftProfileWrap>
             <div className='defaultPicBox'>
+                <NavLink to = {`/userprofile/${유저1['Nick']}`} style={noneactiveStyle}><li className = "LookProfile">프로필 보기</li></NavLink>
                 <img src={profileImage} className='defaultPic'/>
             </div>
                 <div className='profileInfo'>
-                    {유저1['Nick']}({유저1['Age']})<br/>
-                    {유저1['Univ']}<br/>
-                    매너온도: {유저1['Manner']}<br/>
-                    {유저1['Phone']}<br/>
-
-                </div>
+                <li className="UserNick">{유저1['Nick']}[{유저1['Age']}]</li>
+                <li className="UserPhone">{유저1['Phone'].substring(0,3)}-{유저1['Phone'].substring(3,7)}-{유저1['Phone'].substring(7)}</li>  
+                <li className="UserUniv">{유저1['Univ']}</li>
+                <li className="UserManner">매너온도: {유저1['Manner']}</li>
+            </div>
             </LeftProfileWrap>
     )
 }
 
 function RightProfile({유저2, 메세지보낸사람}){
-    // console.log(메세지보낸사람)
-    // console.log(유저2['Nick'])
+    const noneactiveStyle = {
+        textDecoration: 'none',
+        color: '#2B2A28'
+      }
+
     let profileImage=null;
 
     if(유저2['Gender'] === 'boy'){
@@ -155,13 +245,14 @@ function RightProfile({유저2, 메세지보낸사람}){
     return(
         <RightProfileWrap>
             <div className='defaultPicBox'>
+                <NavLink to = {`/userprofile/${유저2['Nick']}`} style={noneactiveStyle}><li className = "LookProfile">프로필 보기</li></NavLink>
                 <img src={profileImage} className='defaultPic'/>
             </div>
-            <div className='profileInfo'>
-                {유저2['Nick']}({유저2['Age']})<br/>
-                {유저2['Univ']}<br/>
-                매너온도: {유저2['Manner']}<br/>
-                {유저2['Phone']}<br/>
+                <div className='profileInfo'>
+                <li className="UserNick">{유저2['Nick']}[{유저2['Age']}]</li>
+                <li className="UserPhone">{유저2['Phone'].substring(0,3)}-{유저2['Phone'].substring(3,7)}-{유저2['Phone'].substring(7)}</li>  
+                <li className="UserUniv">{유저2['Univ']}</li>
+                <li className="UserManner">매너온도: {유저2['Manner']}</li>
             </div>
         </RightProfileWrap>
     )

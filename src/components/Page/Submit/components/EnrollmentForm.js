@@ -43,7 +43,9 @@ const Boldtheme = createMuiTheme({
 });
 
 const ErrorMsg = styled.div`
+  font-family: 'Noto Sans KR', sans-serif;
   color: red;
+  font-size: 0.7rem;
 `;
 
 const InputContainer = styled.div`

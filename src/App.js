@@ -29,7 +29,7 @@ const TransferMobile = styled.div`
 function App(){
 
   const [User, setUser] = useState('');
-  
+
   useEffect(() => {
     authListener();
   }, []);

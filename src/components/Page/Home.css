@@ -7,7 +7,7 @@
     position: absolute;
     top: 50%;
 	left: 50%;
-    transform: translate( -50%, 400% );
+    transform: translate( -50%, -350% );
 }
 .result_link{
     display: inline-flex;

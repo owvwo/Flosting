@@ -74,7 +74,7 @@ export default function MBTISelect(props) {
     <div>
         <RowFlexBox>
         <InputNick
-            placeholder="닉네임 입력"
+            placeholder="변경할 Mbti 선택"
             type="text"
             required
             value={newMbti}

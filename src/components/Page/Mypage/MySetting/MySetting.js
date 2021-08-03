@@ -207,7 +207,7 @@ const MySetting = (props) => {
                     <li>{Name}님! 아래 칸을 변경하여, 정보를 변경할 수 있답니다.</li>
                 </SettingInfor>
 
-                <Nicname_content>
+                {/* <Nicname_content>
                     <School_title>
                         닉네임
                     </School_title>
@@ -267,7 +267,7 @@ const MySetting = (props) => {
                             </Button>
                         </DialogActions>
                     </Dialog>
-                </Nicname_content>
+                </Nicname_content> */}
                 <Nicname_content>
                     <School_title>
                         MBTI

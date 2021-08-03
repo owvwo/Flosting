@@ -163,6 +163,7 @@ const LastRegister = (props) => {
     const db = fire.firestore();
 
     let DBForm = {
+        profileImage: "",
         ID: "",
         User: {
             Age: "",

@@ -30,7 +30,17 @@ const Boldtheme = createMuiTheme({
     fontFamily: "Noto Sans KR",
   },
 });
-
+const SubmitButton = styled.button`
+  color: rgb(0,0,0,0.9);
+  background-color: rgb(0,0,0,0.05);
+  border: 2px solid rgb(0,0,0,0.9);
+  border-radius: 10px;
+  font-family: 'Do Hyeon', sans-serif;
+  font-size: 1.4rem;
+  &:hover{
+    background-color: rgb(0,0,0,0.9);
+    color: white;
+`
 const Container = styled.div`
   text-align: center;
   margin-bottom: 1rem;
@@ -123,9 +133,9 @@ function EP1(props) {
           {index === -1 ? (
             <ThemeProvider theme={Boldtheme}>
               <ButtonContainer>
-                <button className="submitBtn" onClick={handleOpen}>
+                <SubmitButton className="submitBtn" onClick={handleOpen}>
                   신청하기
-                </button>
+                </SubmitButton>
                 <Dialog
                   open={open}
                   onClose={handleClose}
@@ -151,7 +161,7 @@ function EP1(props) {
           ) : (
             <ButtonContainer>
               <Link to="/submit">
-                <button className="submitBtn">신청하기</button>
+                <SubmitButton className="submitBtn">신청하기</SubmitButton>
               </Link>
             </ButtonContainer>
           )}

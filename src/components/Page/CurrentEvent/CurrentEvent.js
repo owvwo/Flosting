@@ -52,12 +52,17 @@ const 알림wrap = styled.div`
 `;
 
 const 알림btn = styled.button`
-  color: 09007a;
+  color: rgb(173,115,240,0.8);
   padding: 5px;
   width: 15rem;
   border-radius: 10px;
-  border: 1px solid B14AF7;
-  background-color: #d7c9ff;
+  border: 2px solid rgb(173,115,240,0.8);
+  background-color: rgb(255,255,255,0.5);
+  font-family: 'Do Hyeon', sans-serif;
+  margin: 10px;
+  &:hover{
+    background-color: rgb(173,115,240,0.8);
+    color: rgb(255,255,255,0.8);
 `;
 
 const CurrentEvent = (props) => {
