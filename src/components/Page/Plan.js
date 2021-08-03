@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { NavLink } from "react-router-dom";
 import styled from 'styled-components';
 import Fade from 'react-reveal/Fade';
-import calendarImage2 from '../../images/002.png'
+import calendarImage2 from '../../images/plan.png'
 
 const Container = styled.div`
 

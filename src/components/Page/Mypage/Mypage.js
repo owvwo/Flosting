@@ -14,8 +14,8 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 
 import { Redirect } from 'react-router-dom';
 import fire from '../Register/LoginFire'
-import MyInfo from './MyInfo'
-import MySetting from './MySetting';
+import MyInfo from './MyInfo/MyInfo'
+import MySetting from './MySetting/MySetting';
 import MyUsage_History from './MyUsage_History/Usage_main'
 import MyRecentSubmit from './MyRecentSubmit';
 
@@ -82,11 +82,15 @@ const useStyles = makeStyles((theme) => ({
 const Mypage = (props) => {
 
     const [User, setUser] = useState(props.User);
+    const [preNick, setpreNick] = useState(""); // 기존 닉네임
     const [ID, setID] = useState("");
+    const [Name, setName] = useState("");
     const [DocID, setDocID] = useState("");
     const db = fire.firestore();
     const [userHistory, setUserHistory] = useState();
+    const [Mbti, setMbti] = useState(); //본인 mbti
     const [row, setrow] = useState({});
+    const [changeInfor, setchangeInfor] = useState(true); // 정보 수정되면 업데이트하게 하는 변수
 
     useEffect(() => {
         setUser(props.User);
@@ -102,29 +106,18 @@ const Mypage = (props) => {
                     if (querySnapshot) {
                         querySnapshot.forEach((doc) => {
                             setID(s_id[0]);
+                            setName(doc.data().User.Name);
                             setDocID(doc.id);
-                            var docRef = db.collection("회원정보").doc(doc.id);
-                            docRef
-                                .get()
-                                .then((doc) => {
-                                    if (doc.exists) {
-                                        console.log("Document data:", doc.data().My_Usage_History);
-                                        setUserHistory(doc.data().My_Usage_History);
-                                    } else {
-                                        // doc.data() will be undefined in this case
-                                        console.log("No such document!");
-                                    }
-                                })
-                                .catch((error) => {
-                                    console.log("Error getting document:", error);
-                                });
+                            setpreNick(doc.data().User.Nick);
+                            setUserHistory(doc.data().My_Usage_History);
+                            setMbti(doc.data().User.Mbti);
                         });
                     } else {
                         console.log("데이터 없음");
                     }
                 });
         }
-    }, [User]);
+    }, [User, changeInfor]);
 
     const classes = useStyles();
     const theme = useTheme();
@@ -171,8 +164,14 @@ const Mypage = (props) => {
                             </MyInfo>
                         </TabPanel>
                         <TabPanel value={value} index={1} dir={theme.direction}>
-                            <MySetting user={User}>
-
+                            <MySetting 
+                            user={User} 
+                            Name = {Name}
+                            Mbti = {Mbti}
+                            DocID = {DocID}
+                            preNick = {preNick}
+                            setchangeInfor = {setchangeInfor}
+                            changeInfor = {changeInfor}>
                             </MySetting>
                         </TabPanel>
                         <TabPanel value={value} index={2} dir={theme.direction}>
@@ -186,11 +185,6 @@ const Mypage = (props) => {
                         <TabPanel value={value} index={3} dir={theme.direction}>
                             <MyRecentSubmit user={User}>
 
-                            </MyRecentSubmit>
-                        </TabPanel>
-                        <TabPanel value={value} index={3} dir={theme.direction}>
-                            <MyRecentSubmit user = {User}>
-                                
                             </MyRecentSubmit>
                         </TabPanel>
                     </SwipeableViews>

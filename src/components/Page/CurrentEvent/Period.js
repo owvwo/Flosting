@@ -4,26 +4,13 @@ import styled from "styled-components";
 const Container = styled.div`
   text-align: center;
   margin-bottom: 1rem;
-  .title {
-    margin-top: 15px;
-    font-size: 2rem;
-    font-weight: bolder;
-  }
-  .subtitle {
-    font-weight: bold;
-    margin-top: 10px;
-  }
-  img {
-    width: 15rem;
-  }
+
   .scheduleBox {
-    display: flex;
+    justify-content: flex-start;
     .scheduleLeft {
-      flex: 1;
       height: 6rem;
     }
     .scheduleRight {
-      flex: 1;
       height: 5rem;
     }
     .scheduleTitle {
@@ -34,14 +21,9 @@ const Container = styled.div`
       font-size: 1rem;
       margin-top: 5px;
       margin: 0 auto;
-      width: 150px;
+      width: 8rem;
       background-color: #f8ecf4;
     }
-  }
-  .submitBtn {
-    width: 80%;
-    height: 3rem;
-    background-color: ;
   }
 `;
 const Period = (props) => {

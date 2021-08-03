@@ -12,6 +12,7 @@ const Container = styled.div`
   margin-bottom: 1rem;
   img {
     width: 100%;
+    text-align: center;
   }
   a {
     color: inherit;
@@ -50,6 +51,7 @@ function EventItem(props) {
                     variant="body2"
                     className={classes.inline}
                     color="textPrimary"
+                    alignItems="center"
                   >
                     <img src={Img} />
                   </Typography>

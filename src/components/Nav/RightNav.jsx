@@ -173,7 +173,7 @@ const RightNav = (props) => {
             </NavLink>
           </RowDiv>
           <RowDiv>
-            <NavLink to="/plan" activeStyle={activeStyle} style={noneactiveStyle}>
+          <NavLink to="/plan" activeStyle={activeStyle} style={noneactiveStyle}>
               <li onClick={() => props.setOpen(!props.open)}>
                 일정 안내
               </li>

@@ -28,7 +28,7 @@ const Usage_main = (props) => {
   const UserID = props.ID;
   const UserHistory = props.UserHistory;
   const User = props.User;
-
+  const UserNick = props.UserNick;
   const [ID, setID] = useState("");
   const [DocID, setDocID] = useState("");
   const db = fire.firestore();
@@ -72,7 +72,12 @@ const Usage_main = (props) => {
   return (
     <ThemeProvider theme={Colortheme}>
       <Container>
-        <Table User={User} UserID={UserID} UserHistory={UserHistory}></Table>
+        <Table
+          User={User}
+          UserID={UserID}
+          UserHistory={UserHistory}
+          UserNick={UserNick}
+        ></Table>
       </Container>
     </ThemeProvider>
   );
