@@ -209,6 +209,7 @@ export default function CollapsibleTable(props) {
           .collection(EP + "lilac")
           .where("userOne.Nick", "==", UserNick)
           .get();
+        console.log("");
       } catch (err) {
         console.log(err);
       } finally {

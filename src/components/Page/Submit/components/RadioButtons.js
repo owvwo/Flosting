@@ -5,39 +5,56 @@ import { InputLabel } from "@material-ui/core";
 import "../FormikContainer.css";
 import styled from "styled-components";
 
-const Label = styled.label`
-  font-family: "Lobster", cursive;
-  font-size: 25px;
-  border: 1.5px solid;
+const Label = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 700;
+  font-size: 1.2rem;
+  border: 1px solid rgb(242,236,218, 1);
+  width : 20rem;
+  height : 2rem;
   padding: 5px;
-  margin: 5px;
   border-radius: 10px;
-  color: #ffffff;
-  background-color: #f7bb9e;
-  display: inline-block;
-  width: 20rem;
+  color: rgb(0,0,0, 0.5);
+  background-color: rgb(242,236,218, 0.8);
+
+`;
+const RadioLabel = styled.label`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size : 0.8rem;
+  
 `;
 
 const RadioButton = styled.input`
-  margin: 1rem;
-  width: 1rem;
-  height: 1.7rem;
+  width: 25px;
+  height: 25px;
+}
 `;
-
-const RadioLabel = styled.label`
-  width: 1rem;
-  height: 1.7rem;
-  font-size: 1rem;
-`;
-
+const FormikContainer = styled.div`
+  display: flex;
+  flex-direction : column;
+  align-items: center;
+  justify-content: center;
+`
+const FieldBox = styled.div`
+  display: flex;
+  flex-direction : row;
+  align-items: center;
+  justify-content: center;
+  margin-top : 0.5rem;
+`
 function RadioButtons(props) {
   const { label, name, options, blockSubmit, ...rest } = props;
   return (
-    <div className="formik-container">
-      <InputLabel>
-        <Label>{label}</Label>
-      </InputLabel>
-      <Field name={name}>
+    <FormikContainer>
+      <Label>{label}</Label>
+      <FieldBox>
+        <Field name={name}>
         {({ field }) => {
           return options.map((option) => {
             return (
@@ -56,8 +73,9 @@ function RadioButtons(props) {
           });
         }}
       </Field>
+      </FieldBox>
       <ErrorMessage component={TextError} name={name} />
-    </div>
+    </FormikContainer>
   );
 }
 

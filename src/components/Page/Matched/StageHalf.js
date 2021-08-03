@@ -6,6 +6,7 @@ import TimerComponent from './Timer.js'
 import fire from '../Register/LoginFire.js'
 import profileImageBoy from '../../../images/profile_boy_default.png';
 import profileImageGirl from '../../../images/profile_girl_default.png';
+import { NavLink,Link } from 'react-router-dom';
 const db = fire.firestore()
 
 const Container = styled.div`
@@ -135,8 +136,7 @@ function Title(){
 }
 
 function LeftProfile({유저1, 메세지보낸사람}){
-    // console.log(메세지보낸사람)
-    // console.log(유저1['Nick'])
+
     let profileImage=null;
 
     if(유저1['Gender'] === 'boy'){
@@ -145,6 +145,8 @@ function LeftProfile({유저1, 메세지보낸사람}){
         profileImage = profileImageGirl
     }
 
+    let profileNickName = 유저1['Nick']
+    
     return(
             <LeftProfileWrap>
                 <div className='decisionState'>
@@ -158,19 +160,15 @@ function LeftProfile({유저1, 메세지보낸사람}){
                     <img src={profileImage} className='defaultPic'/>
                 </div>
                 <div className='profileInfo'>
-                    {유저1['Nick']}({유저1['Age']})<br/>
-                    {유저1['Univ']}<br/>
-                    매너온도: {유저1['Manner']}<br/>
-                    {유저1['Phone']}<br/>
-
+                    {유저1['Nick']}님<br/>
+                    <Link to = {`/userprofile/${profileNickName}`}><div>프로필 보기</div></Link>
                 </div>
             </LeftProfileWrap>
     )
 }
 
 function RightProfile({유저2, 메세지보낸사람}){
-    // console.log(메세지보낸사람)
-    // console.log(유저2['Nick'])
+
     let profileImage=null;
 
     if(유저2['Gender'] === 'boy'){
@@ -178,6 +176,7 @@ function RightProfile({유저2, 메세지보낸사람}){
     }else if(유저2['Gender'] === 'girl') {
         profileImage = profileImageGirl
     }
+    let profileNickName = 유저2['Nick']
     return(
         <RightProfileWrap>
             <div className='decisionState'>
@@ -191,10 +190,8 @@ function RightProfile({유저2, 메세지보낸사람}){
                     <img src={profileImage} className='defaultPic'/>
                 </div>
             <div className='profileInfo'>
-                {유저2['Nick']}({유저2['Age']})<br/>
-                {유저2['Univ']}<br/>
-                매너온도: {유저2['Manner']}<br/>
-                {유저2['Phone']}<br/>
+                {유저2['Nick']}님<br/>
+                <Link to = {`/userprofile/${profileNickName}`}><div>프로필 보기</div></Link>
             </div>
         </RightProfileWrap>
     )

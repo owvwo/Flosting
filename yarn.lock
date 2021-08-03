@@ -10609,6 +10609,11 @@ rc-virtual-list@^3.0.1, rc-virtual-list@^3.2.0:
     rc-resize-observer "^1.0.0"
     rc-util "^5.0.7"
 
+react-adfit-web-component@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/react-adfit-web-component/-/react-adfit-web-component-1.0.2.tgz#a8e158dc3d782d65a6990cf5f7b4a0afa52d3770"
+  integrity sha512-mHcsdd63LuebegYhUJbbwOktaMfzyUZmUkz+0uOaJJ2ri2U/nLLV3tttTb+yyMRMcwVGmJWH2IAmo5ljU4TB1g==
+
 react-app-polyfill@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/react-app-polyfill/-/react-app-polyfill-2.0.0.tgz#a0bea50f078b8a082970a9d853dc34b6dcc6a3cf"

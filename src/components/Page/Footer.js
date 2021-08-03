@@ -3,19 +3,25 @@ import styled from 'styled-components'
 import kakaochannel from '../../images/kakaochannel.png';
 import instaIcon_1 from '../../images/insta.png';
 import instaIcon_2 from '../../images/insta_2.png';
+const CopyrigntZone = styled.div`
 
+`
+const Container = styled.div`
+width: 100%
+`
 const 푸터 = styled.div`
     font-family: 'Noto Sans KR', sans-serif;
     color: grey;
     background: rgb(255,180,224,0.2);
-    padding: 5px;
+    padding: 2px;
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%;
         .left{
-            width: 60%;
+            width: 61%;
                 .info{
-                    padding: 5px;
+                    padding: 2px;
                 }
         }
         .right{
@@ -53,14 +59,13 @@ const 푸터 = styled.div`
 function Footer(){
 
     return(
-        <div>
+        <Container>
             <푸터>
                 <div className='left'>
                     <div className='info'>
                         사업자 등록번호 : 899-33-01066 | 플로스 컴패니 <br/>
                         대표이사: 이상민 | 전화번호: 010-8284-9782<br/>
                         경기도 용인시 수지구 정평로 89, 202 1001<br/>
-                        E-mail: flosting874@gmail.com<br/>                       
                     </div>
                 </div>
                 <div className='right'>
@@ -78,11 +83,11 @@ function Footer(){
                     </div>            
                 </div>  
             </푸터>
-            <div>
+            <CopyrigntZone>
                 <div style={{ textAlign: 'center', fontSize: '0.5rem' }}>Copyright © Flos company All rights reserved.</div>
-            </div>
+            </CopyrigntZone>
 
-        </div>
+        </Container>
     
     )
 };

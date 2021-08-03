@@ -47,7 +47,6 @@ const ErrorMsg = styled.div`
 `;
 
 const InputContainer = styled.div`
-  margin: 1rem;
   text-align: center;
   justify-content: center;
   display: flex;
@@ -81,6 +80,8 @@ p{
 `;
 
 const SubmitButton = styled.button`
+font-family: 'Noto Sans KR', sans-serif;
+font-weight: 400;
   margin: 1rem auto;
   height: 5rem;
   width: 20rem;
@@ -93,19 +94,19 @@ const SubmitButton = styled.button`
 `;
 
 const Title = styled.h1`
-  fontfamily: "Noto Sans KR", sans-serif;
+  font-family: "Noto Sans KR", sans-serif;
   font-size: x-large;
   color: #f7bb9e;
 `;
 
 const ToggleButton = styled.button`
-  fontfamily: "Noto Sans KR", sans-serif;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 500;
   border-radius: 10px;
   margin: 1rem;
   padding: 10px 15px;
-  // border: none;
   width: 20rem;
-  border: none;
+  border: 1px solid rgb(0,0,0,0.2);
   background-color: ${(props) => props.color};
 `;
 
@@ -343,7 +344,7 @@ function EnrollmentForm(props, match) {
                         <ToggleButton
                           type="button"
                           onClick={handleLilac}
-                          color={lilacOn ? "#F7F494" : "#D0AED1"}
+                          color={lilacOn ? "rgb(247,244,148,0.5)" : "rgb(208,174,209,0.5)"}
                         >
                           {lilacOn ? "신청 하기" : "신청 취소"}
                         </ToggleButton>
@@ -394,7 +395,7 @@ function EnrollmentForm(props, match) {
                         <ToggleButton
                           type="button"
                           onClick={handleDaisy}
-                          color={daisyOn ? "#F7F494" : "#D0AED1"}
+                          color={daisyOn ? "rgb(247,244,148,0.5)" : "rgb(208,174,209,0.5)"}
                         >
                           {daisyOn ? "신청 하기" : "신청 취소"}
                         </ToggleButton>
@@ -443,7 +444,7 @@ function EnrollmentForm(props, match) {
                         <ToggleButton
                           type="button"
                           onClick={handleClover}
-                          color={cloverOn ? "#F7F494" : "#D0AED1"}
+                          color={cloverOn ? "rgb(247,244,148,0.5)" : "rgb(208,174,209,0.5)"}
                         >
                           {cloverOn ? "신청 하기" : "신청 취소"}
                         </ToggleButton>
