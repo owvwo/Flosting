@@ -88,6 +88,7 @@ const Mypage = (props) => {
     const [DocID, setDocID] = useState("");
     const db = fire.firestore();
     const [userHistory, setUserHistory] = useState();
+    const [userNick, setUserNick] = useState();
     const [Mbti, setMbti] = useState(); //본인 mbti
     const [row, setrow] = useState({});
     const [changeInfor, setchangeInfor] = useState(true); // 정보 수정되면 업데이트하게 하는 변수
@@ -111,6 +112,7 @@ const Mypage = (props) => {
                             setpreNick(doc.data().User.Nick);
                             setUserHistory(doc.data().My_Usage_History);
                             setMbti(doc.data().User.Mbti);
+                            setUserNick(doc.data().User.Nick);
                         });
                     } else {
                         console.log("데이터 없음");
@@ -180,6 +182,7 @@ const Mypage = (props) => {
                                 ID={ID}
                                 DocID={DocID}
                                 UserHistory={userHistory}
+                                UserNick={userNick}
                             ></MyUsage_History>
                         </TabPanel>
                         <TabPanel value={value} index={3} dir={theme.direction}>

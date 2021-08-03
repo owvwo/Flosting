@@ -6,9 +6,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import MannerTierList from './MannerTierList';
-import tier_mi1 from '../../../../images/tier_mi1.png';
-import tier_zero from '../../../../images/tier_zero.png';
-import tier_plus1 from '../../../../images/tier_plus1.png';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -84,9 +81,9 @@ const Tiermessage = styled.div`
 `;
 
 const MannerInfo = (props) => {
-    const {Manner, NextTier} = props
+    const {tierName, tierImg, Manner, NextTier} = props
     const classes = useStyles();
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [anchorEl, setAnchorEl] = useState(null);
 
     const handleClick = (event) => {
         setAnchorEl(anchorEl ? null : event.currentTarget);
@@ -114,10 +111,10 @@ const MannerInfo = (props) => {
             </Popper>
         <RowFlexBox>
         <TierBox>
-            <img src={tier_zero} />
+            <img src={require('../../../../images/' +tierImg).default} />
         </TierBox>
         <TierNameBox>
-            씨앗
+            {tierName}
         </TierNameBox>
         </RowFlexBox>
         <Tiermessage fontsize={'0.8rem'}>

@@ -146,28 +146,32 @@ ul{
 `
 const CurrentButton = styled.button`
     font-size: 2rem;
-    background-color: rgb(255,180,224,0.8);
-    color: white;
-    border: rgb(179,214,189,0.9);
+    background-color: rgb(255,255,255,0.5);
+    color: rgb(173,115,240,0.8);
+    border: 3px solid rgb(173,115,240,0.8);
+    font-family: 'Do Hyeon', sans-serif;
+    height: 4rem;
     width: 14rem;
     border-radius: 12px;
     padding: 5px;
     &:hover{
-        background-color:white;
-        color: green;
+        background-color: rgb(173,115,240,0.8);
+        color: rgb(255,255,255,0.8);;
     }
 `
 const ResultButton = styled.button`
     font-size: 2rem;
-    background-color: rgb(238,236,142,0.8);
-    color: white;
-    border: rgb(179,214,189,0.9);
+    background-color: rgb(255,255,255,0.5);
+    font-family: 'Do Hyeon', sans-serif;
+    color: rgb(217,164,67,0.8);
+    border: 3px solid rgb(217,164,67,0.8);
     width: 14rem;
+    height: 4rem;
     border-radius: 12px;
     padding: 5px;
     &:hover{
-        background-color:white;
-        color: green;
+        background-color: rgb(217,164,67,0.8);
+        color: rgb(255,255,255,0.8);;
     }
 `
 
@@ -266,7 +270,7 @@ function Jumbotron({ CurrentButton, 버튼타이머, 매칭결과조회여부 })
                     <div className='jb_link'>
                         <NavLink to='/currentevent'>
                             <Fade bottom>
-                                <CurrentButton>현재 진행 중</CurrentButton>
+                                <CurrentButton>시작하기</CurrentButton>
                             </Fade>
                         </NavLink>
                     </div>

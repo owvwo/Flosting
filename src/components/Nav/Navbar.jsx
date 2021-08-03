@@ -18,8 +18,10 @@ const Nav = styled.nav`
   display: flex;
   justify-content: space-between;
   .logo {
-    font-family: 'Lobster', cursive;
-    font-size: 20px;
+    a{
+      font-family: 'Carter One', cursive;
+      font-size : 1.2rem;
+    }
     border: 1.5px solid;
     padding: 5px;
     margin: 5px;
