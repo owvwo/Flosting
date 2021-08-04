@@ -8,14 +8,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-
-
-import tier_mi2 from '../../../../images/tier_mi2.jpeg';
-import tier_mi1 from '../../../../images/tier_mi1.jpeg';
-import tier_zero from '../../../../images/tier_zero.png';
-import tier_plus1 from '../../../../images/tier_plus1.jpeg';
-import tier_plus2 from '../../../../images/tier_plus2.png';
-import tier_plus3 from '../../../../images/tier_plus3.png';
+import fire from "../../Register/LoginFire";
 
 const useStyles = makeStyles((theme) => ({
     nested: {
@@ -54,11 +47,18 @@ const FlexRow = styled.div`
     justify-content : space-between;
 `
 
-const MannerTierList = () => {
+const MannerTierList = (props) => {
 
     const classes = useStyles();
     const [open, setOpen] = useState(false);
-
+    const {
+        tier_mi2,
+        tier_mi1, 
+        tier_zero,
+        tier_plus1,
+        tier_plus2,
+        tier_plus3
+    } = props;
     const handleClick = () => {
         setOpen(!open);
     };
