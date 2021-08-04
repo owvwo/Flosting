@@ -144,7 +144,7 @@ const Error_message_Password = styled.div`
 
 const LastRegister = (props) => {
 
-    const { auth_regis, S_name, S_num, user,  U_unique_key, U_name, U_Age, U_Gender,  U_Phone} = props
+    const { auth_regis, S_name, S_num, user,  U_unique_key, U_name, U_Age, U_Gender,  U_Phone ,U_MBTI, U_Profileurl, U_School_num } = props
     const email = S_num + "@flosting.com";
     const [nickname, setnickname] = useState(''); // 닉네임
     const [password, setPassword] = useState(''); // 패스워드
@@ -166,6 +166,7 @@ const LastRegister = (props) => {
         profileImage: "",
         ID: "",
         User: {
+            Schoolnumber: "",
             Age: "",
             Gender: "",
             Manner: "",
@@ -173,6 +174,7 @@ const LastRegister = (props) => {
             Nick: "",
             Phone: "",
             Univ: "",
+            Mbti : "",
             Unique_key: ""
         }
     }
@@ -303,6 +305,7 @@ const LastRegister = (props) => {
     const saveDB = () => {
         DBForm.ID = S_num;
         DBForm.User.Name = U_name;
+        DBForm.User.Mbti = U_MBTI;
         DBForm.User.Age = U_Age;
         DBForm.User.Gender = U_Gender;
         DBForm.User.Manner = 36.5;
@@ -310,6 +313,7 @@ const LastRegister = (props) => {
         DBForm.User.Phone = U_Phone;
         DBForm.User.Unique_key = U_unique_key;
         DBForm.User.Univ = S_name;
+        DBForm.User.Schoolnumber = U_School_num;
 
         fire
             .firestore()
@@ -317,6 +321,7 @@ const LastRegister = (props) => {
             .add({
                 ID: DBForm.ID,
                 Ongoing: "",
+                profileImage: U_Profileurl,
                 User: DBForm.User
             })
             .then(() => {

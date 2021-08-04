@@ -5,7 +5,6 @@ import Fade from '@material-ui/core/Fade';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import MannerTierList from './MannerTierList';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -81,7 +80,9 @@ const Tiermessage = styled.div`
 `;
 
 const MannerInfo = (props) => {
-    const {tierName, tierImg, Manner, NextTier} = props
+    const {tierName, 
+        tierImg,
+        NextTier,} = props
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = useState(null);
 
@@ -90,7 +91,6 @@ const MannerInfo = (props) => {
     };
 
     const open = Boolean(anchorEl);
-
     return (
         <MannerContainer>
             <MannerBox onClick={handleClick} >
@@ -111,7 +111,7 @@ const MannerInfo = (props) => {
             </Popper>
         <RowFlexBox>
         <TierBox>
-            <img src={require('../../../../images/' +tierImg).default} />
+            <img src={tierImg} />
         </TierBox>
         <TierNameBox>
             {tierName}

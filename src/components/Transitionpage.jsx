@@ -35,18 +35,24 @@ import Timer from "./Page/Matched/Timer";
 import Report from "../components/Page/Report";
 import Plan from "../components/Page/Plan";
 import UserProfile from "./Page/Matched/UserProfile";
+import ProfileSelect from './Page/Register/ProfileSelect';
+import MbtiSelect from './Page/Register/MbtiSelect';
 
 
 const Transition = (props) => {
 
   const [auth_regis, set_auth_regis] = useState(false);
   const [S_num, set_S_num] = useState("");
+  const [U_School_num, setU_School_num]  = useState("");
   const [S_name, set_S_name] = useState("");
   const [U_unique_key, setU_unique_key] = useState("");
   const [U_name, setU_name] = useState("");
   const [U_Age, setU_Age] = useState("");
   const [U_Gender, setU_Gender] = useState("");
   const [U_Phone, setU_Phone] = useState("");
+  const [U_Profileurl, setU_Profileurl] = useState("");
+  const [U_MBTI, setU_MBTI] = useState("");
+
   const [EP_School_Name, setEP_School_Name] = useState([]);
   const [EP_Num, setEP_Num] = useState('');
   const [EP_Start_Day, setEP_Start_Day] = useState('');
@@ -106,6 +112,7 @@ const Transition = (props) => {
           <Route exact path="/register" render={props => (
             <Register_page
               S_num = {S_num}
+              setU_School_num = {setU_School_num}
               set_S_num={set_S_num}
               set_S_name={set_S_name}
               set_auth_regis={set_auth_regis}
@@ -127,6 +134,20 @@ const Transition = (props) => {
               setU_unique_key = {setU_unique_key}
               {...props} />
           )} />
+          <Route path="/register/profileselect" render={props => (
+            <ProfileSelect
+              auth_regis={auth_regis}
+              U_Profileurl= {U_Profileurl}
+              setU_Profileurl = {setU_Profileurl}
+              {...props} />
+          )} />
+          <Route path="/register/mbtiselect" render={props => (
+            <MbtiSelect
+              auth_regis={auth_regis}
+              U_MBTI= {U_MBTI}
+              setU_MBTI = {setU_MBTI}
+              {...props} />
+          )} />
           <Route path="/register/last" render={props => (
             <LastRegister_page
               auth_regis={auth_regis}
@@ -135,7 +156,10 @@ const Transition = (props) => {
               U_Age={U_Age}
               U_Gender={U_Gender}
               U_Phone={U_Phone}
+              U_MBTI = {U_MBTI}
+              U_Profileurl = {U_Profileurl}
               S_num={S_num}
+              U_School_num = {U_School_num}
               S_name={S_name}
               user = {user}
               {...props} />

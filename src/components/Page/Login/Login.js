@@ -5,6 +5,7 @@ import LoginBar from './LoginBar'
 import fire from '../Register/LoginFire'
 import { Redirect } from 'react-router-dom';
 
+
 const Wrapper = styled.div`
 `;
 

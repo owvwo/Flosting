@@ -109,7 +109,7 @@ const Loginbar = () => {
     }
     
     const handlesetID = (e) =>{
-        let pattern = /[^0-9]/gi; // 숫자 입력 되게
+        let pattern = /[^|a-z|0-9|]/gi; // 숫자,문자만 입력 되게
         e.target.value = e.target.value.replace(pattern, '');
 
         setEmail(e.target.value + "@flosting.com");
