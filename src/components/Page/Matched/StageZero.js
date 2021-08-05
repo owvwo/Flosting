@@ -19,19 +19,48 @@ flex-direction: column;
 `
 
 const TimerWrap = styled.div`
-text-align: center;
-color: red;
-margin-top: 1rem;
+    list-style :  none;
+    display: flex;
+    justify-content: flex;
+    align-items: flex;
+    flex-direction: column;
+    .Ment{
+        text-decoration: underline;
+        margin-top: 5px;
+        font-size: 0.6rem;
+        text-align: center;
+    }
+`
+const TitleContainer = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content : center;
+    flex-direction: column;
+
+`
+const NoticeMessage = styled.div`
+ list-style: none;
+ li{
+     font-size: 0.6rem;
+     margin-bottom: 2rem;
+ }
 `
 
 const TitleWrap = styled.div`
-color: white;
-background-color: grey;
-width: 20rem;
-font-size : 2rem;
-text-align : center;
-margin-top: 1rem;
-font-weight : bolder
+
+    color: rgb(0,0,0, 0.75);
+    background: rgb(0,0,0, 0.05);
+    width: 20rem;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content : center;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 700;
+
+    font-size : 2rem;
+    text-align : center;
+    margin-top: 1rem;
 `
 const LeftProfileWrap = styled.div`
 text-align : center;
@@ -40,14 +69,51 @@ justify-content: center;
 align-items: center;
 flex-direction: column;
 margin-right: 1.5rem;
+.ING{
+    font-family: 'Do Hyeon', sans-serif;
+    border-bottom: 1px solid rgb(0,0,0, 0.2);
+    border-top: 3px solid rgb(255,255,255, 1);
+    margin-bottom: 5px;
+    color: rgb(0,0,0,0.5);
+}
+
+    .defaultPicBox{
+        list-style: none;
+        a{
+            
+            .LookProfile{
+                font-family: 'Do Hyeon', sans-serif;
+                margin-bottom: 5px;
+                border-radius : 5px;
+                background: rgb(0,0,0, 0.1);
+            }
+        }
+    }
     .defaultPic{
         width: 6rem;
         height: 6rem;
         background-color: grey;
         border-radius: 50%;
     }
+
     .profileInfo{
+        list-style: none;
         width: 8rem;
+        .UserNick{
+            font-weight: 700;
+        }
+        .UserUniv{
+            font-size: 0.5rem;
+        }
+        .UserManner{
+            font-size: 0.5rem;
+        }
+        .UserPhone{
+            background: rgb(209,240,228,0.8);
+            font-size: 0.9rem;
+            font-weight: 700;
+            
+        }
     }
 `
 
@@ -58,14 +124,51 @@ justify-content: center;
 align-items: center;
 flex-direction: column;
 margin-left: 1.5rem;
+.ING{
+    font-family: 'Do Hyeon', sans-serif;
+    border-bottom: 1px solid rgb(0,0,0, 0.2);
+    border-top: 3px solid rgb(255,255,255, 1);
+    margin-bottom: 5px;
+    color: rgb(0,0,0,0.5);
+}
+
+    .defaultPicBox{
+        list-style: none;
+        a{
+            
+            .LookProfile{
+                font-family: 'Do Hyeon', sans-serif;
+                margin-bottom: 5px;
+                border-radius : 5px;
+                background: rgb(0,0,0, 0.1);
+            }
+        }
+    }
     .defaultPic{
         width: 6rem;
         height: 6rem;
         background-color: grey;
         border-radius: 50%;
     }
+
     .profileInfo{
+        list-style: none;
         width: 8rem;
+        .UserNick{
+            font-weight: 700;
+        }
+        .UserUniv{
+            font-size: 0.5rem;
+        }
+        .UserManner{
+            font-size: 0.5rem;
+        }
+        .UserPhone{
+            background: rgb(209,240,228,0.8);
+            font-size: 0.9rem;
+            font-weight: 700;
+            
+        }
     }
 `
 
@@ -74,26 +177,37 @@ text-align:center;
 margin-top: 2rem;
 `
 const Agree = styled.button`
+font-family: "Noto Sans KR", sans-serif;
 margin-bottom: 1rem;
+margin-right: 0.5rem;
+margin-left: 0.5rem;
 width: 13rem;
 height: 3rem;
-border : 1px solid yellow;
+color : rgb(0,0,0,0.8);
+border : 1px solid rgb(0,0,0, 0.2);
+font-weight: 700;
 border-radius: 40px;
-background-color: pink;
+background-color: rgb(218,219,247, 0.8);
 &:hover{
-    background-color: yellow;
-    color: pink;
+    background-color: rgb(188,189,217, 0.8);
+    color: white;
+}
 `
+
 const Refuse = styled.button`
 margin-bottom: 1rem;
+margin-right: 0.5rem;
+margin-left: 0.5rem;
 width: 13rem;
 height: 3rem;
-border : 1px solid yellow;
+border : 1px solid rgb(218,219,247, 0.8);
+font-weight: 700;
 border-radius: 40px;
-background-color: red;
+background-color: white;
 &:hover{
-    background-color: grey;
-    color: pink;
+    background-color: rgb(217,91,91,0.5);
+    color: white;
+
 `
 
 
@@ -118,9 +232,9 @@ export default StageZero;
 function Timer(){
     return(
         <TimerWrap>
-            <div>
-                플로스팅 종료까지
-            </div>
+            <li className = "Ment">
+            시간이 종료되기 전까지 연락을 해주세요! 
+            </li>
             <TimerComponent/>
         </TimerWrap>
     )
@@ -128,13 +242,21 @@ function Timer(){
 
 function Title(){
     return(
-        <TitleWrap>
+        <TitleContainer>
+            <TitleWrap>
             매칭 진행 중
-        </TitleWrap>
+            </TitleWrap>
+            <NoticeMessage><li>표시된 상대방의 번호로 연락을 먼저 해보세요!</li></NoticeMessage>
+        </TitleContainer>
     )
 }
 
 function LeftProfile({유저1}){
+
+    const noneactiveStyle = {
+        textDecoration: 'none',
+        color: '#2B2A28'
+      }
 
     let profileImage=null;
 
@@ -144,22 +266,28 @@ function LeftProfile({유저1}){
         profileImage = profileImageGirl
     }
 
-    let profileNickName = 유저1['Nick']
-
     return(
             <LeftProfileWrap>
-                <div>결정중</div>
-                <div>
+                <div className = "ING">결정중</div>
+                <div className='defaultPicBox'>
+                    <NavLink to = {`/userprofile/${유저1['Nick']}`} style={noneactiveStyle}><li className = "LookProfile">프로필 보기</li></NavLink>
                     <img src={profileImage} className='defaultPic'/>
                 </div>
                 <div className='profileInfo'>
-                    {유저1['Nick']}님<br/>
-                    <Link to = {`/userprofile/${profileNickName}`}><div>프로필 보기</div></Link>
+                <li className="UserNick">{유저1['Nick']}[{유저1['Age']}]</li>
+                <li className="UserPhone">{유저1['Phone'].substring(0,3)}-{유저1['Phone'].substring(3,7)}-{유저1['Phone'].substring(7)}</li>  
+                <li className="UserUniv">{유저1['Univ']}</li>
+                <li className="UserManner">매너온도: {유저1['Manner']}</li>
                 </div>
             </LeftProfileWrap>
     )
 }
 function RightProfile({유저2}){
+
+    const noneactiveStyle = {
+        textDecoration: 'none',
+        color: '#2B2A28'
+      }
 
     let profileImage=null;
 
@@ -173,14 +301,17 @@ function RightProfile({유저2}){
 
     return(
         <RightProfileWrap>
-            <div>결정중</div>
-            <div className='defaultPicBox'>
-                <img src={profileImage} className='defaultPic'/>
-            </div>
-            <div className='profileInfo'>
-                {유저2['Nick']}님<br/>
-                <Link to = {`/userprofile/${profileNickName}`}><div>프로필 보기</div></Link>
-            </div>
+                <div className = "ING">결정중</div>
+                <div className='defaultPicBox'>
+                    <NavLink to = {`/userprofile/${유저2['Nick']}`} style={noneactiveStyle}><li className = "LookProfile">프로필 보기</li></NavLink>
+                    <img src={profileImage} className='defaultPic'/>
+                </div>
+                <div className='profileInfo'>
+                <li className="UserNick">{유저2['Nick']}[{유저2['Age']}]</li>
+                <li className="UserPhone">{유저2['Phone'].substring(0,3)}-{유저2['Phone'].substring(3,7)}-{유저2['Phone'].substring(7)}</li>  
+                <li className="UserUniv">{유저2['Univ']}</li>
+                <li className="UserManner">매너온도: {유저2['Manner']}</li>
+                </div>
         </RightProfileWrap>
     )
 }

@@ -8,11 +8,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-
-
-import tier_mi1 from '../../../../images/tier_mi1.png';
-import tier_zero from '../../../../images/tier_zero.png';
-import tier_plus1 from '../../../../images/tier_plus1.png';
+import fire from "../../Register/LoginFire";
 
 const useStyles = makeStyles((theme) => ({
     nested: {
@@ -51,11 +47,18 @@ const FlexRow = styled.div`
     justify-content : space-between;
 `
 
-const MannerTierList = () => {
+const MannerTierList = (props) => {
 
     const classes = useStyles();
     const [open, setOpen] = useState(false);
-
+    const {
+        tier_mi2,
+        tier_mi1, 
+        tier_zero,
+        tier_plus1,
+        tier_plus2,
+        tier_plus3
+    } = props;
     const handleClick = () => {
         setOpen(!open);
     };
@@ -69,6 +72,21 @@ const MannerTierList = () => {
             </ListItem>
             <Collapse in={open} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
+                <ListItem button className={classes.CList}>
+                        <TierContent>
+                            <TierImg>
+                                <img src={tier_mi2} />
+                            </TierImg>
+                            <FlexRow>
+                                <Tiermessage fontsize={'0.8rem'}>
+                                    썩은 씨앗
+                                </Tiermessage>
+                                <Tiermessage fontsize={'0.6rem'}>
+                                    10°C ~ 20°C
+                                </Tiermessage>
+                            </FlexRow>
+                        </TierContent>
+                    </ListItem>
                     <ListItem button className={classes.CList}>
                         <TierContent>
                             <TierImg>
@@ -110,6 +128,36 @@ const MannerTierList = () => {
                                 </Tiermessage>
                                 <Tiermessage fontsize={'0.6rem'}>
                                     40°C ~ 50°C
+                                </Tiermessage>
+                            </FlexRow>
+                        </TierContent>
+                    </ListItem>
+                    <ListItem button className={classes.CList}>
+                        <TierContent>
+                            <TierImg>
+                                <img src={tier_plus2} />
+                            </TierImg>
+                            <FlexRow>
+                                <Tiermessage fontsize={'0.8rem'}>
+                                    꽃봉오리
+                                </Tiermessage>
+                                <Tiermessage fontsize={'0.6rem'}>
+                                    50°C ~ 60°C
+                                </Tiermessage>
+                            </FlexRow>
+                        </TierContent>
+                    </ListItem>
+                    <ListItem button className={classes.CList}>
+                        <TierContent>
+                            <TierImg>
+                                <img src={tier_plus3} />
+                            </TierImg>
+                            <FlexRow>
+                                <Tiermessage fontsize={'0.8rem'}>
+                                    데이지
+                                </Tiermessage>
+                                <Tiermessage fontsize={'0.6rem'}>
+                                    60°C ~ 70°C
                                 </Tiermessage>
                             </FlexRow>
                         </TierContent>

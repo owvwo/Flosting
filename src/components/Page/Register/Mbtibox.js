@@ -16,6 +16,10 @@ import Select from '@material-ui/core/Select';
 const RowFlexBox = styled.div`
     display : flex;
     flex-direction: row;
+    margin : 2rem 0rem;
+    padding : 1rem 0rem;
+    border-top : 1px solid rgb(0,0,0, 0.1);
+    border-bottom : 1px solid rgb(0,0,0, 0.1);
 `
 const InputNick = styled.input`
   border : 1px solid #A6A6A6;
@@ -52,14 +56,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function MBTISelect(props) {
-  const {preNick, newMbti, setnewMbti, setCanChange, Mbti, setMbtiChange} = props
+  const {U_MBTI, setU_MBTI} = props
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
 
   const handleChange = (event) => {
-    setnewMbti(event.target.value);
-    setMbtiChange(true);
+    setU_MBTI(event.target.value);
   };
 
   const handleClickOpen = () => {
@@ -77,7 +80,7 @@ export default function MBTISelect(props) {
             placeholder="변경할 Mbti 선택"
             type="text"
             required
-            value={newMbti}
+            value={U_MBTI}
             disabled = {true}
         />
         <Overlapbtn onClick={handleClickOpen}>변경</Overlapbtn>
@@ -91,7 +94,7 @@ export default function MBTISelect(props) {
               <InputLabel htmlFor="demo-dialog-native">Mbti</InputLabel>
               <Select
                 native
-                value={newMbti}
+                value={U_MBTI}
                 onChange={handleChange}
                 input={<Input id="demo-dialog-native" />}
               >

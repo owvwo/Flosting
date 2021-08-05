@@ -11,6 +11,7 @@ flex-direction: column;
         display: flex;
     }
     .text{
+        font-family: 'Do Hyeon', sans-serif;
         height: 30rem;
         text-align: center;
         margin-top: 4rem;
@@ -19,16 +20,37 @@ flex-direction: column;
 
 `
 
-const TitleWrap = styled.div`
-color: white;
-background-color: grey;
-width: 20rem;
-font-size : 2rem;
-text-align : center;
-margin-top: 2rem;
-font-weight : bolder
+const NoticeMessage = styled.div`
+ list-style: none;
+ li{
+     font-size: 0.6rem;
+     margin-bottom: 2rem;
+ }
 `
 
+const TitleContainer = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content : center;
+    flex-direction: column;
+
+`
+const TitleWrap = styled.div`
+
+    color: rgb(0,0,0, 0.75);
+    background: rgb(0,0,0, 0.05);
+    width: 20rem;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content : center;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 700;
+
+    font-size : 2rem;
+    text-align : center;
+    margin-top: 1rem;
+`
 function Refusing(){
 
     return(
@@ -37,8 +59,8 @@ function Refusing(){
             <div className='text'>
                 매칭 거절 의사를 표해<br/>
                 매칭이 종료되었습니다.<br/>
-                저희 플로스팅이<br/>
-                다음 매칭에 더 힘쓰도록 하겠습니다<br/>
+                다음 플로스팅에서는<br/>
+                더 나은 인연을 만나시길 플로스팅에서 기원합니다!<br/>
             </div>
             <Footer/>
         </Container>
@@ -49,9 +71,12 @@ export default Refusing;
 
 function Title(){
     return(
-        <TitleWrap>
-            매칭 종료
-        </TitleWrap>
+        <TitleContainer>
+            <TitleWrap>
+                매칭 종료
+            </TitleWrap>
+            <NoticeMessage><li>불편한 점이 있으셨다면 카카오 채널로 문의해주세요!</li></NoticeMessage>
+        </TitleContainer>
     )
 }
 

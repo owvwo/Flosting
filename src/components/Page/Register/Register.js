@@ -132,11 +132,13 @@ const InputDiv = styled.div`
 
 const Register = (props) => {
 
-    const { S_num, set_S_num, set_S_name, set_auth_regis } = props
+    const { S_num, set_S_num, set_S_name, set_auth_regis, setU_School_num} = props
 
-    const [limitnum, setlimitnum] = useState(false); // 학번의 제한 체크 변수
+    const [limitnum, setlimitnum] = useState(false); // 아이디의 제한 체크 변수
+    const [limitschoolnum, setlimitschoolnum] = useState(false); //학번
     const [limitname, setlimitname] = useState(false); // 학교의 체크 변수
-    const [limitnummessasge, setlimitnummessasge] = useState("숫자로 입력해주세요.");
+    const [limitnummessasge, setlimitnummessasge] = useState("입력 가즈아!");
+    const [limitschoolnummessasge, setlimitschoolnummessasge] = useState("숫자로 입력해주세요.");
     const [canNext, setcanNext] = useState(true); //다음으로 갈 수 있는지 체크해주는 변수
     const [overlap, setoverLap] = useState(false);
     const db = fire.firestore();
@@ -150,6 +152,9 @@ const Register = (props) => {
     useEffect(() => {
         cangoNext();
     }, [limitname])
+    useEffect(() => {
+        cangoNext();
+    }, [limitschoolnum])
 
     const handleoverlap = () => { //중복검사
 
@@ -176,7 +181,7 @@ const Register = (props) => {
     }
 
     const cangoNext = () => {
-        if (limitnum && limitname && overlap)
+        if (limitnum && limitname && overlap && limitschoolnum)
             setcanNext(false);
         else
             setcanNext(true);
@@ -186,27 +191,50 @@ const Register = (props) => {
         set_auth_regis(true);
     }
 
-    const handleNumChange = (e) => {
+    const handleSchoolNumChange = (e) => {
         let pattern = /[^0-9]/gi; // 숫자 입력 되게
         e.target.value = e.target.value.replace(pattern, '');
         if (e.target.value.length > 15) //글자수 제한
             e.target.value = e.target.value.slice(0, 15);
 
 
-        set_S_num(e.target.value);
+        setU_School_num(e.target.value);
         if (((e.target.value).length <= 13 && (e.target.value).length >= 8)) {
+            setlimitschoolnum(true);
+        } else {
+            setlimitschoolnum(false);
+        }
+        if ((e.target.value).length <= 13 && (e.target.value).length >= 8) {
+            setlimitschoolnummessasge("학번입력이 알맞게 되었네요!");
+        }
+        else if ((e.target.value).length == 0) {
+            setlimitschoolnummessasge("숫자로 입력해주세요.");
+        }
+        else {
+            setlimitschoolnummessasge("학번의 길이가 너무 짧아요!");
+        }
+    }
+    const handleNumChange = (e) => {
+        let pattern = /[^0-9|a-z|]/gi; // 숫자 입력 되게
+        e.target.value = e.target.value.replace(pattern, '');
+        if (e.target.value.length > 13) //글자수 제한
+            e.target.value = e.target.value.slice(0, 13);
+
+
+        set_S_num(e.target.value);
+        if (((e.target.value).length <= 13 && (e.target.value).length >= 6)) {
             setlimitnum(true);
         } else {
             setlimitnum(false);
         }
-        if ((e.target.value).length <= 13 && (e.target.value).length >= 8) {
+        if ((e.target.value).length <= 13 && (e.target.value).length >= 6) {
             setlimitnummessasge("중복 확인 버튼을 눌러주세요!");
         }
         else if ((e.target.value).length == 0) {
-            setlimitnummessasge("숫자로 입력해주세요.");
+            setlimitnummessasge("입력 가즈아!");
         }
         else {
-            setlimitnummessasge("학번의 길이가 너무 짧아요!");
+            setlimitnummessasge("아이디의 길이가 너무 짧아요!");
         }
     }
     const handleNameChange = (selected) => {
@@ -223,16 +251,16 @@ const Register = (props) => {
                 </h1>
                 <School_number>
                     <School_title>
-                        학번
+                        아이디
                     </School_title>
                     <School_content>
-                        ※ 년도가 아닌 8 ~ 13자리로 이루어진 본인의 고유학번을 입력해주세요.
+                        ※ 영어와 숫자로 이루어진 6 ~ 13자리 문자열을 입력해주세요.
                     </School_content>
                     <InputDiv>
                         <Input
                             overlap={overlap}
                             limitnum={limitnum}
-                            placeholder="학번을 입력하세요"
+                            placeholder="아이디를 입력하세요"
                             onChange={handleNumChange}
                             disabled={overlap}
                         />
@@ -277,6 +305,26 @@ const Register = (props) => {
                     </InputDiv>
                     <Error_message limitnum={limitnum}>
                         {limitnummessasge}
+                    </Error_message>
+
+                </School_number>
+
+                <School_number>
+                    <School_title>
+                        학번
+                    </School_title>
+                    <School_content>
+                        ※ 년도가 아닌 8 ~ 13자리로 이루어진 본인의 고유학번을 입력해주세요.
+                    </School_content>
+                    <InputDiv>
+                        <Input
+                            limitnum={limitschoolnum}
+                            placeholder="학번을 입력하세요"
+                            onChange={handleSchoolNumChange}
+                        />
+                    </InputDiv>
+                    <Error_message limitnum={limitschoolnum}>
+                        {limitschoolnummessasge}
                     </Error_message>
 
                 </School_number>

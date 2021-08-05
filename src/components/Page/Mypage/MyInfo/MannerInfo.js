@@ -21,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
 
 const MannerContainer = styled.div`
     border-top: 1px solid rgb(0,0,0,0.1);
-    margin-top: 20px;
     padding-top: 10px;
 `
 const RowFlexBox = styled.div`
@@ -53,10 +52,16 @@ const NowTemperature = styled.div`
 `
 
 const MannerInfo = (props) => {
-    const {Manner} = props
+    const {
+        Manner,
+        tier_mi2,
+        tier_mi1,
+        tier_zero,
+        tier_plus1,
+        tier_plus2,
+        tier_plus3 } = props
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
-
     const handleClick = (event) => {
         setAnchorEl(anchorEl ? null : event.currentTarget);
     };
@@ -66,14 +71,14 @@ const MannerInfo = (props) => {
     return (
         <MannerContainer>
             <RowFlexBox>
-            <MannerBox onClick={handleClick} >
-                매너온도
-            </MannerBox>
-            <NowTemperature>
-                <li>{Manner + '°C'} </li>
-            </NowTemperature>
+                <MannerBox onClick={handleClick} >
+                    매너온도
+                </MannerBox>
+                <NowTemperature>
+                    <li>{Manner + '°C'} </li>
+                </NowTemperature>
             </RowFlexBox>
-            <Popper className = {classes.paper} open={open} anchorEl={anchorEl} transition>
+            <Popper className={classes.paper} open={open} anchorEl={anchorEl} transition>
                 {({ TransitionProps }) => (
                     <Fade {...TransitionProps} timeout={350}>
                         <Card>
@@ -82,7 +87,14 @@ const MannerInfo = (props) => {
                                     <li>매너온도는 플로스팅 이용 후 상대방으로부터 받은 후기를 종합해서 만든 매너 지표입니다.</li>
                                     <li>온도에 따른 티어를 확인해보세요!</li>
                                 </Box_content>
-                                <MannerTierList>
+                                <MannerTierList 
+                                    test={"dd"}
+                                    tier_mi2={tier_mi2}
+                                    tier_mi1={tier_mi1}
+                                    tier_zero={tier_zero}
+                                    tier_plus1={tier_plus1}
+                                    tier_plus2={tier_plus2}
+                                    tier_plus3={tier_plus3}>
 
                                 </MannerTierList>
                             </CardContent>
@@ -90,7 +102,7 @@ const MannerInfo = (props) => {
                     </Fade>
                 )}
             </Popper>
-            <MannerBar Manner = {Manner}>
+            <MannerBar Manner={Manner}>
 
             </MannerBar>
 

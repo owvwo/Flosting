@@ -304,7 +304,7 @@ const Certification = (props) => {
                 </NavLink>
               </DialogActions>
             </Dialog>
-            <NavLink to="/register/last">
+            <NavLink to="/register/profileselect">
               <NextButton disabled={canNext}>
                 다음
               </NextButton>

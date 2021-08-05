@@ -1,7 +1,22 @@
 import React, { useState, useEffect } from "react";
 import firebase from '../Register/LoginFire.js'
+import styled from 'styled-components';
 
 const db = firebase.firestore()
+
+const FontDiv = styled.div`
+  color : black;
+  list-style : none;
+  width: 20rem;
+  border-bottom: 1px solid rgb(0,0,0,0.2);
+  display: flex;
+  justify-content : center;
+  align-items : center;
+  li{
+    font-size: 3rem;
+    font-family: 'Pacifico', cursive;
+  }
+`
 
 function Timer(){
   const [days, setDays] = useState()
@@ -39,9 +54,9 @@ function Timer(){
     }, 1000);
   },[지금까지,time])
   return(
-    <div>
-      {hours}시간 {minutes}분 {seconds}초 남았습니다!!
-    </div>
+    <FontDiv>
+      <li>{hours}: {minutes}: {seconds}</li>
+    </FontDiv>
   )
 }
 export default Timer;

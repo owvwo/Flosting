@@ -101,7 +101,7 @@ const SuccessRegister = (props) => {
         <Info_Container>
             <Sub_Info_Container>
                 <School_title>
-                    <li>ID(학번)</li>
+                    <li>ID</li>
                 </School_title>
                 <Short_content>
                     {ID}
