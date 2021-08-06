@@ -75,7 +75,7 @@ const CheckDbData = (props) => {
           <DialogContentText id="alert-dialog-description">
             신청서를 수정하시겠습니까?
             <br />
-            수락하시면 신청페이지로 넘어감
+            수락하시면 신청페이지로 넘어갑니다.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -84,7 +84,7 @@ const CheckDbData = (props) => {
               DisAgree
             </Button>
           </Link>
-          <Link to="/Submit/EP2" style={{ textDecoration: "none" }}>
+          <Link to="/Submit/EP" style={{ textDecoration: "none" }}>
             <Button
               type="button"
               color="primary"
