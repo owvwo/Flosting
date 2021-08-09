@@ -148,7 +148,7 @@ const Admin = (props) => {
             <ThemeProvider theme={Colortheme}>
             <Container>
                 <h1>
-                    관리자 페이지
+                    관리자 페이지ver2.0
                 </h1>
             <School_title>
                 현재 진행중인 플로스팅
