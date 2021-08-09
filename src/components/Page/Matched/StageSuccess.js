@@ -222,7 +222,6 @@ function LeftProfile({유저1, 메세지보낸사람}){
                 <li className="UserNick">{유저1['Nick']}[{유저1['Age']}]</li>
                 <li className="UserPhone">{유저1['Phone'].substring(0,3)}-{유저1['Phone'].substring(3,7)}-{유저1['Phone'].substring(7)}</li>  
                 <li className="UserUniv">{유저1['Univ']}</li>
-                <li className="UserManner">매너온도: {유저1['Manner']}</li>
             </div>
             </LeftProfileWrap>
     )
@@ -252,7 +251,6 @@ function RightProfile({유저2, 메세지보낸사람}){
                 <li className="UserNick">{유저2['Nick']}[{유저2['Age']}]</li>
                 <li className="UserPhone">{유저2['Phone'].substring(0,3)}-{유저2['Phone'].substring(3,7)}-{유저2['Phone'].substring(7)}</li>  
                 <li className="UserUniv">{유저2['Univ']}</li>
-                <li className="UserManner">매너온도: {유저2['Manner']}</li>
             </div>
         </RightProfileWrap>
     )

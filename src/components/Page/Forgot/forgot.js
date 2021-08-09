@@ -95,16 +95,32 @@ const Forgot = (props) => {
     const [limitpassword_C, setlimitpassword_C] = useState(false); //패스워드 안전, 매우안전
     const [canchangePW, setcanchangePW] = useState(false);
 
+    const [S_num, setS_num] = useState('');
+    const [S_Univ, setS_Univ] = useState('');
+    const [goNextID, setgoNextID] = useState(true);
+    const [limitSnum, setlimitSnum] = useState(false);
+    const [limitSUniv, setlimitSUniv] = useState(false);
+    const [IDopen, setIDopen] = useState(false);
+    const [findID, setfindID] = useState('');
 
     useEffect(() => {
         changecanPW();
-
     }, [correspass, limitpassword]);
+    useEffect(() => {
+        changecanID();
+    }, [limitSnum, limitSUniv]);
+
     useEffect(() => {
         setUser(props.User);
 
     }, [props]);
 
+    function changecanID(){
+        if(limitSnum && limitSUniv)
+            setgoNextID(false);
+        else
+            setgoNextID(true);
+    }
     function changecanPW(){
         if(correspass&& limitpassword)
             setcanchangePW(true);
@@ -143,7 +159,20 @@ const Forgot = (props) => {
                         onChangeIndex={handleChangeIndex}
                     >
                         <TabPanel value={value} index={0} dir={theme.direction}>
-                            <ForgotID></ForgotID>
+                            <ForgotID
+                            S_num = {S_num}
+                            setS_num = {setS_num}
+                            S_Univ = {S_Univ}
+                            setS_Univ = {setS_Univ}
+                            goNextID = {goNextID}
+                            setgoNextID = {setgoNextID}
+                            setlimitSnum = {setlimitSnum}
+                            setlimitSUniv = {setlimitSUniv}
+                            IDopen = {IDopen}
+                            setIDopen = {setIDopen}
+                            findID = {findID}
+                            setfindID = {setfindID}
+                            ></ForgotID>
                         </TabPanel>
                         <TabPanel value={value} index={1} dir={theme.direction}>
                             <ForgotPW 
