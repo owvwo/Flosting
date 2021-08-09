@@ -23,7 +23,6 @@ const CheckDbData = (props) => {
         if (querySnapshot) {
           querySnapshot.forEach((doc) => {
             setDocID(doc.id);
-            console.log(doc.id);
           });
         }
       });
@@ -34,7 +33,7 @@ const CheckDbData = (props) => {
       .doc(DocID)
       .delete()
       .then(() => {
-        console.log("삭제 완료");
+        // console.log("삭제 완료");
       })
       .catch((error) => {
         console.log("Error removing document : ", error);
@@ -57,7 +56,7 @@ const CheckDbData = (props) => {
           My_Usage_History: firebase.firestore.FieldValue.arrayRemove(EP_Num),
         });
         batch.commit().then(() => {
-          console.log("good");
+          // console.log("good");
         });
       });
   };

@@ -202,8 +202,6 @@ function StageHalf(props){
     const 발전단계변경 = props.발전단계변경
     const 메세지보낸사람 = props.메세지보낸사람
 
-    console.log(props.컬렉션)
-    console.log(props.문서번호)
     let[연락상태, 연락상태변경] = useState(false);
     useEffect(()=>{
     },[])
