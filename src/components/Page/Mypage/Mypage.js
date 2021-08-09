@@ -115,7 +115,7 @@ const Mypage = (props) => {
                             setUserNick(doc.data().User.Nick);
                         });
                     } else {
-                        console.log("데이터 없음");
+                        // console.log("데이터 없음");
                     }
                 });
         }

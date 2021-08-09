@@ -17,7 +17,6 @@ import LastRegister_page from './Page/Register/LastRegister'
 import My_page from './Page/Mypage/Mypage'
 import ShowingResult from './Page/Matched/ShowingResult'
 import CurrentEvent from "./Page/CurrentEvent/CurrentEvent";
-import 건대 from "./Page/건대.js"
 import SelectResult from '../components/Page/Matched/SelectResult.js';
 import LilacResult from '../components/Page/Matched/LilacResult.js';
 import CloverResult from '../components/Page/Matched/CloverResult.js';

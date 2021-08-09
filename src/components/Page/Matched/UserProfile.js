@@ -56,7 +56,7 @@ function UserProfile() {
                         setNextTier(Till - mannertemp);
                     });
                 } else {
-                    console.log("데이터 없음");
+                    // console.log("데이터 없음");
                 }
             });
     }, []);

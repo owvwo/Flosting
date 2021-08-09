@@ -26,9 +26,7 @@ function ShowingResult(props){
     useEffect(()=>{
         if(user){
         유저이메일 = user.email
-        console.log(user)
         유저아이디 = 유저이메일.split('@')[0];
-        console.log(유저아이디)
 
         const promise_몇회차 = new Promise((resolve, reject) => {
 
@@ -58,14 +56,10 @@ function ShowingResult(props){
             const collectionName = String(value[1]) 
             const Nickname = value[0]
 
-            console.log(Nickname)
-            console.log(collectionName)
-
             db.collection(collectionName).where("userOne.Nick", "==", Nickname)
             .get()
             .then((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
-                    console.log(doc.data());
                     유저1변경(doc.data()['userOne'])
                     유저2변경(doc.data()['userTwo'])
                     발전단계변경(doc.data()['stage'])
@@ -75,12 +69,10 @@ function ShowingResult(props){
                 });
             })
             if(발전단계 === ''){
-                console.log('oo')
                 db.collection(collectionName).where("userTwo.Nick", "==", Nickname)
                 .get()
                 .then((querySnapshot)=>{
                     querySnapshot.forEach((doc)=>{
-                        console.log(doc.data());
                         유저1변경(doc.data()['userOne'])
                         유저2변경(doc.data()['userTwo'])
                         발전단계변경(doc.data()['stage'])

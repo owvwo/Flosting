@@ -118,11 +118,11 @@ function AdminBigFoot(){
         const readClover = await db.collection(`${회차}clover`).get()
         try{
             readClover.forEach((doc)=>{
-                console.log(doc.data().stage)
+                // console.log(doc.data().stage)
                 if(doc.data().stage === 'zero'){cloverStage[0]+=1}
                 else if(doc.data().stage === 'half'){cloverStage[1]+=1}
                 else if(doc.data().stage === 'success'){cloverStage[2]+=1}
-                console.log(cloverStage)
+                // console.log(cloverStage)
             })
         }catch(err){console.log(err)}
     }
@@ -130,11 +130,11 @@ function AdminBigFoot(){
         const readClover = await db.collection(`${회차}lilac`).get()
         try{
             readClover.forEach((doc)=>{
-                console.log(doc.data().stage)
+                // console.log(doc.data().stage)
                 if(doc.data().stage === 'zero'){lilacStage[0]+=1}
                 else if(doc.data().stage === 'half'){lilacStage[1]+=1}
                 else if(doc.data().stage === 'success'){lilacStage[2]+=1}
-                console.log(lilacStage)
+                // console.log(lilacStage)
             })
         }catch(err){console.log(err)}
     }
@@ -142,11 +142,11 @@ function AdminBigFoot(){
         const readClover = await db.collection(`${회차}daisy`).get()
         try{
             readClover.forEach((doc)=>{
-                console.log(doc.data().stage)
+                // console.log(doc.data().stage)
                 if(doc.data().stage === 'zero'){daisyStage[0]+=1}
                 else if(doc.data().stage === 'half'){daisyStage[1]+=1}
                 else if(doc.data().stage === 'success'){daisyStage[2]+=1}
-                console.log(daisyStage)
+                // console.log(daisyStage)
             })
         }catch(err){console.log(err)}
     }

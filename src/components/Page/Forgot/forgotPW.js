@@ -239,8 +239,8 @@ const forgotPW = (props) => {
     const handleChangePassword = () =>{
 
         const letID = ID+'@flosting.com'
-        console.log(letID);
-        console.log(password);
+        // console.log(letID);
+        // console.log(password);
         fetch("https://bjvy462n18.execute-api.ap-northeast-2.amazonaws.com/0727/chps", {
       method: 'POST',
       headers: { 'Accept': 'application/json' },

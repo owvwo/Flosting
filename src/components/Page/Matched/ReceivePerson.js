@@ -323,8 +323,8 @@ function Button(props){
     function onClick_sendMessage(){
         const result = window.confirm('정말로 답장을 보내셨나요?');
         if(result){
-            console.log(props.컬렉션)
-            console.log(props.문서번호)
+            // console.log(props.컬렉션)
+            // console.log(props.문서번호)
             db.collection(props.컬렉션).doc(props.문서번호).update({
                 stage: 'success'
             })
@@ -334,7 +334,7 @@ function Button(props){
 
     function onClick_refuse(){
         const result = window.confirm('정말로 거절하실건가요?');
-        console.log(result)
+        // console.log(result)
         if(result){
             db.collection(props.컬렉션).doc(props.문서번호).update({
                 stage: 'end'
