@@ -43,7 +43,7 @@ const Boldtheme = createMuiTheme({
 });
 
 const ErrorMsg = styled.div`
-  font-family: 'Noto Sans KR', sans-serif;
+  font-family: "Noto Sans KR", sans-serif;
   color: red;
   font-size: 0.7rem;
 `;
@@ -82,8 +82,8 @@ p{
 `;
 
 const SubmitButton = styled.button`
-font-family: 'Noto Sans KR', sans-serif;
-font-weight: 400;
+  font-family: "Noto Sans KR", sans-serif;
+  font-weight: 400;
   margin: 1rem auto;
   height: 5rem;
   width: 20rem;
@@ -102,13 +102,13 @@ const Title = styled.h1`
 `;
 
 const ToggleButton = styled.button`
-  font-family: 'Noto Sans KR', sans-serif;
+  font-family: "Noto Sans KR", sans-serif;
   font-weight: 500;
   border-radius: 10px;
   margin: 1rem;
   padding: 10px 15px;
   width: 20rem;
-  border: 1px solid rgb(0,0,0,0.2);
+  border: 1px solid rgb(0, 0, 0, 0.2);
   background-color: ${(props) => props.color};
 `;
 
@@ -146,18 +146,18 @@ function EnrollmentForm(props, match) {
   const initialValues = {
     Daisy: {
       Ticket: false,
-      Univ: "",
-      Age: "",
+      Univ: "myUniv",
+      Age: "20",
     },
     Lilac: {
       Ticket: false,
-      Univ: "",
-      Age: "",
+      Univ: "myUniv",
+      Age: "20",
     },
     Clover: {
       Ticket: false,
-      Univ: "",
-      Age: "",
+      Univ: "myUniv",
+      Age: "20",
     },
   };
   // 유효성 검사
@@ -217,31 +217,30 @@ function EnrollmentForm(props, match) {
     if (lilacOn) {
       values.Lilac.Age = "";
       values.Lilac.Univ = "";
+      values.Lilac.Ticket = false;
     } else {
       if (values.Lilac.Age === "" || values.Lilac.Univ === "") {
         values.Lilac.Ticket = false;
-        values.Lilac.Age = "";
-        values.Lilac.Univ = "";
       }
     }
+
     if (daisyOn) {
       values.Daisy.Age = "";
       values.Daisy.Univ = "";
+      values.Daisy.Ticket = false;
     } else {
       if (values.Daisy.Age === "" || values.Daisy.Univ === "") {
         values.Daisy.Ticket = false;
-        values.Daisy.Age = "";
-        values.Daisy.Univ = "";
       }
     }
+
     if (cloverOn) {
       values.Clover.Age = "";
       values.Clover.Univ = "";
+      values.Clover.Ticket = false;
     } else {
       if (values.Clover.Age === "" || values.Clover.Univ === "") {
         values.Clover.Ticket = false;
-        values.Clover.Age = "";
-        values.Lilac.Univ = "";
       }
     }
 
@@ -254,7 +253,7 @@ function EnrollmentForm(props, match) {
         Clover: values.Clover,
       })
       .then(() => {
-        alert("success");
+        alert("신청이 완료되었습니다.");
         setSubmitSuccess(true);
       })
       .catch((error) => {
@@ -346,7 +345,11 @@ function EnrollmentForm(props, match) {
                         <ToggleButton
                           type="button"
                           onClick={handleLilac}
-                          color={lilacOn ? "rgb(247,244,148,0.5)" : "rgb(208,174,209,0.5)"}
+                          color={
+                            lilacOn
+                              ? "rgb(247,244,148,0.5)"
+                              : "rgb(208,174,209,0.5)"
+                          }
                         >
                           {lilacOn ? "신청 하기" : "신청 취소"}
                         </ToggleButton>
@@ -397,7 +400,11 @@ function EnrollmentForm(props, match) {
                         <ToggleButton
                           type="button"
                           onClick={handleDaisy}
-                          color={daisyOn ? "rgb(247,244,148,0.5)" : "rgb(208,174,209,0.5)"}
+                          color={
+                            daisyOn
+                              ? "rgb(247,244,148,0.5)"
+                              : "rgb(208,174,209,0.5)"
+                          }
                         >
                           {daisyOn ? "신청 하기" : "신청 취소"}
                         </ToggleButton>
@@ -446,7 +453,11 @@ function EnrollmentForm(props, match) {
                         <ToggleButton
                           type="button"
                           onClick={handleClover}
-                          color={cloverOn ? "rgb(247,244,148,0.5)" : "rgb(208,174,209,0.5)"}
+                          color={
+                            cloverOn
+                              ? "rgb(247,244,148,0.5)"
+                              : "rgb(208,174,209,0.5)"
+                          }
                         >
                           {cloverOn ? "신청 하기" : "신청 취소"}
                         </ToggleButton>

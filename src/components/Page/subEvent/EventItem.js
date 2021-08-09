@@ -40,8 +40,8 @@ function EventItem(props) {
   return (
     <Container>
       <NavContainer>
-        <ListItem alignItems="flex-start" button>
-          <NavLink to="/subevent/event">
+        <NavLink to="/subevent/event">
+          <ListItem alignItems="flex-start" button>
             <ListItemText
               primary={Title}
               secondary={
@@ -59,8 +59,8 @@ function EventItem(props) {
                 </React.Fragment>
               }
             />
-          </NavLink>
-        </ListItem>
+          </ListItem>
+        </NavLink>
       </NavContainer>
     </Container>
   );

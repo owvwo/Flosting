@@ -21,7 +21,6 @@ const Colortheme = createMuiTheme({
 const Container = styled.div`
     font-family: 'Noto Sans KR', sans-serif;
     font-weight: 400;
-    margin: 0rem 2rem;
     
 
     h1{
@@ -139,7 +138,7 @@ const forgotPW = (props) => {
         Phone_number, setPhone_number } = props
 
     const handleNumChange = (e) => {
-        let pattern = /[^0-9]/gi; // 숫자 입력 되게
+        let pattern = /[^|a-z|0-9|]/gi; // 숫자 입력 되게
         e.target.value = e.target.value.replace(pattern, '');
         if (e.target.value.length > 13) //글자수 제한
             e.target.value = e.target.value.slice(0, 13);
@@ -226,13 +225,13 @@ const forgotPW = (props) => {
             if (querySnapshot.size) {
                 querySnapshot.forEach((doc) => {
                     if (doc.data().User.Phone != Phone_number) {
-                        alert("입력하신 학번과 등록한 휴대폰 번호가 일치하지 않아요.")
+                        alert("입력하신 ID와 등록한 휴대폰 번호가 일치하지 않아요.")
                     } else {
                         DoCertification();
                     }
                 });
             } else {
-                alert("입력하신 학번으로 가입된 정보는 없어요.")
+                alert("입력하신 ID로 가입된 정보는 없어요.")
             }
         });
     }
@@ -337,16 +336,16 @@ const forgotPW = (props) => {
                             비밀번호 찾기
                         </h1>
                         <School_content>
-                            <li>아이디는 본인의 학번이에요!</li>
+                            <li></li>
                         </School_content>
                         <School_number>
                             <School_title>
-                                학번
+                                아이디
                             </School_title>
                         </School_number>
                         <Input
                             limitnum={limitnum}
-                            placeholder="학번을 입력하세요"
+                            placeholder="아이디을 입력하세요"
                             onChange={handleNumChange}
                         />
                         <Error_message limitnum={limitID}>

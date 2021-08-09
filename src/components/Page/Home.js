@@ -243,8 +243,9 @@ function Jumbotron({ CurrentButton, 버튼타이머, 매칭결과조회여부 })
     return (
         <div className='jb_wrap'>
             <div className='video_wrap'>
+                <img src  = "https://firebasestorage.googleapis.com/v0/b/flosting-65c9e.appspot.com/o/startmain.png?alt=media" alt aria-hidden = "true" className='start_img'></img>
                 <video muted autoPlay playsInline className="videoview">
-                    <source src={mp4link} type="video/mp4">
+                    <source poster="https://firebasestorage.googleapis.com/v0/b/flosting-65c9e.appspot.com/o/startmain.png?alt=media" src={mp4link} type="video/mp4">
 
                     </source>
                 </video>

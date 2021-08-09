@@ -17,7 +17,6 @@ const 푸터 = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
         .left{
             width: 61%;
                 .info{

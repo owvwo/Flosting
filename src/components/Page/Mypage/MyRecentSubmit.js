@@ -258,7 +258,7 @@ function MyRecentSubmit(props) {
                                 {
                                     cloverAge === ""
                                         ? ("")
-                                        : <div className = "content">나이 - {lilacAge}  </div>
+                                        : <div className = "content">나이 - {cloverAge}  </div>
                                 }
                                 {
                                     cloverUniv === 'dnt_M'
@@ -287,7 +287,7 @@ function MyRecentSubmit(props) {
                                 {
                                     daisyAge === ""
                                         ? ("")
-                                        : <div className = "content">나이 - {lilacAge}  </div>
+                                        : <div className = "content">나이 - {daisyAge}  </div>
                                 }
                                 {
                                     daisyUniv === 'dnt_M'

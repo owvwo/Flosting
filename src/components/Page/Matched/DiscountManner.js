@@ -106,20 +106,10 @@ function DiscountManner(){
                 return db.runTransaction((transaction)=>{
                     return transaction.get(docRef).then((doc)=>{
                         if(!doc){throw "Document does not exist!"}
-                        const Age = doc.data().User.Age;
-                        const Gender = doc.data().User.Gender;
                         const newManner = doc.data().User.Manner - 1;
-                        const Nick = doc.data().User.Nick;
-                        const Phone = doc.data().User.Phone;
-                        const Univ = doc.data().User.Univ;
-                        transaction.update(docRef,{User:{
-                            Age: Age,
-                            Gender:Gender,
-                            Manner: newManner,
-                            Nick: Nick,
-                            Phone: Phone,
-                            Univ: Univ
-                        }})
+                        transaction.update(docRef,{
+                            'User.Manner': newManner
+                        })
                     })
                 })
             })

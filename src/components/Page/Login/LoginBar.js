@@ -90,7 +90,7 @@ const Loginbar = () => {
                     case "auth/invalid-email":
                     case "auth/user-disabled":
                     case "auth/user-not-found":
-                        setEmailError("가입된 학번이 아니네요!");
+                        setEmailError("가입된 ID가 아니네요!");
                         break;
                     case "auth/wrong-password":
                         setEmailError("비밀번호가 틀렸어요!");
@@ -122,7 +122,7 @@ const Loginbar = () => {
     return (
         <Container>
             <Input
-                placeholder="학번"
+                placeholder="아이디"
                 onChange={handlesetID}
             />
             <Input
