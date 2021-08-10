@@ -2,6 +2,7 @@ import React, { Component, useState, useEffect } from 'react'
 import styled from 'styled-components';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import firebase from '../Register/LoginFire.js'
+import firebaseApp from 'firebase/app';
 const db = firebase.firestore()
 
 const Colortheme = createMuiTheme({
@@ -218,7 +219,12 @@ function MyRecentSubmit(props) {
 
     const onClick = async () => {
         try {
-            await db.collection('회원정보').doc(memberInfoDocId).update({ Ongoing: "" })
+            await db.collection('회원정보').doc(memberInfoDocId).update({
+                My_Usage_History: firebaseApp.firestore.FieldValue.arrayRemove(
+                    Number(몇회차)
+                ),
+                Ongoing: "",
+            })
 
             await db.collection(`Flosting_${몇회차}`).doc(submitDocId).delete()
 
@@ -251,26 +257,26 @@ function MyRecentSubmit(props) {
                         <div className="rowDivBox">
                             {
                                 havecloverTicket == true
-                                ? <div className="conditionTitle">매칭 조건</div>
-                                : ("")
+                                    ? <div className="conditionTitle">매칭 조건</div>
+                                    : ("")
                             }
                             <div className="columnDivBox">
                                 {
                                     cloverAge === ""
                                         ? ("")
-                                        : <div className = "content">나이 - {cloverAge}  </div>
+                                        : <div className="content">나이 - {cloverAge}  </div>
                                 }
                                 {
                                     cloverUniv === 'dnt_M'
-                                    && <div className = "content">학교 - 학교 상관없음</div>
+                                    && <div className="content">학교 - 학교 상관없음</div>
                                 }
                                 {
                                     cloverUniv === 'otherUniv'
-                                    && <div className = "content">학교 - 다른 학교만</div>
+                                    && <div className="content">학교 - 다른 학교만</div>
                                 }
                                 {
                                     cloverUniv === 'myUniv'
-                                    && <div className = "content">학교 - 같은 학교만</div>
+                                    && <div className="content">학교 - 같은 학교만</div>
                                 }
                             </div>
                         </div>
@@ -280,26 +286,26 @@ function MyRecentSubmit(props) {
                         <div className="rowDivBox">
                             {
                                 havedaisyTicket == true
-                                ? <div className="conditionTitle">매칭 조건</div>
-                                : ("")
+                                    ? <div className="conditionTitle">매칭 조건</div>
+                                    : ("")
                             }
                             <div className="columnDivBox">
                                 {
                                     daisyAge === ""
                                         ? ("")
-                                        : <div className = "content">나이 - {daisyAge}  </div>
+                                        : <div className="content">나이 - {daisyAge}  </div>
                                 }
                                 {
                                     daisyUniv === 'dnt_M'
-                                    && <div className = "content">학교 - 학교 상관없음</div>
+                                    && <div className="content">학교 - 학교 상관없음</div>
                                 }
                                 {
                                     daisyUniv === 'otherUniv'
-                                    && <div className = "content">학교 - 다른 학교만</div>
+                                    && <div className="content">학교 - 다른 학교만</div>
                                 }
                                 {
                                     daisyUniv === 'myUniv'
-                                    && <div className = "content">학교 - 같은 학교만</div>
+                                    && <div className="content">학교 - 같은 학교만</div>
                                 }
                             </div>
                         </div>
@@ -309,26 +315,26 @@ function MyRecentSubmit(props) {
                         <div className="rowDivBox">
                             {
                                 havelilacTicket == true
-                                ? <div className="conditionTitle">매칭 조건</div>
-                                : ("")
+                                    ? <div className="conditionTitle">매칭 조건</div>
+                                    : ("")
                             }
                             <div className="columnDivBox">
                                 {
                                     lilacAge === ""
                                         ? ("")
-                                        : <div className = "content">나이 - {lilacAge}  </div>
+                                        : <div className="content">나이 - {lilacAge}  </div>
                                 }
                                 {
                                     lilacUniv === 'dnt_M'
-                                    && <div className = "content">학교 - 학교 상관없음</div>
+                                    && <div className="content">학교 - 학교 상관없음</div>
                                 }
                                 {
                                     lilacUniv === 'otherUniv'
-                                    && <div className = "content">학교 - 다른 학교만</div>
+                                    && <div className="content">학교 - 다른 학교만</div>
                                 }
                                 {
                                     lilacUniv === 'myUniv'
-                                    && <div className = "content">학교 - 같은 학교만</div>
+                                    && <div className="content">학교 - 같은 학교만</div>
                                 }
 
                             </div>

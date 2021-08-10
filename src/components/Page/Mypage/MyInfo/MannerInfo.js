@@ -87,7 +87,7 @@ const MannerInfo = (props) => {
                                     <li>매너온도는 플로스팅 이용 후 상대방으로부터 받은 후기를 종합해서 만든 매너 지표입니다.</li>
                                     <li>온도에 따른 티어를 확인해보세요!</li>
                                 </Box_content>
-                                <MannerTierList 
+                                <MannerTierList
                                     test={"dd"}
                                     tier_mi2={tier_mi2}
                                     tier_mi1={tier_mi1}

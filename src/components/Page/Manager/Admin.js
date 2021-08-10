@@ -1,7 +1,7 @@
 import React, { Component, useState, useEffect } from 'react'
 import styled from 'styled-components';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
-import { NavLink, Redirect} from 'react-router-dom';
+import { NavLink, Redirect } from 'react-router-dom';
 import fire from '../Register/LoginFire';
 import SelectList from './SelectList';
 import Extraction from './Extraction';
@@ -122,44 +122,45 @@ const Admin = (props) => {
 
     const user = props.User;
     const db = fire.firestore();
-    const [isManager, setisManager] = useState(true);
+    const { isManager, setisManager } = props;
     const [nowCount, setnowCount] = useState('1');
 
     useEffect(() => {
-      if (user) {
-        let s_id = user.email.split('@');
-        let Infodb = db.collection('Admin');
-        let query = Infodb.where("ID", "==", s_id[0]).get().then((querySnapshot) => {
-          if (querySnapshot.size) {
-            setisManager(true);
-          }
-          else{
+        if (user) {
+            let s_id = user.email.split('@');
+            let Infodb = db.collection('Admin');
+            let query = Infodb.where("ID", "==", s_id[0]).get().then((querySnapshot) => {
+                if (querySnapshot.size) {
+                    setisManager(true);
+                }
+                else {
+                    setisManager(false);
+                }
+            });
+        } else {
             setisManager(false);
-          }
-        });
-      }else{
-        setisManager(false);
-      }
+        }
     }, [user]);
 
 
-    if(isManager){
-        return(
+    if (isManager) {
+        return (
             <ThemeProvider theme={Colortheme}>
-            <Container>
-                <h1>
-                    관리자 페이지ver2.0
-                </h1>
-            <School_title>
-                현재 진행중인 플로스팅
-            </School_title>
-            <SelectList nowCount={nowCount} setnowCount = {setnowCount} />
-            <Extraction nowCount={nowCount}/>
-            </Container>
-            <NavLink to ='/admin/bigfoot'><button>왕발 기능</button></NavLink>
-        </ThemeProvider>
+                <Container>
+                    <h1>
+                        관리자 페이지ver2.0
+                    </h1>
+                    <School_title>
+                        현재 진행중인 플로스팅
+                    </School_title>
+                    <SelectList nowCount={nowCount} setnowCount={setnowCount} />
+                    <Extraction nowCount={nowCount} />
+                </Container>
+                <NavLink to='/admin/bigfoot'><button>왕발 기능</button></NavLink>
+                <NavLink to='/admin/owvwo'><button>승훈 기능</button></NavLink>
+            </ThemeProvider>
         )
-    }else{
+    } else {
         return (<Redirect to='/' />);
     }
 }
