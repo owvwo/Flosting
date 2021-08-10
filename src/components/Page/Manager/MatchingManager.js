@@ -74,23 +74,23 @@ const MatchingManager = (props) => {
     const user = props.user;
     const db = fire.firestore();
     //Lilac 정보
-    const [L_user,setL_user] = useState("");
-    const [L_boy,setL_boy] = useState("");
-    const [L_girl,setL_girl] = useState("");
-    const [L_couple,setL_couple] = useState("");
-    const [L_trash,setL_trash] = useState("");
+    const [L_user, setL_user] = useState("");
+    const [L_boy, setL_boy] = useState("");
+    const [L_girl, setL_girl] = useState("");
+    const [L_couple, setL_couple] = useState("");
+    const [L_trash, setL_trash] = useState("");
 
-    const [D_user,setD_user] = useState("");
-    const [D_boy,setD_boy] = useState("");
-    const [D_girl,setD_girl] = useState("");
-    const [D_couple,setD_couple] = useState("");
-    const [D_trash,setD_trash] = useState("");
+    const [D_user, setD_user] = useState("");
+    const [D_boy, setD_boy] = useState("");
+    const [D_girl, setD_girl] = useState("");
+    const [D_couple, setD_couple] = useState("");
+    const [D_trash, setD_trash] = useState("");
 
-    const [C_user,setC_user] = useState("");
-    const [C_boy,setC_boy] = useState("");
-    const [C_girl,setC_girl] = useState("");
-    const [C_couple,setC_couple] = useState("");
-    const [C_trash,setC_trash] = useState("");
+    const [C_user, setC_user] = useState("");
+    const [C_boy, setC_boy] = useState("");
+    const [C_girl, setC_girl] = useState("");
+    const [C_couple, setC_couple] = useState("");
+    const [C_trash, setC_trash] = useState("");
 
 
     //DB에서 우선순위배열에 추가하는 함수
@@ -732,7 +732,7 @@ const MatchingManager = (props) => {
                     let boynum = 0;
                     let girlnum = 0;
 
-                    if(MatchingType == "Lilac"){
+                    if (MatchingType == "Lilac") {
                         querySnapshot.forEach((doc) => {
                             if (doc.data().Lilac.Age == "Dnt_M" && doc.data().Lilac.Univ == "Dnt_M") {
                                 //1순위 매칭 우선배열
@@ -745,13 +745,13 @@ const MatchingManager = (props) => {
                                 DBtoPriority_Array(Priority_Array, 2, MatchingType, doc.data());
                             }
 
-                            if(doc.data().User.Gender == "boy"){
+                            if (doc.data().User.Gender == "boy") {
                                 boynum++;
-                            }else{
+                            } else {
                                 girlnum++;
                             }
                         })
-                    }else if(MatchingType == "Daisy"){
+                    } else if (MatchingType == "Daisy") {
                         querySnapshot.forEach((doc) => {
                             if (doc.data().Daisy.Age == "Dnt_M" && doc.data().Daisy.Univ == "Dnt_M") {
                                 //1순위 매칭 우선배열
@@ -764,13 +764,13 @@ const MatchingManager = (props) => {
                                 DBtoPriority_Array(Priority_Array, 2, MatchingType, doc.data());
                             }
 
-                            if(doc.data().User.Gender == "boy"){
+                            if (doc.data().User.Gender == "boy") {
                                 boynum++;
-                            }else{
+                            } else {
                                 girlnum++;
                             }
                         })
-                    }else if(MatchingType == "Clover"){
+                    } else if (MatchingType == "Clover") {
                         querySnapshot.forEach((doc) => {
                             if (doc.data().Clover.Age == "Dnt_M" && doc.data().Clover.Univ == "Dnt_M") {
                                 //1순위 매칭 우선배열
@@ -783,9 +783,9 @@ const MatchingManager = (props) => {
                                 DBtoPriority_Array(Priority_Array, 2, MatchingType, doc.data());
                             }
 
-                            if(doc.data().User.Gender == "boy"){
+                            if (doc.data().User.Gender == "boy") {
                                 boynum++;
-                            }else{
+                            } else {
                                 girlnum++;
                             }
                         })
@@ -839,26 +839,26 @@ const MatchingManager = (props) => {
                     }
 
                     if (MatchingType == "Lilac") {
-                        PushCoupletoDB("lilac", couple);;
+                        PushCoupletoDB(nowCount, "lilac", couple);
                         setL_user(User_Num);
                         setL_boy(boynum);
                         setL_girl(girlnum);
-                        setL_couple(couple.size);
-                        setL_trash(trash.size);
+                        setL_couple(couple.length);
+                        setL_trash(trash.length);
                     } else if (MatchingType == "Daisy") {
-                        PushCoupletoDB("daisy", couple);
+                        PushCoupletoDB(nowCount, "daisy", couple);
                         setD_user(User_Num);
                         setD_boy(boynum);
                         setD_girl(girlnum);
-                        setD_couple(couple.size);
-                        setD_trash(trash.size);
+                        setD_couple(couple.length);
+                        setD_trash(trash.length);
                     } else {
-                        PushCoupletoDB("clover", couple);
+                        PushCoupletoDB(nowCount, "clover", couple);
                         setC_user(User_Num);
                         setC_boy(boynum);
                         setC_girl(girlnum);
-                        setC_couple(couple.size);
-                        setC_trash(trash.size);
+                        setC_couple(couple.length);
+                        setC_trash(trash.length);
                     }
                     console.table(couple);
                     console.table(trash);
@@ -866,7 +866,7 @@ const MatchingManager = (props) => {
             });
     }
     //DB에 push해주는 함수
-    const PushCoupletoDB = (MatchingType, couple) => {
+    const PushCoupletoDB = (NowCount, MatchingType, couple) => {
         const couplelength = couple[0].length;
         for (let i = 0; i < couplelength; i++) {
             let userOne = {
@@ -885,7 +885,7 @@ const MatchingManager = (props) => {
                 Phone: couple[1][i].Phone,
                 Univ: couple[1][i].Univ,
             };
-            db.collection("test" + MatchingType)
+            db.collection(String(NowCount) + MatchingType)
                 .add({
                     stage: "zero",
                     userOne: userOne,
@@ -900,6 +900,7 @@ const MatchingManager = (props) => {
                     alert(error.message);
                 });
         }
+
         alert(MatchingType + " 매칭 끝")
     };
     // Array비우는 함수
@@ -971,12 +972,12 @@ const MatchingManager = (props) => {
     let daisylist = [];
     let cloverlist = [];
 
-    async function getlilacData(){
+    async function getlilacData() {
         const LilacCollection_DB = String(nowCount) + "lilac"
 
         const lilacdiv = await db.collection(LilacCollection_DB).get()
-        try{
-            lilacdiv.forEach((doc)=>{
+        try {
+            lilacdiv.forEach((doc) => {
                 let tempdic = {
                     userOne: doc.data().userOne.Nick,
                     userOnePhone: doc.data().userOne.Phone,
@@ -985,14 +986,14 @@ const MatchingManager = (props) => {
                 }
                 lilaclist.push(tempdic)
             })
-        }catch(err){console.log(err)}
+        } catch (err) { console.log(err) }
     }
-    async function getdaisyData(){
+    async function getdaisyData() {
         const DaisyCollection_DB = String(nowCount) + "daisy"
 
         const daisydiv = await db.collection(DaisyCollection_DB).get()
-        try{
-            daisydiv.forEach((doc)=>{
+        try {
+            daisydiv.forEach((doc) => {
                 let tempdic = {
                     userOne: doc.data().userOne.Nick,
                     userOnePhone: doc.data().userOne.Phone,
@@ -1001,14 +1002,14 @@ const MatchingManager = (props) => {
                 }
                 daisylist.push(tempdic)
             })
-        }catch(err){console.log(err)}
+        } catch (err) { console.log(err) }
     }
-    async function getcloverData(){
+    async function getcloverData() {
         const CloverCollection_DB = String(nowCount) + "clover"
 
         const cloverdiv = await db.collection(CloverCollection_DB).get()
-        try{
-            cloverdiv.forEach((doc)=>{
+        try {
+            cloverdiv.forEach((doc) => {
                 let tempdic = {
                     userOne: doc.data().userOne.Nick,
                     userOnePhone: doc.data().userOne.Phone,
@@ -1017,15 +1018,15 @@ const MatchingManager = (props) => {
                 }
                 cloverlist.push(tempdic)
             })
-        }catch(err){console.log(err)}
+        } catch (err) { console.log(err) }
     }
 
-    async function getallData(){
+    async function getallData() {
         const LilacCollection_DB = String(nowCount) + "lilac"
 
         const lilacdiv = await db.collection(LilacCollection_DB).get()
-        try{
-            lilacdiv.forEach((doc)=>{
+        try {
+            lilacdiv.forEach((doc) => {
                 let tempdic = {
                     userOne: doc.data().userOne.Nick,
                     userOnePhone: doc.data().userOne.Phone,
@@ -1034,12 +1035,12 @@ const MatchingManager = (props) => {
                 }
                 lilaclist.push(tempdic)
             })
-        }catch(err){console.log(err)}
+        } catch (err) { console.log(err) }
         const DaisyCollection_DB = String(nowCount) + "daisy"
 
         const daisydiv = await db.collection(DaisyCollection_DB).get()
-        try{
-            daisydiv.forEach((doc)=>{
+        try {
+            daisydiv.forEach((doc) => {
                 let tempdic = {
                     userOne: doc.data().userOne.Nick,
                     userOnePhone: doc.data().userOne.Phone,
@@ -1048,12 +1049,12 @@ const MatchingManager = (props) => {
                 }
                 daisylist.push(tempdic)
             })
-        }catch(err){console.log(err)}
+        } catch (err) { console.log(err) }
         const CloverCollection_DB = String(nowCount) + "clover"
 
         const cloverdiv = await db.collection(CloverCollection_DB).get()
-        try{
-            cloverdiv.forEach((doc)=>{
+        try {
+            cloverdiv.forEach((doc) => {
                 let tempdic = {
                     userOne: doc.data().userOne.Nick,
                     userOnePhone: doc.data().userOne.Phone,
@@ -1062,11 +1063,11 @@ const MatchingManager = (props) => {
                 }
                 cloverlist.push(tempdic)
             })
-        }catch(err){console.log(err)}
+        } catch (err) { console.log(err) }
     }
-    const excelDownhandle = () =>{
+    const excelDownhandle = () => {
 
-        getallData().then(_=>{
+        getallData().then(_ => {
             const dataWS = xlsx.utils.json_to_sheet(lilaclist);
             const dataWS2 = xlsx.utils.json_to_sheet(daisylist);
             const dataWS3 = xlsx.utils.json_to_sheet(cloverlist);
@@ -1111,7 +1112,7 @@ const MatchingManager = (props) => {
                     <li>커플 : {C_couple}</li>
                     <li>트레쉬행 : {C_trash}</li>
                 </MatchingBox>
-                <ExcelBtn onClick = {excelDownhandle}>
+                <ExcelBtn onClick={excelDownhandle}>
                     {nowCount}회차 결과 다운
                 </ExcelBtn>
             </Container>

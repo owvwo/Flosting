@@ -96,7 +96,7 @@ function EditSubmit(props) {
               setUser(doc.data().User);
             });
           } else {
-            console.log("데이터없어");
+            // console.log("데이터없어");
           }
         });
     }

@@ -169,7 +169,7 @@ const Register = (props) => {
                 }
             });
         } else {
-            alert("알맞은 학번을 입력해주세요!")
+            alert("알맞은 ID를 입력해주세요!")
         }
 
     }
@@ -275,7 +275,7 @@ const Register = (props) => {
                             <DialogTitle id="responsive-dialog-title">{S_num}</DialogTitle>
                             <DialogContent>
                                 <DialogContentText>
-                                    위 학번으로 가입하시겠습니까?
+                                    위 ID로 가입하시겠습니까?
                                 </DialogContentText>
                             </DialogContent>
                             <DialogActions>
@@ -294,7 +294,7 @@ const Register = (props) => {
                         >
                             <DialogTitle id="responsive-dialog-title">{S_num}</DialogTitle>
                             <DialogContent>
-                                다음 학번은 중복입니다!
+                                다음 ID는 중복입니다!
                             </DialogContent>
                             <DialogActions>
                                 <Button variant="contained" autoFocus onClick={() => setOpen2(false)} color="primary">

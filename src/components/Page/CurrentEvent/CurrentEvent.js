@@ -6,11 +6,12 @@ import Tada from "react-reveal/Tada";
 import fire from "../Register/LoginFire";
 
 const Container = styled.div`
+  display: flex;
+  flex-direction : column;
   font-family: "Noto Sans KR", sans-serif;
   left: 0;
   width: 100%;
   height: 40rem;
-  overflow: scroll;
   align-items: center;
   background-color: white;
 `;
@@ -91,7 +92,7 @@ const CurrentEvent = (props) => {
               setUser(doc.data().User);
             });
           } else {
-            console.log("데이터없어");
+            // console.log("데이터없어");
           }
         });
     }
@@ -107,67 +108,11 @@ const CurrentEvent = (props) => {
               {...props}
               요소wrap={요소wrap}
               요소btn={요소btn}
-              School_Name={["건국대학교 서울캠퍼스", "세종대학교"]}
+              School_Name={["강남대학교", "단국대학교 죽전캠퍼스"]}
               Num={1}
-              Start_Day="0721"
-              End_Day="0724"
-              Result_Day="0725"
-            />
-          </NavLink>
-        </Tada>
-        <Tada>
-          <NavLink to="/currentevent/EP">
-            <Buttoncontent
-              {...props}
-              요소wrap={요소wrap}
-              요소btn={요소btn}
-              School_Name={["단국대학교 죽전캠퍼스", "강남대학교"]}
-              Num={2}
-              Start_Day="0721"
-              End_Day="0724"
-              Result_Day="0725"
-            />
-          </NavLink>
-        </Tada>
-        <Tada>
-          <NavLink to="/currentevent/EP">
-            <Buttoncontent
-              {...props}
-              요소wrap={요소wrap}
-              요소btn={요소btn}
-              School_Name={["을지대학교 성남캠퍼스", "가천대학교 성남캠퍼스"]}
-              Num={3}
-              Start_Day="0721"
-              End_Day="0724"
-              Result_Day="0725"
-            />
-          </NavLink>
-        </Tada>
-        <Tada>
-          <NavLink to="/currentevent/EP">
-            <Buttoncontent
-              {...props}
-              요소wrap={요소wrap}
-              요소btn={요소btn}
-              School_Name={["성균관대학교 수원캠퍼스", "경희대학교 국제캠퍼스"]}
-              Num={4}
-              Start_Day="0721"
-              End_Day="0724"
-              Result_Day="0725"
-            />
-          </NavLink>
-        </Tada>
-        <Tada>
-          <NavLink to="/currentevent/EP">
-            <Buttoncontent
-              {...props}
-              요소wrap={요소wrap}
-              요소btn={요소btn}
-              School_Name={["강남대학교", "경희대학교 국제캠퍼스"]}
-              Num={5}
-              Start_Day="0721"
-              End_Day="0724"
-              Result_Day="0725"
+              Start_Day="0821"
+              End_Day="0824"
+              Result_Day="0825"
             />
           </NavLink>
         </Tada>
@@ -176,9 +121,9 @@ const CurrentEvent = (props) => {
             <알람신청 알림wrap={알림wrap} 알림btn={알림btn} />
           </NavLink>
         </Tada>
-      </Container>
-
+        
       <Footer />
+      </Container>
     </div>
   );
 };

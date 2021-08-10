@@ -167,7 +167,7 @@ function EP1(props) {
           )}
 
           <Fade bottom>
-            <Period period={period}></Period>
+            <Period EP_Result_Day = {EP_Result_Day} period={period}></Period>
             <Notice />
           </Fade>
         </Container>

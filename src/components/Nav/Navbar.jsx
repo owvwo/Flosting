@@ -3,7 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Navicon from './Navicon';
 import Loginicon from './Loginicon';
-import {NavLink} from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 const Nav = styled.nav`
   position: fixed;
@@ -19,7 +19,7 @@ const Nav = styled.nav`
   justify-content: space-between;
   .logo {
     a{
-      font-family: 'Carter One', cursive;
+      font-family: 'Ubuntu', sans-serif;
       font-size : 1.2rem;
     }
     border: 1.5px solid;
@@ -42,12 +42,12 @@ const Navbar = (props) => {
   return (
     <Nav>
       <div className="logo">
-        <NavLink exact = {true} activeStyle={activeStyle} style = {noneactiveStyle} to= "/">
+        <NavLink exact={true} activeStyle={activeStyle} style={noneactiveStyle} to="/">
           Flosting
         </NavLink>
       </div>
-      <Navicon User = {user}/>
-      <Loginicon User = {user} />
+      <Navicon User={user} />
+      <Loginicon User={user} />
     </Nav>
   )
 }

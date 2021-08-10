@@ -202,7 +202,7 @@ function EnrollmentForm(props, match) {
               setIsSubmit(true);
             });
           } else {
-            console.log("데이터없어");
+            // console.log("데이터없어");
           }
         });
     }
@@ -253,7 +253,7 @@ function EnrollmentForm(props, match) {
         Clover: values.Clover,
       })
       .then(() => {
-        alert("success");
+        alert("신청이 완료되었습니다.");
         setSubmitSuccess(true);
       })
       .catch((error) => {
@@ -279,13 +279,9 @@ function EnrollmentForm(props, match) {
         });
         batch.update(updatedb, { Ongoing: String(EP_Num) });
         batch.commit().then(() => {
-          console.log("good");
+          // console.log("good");
         });
       });
-    console.log("ID", ID);
-    console.log("User", User);
-    console.log("UserUniv", User.Univ);
-    console.log("Form data", values);
     onSubmitProps.resetForm();
   };
 

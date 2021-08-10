@@ -27,6 +27,12 @@ function UserProfile() {
     const [Age,setAge] = useState(19);
     const [tierName, settierName] = useState("");
     const [tierImg, settierImg] = useState("tier_zero.png");
+    const tier_mi2 = 'https://firebasestorage.googleapis.com/v0/b/flosting-65c9e.appspot.com/o/TierImage%2Ftier_mi2.jpeg?alt=media'
+    const tier_mi1 = 'https://firebasestorage.googleapis.com/v0/b/flosting-65c9e.appspot.com/o/TierImage%2Ftier_mi1.jpeg?alt=media'
+    const tier_zero = 'https://firebasestorage.googleapis.com/v0/b/flosting-65c9e.appspot.com/o/TierImage%2Ftier_zero.png?alt=media'
+    const tier_plus1 = 'https://firebasestorage.googleapis.com/v0/b/flosting-65c9e.appspot.com/o/TierImage%2Ftier_plus1.jpeg?alt=media'
+    const tier_plus2 = 'https://firebasestorage.googleapis.com/v0/b/flosting-65c9e.appspot.com/o/TierImage%2Ftier_plus2.png?alt=media'
+    const tier_plus3 = 'https://firebasestorage.googleapis.com/v0/b/flosting-65c9e.appspot.com/o/TierImage%2Ftier_plus3.png?alt=media'
 
     useEffect(() => {
         db.collection("회원정보")
@@ -50,33 +56,34 @@ function UserProfile() {
                         setNextTier(Till - mannertemp);
                     });
                 } else {
-                    console.log("데이터 없음");
+                    // console.log("데이터 없음");
                 }
             });
     }, []);
 
-    function whatTier(Temp){
-        if(Temp < 20){
-          settierName("썩은 씨앗");
-          settierImg("tier_mi2.jpeg")
-        }
-        else if(Temp <30){
-          settierName("깨진 씨앗");
-          settierImg("tier_mi1.jpeg")
-        }else if(Temp < 40){
-          settierName("씨앗");
-          settierImg("tier_zero.png")
-        }else if(Temp < 50){
-          settierName("새싹");
-          settierImg("tier_plus1.jpeg")
-        }else if(Temp < 60){
-          settierName("꽃봉오리")
-          settierImg("tier_plus2.png")
-        }else{
-          settierName("데이지")
-          settierImg("tier_plus3.png")
-        }
+    function whatTier(Temp) {
+
+      if (Temp < 20) {
+        settierImg(tier_mi2);
+        settierName("썩은 씨앗");
       }
+      else if (Temp < 30) {
+        settierImg(tier_mi1);
+        settierName("깨진 씨앗");
+      } else if (Temp < 40) {
+        settierImg(tier_zero);
+        settierName("씨앗");
+      } else if (Temp < 50) {
+        settierImg(tier_plus1);
+        settierName("새싹");
+      } else if (Temp < 60) {
+        settierImg(tier_plus2);
+        settierName("꽃봉오리")
+      } else {
+        settierImg(tier_plus3);
+        settierName("데이지")
+      }
+    }
 
     return (
         <Container>

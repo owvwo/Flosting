@@ -23,7 +23,6 @@ const CheckDbData = (props) => {
         if (querySnapshot) {
           querySnapshot.forEach((doc) => {
             setDocID(doc.id);
-            console.log(doc.id);
           });
         }
       });
@@ -34,7 +33,7 @@ const CheckDbData = (props) => {
       .doc(DocID)
       .delete()
       .then(() => {
-        console.log("삭제 완료");
+        // console.log("삭제 완료");
       })
       .catch((error) => {
         console.log("Error removing document : ", error);
@@ -57,7 +56,7 @@ const CheckDbData = (props) => {
           My_Usage_History: firebase.firestore.FieldValue.arrayRemove(EP_Num),
         });
         batch.commit().then(() => {
-          console.log("good");
+          // console.log("good");
         });
       });
   };
@@ -69,22 +68,22 @@ const CheckDbData = (props) => {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {"이미 신청하셨습니다"}
+          {"이미 신청하셨습니다!"}
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            신청서를 수정하시겠습니까?
+            신청서를 수정하시기 원하면 마이페이지 - 최근신청에서
             <br />
-            수락하시면 신청페이지로 넘어갑니다.
+            삭제 후 다시 신청해주세요.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Link to="/my" style={{ textDecoration: "none" }}>
             <Button type="button" color="primary">
-              DisAgree
+              이동
             </Button>
           </Link>
-          <Link to="/Submit/EP" style={{ textDecoration: "none" }}>
+          {/* <Link to="/Submit/EP" style={{ textDecoration: "none" }}>
             <Button
               type="button"
               color="primary"
@@ -93,7 +92,7 @@ const CheckDbData = (props) => {
             >
               Agree
             </Button>
-          </Link>
+          </Link> */}
         </DialogActions>
       </Dialog>
     </div>

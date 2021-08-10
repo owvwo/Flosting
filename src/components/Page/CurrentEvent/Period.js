@@ -27,6 +27,7 @@ const Container = styled.div`
   }
 `;
 const Period = (props) => {
+  const EP_Result_Day = props.EP_Result_Day;
   const period = props.period;
   return (
     <Container>
@@ -37,7 +38,7 @@ const Period = (props) => {
         </div>
         <div className="scheduleRight">
           <div className="scheduleTitle">결과발송</div>
-          <div className="inner">{period}</div>
+          <div className="inner">{EP_Result_Day}</div>
         </div>
       </div>
     </Container>
