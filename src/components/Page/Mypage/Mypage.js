@@ -151,8 +151,8 @@ const Mypage = (props) => {
                         >
                             <Tab label="내 정보" {...a11yProps(0)} />
                             <Tab label="내 설정" {...a11yProps(1)} />
-                            <Tab label="이용 내역" {...a11yProps(2)} />
-                            <Tab label="최근신청" {...a11yProps(3)} />
+                            {/* <Tab label="이용 내역" {...a11yProps(2)} /> */}
+                            <Tab label="최근신청" {...a11yProps(2)} />
                         </Tabs>
                     </AppBar>
                     <SwipeableViews
@@ -166,17 +166,17 @@ const Mypage = (props) => {
                             </MyInfo>
                         </TabPanel>
                         <TabPanel value={value} index={1} dir={theme.direction}>
-                            <MySetting 
-                            user={User} 
-                            Name = {Name}
-                            Mbti = {Mbti}
-                            DocID = {DocID}
-                            preNick = {preNick}
-                            setchangeInfor = {setchangeInfor}
-                            changeInfor = {changeInfor}>
+                            <MySetting
+                                user={User}
+                                Name={Name}
+                                Mbti={Mbti}
+                                DocID={DocID}
+                                preNick={preNick}
+                                setchangeInfor={setchangeInfor}
+                                changeInfor={changeInfor}>
                             </MySetting>
                         </TabPanel>
-                        <TabPanel value={value} index={2} dir={theme.direction}>
+                        {/* <TabPanel value={value} index={2} dir={theme.direction}>
                             <MyUsage_History
                                 User={User}
                                 ID={ID}
@@ -184,8 +184,8 @@ const Mypage = (props) => {
                                 UserHistory={userHistory}
                                 UserNick={userNick}
                             ></MyUsage_History>
-                        </TabPanel>
-                        <TabPanel value={value} index={3} dir={theme.direction}>
+                        </TabPanel> */}
+                        <TabPanel value={value} index={2} dir={theme.direction}>
                             <MyRecentSubmit user={User}>
 
                             </MyRecentSubmit>
