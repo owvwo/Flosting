@@ -104,12 +104,21 @@ function AdminBigFoot(props) {
             })
         } catch (err) { console.log(err) }
     }
+<<<<<<< HEAD
     function getAlarmExcel() {
         getData().then(_ => {
             const dataWS = xlsx.utils.json_to_sheet(alarmList);
             const wb = xlsx.utils.book_new();
             xlsx.utils.book_append_sheet(wb, dataWS, "알람신청리스트");
             xlsx.writeFile(wb, "Alarm.xlsx");
+=======
+    function getAlarmExcel(){
+        getData().then(_=>{
+            const dataWS = xlsx.utils.json_to_sheet(alarmList);
+            const wb = xlsx.utils.book_new();
+            xlsx.utils.book_append_sheet(wb, dataWS, "알람신청리스트");
+            xlsx.writeFile(wb, "Alarm.xlsx");  
+>>>>>>> d297d1f96bfadde0ea876a169b60189a98b4c75a
         })
     }
     const 회차업데이트 = (event) => {
@@ -165,6 +174,7 @@ function AdminBigFoot(props) {
     }
     useEffect(() => {
         getVariableInfo();
+<<<<<<< HEAD
     }, [])
 
     if (!isManager) {
@@ -203,6 +213,41 @@ function AdminBigFoot(props) {
                             <button>데이터베이스 수정하기</button>
                         </form>
                     </div>
+=======
+    },[])
+    return(
+        <Container>
+            <div className='box'>
+                <h1>회차 DB 수정</h1>
+                <div>
+                    매칭 마감시간: {마감시간}<br/>
+                    매칭 진행중인 회차: {진행중회차}<br/>
+                    신청 받고 있는 회차: {신청중회차}<br/>
+                    <form onSubmit={onSubmit}>
+                        수정 마감시간: <input
+                            name='마감시간'
+                            value={수정마감시간}
+                            placeholder='마감시간'
+                            onChange={onChange}
+                        ></input>
+                        <div>{수정마감시간}</div>
+                        매칭 진행할 회차: <input
+                            name='진행중회차'
+                            value={수정진행중회차}
+                            placeholder='매칭 진행할 회차'
+                            onChange={onChange}
+                        ></input>
+                        <div>{수정진행중회차}</div>
+                        신청중회차: <input
+                            name='신청중회차'
+                            value={수정신청중회차}
+                            placeholder='신청중회차'
+                            onChange={onChange}
+                        ></input>
+                        <div>{수정신청중회차}</div>
+                        <button>데이터베이스 수정하기</button>
+                    </form>
+>>>>>>> d297d1f96bfadde0ea876a169b60189a98b4c75a
                 </div>
                 <div className='box'>
                     <h1>매너온도 차감</h1>

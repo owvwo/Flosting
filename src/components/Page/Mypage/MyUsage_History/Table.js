@@ -91,7 +91,11 @@ function Row(props) {
                     <TableCell>타입</TableCell>
                     <TableCell align="right">신청여부</TableCell>
                     <TableCell align="right">상대 닉네임</TableCell>
+<<<<<<< HEAD
                     <TableCell align="right">진행 상태</TableCell>
+=======
+                    <TableCell align="right">Status</TableCell>
+>>>>>>> d297d1f96bfadde0ea876a169b60189a98b4c75a
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -129,9 +133,47 @@ Row.propTypes = {
 
 // 여기서 오류 찾음 !!!!!!!! 초기값 때문에 그럼
 
+function searchStage(Type, EP, UserNick) {
+  console.log("hi");
+  const db = fire.firestore();
+  let stage;
+  const search = db
+    .collection(EP + Type)
+    .where("UserOne.Nick", "==", UserNick)
+    .get();
+  try {
+    search.forEach((doc) => {
+      console.log(doc.data.stage);
+    });
+  } catch (err) {
+    console.log(err);
+  }
+  return stage;
+}
+
 export default function CollapsibleTable(props) {
   const { User, UserID, UserHistory, UserNick } = props;
   const [row, setRow] = useState([]);
+  const [stage, setStage] = useState([]);
+  const [other, setOther] = useState([]);
+
+  async function searchStage(UserNick, EP, Type) {
+    const db = fire.firestore();
+    let stage;
+    const searchData = await db
+      .collection(EP + Type)
+      .where("userOne.Nick ", "==", UserNick)
+      .get();
+    try {
+      searchData.forEach((doc) => {
+        console.log(doc.data().stage);
+        stage = doc.data().stage;
+      });
+    } catch (err) {
+      console.log(err);
+    }
+    return stage;
+  }
 
   async function searchHistory(UserID, UserHistory) {
     let testrow = [];
@@ -139,6 +181,7 @@ export default function CollapsibleTable(props) {
     for (let i in UserHistory) {
       let EP = UserHistory[i];
       let ticket = [];
+<<<<<<< HEAD
       let currStage = [];
       let currOther = [];
       let lilacDoc;
@@ -146,6 +189,11 @@ export default function CollapsibleTable(props) {
       let cloverDoc;
 
       // 신청 중인 디비 데이터 탐색
+=======
+      let stage = [];
+      console.log(UserHistory[i] + "회차");
+      //회차 데이터
+>>>>>>> d297d1f96bfadde0ea876a169b60189a98b4c75a
       const searchData = await db
         .collection("Flosting_" + UserHistory[i])
         .where("ID", "==", UserID)
@@ -160,6 +208,7 @@ export default function CollapsibleTable(props) {
         console.log(err);
       }
 
+<<<<<<< HEAD
       for (var k = 0; k < 3; k++) {
         currOther[k] = "매칭전 ";
         currStage[k] = "매칭전";
@@ -189,11 +238,34 @@ export default function CollapsibleTable(props) {
             lilacDoc = doc.data();
             currStage[0] = lilacDoc.stage;
             currOther[0] = lilacDoc.userOne.Nick;
+=======
+      let lilacDoc;
+      let daisyDoc;
+      let cloverDoc;
+      let searchLilac;
+      let searchDaisy;
+      let searchClover;
+
+      // 매칭완료된 라일락 디비
+      try {
+        searchLilac = await db
+          .collection(EP + "lilac")
+          .where("userOne.Nick", "==", UserNick)
+          .get();
+      } catch (err) {
+        console.log(err);
+      } finally {
+        try {
+          searchLilac.forEach((doc) => {
+            lilacDoc = doc.data();
+            other[0] = lilacDoc.userTwo.Nick;
+>>>>>>> d297d1f96bfadde0ea876a169b60189a98b4c75a
           });
         } catch (err) {
           console.log(err);
         }
       }
+<<<<<<< HEAD
       // 데이지 검색
       // 매칭 완료 된 디비 검색 -> other, stage 추출
       let matchedDaisyDb = await db
@@ -220,11 +292,49 @@ export default function CollapsibleTable(props) {
             daisyDoc = doc.data();
             currStage[1] = daisyDoc.stage;
             currOther[1] = daisyDoc.userOne.Nick;
+=======
+      if (lilacDoc === undefined) {
+        try {
+          searchLilac = await db
+            .collection(EP + "lilac")
+            .where("userTwo.Nick", "==", UserNick)
+            .get();
+        } catch (err) {
+          console.log(err);
+        } finally {
+          try {
+            searchLilac.forEach((doc) => {
+              lilacDoc = doc.data();
+              other[0] = lilacDoc.userOne.Nick;
+            });
+          } catch (err) {
+            console.log(err);
+          }
+        }
+      }
+      console.log(lilacDoc.stage);
+      stage[0] = lilacDoc.stage;
+
+      // 매칭완료된 데이지 디비
+      try {
+        searchDaisy = await db
+          .collection(EP + "daisy")
+          .where("userOne.Nick", "==", UserNick)
+          .get();
+      } catch (err) {
+        console.log(err);
+      } finally {
+        try {
+          searchDaisy.forEach((doc) => {
+            daisyDoc = doc.data();
+            other[1] = daisyDoc.userTwo.Nick;
+>>>>>>> d297d1f96bfadde0ea876a169b60189a98b4c75a
           });
         } catch (err) {
           console.log(err);
         }
       }
+<<<<<<< HEAD
 
       // 데이지 검색
       // 매칭 완료 된 디비 검색 -> other, stage 추출
@@ -252,11 +362,49 @@ export default function CollapsibleTable(props) {
             cloverDoc = doc.data();
             currStage[2] = cloverDoc.stage;
             currOther[2] = cloverDoc.userOne.Nick;
+=======
+      if (daisyDoc === undefined) {
+        try {
+          searchDaisy = await db
+            .collection(EP + "daisy")
+            .where("userTwo.Nick", "==", UserNick)
+            .get();
+        } catch (err) {
+          console.log(err);
+        } finally {
+          try {
+            searchDaisy.forEach((doc) => {
+              daisyDoc = doc.data();
+              other[1] = daisyDoc.userOne.Nick;
+            });
+          } catch (err) {
+            console.log(err);
+          }
+        }
+      }
+      console.log(daisyDoc.stage);
+      stage[1] = daisyDoc.stage;
+
+      // 매칭완료된 클로버 디비
+      try {
+        searchClover = await db
+          .collection(EP + "clover")
+          .where("userOne.Nick", "==", UserNick)
+          .get();
+      } catch (err) {
+        console.log(err);
+      } finally {
+        try {
+          searchClover.forEach((doc) => {
+            cloverDoc = doc.data();
+            other[2] = cloverDoc.userTwo.Nick;
+>>>>>>> d297d1f96bfadde0ea876a169b60189a98b4c75a
           });
         } catch (err) {
           console.log(err);
         }
       }
+<<<<<<< HEAD
 
       for (var t = 0; t < 3; t++) {
         if (!ticket[t]) {
@@ -274,10 +422,44 @@ export default function CollapsibleTable(props) {
         ticket[2] ? "O" : "X",
         currOther,
         currStage
+=======
+      if (cloverDoc === undefined) {
+        try {
+          searchClover = await db
+            .collection(EP + "clover")
+            .where("userTwo.Nick", "==", UserNick)
+            .get();
+        } catch (err) {
+          console.log(err);
+        } finally {
+          try {
+            searchLilac.forEach((doc) => {
+              cloverDoc = doc.data();
+              other[2] = cloverDoc.userOne.Nick;
+            });
+          } catch (err) {
+            console.log(err);
+          }
+        }
+      }
+      console.log(cloverDoc.stage);
+      stage[2] = cloverDoc.stage;
+
+      testrow[i] = createData(
+        UserHistory[i] + "회차",
+        "정보 1",
+        "정보 2",
+        ticket[0] ? "신청" : "미신청",
+        ticket[1] ? "신청" : "미신청",
+        ticket[2] ? "신청" : "미신청",
+        other,
+        stage
+>>>>>>> d297d1f96bfadde0ea876a169b60189a98b4c75a
       );
     }
 
     setRow(testrow);
+    setStage(stage);
   }
 
   useEffect(() => {

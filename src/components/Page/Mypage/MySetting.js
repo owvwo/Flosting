@@ -1,5 +1,4 @@
 import React, { Component, useState, useEffect } from 'react'
-
 import styled from 'styled-components';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import fire from '../Register/LoginFire';
@@ -35,7 +34,7 @@ const MySetting = (props) => {
                 <h1>
                     내 정보변경
                 </h1>
-
+                
             </Container>
         </ThemeProvider>
     );

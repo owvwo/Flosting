@@ -82,8 +82,13 @@ p{
 `;
 
 const SubmitButton = styled.button`
+<<<<<<< HEAD
   font-family: "Noto Sans KR", sans-serif;
   font-weight: 400;
+=======
+font-family: 'Noto Sans KR', sans-serif;
+font-weight: 400;
+>>>>>>> d297d1f96bfadde0ea876a169b60189a98b4c75a
   margin: 1rem auto;
   height: 5rem;
   width: 20rem;
@@ -102,13 +107,21 @@ const Title = styled.h1`
 `;
 
 const ToggleButton = styled.button`
+<<<<<<< HEAD
   font-family: "Noto Sans KR", sans-serif;
+=======
+  font-family: 'Noto Sans KR', sans-serif;
+>>>>>>> d297d1f96bfadde0ea876a169b60189a98b4c75a
   font-weight: 500;
   border-radius: 10px;
   margin: 1rem;
   padding: 10px 15px;
   width: 20rem;
+<<<<<<< HEAD
   border: 1px solid rgb(0, 0, 0, 0.2);
+=======
+  border: 1px solid rgb(0,0,0,0.2);
+>>>>>>> d297d1f96bfadde0ea876a169b60189a98b4c75a
   background-color: ${(props) => props.color};
 `;
 
@@ -279,7 +292,11 @@ function EnrollmentForm(props, match) {
         });
         batch.update(updatedb, { Ongoing: String(EP_Num) });
         batch.commit().then(() => {
+<<<<<<< HEAD
           // console.log("good");
+=======
+          console.log("good");
+>>>>>>> d297d1f96bfadde0ea876a169b60189a98b4c75a
         });
       });
     onSubmitProps.resetForm();
@@ -341,11 +358,15 @@ function EnrollmentForm(props, match) {
                         <ToggleButton
                           type="button"
                           onClick={handleLilac}
+<<<<<<< HEAD
                           color={
                             lilacOn
                               ? "rgb(247,244,148,0.5)"
                               : "rgb(208,174,209,0.5)"
                           }
+=======
+                          color={lilacOn ? "rgb(247,244,148,0.5)" : "rgb(208,174,209,0.5)"}
+>>>>>>> d297d1f96bfadde0ea876a169b60189a98b4c75a
                         >
                           {lilacOn ? "신청 하기" : "신청 취소"}
                         </ToggleButton>
@@ -396,11 +417,15 @@ function EnrollmentForm(props, match) {
                         <ToggleButton
                           type="button"
                           onClick={handleDaisy}
+<<<<<<< HEAD
                           color={
                             daisyOn
                               ? "rgb(247,244,148,0.5)"
                               : "rgb(208,174,209,0.5)"
                           }
+=======
+                          color={daisyOn ? "rgb(247,244,148,0.5)" : "rgb(208,174,209,0.5)"}
+>>>>>>> d297d1f96bfadde0ea876a169b60189a98b4c75a
                         >
                           {daisyOn ? "신청 하기" : "신청 취소"}
                         </ToggleButton>
@@ -449,11 +474,15 @@ function EnrollmentForm(props, match) {
                         <ToggleButton
                           type="button"
                           onClick={handleClover}
+<<<<<<< HEAD
                           color={
                             cloverOn
                               ? "rgb(247,244,148,0.5)"
                               : "rgb(208,174,209,0.5)"
                           }
+=======
+                          color={cloverOn ? "rgb(247,244,148,0.5)" : "rgb(208,174,209,0.5)"}
+>>>>>>> d297d1f96bfadde0ea876a169b60189a98b4c75a
                         >
                           {cloverOn ? "신청 하기" : "신청 취소"}
                         </ToggleButton>
@@ -503,6 +532,7 @@ function EnrollmentForm(props, match) {
                               type="button"
                               onClick={handleClickOpen}
                               color={"#C6B4CE"}
+<<<<<<< HEAD
                             >
                               제출하기!!
                             </SubmitButton>
@@ -513,6 +543,18 @@ function EnrollmentForm(props, match) {
                               aria-labelledby="alert-dialog-title"
                               aria-describedby="alert-dialog-description"
                             >
+=======
+                            >
+                              제출하기!!
+                            </SubmitButton>
+
+                            <Dialog
+                              open={open}
+                              onClose={handleClose}
+                              aria-labelledby="alert-dialog-title"
+                              aria-describedby="alert-dialog-description"
+                            >
+>>>>>>> d297d1f96bfadde0ea876a169b60189a98b4c75a
                               <DialogTitle id="alert-dialog-title">
                                 {"신청을 완료 하시겠습니까?"}
                               </DialogTitle>

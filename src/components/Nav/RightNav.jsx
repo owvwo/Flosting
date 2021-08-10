@@ -216,7 +216,6 @@ const RightNav = (props) => {
           </RowDiv>
         </RightContentDiv>
         <BlankDiv>
-
         </BlankDiv>
       </ContentDiv>
     </Ul>
