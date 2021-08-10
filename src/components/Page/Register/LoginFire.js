@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import firebase from 'firebase';
-=======
-import firebase from 'firebase/app';
->>>>>>> d297d1f96bfadde0ea876a169b60189a98b4c75a
 import "firebase/firestore";
 import "firebase/auth"
 import "firebase/storage"

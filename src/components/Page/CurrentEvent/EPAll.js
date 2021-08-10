@@ -133,11 +133,7 @@ function EP1(props) {
           {index === -1 ? (
             <ThemeProvider theme={Boldtheme}>
               <ButtonContainer>
-<<<<<<< HEAD
                 <SubmitButton className="submitBtn" onClick={handleOpen}>
-=======
-                <button className="submitBtn" onClick={handleOpen}>
->>>>>>> d297d1f96bfadde0ea876a169b60189a98b4c75a
                   신청하기
                 </SubmitButton>
                 <Dialog
@@ -165,11 +161,7 @@ function EP1(props) {
           ) : (
             <ButtonContainer>
               <Link to="/submit">
-<<<<<<< HEAD
                 <SubmitButton className="submitBtn">신청하기</SubmitButton>
-=======
-                <button className="submitBtn">신청하기</button>
->>>>>>> d297d1f96bfadde0ea876a169b60189a98b4c75a
               </Link>
             </ButtonContainer>
           )}

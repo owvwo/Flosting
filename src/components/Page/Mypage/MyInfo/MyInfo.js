@@ -33,24 +33,6 @@ const inputStyles = makeStyles((theme) => ({
 }));
 
 
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import PhotoCamera from '@material-ui/icons/PhotoCamera';
-const db = fire.firestore();
-const storage = fire.storage();
-const storageRef = storage.ref();
-const inputStyles = makeStyles((theme) => ({
-  root: {
-    '& > *': {
-      margin: theme.spacing(1),
-    },
-  },
-  input: {
-    display: 'none',
-  },
-}));
-
-
 const SmallAvatar = withStyles((theme) => ({
   root: {
     width: theme.spacing(3),
@@ -153,7 +135,6 @@ const MyInfo = (props) => {
   const [Nickname, setNickname] = useState("");
   const [NextTier, setNextTier] = useState("");
   const [Mbti, setMbti] = useState("");
-<<<<<<< HEAD
   const [Age, setAge] = useState(19);
   const [tierName, settierName] = useState("");
   const [tierImg, settierImg] = useState("tier_zero.png");
@@ -166,12 +147,6 @@ const MyInfo = (props) => {
   const tier_plus1 = 'https://firebasestorage.googleapis.com/v0/b/flosting-65c9e.appspot.com/o/TierImage%2Ftier_plus1.jpeg?alt=media'
   const tier_plus2 = 'https://firebasestorage.googleapis.com/v0/b/flosting-65c9e.appspot.com/o/TierImage%2Ftier_plus2.png?alt=media'
   const tier_plus3 = 'https://firebasestorage.googleapis.com/v0/b/flosting-65c9e.appspot.com/o/TierImage%2Ftier_plus3.png?alt=media'
-=======
-  const [Age,setAge] = useState(19);
-  const [프사,프사변경] = useState(null);
-  const [회원정보docId,회원정보docId변경] = useState();
-  const [imgBase64, setImgBase64] = useState("");
->>>>>>> d297d1f96bfadde0ea876a169b60189a98b4c75a
 
   useEffect(() => {
     if (user) {
@@ -182,13 +157,8 @@ const MyInfo = (props) => {
         .get()
         .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
-<<<<<<< HEAD
             회원정보docId변경(doc.id);
             setProfileImage(doc.data().profileImage);
-=======
-            회원정보docId변경(doc.id)
-            setProfileImage(doc.data().profileImage)
->>>>>>> d297d1f96bfadde0ea876a169b60189a98b4c75a
             setNickname(doc.data().User.Nick);
             setRealName(doc.data().User.Name);
             setUniv(doc.data().User.Univ);
@@ -232,7 +202,6 @@ const MyInfo = (props) => {
   return (
     <Container>
       <FlexRowbox>
-<<<<<<< HEAD
         <Badge
           overlap="circular"
           anchorOrigin={{
@@ -247,22 +216,6 @@ const MyInfo = (props) => {
             src={ProfileImage}
             className={classes.largeavatar}
           />
-=======
-      <Badge
-        overlap="circular"
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'right',
-        }}
-        
-        badgeContent={<SmallAvatar alt="Remy Sharp" src={require('../../../../images/Age/Age_'+ Age +'.png').default} />}
-      >
-        <Avatar
-          alt={Nickname}
-          src={ProfileImage}
-          className={classes.largeavatar}
-        />
->>>>>>> d297d1f96bfadde0ea876a169b60189a98b4c75a
         </Badge>
         <FlexColumnbox>
           <SchoolNumBox>
@@ -276,7 +229,6 @@ const MyInfo = (props) => {
           </SchoolNumBox>
         </FlexColumnbox>
       </FlexRowbox>
-<<<<<<< HEAD
       <ProfileChangeBox>
         <UploadProfileImage 프사변경={프사변경} 프사={프사} refresh = {refresh} setrefresh = {setrefresh} user={user} 회원정보docId={회원정보docId} imgBase64={imgBase64} setImgBase64={setImgBase64} />
       </ProfileChangeBox>
@@ -293,12 +245,6 @@ const MyInfo = (props) => {
       <TierInfo tierName={tierName}
         tierImg={tierImg}
         NextTier={NextTier} />
-=======
-      <MannerInfo Manner={Manner} />
-      <MbtiInfo Mbti = {Mbti}></MbtiInfo>
-      <TierInfo Manner={Manner} NextTier={NextTier} />
-      <UploadProfileImage 프사변경={프사변경} 프사={프사} user={user} 회원정보docId={회원정보docId} imgBase64={imgBase64} setImgBase64={setImgBase64} />
->>>>>>> d297d1f96bfadde0ea876a169b60189a98b4c75a
     </Container>
   );
 };
@@ -306,7 +252,6 @@ const MyInfo = (props) => {
 export default MyInfo;
 
 
-<<<<<<< HEAD
 function UploadProfileImage(props) {
 
   const [open,setOpen] = useState(false);
@@ -332,47 +277,15 @@ function UploadProfileImage(props) {
   }
 
   function onChange(e) {
-=======
-
-function UploadProfileImage(props) {
-
-  const classes = inputStyles();
-  const date = new Date();
-
-  async function onSubmit (event){
-    event.preventDefault();
-    const uploadTask = storageRef.child(`profileImage/${props.user.uid}/${date}`).put(props.프사)
-    uploadTask.then((snapshot)=>{
-      snapshot.ref.getDownloadURL().then((downloadURL)=>{
-        console.log(downloadURL)
-        db.collection('회원정보').doc(props.회원정보docId).update(
-          {"profileImage": downloadURL}
-        ).then(
-          alert('프로필 사진 변경 성공! 새로고침 해주세요!')
-          )
-      })
-    })
-  }  
-  
-  function onChange(e){
->>>>>>> d297d1f96bfadde0ea876a169b60189a98b4c75a
     let reader = new FileReader();
     reader.onloadend = () => {
       const base64 = reader.result;
       if (base64) {
-<<<<<<< HEAD
         props.setImgBase64(base64.toString());
       }
     }
     if (e.target.files[0]) {
       reader.readAsDataURL(e.target.files[0]);
-=======
-        props.setImgBase64(base64.toString()); 
-      }
-    }
-    if(e.target.files[0]) {
-      reader.readAsDataURL(e.target.files[0]); 
->>>>>>> d297d1f96bfadde0ea876a169b60189a98b4c75a
       props.프사변경(e.target.files[0])
     }
   }
@@ -381,7 +294,6 @@ function UploadProfileImage(props) {
     <div className={classes.root}>
       <input className={classes.input} id="icon-button-file" type="file" accept=".gif, .jpg, .png"
         onChange={onChange}
-<<<<<<< HEAD
       />
       <CameraBox>
         <label htmlFor="icon-button-file" onClick = {() => setOpen(true)}>
@@ -419,28 +331,6 @@ function UploadProfileImage(props) {
             </DialogActions>
           </Dialog>
       }
-=======
-    />
-      <label htmlFor="icon-button-file">
-        <IconButton color="primary" aria-label="upload picture" component="span">
-          <PhotoCamera />
-        </IconButton>
-      </label>
-      {
-        props.프사 === null
-        ?
-        <div></div>
-        :
-        <label htmlFor="contained-button-file">
-          <Button variant="contained" color="primary" component="span" onClick={onSubmit}>
-            저장하기
-          </Button>
-        <div>
-          <Avatar style={{"width":"150px", "height" : "150px", "border": "1px solid grey"}} src={props.imgBase64}/>
-        </div>
-        </label>
-      }      
->>>>>>> d297d1f96bfadde0ea876a169b60189a98b4c75a
     </div>
   );
 }

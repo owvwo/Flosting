@@ -10,9 +10,10 @@ const Container = styled.div`
 font-family: 'Noto Sans KR', sans-serif;
 left: 0;
 width: 100%;
+height: 40rem;
+overflow: scroll;
 align-items: center;
 background-color: white;
-margin-bottom : 2rem;
 `
 const 제목 = styled.div`
 font-size : 2rem;

@@ -1,11 +1,7 @@
 import React, { Component, useState, useEffect } from 'react'
 import styled from 'styled-components';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
-<<<<<<< HEAD
 import { NavLink, Redirect } from 'react-router-dom';
-=======
-import { NavLink, Redirect} from 'react-router-dom';
->>>>>>> d297d1f96bfadde0ea876a169b60189a98b4c75a
 import fire from '../Register/LoginFire';
 import SelectList from './SelectList';
 import Extraction from './Extraction';
@@ -126,7 +122,6 @@ const Admin = (props) => {
 
     const user = props.User;
     const db = fire.firestore();
-<<<<<<< HEAD
     const { isManager, setisManager } = props;
     const [nowCount, setnowCount] = useState('1');
 
@@ -166,46 +161,6 @@ const Admin = (props) => {
             </ThemeProvider>
         )
     } else {
-=======
-    const [isManager, setisManager] = useState(true);
-    const [nowCount, setnowCount] = useState('1');
-
-    useEffect(() => {
-      if (user) {
-        let s_id = user.email.split('@');
-        let Infodb = db.collection('Admin');
-        let query = Infodb.where("ID", "==", s_id[0]).get().then((querySnapshot) => {
-          if (querySnapshot.size) {
-            setisManager(true);
-          }
-          else{
-            setisManager(false);
-          }
-        });
-      }else{
-        setisManager(false);
-      }
-    }, [user]);
-
-
-    if(isManager){
-        return(
-            <ThemeProvider theme={Colortheme}>
-            <Container>
-                <h1>
-                    관리자 페이지
-                </h1>
-            <School_title>
-                현재 진행중인 플로스팅
-            </School_title>
-            <SelectList nowCount={nowCount} setnowCount = {setnowCount} />
-            <Extraction nowCount={nowCount}/>
-            </Container>
-            <NavLink to ='/admin/bigfoot'><button>왕발 기능</button></NavLink>
-        </ThemeProvider>
-        )
-    }else{
->>>>>>> d297d1f96bfadde0ea876a169b60189a98b4c75a
         return (<Redirect to='/' />);
     }
 }

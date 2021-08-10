@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import React, { useState } from 'react';
-=======
-import React, {useState} from 'react';
->>>>>>> d297d1f96bfadde0ea876a169b60189a98b4c75a
 
 import styled from 'styled-components';
 import { makeStyles } from '@material-ui/core/styles';
@@ -56,30 +52,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SelectList(props) {
-<<<<<<< HEAD
   const { nowCount, setnowCount } = props;
-=======
-  const {nowCount, setnowCount} = props;
->>>>>>> d297d1f96bfadde0ea876a169b60189a98b4c75a
   const classes = useStyles();
   const [open, setOpen] = useState(false);
 
 
-<<<<<<< HEAD
   const listArr = () => {
     const result = [];
     for (let i = 1; i < 10; i++) {
       result.push(<option value={String(i)}>{i}회차</option>)
     }
     return result;
-=======
-  const listArr = () =>{
-      const result = [];
-      for (let i =1; i< 10; i++){
-        result.push(<option value={String(i)}>{i}회차</option>)
-      }
-      return result;
->>>>>>> d297d1f96bfadde0ea876a169b60189a98b4c75a
   }
 
   const handleChange = (event) => {
@@ -96,7 +79,6 @@ export default function SelectList(props) {
 
   return (
     <div>
-<<<<<<< HEAD
       <RowFlexBox>
         <InputNick
           placeholder="닉네임 입력"
@@ -107,18 +89,6 @@ export default function SelectList(props) {
         />
         <Overlapbtn onClick={handleClickOpen}>변경</Overlapbtn>
       </RowFlexBox>
-=======
-        <RowFlexBox>
-        <InputNick
-            placeholder="닉네임 입력"
-            type="text"
-            required
-            value={nowCount + "회차"}
-            disabled = {true}
-        />
-        <Overlapbtn onClick={handleClickOpen}>변경</Overlapbtn>
-        </RowFlexBox>
->>>>>>> d297d1f96bfadde0ea876a169b60189a98b4c75a
 
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>회차 변경</DialogTitle>
@@ -132,11 +102,7 @@ export default function SelectList(props) {
                 onChange={handleChange}
                 input={<Input id="demo-dialog-native" />}
               >
-<<<<<<< HEAD
                 {listArr()}
-=======
-               {listArr()}
->>>>>>> d297d1f96bfadde0ea876a169b60189a98b4c75a
               </Select>
             </FormControl>
           </form>

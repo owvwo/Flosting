@@ -15,6 +15,7 @@ import Terms_page from './Page/Register/Terms'
 import Certification_page from './Page/Register/Certification'
 import LastRegister_page from './Page/Register/LastRegister'
 import My_page from './Page/Mypage/Mypage'
+import ShowingResult from './Page/Matched/ShowingResult'
 import CurrentEvent from "./Page/CurrentEvent/CurrentEvent";
 import SelectResult from '../components/Page/Matched/SelectResult.js';
 import LilacResult from '../components/Page/Matched/LilacResult.js';
@@ -58,35 +59,23 @@ const Transition = (props) => {
   const [EP_End_Day, setEP_End_Day] = useState('');
   const [EP_Result_Day, setEP_Result_Day] = useState('');
   const [S_Event, setS_Event] = useState("");
-<<<<<<< HEAD
   const [isManager, setisManager] = useState(false); // 매니저인지 아닌지
-=======
->>>>>>> d297d1f96bfadde0ea876a169b60189a98b4c75a
 
   const user = props.User;
   const location = useLocation();
-  
+
   return (
     <TransitionGroup className="transition-group">
       <CSSTransition key={location.pathname} classNames="fade" timeout={500}>
         <Switch location={location}>
           <Route exact path="/"><Home_page User={user} /></Route>
           <Route exact path="/currentevent"><CurrentEvent
-<<<<<<< HEAD
             User={user}
             setEP_School_Name={setEP_School_Name}
             setEP_Num={setEP_Num}
             setEP_Start_Day={setEP_Start_Day}
             setEP_End_Day={setEP_End_Day}
             setEP_Result_Day={setEP_Result_Day}
-=======
-          User = {user}
-          setEP_School_Name = {setEP_School_Name}
-          setEP_Num = {setEP_Num}
-          setEP_Start_Day = {setEP_Start_Day}
-          setEP_End_Day = {setEP_End_Day}
-          setEP_Result_Day = {setEP_Result_Day}
->>>>>>> d297d1f96bfadde0ea876a169b60189a98b4c75a
           /></Route>
           <Route exact path="/currentevent/EP"><EPall
             User={user}
@@ -107,14 +96,9 @@ const Transition = (props) => {
           <Route path="/about" component={About_page} />
           <Route path="/history" component={History_page} />
           <Route exact path="/ad" component={AD_page} />
-<<<<<<< HEAD
           <Route exact path="/admin"><Admin_page isManager={isManager} setisManager={setisManager} User={user} /></Route>
           <Route exact path="/admin/owvwo"><AdminOwvwO isManager={isManager} User={user} /></Route>
           <Route exact path="/admin/bigfoot"><AdminBigFoot isManager={isManager} User={user} /></Route>
-=======
-          <Route exact path="/admin"><Admin_page User = {user}/></Route>
-          <Route exact path="/admin/bigfoot" component={AdminBigFoot} />
->>>>>>> d297d1f96bfadde0ea876a169b60189a98b4c75a
           <Route path="/plan"><Plan /></Route>
           <Route path="/timer"><Timer User={user} /></Route>
           <Route path="/selectresult"><SelectResult User={user} /></Route>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Select from "react-select";
 import { Button, Form, Container, Row, Col, Image } from "react-bootstrap";
-// import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 import { NavLink } from "react-router-dom";
 const Submit = () => {
   // 아이디 전달

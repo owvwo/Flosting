@@ -1,23 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import fire from './Register/LoginFire'
 
-
 const AD = () => {
-
-
-    return (
-        <div>
-            <h3>지금 로그인되어있는 학번</h3>
-            <h2>정우 치팅 ㄱ</h2>
-        </div>
-    );
-};
-
-export default AD;
-
-
-
-
     // const db = fire.firestore();
     // const [ID, setID] = useState('');
 
@@ -48,3 +32,13 @@ export default AD;
 
 
     // }, []);
+
+    return (
+        <div>
+            <h3>지금 로그인되어있는 학번</h3>
+            <h2>정우 치팅 ㄱ</h2>
+        </div>
+    );
+};
+
+export default AD;
