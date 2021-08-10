@@ -256,7 +256,7 @@ function LeftProfile({유저1}){
     const noneactiveStyle = {
         textDecoration: 'none',
         color: '#2B2A28'
-      }
+    }
 
     let profileImage=null;
 
@@ -286,7 +286,7 @@ function RightProfile({유저2}){
     const noneactiveStyle = {
         textDecoration: 'none',
         color: '#2B2A28'
-      }
+    }
 
     let profileImage=null;
 
@@ -313,58 +313,6 @@ function RightProfile({유저2}){
         </RightProfileWrap>
     )
 }
-
-// function LeftProfile({유저1}){
-
-//     let profileImage=null;
-
-//     if(유저1['Gender'] === 'boy'){
-//         profileImage = profileImageBoy
-//     }else if(유저1['Gender'] === 'girl') {
-//         profileImage = profileImageGirl
-//     }
-//     return(
-//             <LeftProfileWrap>
-//                 <div>결정중</div>
-//                 <div>
-//                     <img src={profileImage} className='defaultPic'/>
-//                 </div>
-//                 <div className='profileInfo'>
-//                     {유저1['Nick']}({유저1['Age']})<br/>
-//                     {유저1['Univ']}<br/>
-//                     매너온도: {유저1['Manner']}<br/>
-//                     {유저1['Phone']}<br/>
-
-//                 </div>
-//             </LeftProfileWrap>
-//     )
-// }
-
-// function RightProfile({유저2}){
-
-//     let profileImage=null;
-
-//     if(유저2['Gender'] === 'boy'){
-//         profileImage = profileImageBoy
-//     }else if(유저2['Gender'] === 'girl') {
-//         profileImage = profileImageGirl
-//     }
-
-//     return(
-//         <RightProfileWrap>
-//             <div>결정중</div>
-//             <div className='defaultPicBox'>
-//                 <img src={profileImage} className='defaultPic'/>
-//             </div>
-//             <div className='profileInfo'>
-//                 {유저2['Nick']}({유저2['Age']})<br/>
-//                 {유저2['Univ']}<br/>
-//                 매너온도: {유저2['Manner']}<br/>
-//                 {유저2['Phone']}<br/>
-//             </div>
-//         </RightProfileWrap>
-//     )
-// }
 
 function Button(props){
     function onClick_sendMessage(){
