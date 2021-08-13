@@ -9,7 +9,10 @@ import { testAge } from './TestAge';
 import { testUniv } from './TestUniv';
 
 const Container = styled.div`
-
+    display : flex;
+    flex-direction : column;
+    align-items : center;
+    list-style : none;
 `
 const Input = styled.input`
   font-family: 'Noto Sans KR', sans-serif;
@@ -45,6 +48,7 @@ const Button = styled.button`
 
 function AdminOwvwO(props) {
 
+
     const { isManager } = props;
     const [ID, setID] = useState("");
     const [Age, setAge] = useState("");
@@ -54,14 +58,20 @@ function AdminOwvwO(props) {
     const [Mbti, setMbti] = useState("");
     const [Phone, setPhone] = useState("");
     const [Univ, setUniv] = useState("");
+    const [Unique_key, setUnique_key] = useState("");
+    const [Name, setName] = useState("");
+
     const [LilacAge, setLilacAge] = useState("");
     const [LilacTicket, setLilacTicket] = useState("");
+    const [LilacTicketNumber, setLilacTicketNumber] = useState("");
     const [LilacUniv, setLilacUniv] = useState("");
     const [DaisyAge, setDaisyAge] = useState("");
     const [DaisyTicket, setDaisyTicket] = useState("");
+    const [DaisyTicketNumber, setDaisyTicketNumber] = useState("");
     const [DaisyUniv, setDaisyUniv] = useState("");
     const [CloverAge, setCloverAge] = useState("");
     const [CloverTicket, setCloverTicket] = useState("");
+    const [CloverTicketNumber, setCloverTicketNumber] = useState("");
     const [CloverUniv, setCloverUniv] = useState("");
     const db = firebase.firestore()
     const dbUser = {
@@ -72,24 +82,29 @@ function AdminOwvwO(props) {
         Mbti: "",
         Phone: "",
         Univ: "",
+        Unique_key: "",
+        Name: ""
     }
     const Lilacvalue = {
 
         Age: "",
         Ticket: "",
-        Univ: ""
+        Univ: "",
+        TicketNumber: ""
     }
     const Daisyvalue =
     {
         Age: "",
         Ticket: "",
-        Univ: ""
+        Univ: "",
+        TicketNumber: ""
     }
     const Clovervalue =
     {
         Age: "",
         Ticket: "",
-        Univ: ""
+        Univ: "",
+        TicketNumber: ""
     }
 
     const OnClickpush = () => {
@@ -100,9 +115,12 @@ function AdminOwvwO(props) {
         dbUser.Mbti = "TTTT";
         dbUser.Univ = Univ;
         dbUser.Phone = "010101010";
+        dbUser.Unique_key = Unique_key;
+        dbUser.Name = Name;
         Lilacvalue.Age = LilacAge;
         Lilacvalue.Univ = LilacUniv;
         Lilacvalue.Ticket = true;
+        Lilacvalue.TicketNumber = LilacTicketNumber;
 
         db.collection("Flosting_2")
             .add({
@@ -113,7 +131,7 @@ function AdminOwvwO(props) {
                 Clover: Clovervalue,
             })
             .then(() => {
-                console.log("신청이 완료되었습니다.");
+                alert("신청이 완료되었습니다.");
             })
             .catch((error) => {
                 alert(error.message);
@@ -141,6 +159,16 @@ function AdminOwvwO(props) {
     const handlesetUniv = (e) => {
         setUniv(e.target.value);
     }
+    const handlesetName = (e) => {
+        setName(e.target.value);
+    }
+    const handlesetUnique_key = (e) => {
+        setUnique_key(e.target.value);
+    }
+
+    const handleLilacTicketNumber = (e) => {
+        setLilacTicketNumber(e.target.value);
+    }
     if (!isManager) {
         return (<Redirect to='/' />);
     } else {
@@ -164,6 +192,12 @@ function AdminOwvwO(props) {
                 <li>Univ <Input
                     placeholder="신청하는애 Univ"
                     onChange={handlesetUniv} /></li>
+                <li>Name <Input
+                    placeholder="신청하는애 이름"
+                    onChange={handlesetName} /></li>
+                <li>Unique_key <Input
+                    placeholder="신청하는애 Unique_key"
+                    onChange={handlesetUnique_key} /></li>
 
                 <h2>라일락 선택</h2>
                 <SelectSearch
@@ -183,6 +217,10 @@ function AdminOwvwO(props) {
                     emptyMessage="Not found"
                     placeholder="학교선택"
                 />
+                <li>TicketNumber <Input
+                    placeholder="티켓 수"
+                    onChange={handleLilacTicketNumber} /></li>
+
                 <Button register onClick={OnClickpush}>
                     ㄱㄱ
                 </Button>

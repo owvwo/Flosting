@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Footer from '../Footer';
 import {NavLink} from 'react-router-dom';
-import TimerComponent from './Timer.js'
 import fire from '../Register/LoginFire.js'
 import profileImageBoy from '../../../images/profile_boy_default.png';
 import profileImageGirl from '../../../images/profile_girl_default.png';
@@ -157,28 +156,38 @@ margin-left: 1.5rem;
 
 
 function StageSuccess(props){
-    const 유저1 = props.유저1
-    const 유저2 = props.유저2
-    const 닉네임 = props.닉네임
-    const 발전단계변경 = props.발전단계변경
-    const 메세지보낸사람 = props.메세지보낸사람
+    let [init, setInit] = useState(false)
+    let [새로고침, 새로고침변경] = useState(false)
 
-    let[연락상태, 연락상태변경] = useState(false);
     useEffect(()=>{
-    },[])
-
+        if(props.유저1 && props.유저2){
+            setInit(true);
+        }
+        if(새로고침){
+            console.log('refresh')
+            window.location.reload();
+        }
+    })
+    
     return(
-        <Container>
+        <div>
+        {
+            init
+            ?
+            <Container>
             <Title/>
             <div className='ProfileWrap'>
-                <LeftProfile 유저1={유저1} 메세지보낸사람={메세지보낸사람}/>
-                <RightProfile 유저2={유저2} 메세지보낸사람={메세지보낸사람}/>
+                <LeftProfile 유저1={props.유저1} 메세지보낸사람={props.메세지보낸사람}/>
+                <RightProfile 유저2={props.유저2} 메세지보낸사람={props.메세지보낸사람}/>
             </div>
             <div className='text'>
                 플로스팅을 이용해주셔서 감사합니다 :)<br/>
             </div>
             <Footer/>
-        </Container>
+            </Container>
+            : null
+            }
+    </div>    
     )
 }
 export default StageSuccess;
@@ -195,60 +204,47 @@ function Title(){
     )
 }
 
-function LeftProfile({유저1, 메세지보낸사람}){
+function LeftProfile(props){
+    let 유저1 = props.유저1
+    let profileImage=유저1.profileImage;
 
     const noneactiveStyle = {
         textDecoration: 'none',
         color: '#2B2A28'
-      }
-
-    let profileImage=null;
-
-    if(유저1['Gender'] === 'boy'){
-        profileImage = profileImageBoy
-    }else if(유저1['Gender'] === 'girl') {
-        profileImage = profileImageGirl
     }
 
     return(
             <LeftProfileWrap>
             <div className='defaultPicBox'>
-                <NavLink to = {`/userprofile/${유저1['Nick']}`} style={noneactiveStyle}><li className = "LookProfile">프로필 보기</li></NavLink>
+                <NavLink to = {`/userprofile/${유저1.User.Nick}`} style={noneactiveStyle}><li className = "LookProfile">프로필 보기</li></NavLink>
                 <img src={profileImage} className='defaultPic'/>
             </div>
                 <div className='profileInfo'>
-                <li className="UserNick">{유저1['Nick']}[{유저1['Age']}]</li>
-                <li className="UserPhone">{유저1['Phone'].substring(0,3)}-{유저1['Phone'].substring(3,7)}-{유저1['Phone'].substring(7)}</li>  
-                <li className="UserUniv">{유저1['Univ']}</li>
+                <li className="UserNick">{유저1.User.Nick}[{유저1.User.Age}]</li>
+                <li className="UserUniv">{유저1.User.Univ}</li>
             </div>
             </LeftProfileWrap>
     )
 }
 
-function RightProfile({유저2, 메세지보낸사람}){
+function RightProfile(props){
+    let 유저2 = props.유저2
+    let profileImage=유저2.profileImage;
+    
     const noneactiveStyle = {
         textDecoration: 'none',
         color: '#2B2A28'
-      }
-
-    let profileImage=null;
-
-    if(유저2['Gender'] === 'boy'){
-        profileImage = profileImageBoy
-    }else if(유저2['Gender'] === 'girl') {
-        profileImage = profileImageGirl
     }
 
     return(
         <RightProfileWrap>
             <div className='defaultPicBox'>
-                <NavLink to = {`/userprofile/${유저2['Nick']}`} style={noneactiveStyle}><li className = "LookProfile">프로필 보기</li></NavLink>
+                <NavLink to = {`/userprofile/${유저2.User.Nick}`} style={noneactiveStyle}><li className = "LookProfile">프로필 보기</li></NavLink>
                 <img src={profileImage} className='defaultPic'/>
             </div>
                 <div className='profileInfo'>
-                <li className="UserNick">{유저2['Nick']}[{유저2['Age']}]</li>
-                <li className="UserPhone">{유저2['Phone'].substring(0,3)}-{유저2['Phone'].substring(3,7)}-{유저2['Phone'].substring(7)}</li>  
-                <li className="UserUniv">{유저2['Univ']}</li>
+                <li className="UserNick">{유저2.User.Nick}[{유저2.User.Age}]</li>
+                    <li className="UserUniv">{유저2.User.Univ}</li>
             </div>
         </RightProfileWrap>
     )

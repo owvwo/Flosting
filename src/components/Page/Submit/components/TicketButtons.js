@@ -3,8 +3,7 @@ import "../FormikContainer.css";
 import styled from "styled-components";
 
 import fuzzySearch from '../../Register/fuzzySearch';
-import { DesiredUnivOptions } from './Options/DesiredUnivOptions';
-import { testAge } from '../../Manager/TestAge';
+import { ticketOptions } from './Options/TicketOptions';
 import SelectSearch from 'react-select-search';
 
 const Label = styled.div`
@@ -28,27 +27,27 @@ const FormikContainer = styled.div`
   display: flex;
   flex-direction : column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   margin : 0rem 0rem 1rem 0rem;
 `
 function Select(props) {
-  const { controlUniv, setcontrolUniv, label } = props;
+  const { controlTicket, setcontrolTicket, label } = props;
 
   const handleUnivChange = (selected) => {
-    setcontrolUniv(selected);
+    setcontrolTicket(selected);
   }
 
   return (
     <FormikContainer>
       <Label>{label}</Label>
       <SelectSearch
-        options={DesiredUnivOptions}
-        value={controlUniv}
+        options={ticketOptions}
+        value={controlTicket}
         search
         filterOptions={fuzzySearch}
         onChange={handleUnivChange}
         emptyMessage="Not found"
-        placeholder="학교 선택"
+        placeholder="티켓 선택"
       />
 
     </FormikContainer>

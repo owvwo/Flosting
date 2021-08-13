@@ -85,13 +85,13 @@ function SelectResult(){
 
             <Flip left>
             <ButtonDiv>
-                <NavLink to='/lilacresult'>
+                <NavLink to = {`/selectresult/lilac`}>
                     <button className='lilacbutton'>라일락팅 결과 확인하기</button>
                 </NavLink>
-                <NavLink to='/daisyresult'>
+                <NavLink to = {`/selectresult/daisy`}>
                     <button className='daisybutton'>데이지팅 결과 확인하기</button>
                 </NavLink>
-                <NavLink to='/cloverresult'>
+                <NavLink to = {`/selectresult/clover`}>
                     <button className='cloverbutton'>클로버팅 결과 확인하기</button>
                 </NavLink>
             </ButtonDiv>
