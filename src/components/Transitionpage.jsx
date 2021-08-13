@@ -18,9 +18,7 @@ import My_page from './Page/Mypage/Mypage'
 import ShowingResult from './Page/Matched/ShowingResult'
 import CurrentEvent from "./Page/CurrentEvent/CurrentEvent";
 import SelectResult from '../components/Page/Matched/SelectResult.js';
-import LilacResult from '../components/Page/Matched/LilacResult.js';
-import CloverResult from '../components/Page/Matched/CloverResult.js';
-import DasiyResult from '../components/Page/Matched/DasiyResult.js';
+import MatchingList from '../components/Page/Matched/MatchingList.js';
 import Forgot_page from "./Page/Forgot/forgot";
 import AdminBigFoot from "./Page/Manager/AdminBigFoot.js";
 import AdminOwvwO from "./Page/Manager/AdminOwvwO";
@@ -101,10 +99,9 @@ const Transition = (props) => {
           <Route exact path="/admin/bigfoot"><AdminBigFoot isManager={isManager} User={user} /></Route>
           <Route path="/plan"><Plan /></Route>
           <Route path="/timer"><Timer User={user} /></Route>
-          <Route path="/selectresult"><SelectResult User={user} /></Route>
-          <Route path="/lilacresult"><LilacResult User={user} /></Route>
-          <Route path="/cloverresult"><CloverResult User={user} /></Route>
-          <Route path="/daisyresult"><DasiyResult User={user} /></Route>
+          <Route exact path="/selectresult"><SelectResult User={user} /></Route>
+          <Route exact path="/selectresult/:sort"><MatchingList User={user} /></Route>
+          <Route exact path="/selectresult/:sort/:ongoing/:docid"><ShowingResult User={user} /></Route>
           <Route path="/userprofile/:Nick"><UserProfile User={user} /></Route>
           <Route path="/report"><Report User={user} /></Route>
           <Route path="/qna"><QnaMain User={user} /></Route>
