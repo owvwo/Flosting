@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import eventMain from "../../../images/violet.png";
+import OpenEventMain from "../../../images/OpenEventMain.png";
 import Footer from "../Footer";
 import { NavLink } from "react-router-dom";
 
@@ -22,7 +22,6 @@ const Container = styled.div`
   left: 0;
   width: 100%;
   height: 40rem;
-  overflow: scroll;
   align-items: center;
   background-color: white;
 `;
@@ -39,7 +38,7 @@ const NavContainer = styled.div`
   border-radius: 10px;
   margin: 0.5rem;
   img {
-    width: 15rem;
+    width: 100%;
     margin: 1rem auto;
     display: block;
   }
@@ -71,10 +70,7 @@ function EventDetail(props) {
     <Container>
       <Title>오픈 기념 이벤트</Title>
       <NavContainer>
-        <Text>
-          오픈 기념 무료 매칭 이벤트!! <br /> 지금 바로 신청하세요~~
-        </Text>
-        <img src={eventMain}></img>
+        <img src={OpenEventMain}></img>
         <NavLink to="/currentevent">
           <Button>신청하기!!</Button>
         </NavLink>

@@ -196,33 +196,43 @@ margin-left: 1.5rem;
 
 
 function StageHalf(props){
-    const 유저1 = props.유저1
-    const 유저2 = props.유저2
-    const 닉네임 = props.닉네임
-    const 발전단계변경 = props.발전단계변경
-    const 메세지보낸사람 = props.메세지보낸사람
+    let [init, setInit] = useState(false)
+    let [새로고침, 새로고침변경] = useState(false)
 
-    let[연락상태, 연락상태변경] = useState(false);
     useEffect(()=>{
-    },[])
+        if(props.유저1 && props.유저2){
+            setInit(true);
+        }
+        if(새로고침){
+            console.log('refresh')
+            window.location.reload();
+        }
+    })
 
     return(
-        <Container>
-            <Timer/>
-            <Title/>
-            <div className='ProfileWrap'>
-                <LeftProfile 유저1={유저1} 메세지보낸사람={메세지보낸사람}/>
-                <RightProfile 유저2={유저2} 메세지보낸사람={메세지보낸사람}/>
-            </div>
-            <div className='text'>
-                서로 연락중인데 계속 이 화면이 지속되면<br/>
-                상대방에게 '답장했어요' 버튼을<br/>
-                눌러달라고 요청해주세요!<br/>
-                상대방이 답장버튼을 눌러야만<br/>
-                매너온도에 악영향을 미치지 않습니다.<br/>
-            </div>
-            <Footer/>
-        </Container>
+        <div>
+            {
+                init
+                ?
+                <Container>
+                <Timer/>
+                <Title/>
+                <div className='ProfileWrap'>
+                    <LeftProfile 유저1={props.유저1} 메세지보낸사람={props.메세지보낸사람}/>
+                    <RightProfile 유저2={props.유저2} 메세지보낸사람={props.메세지보낸사람}/>
+                </div>
+                <div className='text'>
+                    서로 연락중인데 계속 이 화면이 지속되면<br/>
+                    상대방에게 '답장했어요' 버튼을<br/>
+                    눌러달라고 요청해주세요!<br/>
+                    상대방이 답장버튼을 눌러야만<br/>
+                    매너온도에 악영향을 미치지 않습니다.<br/>
+                </div>
+                <Footer/>
+                </Container>
+                : null
+                }
+        </div>
     )
 }
 export default StageHalf;
@@ -249,18 +259,14 @@ function Title(){
     )
 }
 
-function LeftProfile({유저1, 메세지보낸사람}){
+function LeftProfile(props){
+    let 유저1 = props.유저1
+    let 메세지보낸사람 = props.메세지보낸사람
+    let profileImage=유저1.profileImage;
 
     const noneactiveStyle = {
         textDecoration: 'none',
         color: '#2B2A28'
-      }
-    let profileImage=null;
-
-    if(유저1['Gender'] === 'boy'){
-        profileImage = profileImageBoy
-    }else if(유저1['Gender'] === 'girl') {
-        profileImage = profileImageGirl
     }
 
     
@@ -268,55 +274,49 @@ function LeftProfile({유저1, 메세지보낸사람}){
             <LeftProfileWrap>
                 <div className='decisionState'>
                     {
-                    메세지보낸사람 === 유저1['Nick']
+                    메세지보낸사람 === 유저1.User.Nick
                     ? <div className = "ED">메세지보냈음!</div>
                     : <div className = "ING">결정중</div>
                     }
                 </div>
                 <div className='defaultPicBox'>
-                    <NavLink to = {`/userprofile/${유저1['Nick']}`} style={noneactiveStyle}><li className = "LookProfile">프로필 보기</li></NavLink>
+                    <NavLink to = {`/userprofile/${유저1.User.Nick}`} style={noneactiveStyle}><li className = "LookProfile">프로필 보기</li></NavLink>
                     <img src={profileImage} className='defaultPic'/>
                 </div>
                 <div className='profileInfo'>
-                    <li className="UserNick">{유저1['Nick']}[{유저1['Age']}]</li>
-                    <li className="UserPhone">{유저1['Phone'].substring(0,3)}-{유저1['Phone'].substring(3,7)}-{유저1['Phone'].substring(7)}</li>  
-                    <li className="UserUniv">{유저1['Univ']}</li>
+                    <li className="UserNick">{유저1.User.Nick}[{유저1.User.Age}]</li>
+                    <li className="UserUniv">{유저1.User.Univ}</li>
                 </div>
             </LeftProfileWrap>
     )
 }
 
-function RightProfile({유저2, 메세지보낸사람}){
-
-    let profileImage=null;
+function RightProfile(props){
+    let 유저2 = props.유저2
+    let 메세지보낸사람 = props.메세지보낸사람
+    let profileImage=유저2.profileImage;
 
     const noneactiveStyle = {
         textDecoration: 'none',
         color: '#2B2A28'
-      }
+}
 
-    if(유저2['Gender'] === 'boy'){
-        profileImage = profileImageBoy
-    }else if(유저2['Gender'] === 'girl') {
-        profileImage = profileImageGirl
-    }
     return(
         <RightProfileWrap>
                 <div className='decisionState'>
                     {
-                    메세지보낸사람 === 유저2['Nick']
+                    메세지보낸사람 === 유저2.User.Nick
                     ? <div className = "ED">메세지보냈음!</div>
                     : <div className = "ING">결정중</div>
                     }
                 </div>
                 <div className='defaultPicBox'>
-                    <NavLink to = {`/userprofile/${유저2['Nick']}`} style={noneactiveStyle}><li className = "LookProfile">프로필 보기</li></NavLink>
+                    <NavLink to = {`/userprofile/${유저2.User.Nick}`} style={noneactiveStyle}><li className = "LookProfile">프로필 보기</li></NavLink>
                     <img src={profileImage} className='defaultPic'/>
                 </div>
                 <div className='profileInfo'>
-                    <li className="UserNick">{유저2['Nick']}[{유저2['Age']}]</li>
-                    <li className="UserPhone">{유저2['Phone'].substring(0,3)}-{유저2['Phone'].substring(3,7)}-{유저2['Phone'].substring(7)}</li>  
-                    <li className="UserUniv">{유저2['Univ']}</li>
+                    <li className="UserNick">{유저2.User.Nick}[{유저2.User.Age}]</li>
+                    <li className="UserUniv">{유저2.User.Univ}</li>
                 </div>
         </RightProfileWrap>
     )
