@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useSpring, animated } from 'react-spring'
 import Footer from '../Footer';
 import TimerComponent from './Timer.js'
 import fire from '../Register/LoginFire.js'
 import profileImageBoy from '../../../images/profile_boy_default.png';
 import profileImageGirl from '../../../images/profile_girl_default.png';
-import { NavLink,Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 const db = fire.firestore()
 
 const Container = styled.div`
@@ -204,23 +203,38 @@ background-color: white;
 
 
 function ReceivePerson(props){
-    const 유저1 = props.유저1
-    const 유저2 = props.유저2
-    const 닉네임 = props.닉네임
-    const 발전단계변경 = props.발전단계변경
-    const 메세지보낸사람 = props.메세지보낸사람
+    let [init, setInit] = useState(false)
+    let [새로고침, 새로고침변경] = useState(false)
 
-    return(
-        <Container>
-            <Timer/>
-            <Title/>
-            <div className='ProfileWrap'>
-                <LeftProfile 유저1={유저1} 메세지보낸사람={메세지보낸사람}/>
-                <RightProfile 유저2={유저2} 메세지보낸사람={메세지보낸사람}/>
-            </div>
-            <Button 컬렉션={props.컬렉션} 문서번호={props.문서번호} 닉네임={props.닉네임}/>
-            <Footer/>
-        </Container>
+    useEffect(()=>{
+        if(props.유저1 && props.유저2){
+            setInit(true);
+        }
+        if(새로고침){
+            console.log('refresh')
+            window.location.reload();
+
+        }
+    })
+
+    return (
+        <div>
+            {
+                init
+                    ?
+                    <Container>
+                        <Timer />
+                        <Title />
+                        <div className='ProfileWrap'>
+                            <LeftProfile 유저1={props.유저1} 메세지보낸사람={props.메세지보낸사람} />
+                            <RightProfile 유저2={props.유저2} 메세지보낸사람={props.메세지보낸사람} />
+                        </div>
+                        <Button 컬렉션={props.컬렉션} 문서번호={props.문서번호} 닉네임={props.닉네임} 새로고침변경={새로고침변경}/>
+                        <Footer />
+                    </Container>
+                    : null
+            }
+        </div>
     )
 }
 export default ReceivePerson;
@@ -247,27 +261,23 @@ function Title(){
     )
 }
 
-function LeftProfile({유저1, 메세지보낸사람}){
+function LeftProfile(props){
+    let 유저1 = props.유저1
+    let profileImage=유저1.profileImage;
+    let profileNickName = 유저1.User.Nick;
+
     const noneactiveStyle = {
         textDecoration: 'none',
         color: '#2B2A28'
-      }
-
-      
-    let profileImage=null;
-
-    if(유저1['Gender'] === 'boy'){
-        profileImage = profileImageBoy
-    }else if(유저1['Gender'] === 'girl') {
-        profileImage = profileImageGirl
     }
-    let profileNickName = 유저1['Nick']
+
+
 
     return(
             <LeftProfileWrap>
                 <div className='decisionState'>
                     {
-                    메세지보낸사람 === 유저1['Nick']
+                    props.메세지보낸사람 === 유저1.User.Nick
                     ? <div className = "ED">메세지보냈음!</div>
                     : <div className = "ING">결정중</div>
                     }
@@ -276,33 +286,29 @@ function LeftProfile({유저1, 메세지보낸사람}){
                     <img src={profileImage} className='defaultPic'/>
                 </div>
                 <div className='profileInfo'>
-                    <li className="UserNick">{유저1['Nick']}</li>
+                    <li className="UserNick">{유저1.User.Nick}</li>
                     <NavLink to = {`/userprofile/${profileNickName}`} style={noneactiveStyle}><li className = "LookProfile">프로필 보기</li></NavLink>
                 </div>
             </LeftProfileWrap>
     )
 }
 
-function RightProfile({유저2, 메세지보낸사람}){
+function RightProfile(props){
+
+    let 유저2 = props.유저2
+    let profileImage=유저2.profileImage;
+    let profileNickName = 유저2.User.Nick
+
     const noneactiveStyle = {
         textDecoration: 'none',
         color: '#2B2A28'
-      }
-
-    let profileImage=null;
-
-    if(유저2['Gender'] === 'boy'){
-        profileImage = profileImageBoy
-    }else if(유저2['Gender'] === 'girl') {
-        profileImage = profileImageGirl
     }
-    let profileNickName = 유저2['Nick']
 
     return(
         <RightProfileWrap>
             <div className='decisionState'>
                 {
-                메세지보낸사람 === 유저2['Nick']
+                props.메세지보낸사람 === 유저2.User.Nick
                 ? <div className = "ED">메세지보냈음!</div>
                 : <div className = "ING">결정중</div>
                 }
@@ -311,7 +317,7 @@ function RightProfile({유저2, 메세지보낸사람}){
                 <img src={profileImage} className='defaultPic'/>
             </div>
             <div className='profileInfo'>
-                <li className="UserNick">{유저2['Nick']}</li>
+                <li className="UserNick">{유저2.User.Nick}</li>
                 <NavLink to = {`/userprofile/${profileNickName}`} style={noneactiveStyle}><li className = "LookProfile">프로필 보기</li></NavLink>
             </div>
         </RightProfileWrap>
@@ -323,26 +329,27 @@ function Button(props){
     function onClick_sendMessage(){
         const result = window.confirm('정말로 답장을 보내셨나요?');
         if(result){
-            // console.log(props.컬렉션)
-            // console.log(props.문서번호)
             db.collection(props.컬렉션).doc(props.문서번호).update({
                 stage: 'success'
+            }).then(()=>{
+                alert('좋은 인연이 되시길 기원합니다!')
+                props.새로고침변경(true)
             })
-            alert('좋은 인연이 되시길 기원합니다!')
         }else{}
     }
 
     function onClick_refuse(){
         const result = window.confirm('정말로 거절하실건가요?');
-        // console.log(result)
         if(result){
             db.collection(props.컬렉션).doc(props.문서번호).update({
                 stage: 'end'
             })
             db.collection(props.컬렉션).doc(props.문서번호).update({
                 거절한사람: props.닉네임
+            }).then(()=>{
+                alert('매칭을 거절하셨습니다.')
+                props.새로고침변경(true)
             })
-            alert('매칭을 거절하셨습니다.')
         }else{}
     }
 

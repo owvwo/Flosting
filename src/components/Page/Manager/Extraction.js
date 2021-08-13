@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import fire from '../Register/LoginFire';
-import MatchingManager from './MatchingManager';
+import MatchingManager2 from './MatchingManager2';
 
 const Wrapper = styled.div`
     padding : 5px;
@@ -34,37 +34,37 @@ const Exbar = styled.div`
 `
 
 export default function Extraction(props) {
-    const {nowCount} = props;
+    const { nowCount } = props;
     const [isEx, setisEx] = useState(false);
     const db = fire.firestore();
 
-    const handleonClick = () =>{
+    const handleonClick = () => {
         alert("추출완료");
         setisEx(true);
     }
     const Exlist = () => {
-        return(
+        return (
             <div>
                 <Exbar>
                     <li>{nowCount}회차 애들 매칭해주기</li>
                 </Exbar>
-                <MatchingManager nowCount = {nowCount}>
+                <MatchingManager2 nowCount={nowCount}>
 
-                </MatchingManager>
+                </MatchingManager2>
             </div>
         )
     }
 
-    
-  return (
-      <Wrapper>
-        <Exbutton onClick={handleonClick}>추출</Exbutton>
-        {isEx ?
-        (
-        <Exlist>
 
-        </Exlist>
-         ) : ""}
-      </Wrapper>
-  );
+    return (
+        <Wrapper>
+            <Exbutton onClick={handleonClick}>추출</Exbutton>
+            {isEx ?
+                (
+                    <Exlist>
+
+                    </Exlist>
+                ) : ""}
+        </Wrapper>
+    );
 }

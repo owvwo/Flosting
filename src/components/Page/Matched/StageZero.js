@@ -212,19 +212,39 @@ background-color: white;
 
 
 function StageZero(props){
+    let [init, setInit] = useState(false)
+    let [새로고침, 새로고침변경] = useState(false)
 
-    
+    useEffect(()=>{
+        if(props.유저1 && props.유저2){
+            setInit(true);
+        }
+        if(새로고침){
+            console.log('refresh')
+            window.location.reload();
+
+        }
+    })
+
     return(
-        <Container>
-            <Timer/>
-            <Title/>
-            <div className='ProfileWrap'>
-                <LeftProfile 유저1={props.유저1} />
-                <RightProfile 유저2={props.유저2} />
-            </div>
-            <Button 컬렉션={props.컬렉션} 문서번호={props.문서번호} 닉네임={props.닉네임} 회원정보문서아이디={props.회원정보문서아이디} 유저정보={props.유저정보}/>
-            <Footer/>
-        </Container>
+        <div>
+            {
+                init
+                ?
+                    <Container>
+                        <Timer />
+                        <Title />
+                        <div className='ProfileWrap'>
+                            <LeftProfile 유저1={props.유저1} />
+                            <RightProfile 유저2={props.유저2} />
+                        </div>
+                        <Button 새로고침변경={새로고침변경} 컬렉션={props.컬렉션} 문서번호={props.문서번호} 닉네임={props.닉네임} 회원정보문서아이디={props.회원정보문서아이디} 유저정보={props.유저정보}/>
+                        <Footer />
+                    </Container>
+    
+                : null
+            }
+        </div>
     )
 }
 export default StageZero;
@@ -251,120 +271,53 @@ function Title(){
     )
 }
 
-function LeftProfile({유저1}){
+function LeftProfile(props){
+    let 유저1 = props.유저1
+    let profileImage=유저1.profileImage;
 
     const noneactiveStyle = {
         textDecoration: 'none',
         color: '#2B2A28'
-      }
-
-    let profileImage=null;
-
-    if(유저1['Gender'] === 'boy'){
-        profileImage = profileImageBoy
-    }else if(유저1['Gender'] === 'girl') {
-        profileImage = profileImageGirl
     }
+
 
     return(
             <LeftProfileWrap>
                 <div className = "ING">결정중</div>
                 <div className='defaultPicBox'>
-                    <NavLink to = {`/userprofile/${유저1['Nick']}`} style={noneactiveStyle}><li className = "LookProfile">프로필 보기</li></NavLink>
+                    <NavLink to = {`/userprofile/${유저1.User.Nick}`} style={noneactiveStyle}><li className = "LookProfile">프로필 보기</li></NavLink>
                     <img src={profileImage} className='defaultPic'/>
                 </div>
                 <div className='profileInfo'>
-                <li className="UserNick">{유저1['Nick']}[{유저1['Age']}]</li>
-                <li className="UserPhone">{유저1['Phone'].substring(0,3)}-{유저1['Phone'].substring(3,7)}-{유저1['Phone'].substring(7)}</li>  
-                <li className="UserUniv">{유저1['Univ']}</li>
+                <li className="UserNick">{유저1.User.Nick}[{유저1.User.Age}]</li>
+                <li className="UserUniv">{유저1.User.Univ}</li>
                 </div>
             </LeftProfileWrap>
     )
 }
-function RightProfile({유저2}){
+function RightProfile(props){
+    let 유저2 = props.유저2
+    let profileImage=유저2.profileImage;
 
     const noneactiveStyle = {
         textDecoration: 'none',
         color: '#2B2A28'
-      }
-
-    let profileImage=null;
-
-    if(유저2['Gender'] === 'boy'){
-        profileImage = profileImageBoy
-    }else if(유저2['Gender'] === 'girl') {
-        profileImage = profileImageGirl
     }
-
-    let profileNickName = 유저2['Nick']
 
     return(
         <RightProfileWrap>
                 <div className = "ING">결정중</div>
                 <div className='defaultPicBox'>
-                    <NavLink to = {`/userprofile/${유저2['Nick']}`} style={noneactiveStyle}><li className = "LookProfile">프로필 보기</li></NavLink>
+                    <NavLink to = {`/userprofile/${유저2.User.Nick}`} style={noneactiveStyle}><li className = "LookProfile">프로필 보기</li></NavLink>
                     <img src={profileImage} className='defaultPic'/>
                 </div>
                 <div className='profileInfo'>
-                <li className="UserNick">{유저2['Nick']}[{유저2['Age']}]</li>
-                <li className="UserPhone">{유저2['Phone'].substring(0,3)}-{유저2['Phone'].substring(3,7)}-{유저2['Phone'].substring(7)}</li>  
-                <li className="UserUniv">{유저2['Univ']}</li>
+                <li className="UserNick">{유저2.User.Nick}[{유저2.User.Age}]</li>
+                <li className="UserUniv">{유저2.User.Univ}</li>
                 </div>
         </RightProfileWrap>
     )
 }
-
-// function LeftProfile({유저1}){
-
-//     let profileImage=null;
-
-//     if(유저1['Gender'] === 'boy'){
-//         profileImage = profileImageBoy
-//     }else if(유저1['Gender'] === 'girl') {
-//         profileImage = profileImageGirl
-//     }
-//     return(
-//             <LeftProfileWrap>
-//                 <div>결정중</div>
-//                 <div>
-//                     <img src={profileImage} className='defaultPic'/>
-//                 </div>
-//                 <div className='profileInfo'>
-//                     {유저1['Nick']}({유저1['Age']})<br/>
-//                     {유저1['Univ']}<br/>
-//                     매너온도: {유저1['Manner']}<br/>
-//                     {유저1['Phone']}<br/>
-
-//                 </div>
-//             </LeftProfileWrap>
-//     )
-// }
-
-// function RightProfile({유저2}){
-
-//     let profileImage=null;
-
-//     if(유저2['Gender'] === 'boy'){
-//         profileImage = profileImageBoy
-//     }else if(유저2['Gender'] === 'girl') {
-//         profileImage = profileImageGirl
-//     }
-
-//     return(
-//         <RightProfileWrap>
-//             <div>결정중</div>
-//             <div className='defaultPicBox'>
-//                 <img src={profileImage} className='defaultPic'/>
-//             </div>
-//             <div className='profileInfo'>
-//                 {유저2['Nick']}({유저2['Age']})<br/>
-//                 {유저2['Univ']}<br/>
-//                 매너온도: {유저2['Manner']}<br/>
-//                 {유저2['Phone']}<br/>
-//             </div>
-//         </RightProfileWrap>
-//     )
-// }
 
 function Button(props){
     function onClick_sendMessage(){
@@ -378,8 +331,10 @@ function Button(props){
             })
             db.collection('회원정보').doc(props.회원정보문서아이디).update({
                 'User.Manner': props.유저정보['Manner']+1
+            }).then(()=>{
+                alert('매너온도가 상승했습니다! 좋은 결과 기원합니다 :)')
+                props.새로고침변경(true);
             })
-            alert('매너온도가 상승했습니다! 좋은 결과 기원합니다 :)')
         }else{}
     }
     function onClick_refuse(){
@@ -390,8 +345,10 @@ function Button(props){
             })
             db.collection(props.컬렉션).doc(props.문서번호).update({
                 거절한사람: props.닉네임
+            }).then(()=>{
+                alert('매칭을 거절하셨습니다.')
+                props.새로고침변경(true);
             })
-            alert('매칭을 거절하셨습니다.')
         }else{}
     }
 

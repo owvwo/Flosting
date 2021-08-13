@@ -1,5 +1,5 @@
-export const desiredUnivOptions = [
-  { key: "우리학교만", value: "myUniv", checked: "checked" },
-  { key: "타학교만", value: "otherUniv" },
-  { key: "상관없음", value: "dnt_M" },
+export const DesiredUnivOptions = [
+  { name: "우리학교만", value: "myUniv", checked: "checked" },
+  { name: "타학교만", value: "otherUniv" },
+  { name: "상관없음", value: "dnt_M" },
 ];

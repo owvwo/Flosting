@@ -2,6 +2,7 @@ import React from "react";
 // import Input from "./Input";
 import Select from "./Select";
 import RadioButtons from "./RadioButtons";
+import TicketButtons from "./TicketButtons";
 
 // import CheckboxGroup from "./CheckboxGroup";
 
@@ -12,9 +13,11 @@ function FormikControl(props) {
     // case "input":
     //   return <Input {...rest} />;
     case "select":
-      return <Select blockSubmit={blockSubmit} {...rest} />;
+      return <Select blockSubmit={blockSubmit} {...props} {...rest} />;
     case "radio":
-      return <RadioButtons blockSubmit={blockSubmit} {...rest} />;
+      return <RadioButtons blockSubmit={blockSubmit} {...props} {...rest} />;
+    case "ticket":
+      return <TicketButtons blockSubmit={blockSubmit} {...props} {...rest} />;
     // case "checkbox":
     //   return <CheckboxGroup {...rest} />;
     default:
