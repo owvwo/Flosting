@@ -59,12 +59,14 @@ function AdminCheckMoneyGiver(props){
     async function checking(회차){
         await db.collection(`Flosting_${회차}`).where("Paid", "==", false).get().then((snapShot)=>{
             snapShot.forEach((doc)=>{
-                미입금자들.push({
-                    '회차' : 회차,
-                    '이름' : doc.data().User.Name,
-                    '금액': doc.data().Cost,
-                    '번호' : doc.id
-                });
+                if(doc.data().Cost>0){
+                    미입금자들.push({
+                        '회차' : 회차,
+                        '이름' : doc.data().User.Name,
+                        '금액': doc.data().Cost,
+                        '번호' : doc.id
+                    });
+                }
             })
             미입금자명단변경(미입금자들)
         })

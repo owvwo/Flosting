@@ -23,13 +23,15 @@ function DeleteNoPaid(){
     let arr = []
     function onClick(){
         db.collection(`Flosting_${회차}`).where('Paid', '==', false).get().then((snapShot)=>{
+
             snapShot.forEach((doc)=>{
-                console.log(doc.data())
-                arr.push({
-                    '이름' : doc.data().User.Name,
-                    '금액' : doc.data().Cost,
-                    '번호' : doc.id
-                });
+                if(doc.data().Cost>0){
+                    arr.push({
+                        '이름' : doc.data().User.Name,
+                        '금액' : doc.data().Cost,
+                        '번호' : doc.id
+                    });
+                }
             })
         }).then(()=>{사형수변경(arr);})
         setInit(true)
