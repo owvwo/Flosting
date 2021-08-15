@@ -206,6 +206,7 @@ function EnrollmentForm(props, match) {
     }
   }, [User]);
 
+
   // Submit Handler
   const onSubmit = () => {
 

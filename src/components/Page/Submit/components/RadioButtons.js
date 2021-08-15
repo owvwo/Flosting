@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Field, ErrorMessage } from "formik";
 import TextError from "./TextError";
 import { InputLabel } from "@material-ui/core";
@@ -97,9 +97,9 @@ function radiobutton(props) {
   const { controlAge, setcontrolAge, label } = props;
 
   const handleSelectChange = (event) => {
-    const value = event.target.value;
-    setcontrolAge(value);
+    setcontrolAge(event.target.value);
   };
+
 
   return (
     <FormikContainer>

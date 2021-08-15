@@ -62,6 +62,8 @@ function Submit(props) {
     }
   }, [user]);
 
+
+
   if (!JSON.parse(localStorage.getItem('user'))) { return (<Redirect to='/login' />); }
   else if (EP_Num == "") {
     return (<Redirect to='/currentevent' />);
