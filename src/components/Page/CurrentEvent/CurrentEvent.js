@@ -2,7 +2,7 @@ import { React, useEffect, useState } from "react";
 import styled from "styled-components";
 import Footer from "../Footer.js";
 import { NavLink } from "react-router-dom";
-import Tada from "react-reveal/Tada";
+import Fade from "react-reveal/Fade";
 import fire from "../Register/LoginFire";
 
 const Container = styled.div`
@@ -102,7 +102,7 @@ const CurrentEvent = (props) => {
     <div>
       <Container>
         <Title 제목={제목} />
-        <Tada>
+        <Fade bottom>
           <NavLink to="/currentevent/EP">
             <Buttoncontent
               {...props}
@@ -115,12 +115,12 @@ const CurrentEvent = (props) => {
               Result_Day="0825"
             />
           </NavLink>
-        </Tada>
-        <Tada>
+        </Fade>
+        <Fade bottom>
           <NavLink to="/currentevent/alarm">
             <알람신청 알림wrap={알림wrap} 알림btn={알림btn} />
           </NavLink>
-        </Tada>
+        </Fade >
         
       <Footer />
       </Container>

@@ -160,6 +160,35 @@ const Container = styled.div`
             }
         }
     }
+    .입금전Box{
+        h2{
+            font-size: 1.3rem;
+        }
+        color: rgb(0,0,0,0.8);
+        background-color: rgb(212,94,150,0.1);
+        border: 1px solid rgb(0,0,0,0.05);
+        border-radius: 15px;
+        padding: 0.5rem;
+        margin-bottom: 1rem; 
+    }
+    .입금후Box{
+        h2{
+            font-size: 1.3rem;
+        }
+        color: rgb(0,0,0,0.8);
+        background-color: rgb(90,82,235,0.1);
+        border: 1px solid rgb(0,0,0,0.05);
+        border-radius: 15px;
+        padding: 0.5rem;
+        margin-bottom: 1rem; 
+    }
+    .미입금자Box{
+        background-color: red;
+        border: 1px solid rgb(0,0,0,0.05);
+        border-radius: 15px;
+        padding: 0.5rem;
+        margin-bottom: 1rem; 
+    }
 
 `
 
@@ -177,6 +206,11 @@ function MyRecentSubmit(props) {
     let [havelilacTicket, sethavelilacTicket] = useState(false); //라일락 티켓이 있는지 없는지
     let [havedaisyTicket, sethavedaisyTicket] = useState(false); //데이지 티켓이 있는지 없는지
     let [havecloverTicket, sethavecloverTicket] = useState(false); //클로버 티켓이 있는지 없는지
+    let [lilacTicketNumber, setlilacTicketNumber] = useState(); // lilac ticket number
+    let [daisyTicketNumber, setdaisyTicketNumber] = useState(); // lilac ticket number
+    let [cloverTicketNumber, setcloverTicketNumber] = useState(); // lilac ticket number
+    let [paid, setPaid] = useState(); // 입금 했는지 안했는지
+    let [cost, setCost] = useState(); // 입금해야하는 금액
     let 신청중회차 = [];
 
     // DB 현재 신청 중인 회차 변수 불러오는 함수
@@ -200,6 +234,12 @@ function MyRecentSubmit(props) {
                 sethavelilacTicket(doc.data().Lilac.Ticket);
                 sethavedaisyTicket(doc.data().Daisy.Ticket);
                 sethavecloverTicket(doc.data().Clover.Ticket);
+                setlilacTicketNumber(doc.data().Lilac.TicketNumber);
+                setdaisyTicketNumber(doc.data().Daisy.TicketNumber);
+                setcloverTicketNumber(doc.data().Clover.TicketNumber);
+                setPaid(doc.data().Paid);
+                setCost(doc.data().Cost);
+
             })
 
         } catch (err) { console.log(err) }
@@ -252,6 +292,32 @@ function MyRecentSubmit(props) {
                 <br />
                 <h2>{몇회차}회차 신청 내역</h2>
                 <div>
+                    {
+                        cost>0 && !paid
+                        &&
+                            <div className='입금전Box'>
+                                <h2>{cost}원 입금확인 전</h2>
+                                <NoticeMessage>입금계좌 : 농협 356-1499-7855-83 이상민(플로스컴패니)</NoticeMessage>
+                                <NoticeMessage>입금확인이 완료되기 전에만 취소 및 수정이 가능합니다.</NoticeMessage>
+                            </div>
+                    }
+                    {
+                        cost>0 && paid
+                        &&
+                            <div className='입금후Box'>
+                                <h2>{cost}원 입금확인 완료!!</h2>
+                            </div>
+                    }
+                    {
+                        버튼상태 && !havelilacTicket && !havecloverTicket && !havedaisyTicket
+                        &&
+                            <div className='미입금자Box'>
+                                <NoticeMessage>
+                                    {몇회차}회차 입금내역이 존재하지 않아 자동취소 되었습니다
+                                </NoticeMessage>
+                            </div>
+                    }
+
                     <div className='cloverTingBox'>
                         <h2>클로버팅</h2>
                         <div className="rowDivBox">
@@ -277,6 +343,10 @@ function MyRecentSubmit(props) {
                                 {
                                     cloverUniv === 'myUniv'
                                     && <div className="content">학교 - 같은 학교만</div>
+                                }
+                                {
+                                    havecloverTicket
+                                    && <div className="content">티켓 - {cloverTicketNumber}장</div>
                                 }
                             </div>
                         </div>
@@ -307,6 +377,10 @@ function MyRecentSubmit(props) {
                                     daisyUniv === 'myUniv'
                                     && <div className="content">학교 - 같은 학교만</div>
                                 }
+                                {
+                                    havedaisyTicket
+                                    && <div className="content">티켓 - {daisyTicketNumber}장</div>
+                                }   
                             </div>
                         </div>
                     </div>
@@ -336,12 +410,15 @@ function MyRecentSubmit(props) {
                                     lilacUniv === 'myUniv'
                                     && <div className="content">학교 - 같은 학교만</div>
                                 }
-
+                                {
+                                    havelilacTicket
+                                    && <div className="content">티켓 - {lilacTicketNumber}장</div>
+                                }
                             </div>
                         </div>
                     </div>
                     {
-                        버튼상태
+                        버튼상태 && !paid
                             ?
                             <div>
                                 <button onClick={onClick} className='resubmitButton'>신청취소</button>

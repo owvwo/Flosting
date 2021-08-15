@@ -24,7 +24,8 @@ height: 37rem;
     .신고리스트{
         margin-top : 1.5rem;
         margin-bottom: 3rem;
-        margin-left: 2rem;
+        margin-left: 1rem;
+        margin-right: 1rem;
     }
     // .form_div{
     //     display: flex;
@@ -111,16 +112,17 @@ function Report(props){
             <Container>
                 <div className='신고하기타이틀'>사용자 신고하기</div>
                 <div className='신고내용'>
-                    아래 내용과 같은 일을 겪으셨거나 기타 신고 접수은<br/> 
+                    아래 내용과 같은 일을 겪으셨거나 기타 신고 접수는<br/> 
                     플로스팅 공식 SNS계정을 통해 신고해주시기 바랍니다<br/> 
                 </div>
                 <div className='신고리스트'>
-                    <ul>
-                        <li>상대방이 거짓 정보를 이용해 매칭에 참여한 경우</li><br/> 
-                        <li>내 개인정보가 무단으로 공유당한 경우</li><br/> 
-                        <li>상대방이 선톡/답장을 했다고 매칭결과상 나오지만
+                    <ul style={{listStyle:"none"}}>
+                        <li>❗ 상대방이 거짓 정보를 이용해 매칭에 참여한 경우</li><br/> 
+                        <li>❗ 내 개인정보가 무단으로 공유당한 경우</li><br/> 
+                        <li>❗ 상대방이 선톡/답장을 했다고 매칭결과상 나오지만
                         실제로 선톡/답장이 오지 않은 경우 </li><br/>
-                        <li>욕설 및 비속어 사용자</li>
+                        <li>❗ 욕설 및 비속어 사용자</li><br/>
+                        <li>❗ 부적절한 프로필 사진 및 닉네임 사용자</li>
                     </ul>
                 </div>
                 <SNSLink/>

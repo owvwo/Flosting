@@ -110,7 +110,7 @@ function radiobutton(props) {
             type="radio"
             name="radio"
             value="20"
-            checked={controlAge === "20"}
+            checked={controlAge === "20" ? true: false}
             onChange={(event) => handleSelectChange(event)}
           />
           <RadioButtonLabel />
@@ -121,7 +121,7 @@ function radiobutton(props) {
             type="radio"
             name="radio"
             value="21~23"
-            checked={controlAge === "21~23"}
+            checked={controlAge === "21~23" ? true: false}
             onChange={(event) => handleSelectChange(event)}
           />
           <RadioButtonLabel />
@@ -134,7 +134,7 @@ function radiobutton(props) {
             type="radio"
             name="radio"
             value="24+"
-            checked={controlAge === "24+"}
+            checked={controlAge === "24+" ? true: false}
             onChange={(event) => handleSelectChange(event)}
           />
           <RadioButtonLabel />
@@ -145,7 +145,7 @@ function radiobutton(props) {
             type="radio"
             name="radio"
             value="dnt_M"
-            checked={controlAge === "dnt_M"}
+            checked={controlAge === "dnt_M" ? true: false}
             onChange={(event) => handleSelectChange(event)}
           />
           <RadioButtonLabel />
