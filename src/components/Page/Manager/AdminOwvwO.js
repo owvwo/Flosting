@@ -106,10 +106,11 @@ function AdminOwvwO(props) {
         Univ: "",
         TicketNumber: ""
     }
+
     useEffect(() => {
         setNick(Age + Gender + "-" + LilacAge + "-" + LilacUniv + "-티켓" + LilacTicketNumber);
     }, [Age, Univ, LilacAge, LilacUniv, LilacTicketNumber])
-    
+
     const OnClickpush = () => {
         dbUser.Age = Age;
         dbUser.Gender = Gender;
@@ -125,7 +126,6 @@ function AdminOwvwO(props) {
         Lilacvalue.Ticket = true;
         Lilacvalue.TicketNumber = LilacTicketNumber;
 
-        setUnique_key(String(Number(Unique_key) +1))
         db.collection("Flosting_2")
             .add({
                 ID: ID,
@@ -140,6 +140,8 @@ function AdminOwvwO(props) {
             .catch((error) => {
                 alert(error.message);
             });
+
+        setUnique_key(String(Number(Unique_key) + 1));
     }
     const handleAgeChange = (selected) => {
         setLilacAge(selected);
@@ -191,7 +193,8 @@ function AdminOwvwO(props) {
                     placeholder="신청하는애 Gender"
                     onChange={handlesetGender} /></li>
                 <li>Nick <Input
-                    value={Age + Gender + "-" + LilacAge + "-" + LilacUniv + "-티켓" + LilacTicketNumber}                    placeholder="신청하는애 Nick"
+                    value={Age + Gender + "-" + LilacAge + "-" + LilacUniv + "-티켓" + LilacTicketNumber}
+                    placeholder="신청하는애 Nick"
                     onChange={handlesetNick} /></li>
                 <li>Univ <Input
                     placeholder="신청하는애 Univ"

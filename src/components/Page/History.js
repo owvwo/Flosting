@@ -41,7 +41,7 @@ const History = () =>{
             <div className='히스토리내용'>
                 <div>총 누적 2019명!!</div>
                 <div className='표'>
-                    <div>남자<br/>939명</div>
+                    <div><br/>939명</div>
                     <div>여자<br/>1080명</div>
                 </div>
             </div>

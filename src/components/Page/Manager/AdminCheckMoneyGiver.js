@@ -47,7 +47,7 @@ function AdminCheckMoneyGiver(props){
     // DB에서 필요한 변수 불러오는 함수
     async function getVariableInfo(){
         await db.collection('매칭결과변수').doc('variableInfo').get().then((doc)=>{
-            신청중회차arr변경(doc.data()['신청중'].split(" "));
+            신청중회차arr변경(doc.data()['신청중'].split("/"));
         })
     }
 
