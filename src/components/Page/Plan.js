@@ -14,8 +14,16 @@ margin-top: 2rem;
 font-weight : bolder
 `
 const 달력 = styled.div`
+display: flex;
+justify-content: center;
+align-items: center;
+img{
+    @media all and (min-width:768px) {
+        width:40rem;
+    }
+    width:100vw;
+}   
 margin-top: 2rem;
-img{width:100vw}
 `
 
 function Plan() {

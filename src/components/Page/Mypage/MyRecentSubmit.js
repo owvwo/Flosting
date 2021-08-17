@@ -183,7 +183,9 @@ const Container = styled.div`
         margin-bottom: 1rem; 
     }
     .미입금자Box{
-        background-color: red;
+        background-color: rgb(212,94,150,0.1);
+        color: red;
+        border : 1px solid rgb(0,0,0,0.05);
         border: 1px solid rgb(0,0,0,0.05);
         border-radius: 15px;
         padding: 0.5rem;
@@ -293,38 +295,38 @@ function MyRecentSubmit(props) {
                 <h2>{몇회차}회차 신청 내역</h2>
                 <div>
                     {
-                        1000>cost && !paid
+                        1000 > cost && !paid
                         &&
-                            <div className='입금전Box'>
-                                <h2>무료</h2>
-                                <NoticeMessage>현재 오픈 이벤트로 종류별 1개의 티켓은 무료입니다.</NoticeMessage>
-                            </div>
+                        <div className='입금전Box'>
+                            <h2>무료</h2>
+                            <NoticeMessage>현재 오픈 이벤트로 종류별 1개의 티켓은 무료입니다.</NoticeMessage>
+                        </div>
                     }
                     {
-                        cost>=1000 && !paid
+                        cost >= 1000 && !paid
                         &&
-                            <div className='입금전Box'>
-                                <h2>{cost}원 입금확인 전</h2>
-                                <NoticeMessage>입금계좌 : 농협 356-1499-7855-83 이상민(플로스컴패니)</NoticeMessage>
-                                <NoticeMessage>입금확인이 완료되기 전에만 취소 및 수정이 가능합니다.</NoticeMessage>
-                                <NoticeMessage>현재 오픈 이벤트로 종류별 1개의 티켓은 무료입니다.</NoticeMessage>
-                            </div>
+                        <div className='입금전Box'>
+                            <h2>{cost}원 입금확인 전</h2>
+                            <NoticeMessage>입금계좌 : 농협 356-1499-7855-83 이상민(플로스컴패니)</NoticeMessage>
+                            <NoticeMessage>입금확인이 완료되기 전에만 취소 및 수정이 가능합니다.</NoticeMessage>
+                            <NoticeMessage>현재 오픈 이벤트로 종류별 1개의 티켓은 무료입니다.</NoticeMessage>
+                        </div>
                     }
                     {
-                        cost>=1000 && paid
+                        cost >= 1000 && paid
                         &&
-                            <div className='입금후Box'>
-                                <h2>{cost}원 입금확인 완료!!</h2>
-                            </div>
+                        <div className='입금후Box'>
+                            <h2>{cost}원 입금확인 완료!!</h2>
+                        </div>
                     }
                     {
                         버튼상태 == true && !havelilacTicket && !havecloverTicket && !havedaisyTicket
                         &&
-                            <div className='미입금자Box'>
-                                <NoticeMessage>
-                                    {몇회차}회차 입금내역이 존재하지 않아 자동취소 되었습니다
-                                </NoticeMessage>
-                            </div>
+                        <div className='미입금자Box'>
+                            <NoticeMessage>
+                                {몇회차}회차 입금내역이 존재하지 않아 자동취소 되었습니다
+                            </NoticeMessage>
+                        </div>
                     }
 
                     <div className='cloverTingBox'>
@@ -389,7 +391,7 @@ function MyRecentSubmit(props) {
                                 {
                                     havedaisyTicket
                                     && <div className="content">티켓 - {daisyTicketNumber}장</div>
-                                }   
+                                }
                             </div>
                         </div>
                     </div>
@@ -427,7 +429,7 @@ function MyRecentSubmit(props) {
                         </div>
                     </div>
                     {
-                        버튼상태 && !paid && (havecloverTicket||havedaisyTicket||havelilacTicket)
+                        버튼상태 && !paid && (havecloverTicket || havedaisyTicket || havelilacTicket)
                             ?
                             <div>
                                 <button onClick={onClick} className='resubmitButton'>신청취소</button>
