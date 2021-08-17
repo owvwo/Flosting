@@ -35,6 +35,8 @@ import Plan from "../components/Page/Plan";
 import UserProfile from "./Page/Matched/UserProfile";
 import ProfileSelect from './Page/Register/ProfileSelect';
 import MbtiSelect from './Page/Register/MbtiSelect';
+import AdminCheckMoneyGiver from "./Page/Manager/AdminCheckMoneyGiver";
+import DeleteNoPaid from "./Page/Manager/DeleteNoPaid";
 
 
 const Transition = (props) => {
@@ -97,6 +99,8 @@ const Transition = (props) => {
           <Route exact path="/admin"><Admin_page isManager={isManager} setisManager={setisManager} User={user} /></Route>
           <Route exact path="/admin/owvwo"><AdminOwvwO isManager={isManager} User={user} /></Route>
           <Route exact path="/admin/bigfoot"><AdminBigFoot isManager={isManager} User={user} /></Route>
+          <Route exact path="/admin/moneygiver"><AdminCheckMoneyGiver isManager={isManager} User={user} /></Route>
+          <Route exact path="/admin/delete"><DeleteNoPaid isManager={isManager} User={user} /></Route>
           <Route path="/plan"><Plan /></Route>
           <Route path="/timer"><Timer User={user} /></Route>
           <Route exact path="/selectresult"><SelectResult User={user} /></Route>

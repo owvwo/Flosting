@@ -167,7 +167,7 @@ function 답변1({답변Container}){
     return(
         <답변Container>
             <div className='content'>
-                A <br/>최종 신청이 마감된 다음날부터 매칭이 진행되며,<br/>
+                A. <br/>최종 신청이 마감된 다음날부터 매칭이 진행되며,<br/>
                 매칭 완료 후, 홈페이지에서 결과를 <br/>확인하실 수 있습니다.
             </div>
         </답변Container>
@@ -177,7 +177,7 @@ function 답변2({답변Container}){
     return(
         <답변Container>
             <div className='content'>
-                A   <br/> 마이페이지 - 최근 신청 내역<br/>
+                A.   <br/> 마이페이지 - 최근 신청 내역<br/>
                 신청 취소 후 다시 신청 하시면 수정이 가능합니다.<br/>
                 (단, 해당 회차가 신청기간일 경우에만 <br/>취소가 가능합니다.)
             </div>
@@ -188,7 +188,7 @@ function 답변3({답변Container}){
     return(
         <답변Container>
             <div className='content'>
-                A <br/> 1대1일 매칭일 경우 성비 불균형에 따라<br/> 매칭 실패가 발생할 수 있습니다.
+                A. <br/> 1대1일 매칭일 경우 성비 불균형에 따라<br/> 매칭 실패가 발생할 수 있습니다.
             </div>
         </답변Container>
     )
@@ -197,7 +197,7 @@ function 답변4({답변Container}){
     return(
         <답변Container>
             <div className='content'>
-                A <br/> 다음 회차에 대한 일정은 항상 변동될 수 있기<br/> 때문에 미리 안내해 드리지 않고 있습니다 :)
+                A. <br/> 다음 회차에 대한 일정은 항상 변동될 수 있기<br/> 때문에 미리 안내해 드리지 않고 있습니다 :)
             </div>
         </답변Container>
     )
@@ -206,7 +206,7 @@ function 답변5({답변Container}){
     return(
         <답변Container>
             <div className='content'>
-                A <br/>저희 플로스팅은 여러 대학교 학생들이 <br/>코로나로 인해 학교를 가지 못하는 대학생들을 위해 <br/>기획하게 된 창업 이벤트 업체입니다.
+                A. <br/>저희 플로스팅은 여러 대학교 학생들이 <br/>코로나로 인해 학교를 가지 못하는 대학생들을 위해 <br/>기획하게 된 창업 이벤트 업체입니다.
             </div>
         </답변Container>
     )

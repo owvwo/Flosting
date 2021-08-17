@@ -62,10 +62,10 @@ const TypeImage = styled.div`
 `;
 
 const SlidNext = styled.div`
-font-family: "Noto Sans KR", sans-serif;
-font-weight : 700;
-margin: 1rem 0rem;
-`
+  font-family: "Noto Sans KR", sans-serif;
+  font-weight: 700;
+  margin: 1rem 0rem;
+`;
 
 const Container = styled.div`
 width:  
@@ -141,20 +141,35 @@ function useToggle(initialValue = true, values) {
 
 function EnrollmentForm(props, match) {
   // User ID
-  const { User, ID, EP_Num,
-    lilac_Age, setlilac_Age,
-    lilac_Univ, setlilac_Univ,
-    lilac_Ticket, setlilac_Ticket,
-    lilac_Ticket_FT, setlilac_Ticket_FT,
-    daisy_Age, setdaisy_Age,
-    daisy_Univ, setdaisy_Univ,
-    daisy_Ticket, setdaisy_Ticket,
-    daisy_Ticket_FT, setdaisy_Ticket_FT,
-    clover_Age, setclover_Age,
-    clover_Univ, setclover_Univ,
-    clover_Ticket, setclover_Ticket,
-    clover_Ticket_FT, setclover_Ticket_FT,
-    setPayment
+  const {
+    User,
+    ID,
+    EP_Num,
+    lilac_Age,
+    setlilac_Age,
+    lilac_Univ,
+    setlilac_Univ,
+    lilac_Ticket,
+    setlilac_Ticket,
+    lilac_Ticket_FT,
+    setlilac_Ticket_FT,
+    daisy_Age,
+    setdaisy_Age,
+    daisy_Univ,
+    setdaisy_Univ,
+    daisy_Ticket,
+    setdaisy_Ticket,
+    daisy_Ticket_FT,
+    setdaisy_Ticket_FT,
+    clover_Age,
+    setclover_Age,
+    clover_Univ,
+    setclover_Univ,
+    clover_Ticket,
+    setclover_Ticket,
+    clover_Ticket_FT,
+    setclover_Ticket_FT,
+    setPayment,
   } = props;
   // const EP = match.params.EP;
   // console.log(EP);
@@ -208,7 +223,6 @@ function EnrollmentForm(props, match) {
 
   // Submit Handler
   const onSubmit = () => {
-
     if (lilacOn) {
       setlilac_Ticket_FT(false);
       console.log("lila");
@@ -278,9 +292,7 @@ function EnrollmentForm(props, match) {
                 type="button"
                 onClick={handleLilac}
                 color={
-                  lilacOn
-                    ? "rgb(247,244,148,0.5)"
-                    : "rgb(208,174,209,0.5)"
+                  lilacOn ? "rgb(247,244,148,0.5)" : "rgb(208,174,209,0.5)"
                 }
               >
                 {lilacOn ? "신청 하기" : "신청 취소"}
@@ -314,6 +326,7 @@ function EnrollmentForm(props, match) {
                     setcontrolTicket={setlilac_Ticket}
                   />
                   <FormikControl
+                    type={"lilac"}
                     blockSubmit={lilacOn}
                     control="radio"
                     label="상대의 나이를 선택해주세요"
@@ -355,9 +368,7 @@ function EnrollmentForm(props, match) {
                 type="button"
                 onClick={handleDaisy}
                 color={
-                  daisyOn
-                    ? "rgb(247,244,148,0.5)"
-                    : "rgb(208,174,209,0.5)"
+                  daisyOn ? "rgb(247,244,148,0.5)" : "rgb(208,174,209,0.5)"
                 }
               >
                 {daisyOn ? "신청 하기" : "신청 취소"}
@@ -391,6 +402,7 @@ function EnrollmentForm(props, match) {
                     setcontrolTicket={setdaisy_Ticket}
                   />
                   <FormikControl
+                    type={"daisy"}
                     blockSubmit={daisyOn}
                     control="radio"
                     label="상대의 나이를 선택해주세요"
@@ -430,9 +442,7 @@ function EnrollmentForm(props, match) {
                 type="button"
                 onClick={handleClover}
                 color={
-                  cloverOn
-                    ? "rgb(247,244,148,0.5)"
-                    : "rgb(208,174,209,0.5)"
+                  cloverOn ? "rgb(247,244,148,0.5)" : "rgb(208,174,209,0.5)"
                 }
               >
                 {cloverOn ? "신청 하기" : "신청 취소"}
@@ -466,6 +476,7 @@ function EnrollmentForm(props, match) {
                     setcontrolTicket={setclover_Ticket}
                   />
                   <FormikControl
+                    type={"clover"}
                     blockSubmit={cloverOn}
                     control="radio"
                     label="상대의 나이를 선택해주세요"
@@ -523,11 +534,7 @@ function EnrollmentForm(props, match) {
                       </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                      <Button
-                        onClick={onSubmit}
-                        color="primary"
-                        autoFocus
-                      >
+                      <Button onClick={onSubmit} color="primary" autoFocus>
                         네
                       </Button>
                       <Button onClick={handleClose} color="primary">

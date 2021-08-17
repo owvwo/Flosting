@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
@@ -273,11 +273,17 @@ function Payment(props) {
     const db = fire.firestore();
     // redirect state
     const [submitSuccess, setSubmitSuccess] = useState(false);
-
+    const [discountSum, setDiscountSum] = useState(0); // 할인금액 상태 저장
     let AllSum = (Number(clover_Ticket) + Number(lilac_Ticket) + Number(daisy_Ticket)) * 1000
-    let AllSumString = String(AllSum);
-    let FinishSum = AllSum - 1000;
-    let FinishSumString = String(FinishSum);
+    let FinishSum = AllSum-discountSum;
+
+    // 할인되는 금액이 얼마인지 판단하는 hook
+    useEffect(()=>{
+        if(lilac_Ticket_FT){setDiscountSum(cost => cost+1000)}
+        if(daisy_Ticket_FT){setDiscountSum(cost => cost+1000)}
+        if(clover_Ticket_FT){setDiscountSum(cost => cost+1000)}
+        
+    },[])
 
     let lilacvalues = {
         Ticket: "",
@@ -334,9 +340,9 @@ function Payment(props) {
             clovervalues.TicketNumber = "";
         } else {
             clovervalues.Ticket = true;
-            clovervalues.Univ = daisy_Univ;
-            clovervalues.Age = daisy_Age;
-            clovervalues.TicketNumber = daisy_Ticket;
+            clovervalues.Univ = clover_Univ;
+            clovervalues.Age = clover_Age;
+            clovervalues.TicketNumber = clover_Ticket;
         }
 
         db.collection("Flosting_" + EP_Num)
@@ -346,6 +352,8 @@ function Payment(props) {
                 Lilac: lilacvalues,
                 Daisy: daisyvalues,
                 Clover: clovervalues,
+                Paid: false, // 돈 냈는지 안냈는지 알려주는 변수 추가
+                Cost: FinishSum // 얼마 내야하는지 최종 금액 데이터 추가
             })
             .then(() => {
                 alert("신청이 완료되었습니다.");
@@ -424,7 +432,7 @@ function Payment(props) {
                             </div>
                             <div className="Ticketdollar">
                                 <li>
-                                    1,000
+                                1,000
                                 </li>
                             </div>
                             <div className="TicketSum">
@@ -505,21 +513,19 @@ function Payment(props) {
                                     </li>
                                 </div>
                                 <div className="SelectAllSum">
-                                    <li>
-                                        {AllSumString.substr(0, 1) + "," + AllSumString.substr(1) + "원"}
+                                    <li> 
+                                        {/* 숫자 세자릿 수 콤마 찍는 최적화된 방법이라 생각함(String변수 생성 필요없이) */}
+                                        {AllSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원
                                     </li>
                                 </div>
                                 <div className="SelectDiscount">
                                     <li>
-                                        {"1,000원"}
+                                        {discountSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원
                                     </li>
                                 </div>
                                 <div className="SelectRealSum">
                                     <li>
-                                        {(FinishSumString !== "0") ? (
-                                            FinishSumString.substr(0, 1) + "," + FinishSumString.substr(1) + "원"
-                                        ) : "0원"
-                                        }
+                                        {FinishSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원
                                     </li>
                                 </div>
                             </div>

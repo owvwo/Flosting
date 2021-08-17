@@ -99,7 +99,7 @@ function Alarm(props){
                 <div className='title'>우리학교 알림 신청하기</div>
                 <div className='title_sub'>
                     본인 학교에서 플로스팅이 진행될 때<br/> 
-                    문자로 일정을 안내를 해드립니다 :)
+                    카카오톡 메세지로 일정을 안내 해드립니다 :)
                 </div>
                 <div className='form_div'>
                     <form onSubmit={onSubmit}>

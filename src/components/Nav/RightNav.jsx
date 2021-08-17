@@ -168,7 +168,7 @@ const RightNav = (props) => {
           <RowDiv>
             <NavLink to="/history" activeStyle={activeStyle} style={noneactiveStyle}>
               <li onClick={() => props.setOpen(!props.open)}>
-                플로스팅 연혁
+                역대 진행
               </li>
             </NavLink>
           </RowDiv>
