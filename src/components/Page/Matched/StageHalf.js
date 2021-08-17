@@ -6,7 +6,7 @@ import TimerComponent from './Timer.js'
 import fire from '../Register/LoginFire.js'
 import profileImageBoy from '../../../images/profile_boy_default.png';
 import profileImageGirl from '../../../images/profile_girl_default.png';
-import { NavLink,Link } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 const db = fire.firestore()
 
 const Container = styled.div`
@@ -195,129 +195,131 @@ margin-left: 1.5rem;
 `
 
 
-function StageHalf(props){
+function StageHalf(props) {
     let [init, setInit] = useState(false)
     let [새로고침, 새로고침변경] = useState(false)
 
-    useEffect(()=>{
-        if(props.유저1 && props.유저2){
+    useEffect(() => {
+        if (props.유저1 && props.유저2) {
             setInit(true);
         }
-        if(새로고침){
+        if (새로고침) {
             console.log('refresh')
             window.location.reload();
         }
     })
 
-    return(
+    return (
         <div>
             {
                 init
-                ?
-                <Container>
-                <Timer/>
-                <Title/>
-                <div className='ProfileWrap'>
-                    <LeftProfile 유저1={props.유저1} 메세지보낸사람={props.메세지보낸사람}/>
-                    <RightProfile 유저2={props.유저2} 메세지보낸사람={props.메세지보낸사람}/>
-                </div>
-                <div className='text'>
-                    서로 연락중인데 계속 이 화면이 지속되면<br/>
-                    상대방에게 '답장했어요' 버튼을<br/>
-                    눌러달라고 요청해주세요!<br/>
-                    상대방이 답장버튼을 눌러야만<br/>
-                    매너온도에 악영향을 미치지 않습니다.<br/>
-                </div>
-                <Footer/>
-                </Container>
-                : null
-                }
+                    ?
+                    <Container>
+                        <Timer />
+                        <Title />
+                        <div className='ProfileWrap'>
+                            <LeftProfile 유저1={props.유저1} 메세지보낸사람={props.메세지보낸사람} />
+                            <RightProfile 유저2={props.유저2} 메세지보낸사람={props.메세지보낸사람} />
+                        </div>
+                        <div className='text'>
+                            서로 연락중인데 계속 이 화면이 지속되면<br />
+                            상대방에게 '답장했어요' 버튼을<br />
+                            눌러달라고 요청해주세요!<br />
+                            상대방이 답장버튼을 눌러야만<br />
+                            매너온도에 악영향을 미치지 않습니다.<br />
+                        </div>
+                        <Footer />
+                    </Container>
+                    : null
+            }
         </div>
     )
 }
 export default StageHalf;
 
-function Timer(){
-    return(
+function Timer() {
+    return (
         <TimerWrap>
-            <li className = "Ment">
-            시간이 종료되기전까지 연락이 오길 기원합니다!
+            <li className="Ment">
+                시간이 종료되기전까지 연락이 오길 기원합니다!
             </li>
-            <TimerComponent/>
+            <TimerComponent />
         </TimerWrap>
     )
 }
 
-function Title(){
-    return(
+function Title() {
+    return (
         <TitleContainer>
             <TitleWrap>
-            매칭 진행 중
+                매칭 진행 중
             </TitleWrap>
             <NoticeMessage><li>표시된 상대방의 번호가 잘못된 것 같으면 카카오 채널로 문의해주세요!</li></NoticeMessage>
         </TitleContainer>
     )
 }
 
-function LeftProfile(props){
+function LeftProfile(props) {
     let 유저1 = props.유저1
     let 메세지보낸사람 = props.메세지보낸사람
-    let profileImage=유저1.profileImage;
+    let profileImage = 유저1.profileImage;
 
     const noneactiveStyle = {
         textDecoration: 'none',
         color: '#2B2A28'
     }
 
-    
-    return(
-            <LeftProfileWrap>
-                <div className='decisionState'>
-                    {
+
+    return (
+        <LeftProfileWrap>
+            <div className='decisionState'>
+                {
                     메세지보낸사람 === 유저1.User.Nick
-                    ? <div className = "ED">메세지보냈음!</div>
-                    : <div className = "ING">결정중</div>
-                    }
-                </div>
-                <div className='defaultPicBox'>
-                    <NavLink to = {`/userprofile/${유저1.User.Nick}`} style={noneactiveStyle}><li className = "LookProfile">프로필 보기</li></NavLink>
-                    <img src={profileImage} className='defaultPic'/>
-                </div>
-                <div className='profileInfo'>
-                    <li className="UserNick">{유저1.User.Nick}[{유저1.User.Age}]</li>
-                    <li className="UserUniv">{유저1.User.Univ}</li>
-                </div>
-            </LeftProfileWrap>
+                        ? <div className="ED">메세지보냈음!</div>
+                        : <div className="ING">결정중</div>
+                }
+            </div>
+            <div className='defaultPicBox'>
+                <NavLink to={`/userprofile/${유저1.User.Nick}`} style={noneactiveStyle}><li className="LookProfile">프로필 보기</li></NavLink>
+                <img src={profileImage} className='defaultPic' />
+            </div>
+            <div className='profileInfo'>
+                <li className="UserNick">{유저1.User.Nick}[{유저1.User.Age}]</li>
+                <li className="UserPhone">{유저1.User.Phone.substring(0, 3)}-{유저1.User.Phone.substring(3, 7)}-{유저1.User.Phone.substring(7)}</li>
+                <li className="UserUniv">{유저1.User.Univ}</li>
+            </div>
+        </LeftProfileWrap>
     )
 }
 
-function RightProfile(props){
+function RightProfile(props) {
     let 유저2 = props.유저2
     let 메세지보낸사람 = props.메세지보낸사람
-    let profileImage=유저2.profileImage;
+    let profileImage = 유저2.profileImage;
 
     const noneactiveStyle = {
         textDecoration: 'none',
         color: '#2B2A28'
-}
+    }
 
-    return(
+    return (
         <RightProfileWrap>
-                <div className='decisionState'>
-                    {
+            <div className='decisionState'>
+                {
                     메세지보낸사람 === 유저2.User.Nick
-                    ? <div className = "ED">메세지보냈음!</div>
-                    : <div className = "ING">결정중</div>
-                    }
-                </div>
-                <div className='defaultPicBox'>
-                    <NavLink to = {`/userprofile/${유저2.User.Nick}`} style={noneactiveStyle}><li className = "LookProfile">프로필 보기</li></NavLink>
-                    <img src={profileImage} className='defaultPic'/>
-                </div>
-                <div className='profileInfo'>
-                    <li className="UserNick">{유저2.User.Nick}[{유저2.User.Age}]</li>
-                    <li className="UserUniv">{유저2.User.Univ}</li>
-                </div>
+                        ? <div className="ED">메세지보냈음!</div>
+                        : <div className="ING">결정중</div>
+                }
+            </div>
+            <div className='defaultPicBox'>
+                <NavLink to={`/userprofile/${유저2.User.Nick}`} style={noneactiveStyle}><li className="LookProfile">프로필 보기</li></NavLink>
+                <img src={profileImage} className='defaultPic' />
+            </div>
+            <div className='profileInfo'>
+                <li className="UserNick">{유저2.User.Nick}[{유저2.User.Age}]</li>
+                <li className="UserPhone">{유저2.User.Phone.substring(0, 3)}-{유저2.User.Phone.substring(3, 7)}-{유저2.User.Phone.substring(7)}</li>
+                <li className="UserUniv">{유저2.User.Univ}</li>
+            </div>
         </RightProfileWrap>
     )
 }
