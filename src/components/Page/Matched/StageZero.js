@@ -3,9 +3,7 @@ import styled from 'styled-components';
 import Footer from '../Footer';
 import TimerComponent from './Timer.js'
 import fire from '../Register/LoginFire.js'
-import profileImageBoy from '../../../images/profile_boy_default.png';
-import profileImageGirl from '../../../images/profile_girl_default.png';
-import { NavLink,Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 const db = fire.firestore()
 
 const Container = styled.div`

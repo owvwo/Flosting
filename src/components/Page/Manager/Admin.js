@@ -157,6 +157,8 @@ const Admin = (props) => {
                     <Extraction nowCount={nowCount} />
                 </Container>
                 <NavLink to='/admin/bigfoot'><button>왕발 기능</button></NavLink>
+                <NavLink to='/admin/moneygiver'><button>입금자 확인 기능</button></NavLink>
+                <NavLink to='/admin/delete'><button>미입금자 처형</button></NavLink>
                 <NavLink to='/admin/owvwo'><button>승훈 기능</button></NavLink>
             </ThemeProvider>
         )

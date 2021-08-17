@@ -107,6 +107,10 @@ function AdminOwvwO(props) {
         TicketNumber: ""
     }
 
+    useEffect(() => {
+        setNick(Age + Gender + "-" + LilacAge + "-" + LilacUniv + "-티켓" + LilacTicketNumber);
+    }, [Age, Univ, LilacAge, LilacUniv, LilacTicketNumber])
+
     const OnClickpush = () => {
         dbUser.Age = Age;
         dbUser.Gender = Gender;
@@ -136,6 +140,8 @@ function AdminOwvwO(props) {
             .catch((error) => {
                 alert(error.message);
             });
+
+        setUnique_key(String(Number(Unique_key) + 1));
     }
     const handleAgeChange = (selected) => {
         setLilacAge(selected);
@@ -187,6 +193,7 @@ function AdminOwvwO(props) {
                     placeholder="신청하는애 Gender"
                     onChange={handlesetGender} /></li>
                 <li>Nick <Input
+                    value={Age + Gender + "-" + LilacAge + "-" + LilacUniv + "-티켓" + LilacTicketNumber}
                     placeholder="신청하는애 Nick"
                     onChange={handlesetNick} /></li>
                 <li>Univ <Input
@@ -196,6 +203,7 @@ function AdminOwvwO(props) {
                     placeholder="신청하는애 이름"
                     onChange={handlesetName} /></li>
                 <li>Unique_key <Input
+                    value={Unique_key}
                     placeholder="신청하는애 Unique_key"
                     onChange={handlesetUnique_key} /></li>
 
