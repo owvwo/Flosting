@@ -202,15 +202,15 @@ background-color: white;
 `
 
 
-function ReceivePerson(props){
+function ReceivePerson(props) {
     let [init, setInit] = useState(false)
     let [새로고침, 새로고침변경] = useState(false)
 
-    useEffect(()=>{
-        if(props.유저1 && props.유저2){
+    useEffect(() => {
+        if (props.유저1 && props.유저2) {
             setInit(true);
         }
-        if(새로고침){
+        if (새로고침) {
             console.log('refresh')
             window.location.reload();
 
@@ -229,7 +229,7 @@ function ReceivePerson(props){
                             <LeftProfile 유저1={props.유저1} 메세지보낸사람={props.메세지보낸사람} />
                             <RightProfile 유저2={props.유저2} 메세지보낸사람={props.메세지보낸사람} />
                         </div>
-                        <Button 컬렉션={props.컬렉션} 문서번호={props.문서번호} 닉네임={props.닉네임} 새로고침변경={새로고침변경}/>
+                        <Button 컬렉션={props.컬렉션} 문서번호={props.문서번호} 닉네임={props.닉네임} 새로고침변경={새로고침변경} />
                         <Footer />
                     </Container>
                     : null
@@ -239,31 +239,31 @@ function ReceivePerson(props){
 }
 export default ReceivePerson;
 
-function Timer(){
-    return(
+function Timer() {
+    return (
         <TimerWrap>
-            <li className = "Ment">
-            시간이 종료되기 전까지 연락을 해주세요! 
+            <li className="Ment">
+                시간이 종료되기 전까지 연락을 해주세요!
             </li>
-            <TimerComponent/>
+            <TimerComponent />
         </TimerWrap>
     )
 }
 
-function Title(){
-    return(
+function Title() {
+    return (
         <TitleContainer>
             <TitleWrap>
-            매칭 진행 중
+                매칭 진행 중
             </TitleWrap>
             <NoticeMessage><li>표시와 다르게 상대방에게 메세지가 안오셨다면 카카오 채널을 통해 문의해주세요!</li></NoticeMessage>
         </TitleContainer>
     )
 }
 
-function LeftProfile(props){
+function LeftProfile(props) {
     let 유저1 = props.유저1
-    let profileImage=유저1.profileImage;
+    let profileImage = 유저1.profileImage;
     let profileNickName = 유저1.User.Nick;
 
     const noneactiveStyle = {
@@ -273,30 +273,31 @@ function LeftProfile(props){
 
 
 
-    return(
-            <LeftProfileWrap>
-                <div className='decisionState'>
-                    {
+    return (
+        <LeftProfileWrap>
+            <div className='decisionState'>
+                {
                     props.메세지보낸사람 === 유저1.User.Nick
-                    ? <div className = "ED">메세지보냈음!</div>
-                    : <div className = "ING">결정중</div>
-                    }
-                </div>
-                <div>
-                    <img src={profileImage} className='defaultPic'/>
-                </div>
-                <div className='profileInfo'>
-                    <li className="UserNick">{유저1.User.Nick}</li>
-                    <NavLink to = {`/userprofile/${profileNickName}`} style={noneactiveStyle}><li className = "LookProfile">프로필 보기</li></NavLink>
-                </div>
-            </LeftProfileWrap>
+                        ? <div className="ED">메세지보냈음!</div>
+                        : <div className="ING">결정중</div>
+                }
+            </div>
+            <div>
+                <img src={profileImage} className='defaultPic' />
+            </div>
+            <div className='profileInfo'>
+                <li className="UserNick">{유저1.User.Nick}</li>
+                <li className="UserPhone">{유저1.User.Phone.substring(0, 3)}-{유저1.User.Phone.substring(3, 7)}-{유저1.User.Phone.substring(7)}</li>
+                <NavLink to={`/userprofile/${profileNickName}`} style={noneactiveStyle}><li className="LookProfile">프로필 보기</li></NavLink>
+            </div>
+        </LeftProfileWrap>
     )
 }
 
-function RightProfile(props){
+function RightProfile(props) {
 
     let 유저2 = props.유저2
-    let profileImage=유저2.profileImage;
+    let profileImage = 유저2.profileImage;
     let profileNickName = 유저2.User.Nick
 
     const noneactiveStyle = {
@@ -304,57 +305,58 @@ function RightProfile(props){
         color: '#2B2A28'
     }
 
-    return(
+    return (
         <RightProfileWrap>
             <div className='decisionState'>
                 {
-                props.메세지보낸사람 === 유저2.User.Nick
-                ? <div className = "ED">메세지보냈음!</div>
-                : <div className = "ING">결정중</div>
+                    props.메세지보낸사람 === 유저2.User.Nick
+                        ? <div className="ED">메세지보냈음!</div>
+                        : <div className="ING">결정중</div>
                 }
             </div>
             <div className='defaultPicBox'>
-                <img src={profileImage} className='defaultPic'/>
+                <img src={profileImage} className='defaultPic' />
             </div>
             <div className='profileInfo'>
                 <li className="UserNick">{유저2.User.Nick}</li>
-                <NavLink to = {`/userprofile/${profileNickName}`} style={noneactiveStyle}><li className = "LookProfile">프로필 보기</li></NavLink>
+                <li className="UserPhone">{유저2.User.Phone.substring(0, 3)}-{유저2.User.Phone.substring(3, 7)}-{유저2.User.Phone.substring(7)}</li>
+                <NavLink to={`/userprofile/${profileNickName}`} style={noneactiveStyle}><li className="LookProfile">프로필 보기</li></NavLink>
             </div>
         </RightProfileWrap>
     )
 }
 
-function Button(props){
+function Button(props) {
 
-    function onClick_sendMessage(){
+    function onClick_sendMessage() {
         const result = window.confirm('정말로 답장을 보내셨나요?');
-        if(result){
+        if (result) {
             db.collection(props.컬렉션).doc(props.문서번호).update({
                 stage: 'success'
-            }).then(()=>{
+            }).then(() => {
                 alert('좋은 인연이 되시길 기원합니다!')
                 props.새로고침변경(true)
             })
-        }else{}
+        } else { }
     }
 
-    function onClick_refuse(){
+    function onClick_refuse() {
         const result = window.confirm('정말로 거절하실건가요?');
-        if(result){
+        if (result) {
             db.collection(props.컬렉션).doc(props.문서번호).update({
                 stage: 'end'
             })
             db.collection(props.컬렉션).doc(props.문서번호).update({
                 거절한사람: props.닉네임
-            }).then(()=>{
+            }).then(() => {
                 alert('매칭을 거절하셨습니다.')
                 props.새로고침변경(true)
             })
-        }else{}
+        } else { }
     }
 
-    return(
-        
+    return (
+
         <ButtonWrap>
             {/* <NotYet>아직 연락 안왔어요</NotYet> */}
             <ReplyMessage onClick={onClick_sendMessage}>답장했어요</ReplyMessage>
