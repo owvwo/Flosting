@@ -9,41 +9,40 @@ const Label = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Noto Sans KR', sans-serif;
+  font-family: "Noto Sans KR", sans-serif;
   font-weight: 700;
   font-size: 1.2rem;
-  border: 1px solid rgb(242,236,218, 1);
-  width : 20rem;
-  height : 2rem;
+  border: 1px solid rgb(242, 236, 218, 1);
+  width: 20rem;
+  height: 2rem;
   margin-bottom: 10px;
   padding: 5px;
   border-radius: 10px;
-  color: rgb(0,0,0, 0.5);
-  background-color: rgb(242,236,218, 0.8);
-
+  color: rgb(0, 0, 0, 0.5);
+  background-color: rgb(242, 236, 218, 0.8);
 `;
 const FormikContainer = styled.div`
   display: flex;
-  flex-direction : column;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-`
+`;
 
 const Item = styled.div`
   display: flex;
   align-items: center;
   height: 5rem;
   position: relative;
-  margin : 0rem 1rem;
-  .labelName{
-    font-family: 'Do Hyeon', sans-serif;
+  margin: 0rem 1rem;
+  .labelName {
+    font-family: "Do Hyeon", sans-serif;
     width: 4rem;
   }
 `;
 const FlexrowDiv = styled.div`
   display: flex;
-  flex-direction : row;
-`
+  flex-direction: row;
+`;
 const RadioButtonLabel = styled.label`
   position: absolute;
   top: 1rem;
@@ -93,13 +92,13 @@ const RadioButton = styled.input`
   `}
 `;
 
-function radiobutton(props) {
+function Radiobutton(props) {
   const { controlAge, setcontrolAge, label } = props;
 
   const handleSelectChange = (event) => {
-    setcontrolAge(event.target.value);
+    const value = event.target.value;
+    setcontrolAge(value);
   };
-
 
   return (
     <FormikContainer>
@@ -107,10 +106,10 @@ function radiobutton(props) {
       <FlexrowDiv>
         <Item>
           <RadioButton
+            id="radio"
             type="radio"
-            name="radio"
             value="20"
-            checked={controlAge === "20"}
+            checked={controlAge === "20" ? true : false}
             onChange={(event) => handleSelectChange(event)}
           />
           <RadioButtonLabel />
@@ -118,10 +117,10 @@ function radiobutton(props) {
         </Item>
         <Item>
           <RadioButton
+            id="radio"
             type="radio"
-            name="radio"
             value="21~23"
-            checked={controlAge === "21~23"}
+            checked={controlAge === "21~23" ? true : false}
             onChange={(event) => handleSelectChange(event)}
           />
           <RadioButtonLabel />
@@ -131,10 +130,10 @@ function radiobutton(props) {
       <FlexrowDiv>
         <Item>
           <RadioButton
+            id="radio"
             type="radio"
-            name="radio"
             value="24+"
-            checked={controlAge === "24+"}
+            checked={controlAge === "24+" ? true : false}
             onChange={(event) => handleSelectChange(event)}
           />
           <RadioButtonLabel />
@@ -142,19 +141,18 @@ function radiobutton(props) {
         </Item>
         <Item>
           <RadioButton
+            id="radio"
             type="radio"
-            name="radio"
             value="dnt_M"
-            checked={controlAge === "dnt_M"}
+            checked={controlAge === "dnt_M" ? true : false}
             onChange={(event) => handleSelectChange(event)}
           />
           <RadioButtonLabel />
           <div className="labelName">상관없음</div>
         </Item>
       </FlexrowDiv>
-
     </FormikContainer>
   );
 }
 
-export default radiobutton;
+export default Radiobutton;
