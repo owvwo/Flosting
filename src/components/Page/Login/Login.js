@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 import LoginBar from './LoginBar'
 import fire from '../Register/LoginFire'
 import { Redirect } from 'react-router-dom';
+import Logosrc from '../../../images/Logo_Pink.png'
 
 
 const Wrapper = styled.div`
@@ -45,13 +46,22 @@ const Container = styled.div`
     justify-content: center;
     align-items: center;
 `;
+const FlostingImg = styled.div`
+    img{
+        width: 15rem;
+    }
+`
 const FlostingTitle = styled.div`
-    font-family: 'Lobster', cursive;
-    font-size: 40px;
-    border: 1.5px solid;
+    list-style : none;
+    li{
+        font-family: 'Ubuntu', sans-serif;
+        font-size: 2rem;
+    }
+    position : relative;
+    top : -2rem;
     padding: 5px;
     margin: 5px;
-    margin-bottom: 4.0rem;
+    margin-bottom: 2.0rem;
 `;
 const Button = styled.button`
   font-family: 'Noto Sans KR', sans-serif;
@@ -80,71 +90,74 @@ const Login = () => {
     const noneactiveStyle = {
         color: '#000000',
         textDecoration: 'none'
-      }
-    
+    }
+
     const [currentPage, handlePageChange] = useState(false);
     const [user, setUser] = useState('');
 
     const authListener = () => {
-      fire.auth().onAuthStateChanged((user) => {
-          if(user){
-              setUser(user);
-          }else{
-              setUser("");
-          }
-      });
+        fire.auth().onAuthStateChanged((user) => {
+            if (user) {
+                setUser(user);
+            } else {
+                setUser("");
+            }
+        });
     };
 
-    useEffect(()=>{
+    useEffect(() => {
         authListener();
     }, []);
 
-    if(user){
+    if (user) {
         return (<Redirect to='/' />);
     }
-    else{
-    return (
-        <Wrapper>
-            <Container>
-                <FlostingTitle>
-                    Flosting
-                </FlostingTitle>
-                {currentPage == false ? (
-                    <Container>
-                        <Button login onClick={() => handlePageChange(true)}>
-                            로그인
-                        </Button>
-                        <NavLink to="/register">
-                            <Button register>
-                                회원가입
+    else {
+        return (
+            <Wrapper>
+                <Container>
+                    <FlostingImg>
+                        <img src={Logosrc}></img>
+                    </FlostingImg>
+                    <FlostingTitle>
+                        <li>Flosting</li>
+                    </FlostingTitle>
+                    {currentPage == false ? (
+                        <Container>
+                            <Button login onClick={() => handlePageChange(true)}>
+                                로그인
                             </Button>
-                        </NavLink>
-                        <Forgotlinkbox>
-                            <NavLink to ="/forgot" style={noneactiveStyle}>
-                            <li>아이디/비밀번호 찾기</li>
+                            <NavLink to="/register">
+                                <Button register>
+                                    회원가입
+                                </Button>
                             </NavLink>
-                        </Forgotlinkbox>
-                    </Container>
-                ) : (
-                    <div>
-                        <LoginBar />
-                        <Forgotlinkbox>
-                        <NavLink to ="/forgot" style={noneactiveStyle}>
-                            <li>아이디/비밀번호 찾기</li>
-                            </NavLink>
-                        </Forgotlinkbox>
-                        <Registerlinkbox>
-                            <li className = "li1">플로스팅이 처음이신가요?&nbsp;</li>
-                            <NavLink to="/register" style={noneactiveStyle}>
-                            <li className = "li2">회원가입</li>
-                            </NavLink>
-                        </Registerlinkbox>
-                    </div>
-                )
-                }
-            </Container>
-        </Wrapper>
-    );
+                            <Forgotlinkbox>
+                                <NavLink to="/forgot" style={noneactiveStyle}>
+                                    <li>아이디/비밀번호 찾기</li>
+                                </NavLink>
+                            </Forgotlinkbox>
+                        </Container>
+                    ) : (
+                        <div>
+                            <LoginBar />
+                            <Forgotlinkbox>
+                                <NavLink to="/forgot" style={noneactiveStyle}>
+                                    <li>아이디/비밀번호 찾기</li>
+                                </NavLink>
+                            </Forgotlinkbox>
+                            <Registerlinkbox>
+                                <li className="li1">플로스팅이 처음이신가요?&nbsp;</li>
+                                <NavLink to="/register" style={noneactiveStyle}>
+                                    <li className="li2">회원가입</li>
+                                </NavLink>
+                            </Registerlinkbox>
+                        </div>
+                    )
+                    }
+                </Container>
+            </Wrapper>
+        );
     }
 }
 export default Login;

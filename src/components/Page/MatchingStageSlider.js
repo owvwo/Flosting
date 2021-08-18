@@ -15,7 +15,7 @@ const Wrap = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgb(255,180,224,0.2);
+  background-color: rgb(255,180,224,0.1);
   border-radius: 40px;
   height: 40rem;
   .topText{
@@ -73,8 +73,8 @@ export default class 참여방법Slider extends Component {
 
           <Wrap>
             <div className='topText'>
-              신청하신 회차의 결과 발표일이 되어<br/>
-              플로스팅에 접속하시면<br/>
+              신청하신 회차의 결과 발표일이 되어<br />
+              플로스팅에 접속하시면<br />
               새로운 '매칭결과보기' 버튼이 생성됩니다.
             </div>
             <div className='imageBox'>
@@ -88,83 +88,83 @@ export default class 참여방법Slider extends Component {
 
           <Wrap>
             <div className='topText'>
-              클로버팅/라일락팅/데이지팅 중<br/>
-              신청한 플로스팅을 클릭하면<br/>
-              매칭된 상대와 남은 매칭 시간을 <br/>
-              확인 할 수 있어요<br/><br/>
-              제한 시간 내 아무런 응답이 없으면<br/>
+              클로버팅/라일락팅/데이지팅 중<br />
+              신청한 플로스팅을 클릭하면<br />
+              매칭된 상대와 남은 매칭 시간을 <br />
+              확인 할 수 있어요<br /><br />
+              제한 시간 내 아무런 응답이 없으면<br />
               내 매너온도가 차감되니 주의하세요!!
             </div>
             <div className='imageBox'>
               <img className='사진' src={매칭2} />
             </div>
             <div className='innerTextColunm'>
-                    <div className='column'>
-                        시간초과<br/>
-                        ↓<br/>
-                        매칭종료 및<br/>
-                        매너온도 차감<br/>
-                    </div>
-                    <div className='column'>
-                        선톡했어요!<br/>
-                        ↓<br/>
-                        매너온도 상승<br/>
-                        매칭 단계 상승<br/>
-                    </div>
-                    <div className='column'>
-                        거절할래요<br/>
-                        ↓<br/>
-                        매칭종료<br/>
-                        매너온도 유지<br/>
-                    </div>
-                </div>
+              <div className='column'>
+                시간초과<br />
+                ↓<br />
+                매칭종료 및<br />
+                매너온도 차감<br />
+              </div>
+              <div className='column'>
+                선톡했어요!<br />
+                ↓<br />
+                매너온도 상승<br />
+                매칭 단계 상승<br />
+              </div>
+              <div className='column'>
+                거절할래요<br />
+                ↓<br />
+                매칭종료<br />
+                매너온도 유지<br />
+              </div>
+            </div>
           </Wrap>
 
           <Wrap>
             <div className='topText'>
-              매칭상대로부터 먼저 연락이 왔다면<br/>
-              제한 시간 내 매칭의사를 표할 수 있어요<br/><br/>
-              제한 시간 내 아무런 응답이 없으면<br/>
+              매칭상대로부터 먼저 연락이 왔다면<br />
+              제한 시간 내 매칭의사를 표할 수 있어요<br /><br />
+              제한 시간 내 아무런 응답이 없으면<br />
               내 매너온도가 차감되니 주의하세요!!
-              <br/>
+              <br />
             </div>
             <div className='imageBox'>
               <img className='사진' src={매칭3} />
             </div>
             <div className='innerTextColunm'>
               <div className='column'>
-                  시간초과<br/>
-                  ↓<br/>
-                  매칭종료 및<br/>
-                  매너온도 차감<br/>
+                시간초과<br />
+                ↓<br />
+                매칭종료 및<br />
+                매너온도 차감<br />
               </div>
               <div className='column'>
-                  답장했어요!<br/>
-                  ↓<br/>
-                  매칭 단계 상승<br/>
-                  매칭 성공!!<br/>
+                답장했어요!<br />
+                ↓<br />
+                매칭 단계 상승<br />
+                매칭 성공!!<br />
               </div>
               <div className='column'>
-                  거절할래요<br/>
-                  ↓<br/>
-                  매칭종료<br/>
-                  매너온도 유지<br/>
+                거절할래요<br />
+                ↓<br />
+                매칭종료<br />
+                매너온도 유지<br />
               </div>
-          </div>
+            </div>
 
           </Wrap>
 
           <Wrap>
             <div className='topText'>
-              양 쪽 모두 연락을 하게 되면 <br/>
-              매칭 성공화면으로 전환됩니다 <br/>
+              양 쪽 모두 연락을 하게 되면 <br />
+              매칭 성공화면으로 전환됩니다 <br />
             </div>
             <div className='imageBox'>
               <img className='사진' src={매칭4} />
             </div>
             <div className='topText'>
-              매칭 성공이 된 분들에 한하여 진행할 <br/>
-              이벤트를 준비중에 있습니다 :)<br/>
+              매칭 성공이 된 분들에 한하여 진행할 <br />
+              이벤트를 준비중에 있습니다 :)<br />
             </div>
             <div className='arrow'>
               거절을 하면 어떻게 되나요? →
@@ -173,15 +173,15 @@ export default class 참여방법Slider extends Component {
           </Wrap>
           <Wrap>
             <div className='topText'>
-              거절의사를 표하게 되면 양측 모두<br/>
-              즉시 매칭 종료가 됩니다.<br/>
+              거절의사를 표하게 되면 양측 모두<br />
+              즉시 매칭 종료가 됩니다.<br />
             </div>
             <div className='imageBox'>
               <img className='사진' src={매칭5} />
             </div>
             <div className='topText'>
-              플로스팅은 1대1 매칭을 원칙으로 하고 있어<br/>
-              거절에 의한 재매칭은 불가능합니다<br/>
+              플로스팅은 상대방의 부재와<br />
+              거절에 의한 재매칭은 불가능합니다<br />
             </div>
           </Wrap>
         </Slider>

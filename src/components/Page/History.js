@@ -34,21 +34,21 @@ text-align:center;
 `
 
 
-const History = () =>{
-    return(
+const History = () => {
+    return (
         <Container>
             <div className='title'>히스토리</div>
             <div className='히스토리내용'>
                 <div>총 누적 2019명!!</div>
                 <div className='표'>
-                    <div><br/>939명</div>
-                    <div>여자<br/>1080명</div>
+                    <div>남자<br />939명</div>
+                    <div>여자<br />1080명</div>
                 </div>
             </div>
             <div className='sliderDiv'>
-                <SimpleSlider/>
+                <SimpleSlider />
             </div>
-            <Footer/>
+            <Footer />
         </Container>
     );
 };

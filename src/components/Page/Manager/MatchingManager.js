@@ -68,7 +68,7 @@ const MatchingBox = styled.div`
         font-size : 0.7rem;
     }
 `
-const MatchingManager = (props) => {
+const MatchingManager2 = (props) => {
 
     const { nowCount } = props;
     const user = props.user;
@@ -93,26 +93,36 @@ const MatchingManager = (props) => {
     const [C_trash, setC_trash] = useState("");
 
 
+    const MAX_MATCHING_NUM = 20;
+
     //DB에서 우선순위배열에 추가하는 함수
     function DBtoPriority_Array(Priority_Array, Priority, MatchingType, data) {
         //우선순위 배열, 우선순위, Lilac/Daisy/Clover/ DOC.data
 
         let tempdic = {
-            Pick: false, //Couple :true  / 초기값 : false
+            Name: data.User.Name, // 본인 이름
             Age: data.User.Age, // 본인 나이
             Gender: data.User.Gender, //본인 성별
-            Manner: data.User.Manner, // 본인 매너
             Nick: data.User.Nick, // 본인 닉네임
             Phone: data.User.Phone,// 본인 폰
+            Unique_key: data.User.Unique_key, //Unique Key 값
             Univ: data.User.Univ, // 본인 학교
+            MaxMatching: MAX_MATCHING_NUM, // 최대 매칭 수
+            MatchingCode: [] // 매칭된 사람
         }
         if (MatchingType == "Lilac") {
+            tempdic['OriginalTicket'] = data.Lilac.TicketNumber // 처음 신청한 티켓 수
+            tempdic['Ticket'] = data.Lilac.TicketNumber; // 남은 티켓 수
             tempdic['W_Age'] = data.Lilac.Age; //원하는 나이
             tempdic['W_Univ'] = data.Lilac.Univ; //원하는 학교
         } else if (MatchingType == "Daisy") {
+            tempdic['OriginalTicket'] = data.Daisy.TicketNumber // 처음 신청한 티켓 수
+            tempdic['Ticket'] = data.Daisy.TicketNumber; //티켓 수
             tempdic['W_Age'] = data.Daisy.Age; //원하는 나이
             tempdic['W_Univ'] = data.Daisy.Univ; //원하는 학교
         } else {
+            tempdic['OriginalTicket'] = data.Clover.TicketNumber // 처음 신청한 티켓 수
+            tempdic['Ticket'] = data.Clover.TicketNumber; //티켓 수
             tempdic['W_Age'] = data.Clover.Age; //원하는 나이
             tempdic['W_Univ'] = data.Clover.Univ; //원하는 학교
         }
@@ -151,45 +161,55 @@ const MatchingManager = (props) => {
     }
     //PickUser와 OtherUser가 커플이 될 수 있는지 확인하는 함수
     const CheckCanCouple = (PickUser, OtherUser, MatchingType) => {
+
+        //만약 이전에 매칭된 놈이면 패스
+        if (PickUser.MatchingCode.length) {
+            let forlength = PickUser.MatchingCode.length;
+            for (let i = 0; i < forlength; i++) {
+                if (PickUser.MatchingCode[i] == OtherUser.Unique_key)
+                    return false;
+            }
+        }
+
         //Lilac일 경우, 남녀만됨.
         if (MatchingType == "Lilac" || MatchingType == "Daisy") {
             if (PickUser.Gender != OtherUser.Gender) {
                 //젠더 달라야함.
-                if (PickUser.W_Age == "Dnt_M" && PickUser.W_Univ == "Dnt_M") {
+                if (PickUser.W_Age == "dnt_M" && PickUser.W_Univ == "dnt_M") {
                     //pickuser는 나이, 학교 상관없어.
-                    if (OtherUser.W_Age == "Dnt_M" && OtherUser.W_Univ == "Dnt_M") {
+                    if (OtherUser.W_Age == "dnt_M" && OtherUser.W_Univ == "dnt_M") {
                         //otheruser는 나이, 학교 상관없어.
                         return true;
                     }
-                    else if (OtherUser.W_Age != "Dnt_M" && OtherUser.W_Univ == "Dnt_M") {
+                    else if (OtherUser.W_Age != "dnt_M" && OtherUser.W_Univ == "dnt_M") {
                         //otheruser는 나이 조건있고, 학교 상관없어.
                         if (CheckAgeCondition(OtherUser.W_Age, PickUser.Age)) {
                             return true;
                         } else {
                             return false;
                         }
-                    } else if (OtherUser.W_Age == "Dnt_M" && OtherUser.W_Univ == "myUniv") {
+                    } else if (OtherUser.W_Age == "dnt_M" && OtherUser.W_Univ == "myUniv") {
                         //otheruser는 나이 상관없고, 학교만 울학교면 좋겠어.
                         if (PickUser.Univ == OtherUser.Univ) {
                             return true;
                         } else {
                             return false;
                         }
-                    } else if (OtherUser.W_Age != "Dnt_M" && OtherUser.W_Univ == "myUniv") {
+                    } else if (OtherUser.W_Age != "dnt_M" && OtherUser.W_Univ == "myUniv") {
                         //otheruser는 나이 조건있고, 학교는 울학교면 좋겠어.
                         if (PickUser.Univ == OtherUser.Univ && CheckAgeCondition(OtherUser.W_Age, PickUser.Age)) {
                             return true;
                         } else {
                             return false;
                         }
-                    } else if (OtherUser.W_Age == "Dnt_M" && OtherUser.W_Univ == "otherUniv") {
+                    } else if (OtherUser.W_Age == "dnt_M" && OtherUser.W_Univ == "otherUniv") {
                         //otheruser는 나이 상관없고, 학교가 타학교면 좋겠어.
                         if (PickUser.Univ != OtherUser.Univ) {
                             return true;
                         } else {
                             return false;
                         }
-                    } else if (OtherUser.W_Age != "Dnt_M" && OtherUser.W_Univ == "otherUniv") {
+                    } else if (OtherUser.W_Age != "dnt_M" && OtherUser.W_Univ == "otherUniv") {
                         //otheruser는 나이 조건있고, 학교가 타학교면 좋겠어.
                         if (PickUser.Univ != OtherUser.Univ && CheckAgeCondition(OtherUser.W_Age, PickUser.Age)) {
                             return true;
@@ -197,42 +217,42 @@ const MatchingManager = (props) => {
                             return false;
                         }
                     }
-                } else if (PickUser.W_Age != "Dnt_M" && PickUser.W_Univ == "Dnt_M") {
+                } else if (PickUser.W_Age != "dnt_M" && PickUser.W_Univ == "dnt_M") {
                     //pickuser는 나이 조건있고, 학교 상관없어.
                     if (CheckAgeCondition(PickUser.W_Age, OtherUser.Age)) {
-                        if (OtherUser.W_Age == "Dnt_M" && OtherUser.W_Univ == "Dnt_M") {
+                        if (OtherUser.W_Age == "dnt_M" && OtherUser.W_Univ == "dnt_M") {
                             //otheruser는 나이,학교 상관없어.
                             return true;
                         }
-                        else if (OtherUser.W_Age != "Dnt_M" && OtherUser.W_Univ == "Dnt_M") {
+                        else if (OtherUser.W_Age != "dnt_M" && OtherUser.W_Univ == "dnt_M") {
                             //otheruser는 나이 조건있고, 학교 상관없어.
                             if (CheckAgeCondition(OtherUser.W_Age, PickUser.Age)) {
                                 return true;
                             } else {
                                 return false;
                             }
-                        } else if (OtherUser.W_Age == "Dnt_M" && OtherUser.W_Univ == "myUniv") {
+                        } else if (OtherUser.W_Age == "dnt_M" && OtherUser.W_Univ == "myUniv") {
                             //otheruser는 나이 상관없고, 학교만 울학교면 좋겠어.
                             if (PickUser.Univ == OtherUser.Univ) {
                                 return true;
                             } else {
                                 return false;
                             }
-                        } else if (OtherUser.W_Age != "Dnt_M" && OtherUser.W_Univ == "myUniv") {
+                        } else if (OtherUser.W_Age != "dnt_M" && OtherUser.W_Univ == "myUniv") {
                             //otheruser는 나이 조건있고, 학교는 울학교면 좋겠어.
                             if (PickUser.Univ == OtherUser.Univ && CheckAgeCondition(OtherUser.W_Age, PickUser.Age)) {
                                 return true;
                             } else {
                                 return false;
                             }
-                        } else if (OtherUser.W_Age == "Dnt_M" && OtherUser.W_Univ == "otherUniv") {
+                        } else if (OtherUser.W_Age == "dnt_M" && OtherUser.W_Univ == "otherUniv") {
                             //otheruser는 나이 상관없고, 학교가 타학교면 좋겠어.
                             if (PickUser.Univ != OtherUser.Univ) {
                                 return true;
                             } else {
                                 return false;
                             }
-                        } else if (OtherUser.W_Age != "Dnt_M" && OtherUser.W_Univ == "otherUniv") {
+                        } else if (OtherUser.W_Age != "dnt_M" && OtherUser.W_Univ == "otherUniv") {
                             //otheruser는 나이 조건있고, 학교가 타학교면 좋겠어.
                             if (PickUser.Univ != OtherUser.Univ && CheckAgeCondition(OtherUser.W_Age, PickUser.Age)) {
                                 return true;
@@ -243,42 +263,42 @@ const MatchingManager = (props) => {
                     } else {
                         return false;
                     }
-                } else if (PickUser.W_Age == "Dnt_M" && PickUser.W_Univ == "myUniv") {
+                } else if (PickUser.W_Age == "dnt_M" && PickUser.W_Univ == "myUniv") {
                     //pickuser는 나이 상관없고, 학교만 울학교면 좋겠어.
                     if (PickUser.Univ == OtherUser.Univ) {
-                        if (OtherUser.W_Age == "Dnt_M" && OtherUser.W_Univ == "Dnt_M") {
+                        if (OtherUser.W_Age == "dnt_M" && OtherUser.W_Univ == "dnt_M") {
                             //otheruser는 나이,학교 상관없어.
                             return true;
                         }
-                        else if (OtherUser.W_Age != "Dnt_M" && OtherUser.W_Univ == "Dnt_M") {
+                        else if (OtherUser.W_Age != "dnt_M" && OtherUser.W_Univ == "dnt_M") {
                             //otheruser는 나이 조건있고, 학교 상관없어.
                             if (CheckAgeCondition(OtherUser.W_Age, PickUser.Age)) {
                                 return true;
                             } else {
                                 return false;
                             }
-                        } else if (OtherUser.W_Age == "Dnt_M" && OtherUser.W_Univ == "myUniv") {
+                        } else if (OtherUser.W_Age == "dnt_M" && OtherUser.W_Univ == "myUniv") {
                             //otheruser는 나이 상관없고, 학교만 울학교면 좋겠어.
                             if (PickUser.Univ == OtherUser.Univ) {
                                 return true;
                             } else {
                                 return false;
                             }
-                        } else if (OtherUser.W_Age != "Dnt_M" && OtherUser.W_Univ == "myUniv") {
+                        } else if (OtherUser.W_Age != "dnt_M" && OtherUser.W_Univ == "myUniv") {
                             //otheruser는 나이 조건있고, 학교는 울학교면 좋겠어.
                             if (PickUser.Univ == OtherUser.Univ && CheckAgeCondition(OtherUser.W_Age, PickUser.Age)) {
                                 return true;
                             } else {
                                 return false;
                             }
-                        } else if (OtherUser.W_Age == "Dnt_M" && OtherUser.W_Univ == "otherUniv") {
+                        } else if (OtherUser.W_Age == "dnt_M" && OtherUser.W_Univ == "otherUniv") {
                             //otheruser는 나이 상관없고, 학교가 타학교면 좋겠어.
                             if (PickUser.Univ != OtherUser.Univ) {
                                 return true;
                             } else {
                                 return false;
                             }
-                        } else if (OtherUser.W_Age != "Dnt_M" && OtherUser.W_Univ == "otherUniv") {
+                        } else if (OtherUser.W_Age != "dnt_M" && OtherUser.W_Univ == "otherUniv") {
                             //otheruser는 나이 조건있고, 학교가 타학교면 좋겠어.
                             if (PickUser.Univ != OtherUser.Univ && CheckAgeCondition(OtherUser.W_Age, PickUser.Age)) {
                                 return true;
@@ -289,42 +309,42 @@ const MatchingManager = (props) => {
                     } else {
                         return false;
                     }
-                } else if (PickUser.W_Age != "Dnt_M" && PickUser.W_Univ == "myUniv") {
+                } else if (PickUser.W_Age != "dnt_M" && PickUser.W_Univ == "myUniv") {
                     //pickuser는 나이 조건있고, 학교는 울학교면 좋겠어.
                     if (PickUser.Univ == OtherUser.Univ && CheckAgeCondition(PickUser.W_Age, OtherUser.Age)) {
-                        if (OtherUser.W_Age == "Dnt_M" && OtherUser.W_Univ == "Dnt_M") {
+                        if (OtherUser.W_Age == "dnt_M" && OtherUser.W_Univ == "dnt_M") {
                             //otheruser는 나이,학교 상관없어.
                             return true;
                         }
-                        else if (OtherUser.W_Age != "Dnt_M" && OtherUser.W_Univ == "Dnt_M") {
+                        else if (OtherUser.W_Age != "dnt_M" && OtherUser.W_Univ == "dnt_M") {
                             //otheruser는 나이 조건있고, 학교 상관없어.
                             if (CheckAgeCondition(OtherUser.W_Age, PickUser.Age)) {
                                 return true;
                             } else {
                                 return false;
                             }
-                        } else if (OtherUser.W_Age == "Dnt_M" && OtherUser.W_Univ == "myUniv") {
+                        } else if (OtherUser.W_Age == "dnt_M" && OtherUser.W_Univ == "myUniv") {
                             //otheruser는 나이 상관없고, 학교만 울학교면 좋겠어.
                             if (PickUser.Univ == OtherUser.Univ) {
                                 return true;
                             } else {
                                 return false;
                             }
-                        } else if (OtherUser.W_Age != "Dnt_M" && OtherUser.W_Univ == "myUniv") {
+                        } else if (OtherUser.W_Age != "dnt_M" && OtherUser.W_Univ == "myUniv") {
                             //otheruser는 나이 조건있고, 학교는 울학교면 좋겠어.
                             if (PickUser.Univ == OtherUser.Univ && CheckAgeCondition(OtherUser.W_Age, PickUser.Age)) {
                                 return true;
                             } else {
                                 return false;
                             }
-                        } else if (OtherUser.W_Age == "Dnt_M" && OtherUser.W_Univ == "otherUniv") {
+                        } else if (OtherUser.W_Age == "dnt_M" && OtherUser.W_Univ == "otherUniv") {
                             //otheruser는 나이 상관없고, 학교가 타학교면 좋겠어.
                             if (PickUser.Univ != OtherUser.Univ) {
                                 return true;
                             } else {
                                 return false;
                             }
-                        } else if (OtherUser.W_Age != "Dnt_M" && OtherUser.W_Univ == "otherUniv") {
+                        } else if (OtherUser.W_Age != "dnt_M" && OtherUser.W_Univ == "otherUniv") {
                             //otheruser는 나이 조건있고, 학교가 타학교면 좋겠어.
                             if (PickUser.Univ != OtherUser.Univ && CheckAgeCondition(OtherUser.W_Age, PickUser.Age)) {
                                 return true;
@@ -335,42 +355,42 @@ const MatchingManager = (props) => {
                     } else {
                         return false;
                     }
-                } else if (PickUser.W_Age == "Dnt_M" && PickUser.W_Univ == "otherUniv") {
+                } else if (PickUser.W_Age == "dnt_M" && PickUser.W_Univ == "otherUniv") {
                     //pickuser는 나이 상관없고, 학교가 타학교면 좋겠어.
                     if (PickUser.Univ != OtherUser.Univ) {
-                        if (OtherUser.W_Age == "Dnt_M" && OtherUser.W_Univ == "Dnt_M") {
+                        if (OtherUser.W_Age == "dnt_M" && OtherUser.W_Univ == "dnt_M") {
                             //otheruser는 나이,학교 상관없어.
                             return true;
                         }
-                        else if (OtherUser.W_Age != "Dnt_M" && OtherUser.W_Univ == "Dnt_M") {
+                        else if (OtherUser.W_Age != "dnt_M" && OtherUser.W_Univ == "dnt_M") {
                             //otheruser는 나이 조건있고, 학교 상관없어.
                             if (CheckAgeCondition(OtherUser.W_Age, PickUser.Age)) {
                                 return true;
                             } else {
                                 return false;
                             }
-                        } else if (OtherUser.W_Age == "Dnt_M" && OtherUser.W_Univ == "myUniv") {
+                        } else if (OtherUser.W_Age == "dnt_M" && OtherUser.W_Univ == "myUniv") {
                             //otheruser는 나이 상관없고, 학교만 울학교면 좋겠어.
                             if (PickUser.Univ == OtherUser.Univ) {
                                 return true;
                             } else {
                                 return false;
                             }
-                        } else if (OtherUser.W_Age != "Dnt_M" && OtherUser.W_Univ == "myUniv") {
+                        } else if (OtherUser.W_Age != "dnt_M" && OtherUser.W_Univ == "myUniv") {
                             //otheruser는 나이 조건있고, 학교는 울학교면 좋겠어.
                             if (PickUser.Univ == OtherUser.Univ && CheckAgeCondition(OtherUser.W_Age, PickUser.Age)) {
                                 return true;
                             } else {
                                 return false;
                             }
-                        } else if (OtherUser.W_Age == "Dnt_M" && OtherUser.W_Univ == "otherUniv") {
+                        } else if (OtherUser.W_Age == "dnt_M" && OtherUser.W_Univ == "otherUniv") {
                             //otheruser는 나이 상관없고, 학교가 타학교면 좋겠어.
                             if (PickUser.Univ != OtherUser.Univ) {
                                 return true;
                             } else {
                                 return false;
                             }
-                        } else if (OtherUser.W_Age != "Dnt_M" && OtherUser.W_Univ == "otherUniv") {
+                        } else if (OtherUser.W_Age != "dnt_M" && OtherUser.W_Univ == "otherUniv") {
                             //otheruser는 나이 조건있고, 학교가 타학교면 좋겠어.
                             if (PickUser.Univ != OtherUser.Univ && CheckAgeCondition(OtherUser.W_Age, PickUser.Age)) {
                                 return true;
@@ -381,42 +401,42 @@ const MatchingManager = (props) => {
                     } else {
                         return false;
                     }
-                } else if (PickUser.W_Age != "Dnt_M" && PickUser.W_Univ == "otherUniv") {
+                } else if (PickUser.W_Age != "dnt_M" && PickUser.W_Univ == "otherUniv") {
                     //pickuser는 나이 조건있고, 학교가 타학교면 좋겠어.
                     if (PickUser.Univ != OtherUser.Univ && CheckAgeCondition(PickUser.W_Age, OtherUser.Age)) {
-                        if (OtherUser.W_Age == "Dnt_M" && OtherUser.W_Univ == "Dnt_M") {
+                        if (OtherUser.W_Age == "dnt_M" && OtherUser.W_Univ == "dnt_M") {
                             //otheruser는 나이,학교 상관없어.
                             return true;
                         }
-                        else if (OtherUser.W_Age != "Dnt_M" && OtherUser.W_Univ == "Dnt_M") {
+                        else if (OtherUser.W_Age != "dnt_M" && OtherUser.W_Univ == "dnt_M") {
                             //otheruser는 나이 조건있고, 학교 상관없어.
                             if (CheckAgeCondition(OtherUser.W_Age, PickUser.Age)) {
                                 return true;
                             } else {
                                 return false;
                             }
-                        } else if (OtherUser.W_Age == "Dnt_M" && OtherUser.W_Univ == "myUniv") {
+                        } else if (OtherUser.W_Age == "dnt_M" && OtherUser.W_Univ == "myUniv") {
                             //otheruser는 나이 상관없고, 학교만 울학교면 좋겠어.
                             if (PickUser.Univ == OtherUser.Univ) {
                                 return true;
                             } else {
                                 return false;
                             }
-                        } else if (OtherUser.W_Age != "Dnt_M" && OtherUser.W_Univ == "myUniv") {
+                        } else if (OtherUser.W_Age != "dnt_M" && OtherUser.W_Univ == "myUniv") {
                             //otheruser는 나이 조건있고, 학교는 울학교면 좋겠어.
                             if (PickUser.Univ == OtherUser.Univ && CheckAgeCondition(OtherUser.W_Age, PickUser.Age)) {
                                 return true;
                             } else {
                                 return false;
                             }
-                        } else if (OtherUser.W_Age == "Dnt_M" && OtherUser.W_Univ == "otherUniv") {
+                        } else if (OtherUser.W_Age == "dnt_M" && OtherUser.W_Univ == "otherUniv") {
                             //otheruser는 나이 상관없고, 학교가 타학교면 좋겠어.
                             if (PickUser.Univ != OtherUser.Univ) {
                                 return true;
                             } else {
                                 return false;
                             }
-                        } else if (OtherUser.W_Age != "Dnt_M" && OtherUser.W_Univ == "otherUniv") {
+                        } else if (OtherUser.W_Age != "dnt_M" && OtherUser.W_Univ == "otherUniv") {
                             //otheruser는 나이 조건있고, 학교가 타학교면 좋겠어.
                             if (PickUser.Univ != OtherUser.Univ && CheckAgeCondition(OtherUser.W_Age, PickUser.Age)) {
                                 return true;
@@ -438,41 +458,41 @@ const MatchingManager = (props) => {
         else {
             if (PickUser.Gender == OtherUser.Gender) {
                 //젠더 달라야함.
-                if (PickUser.W_Age == "Dnt_M" && PickUser.W_Univ == "Dnt_M") {
+                if (PickUser.W_Age == "dnt_M" && PickUser.W_Univ == "dnt_M") {
                     //pickuser는 나이, 학교 상관없어.
-                    if (OtherUser.W_Age == "Dnt_M" && OtherUser.W_Univ == "Dnt_M") {
+                    if (OtherUser.W_Age == "dnt_M" && OtherUser.W_Univ == "dnt_M") {
                         //otheruser는 나이, 학교 상관없어.
                         return true;
                     }
-                    else if (OtherUser.W_Age != "Dnt_M" && OtherUser.W_Univ == "Dnt_M") {
+                    else if (OtherUser.W_Age != "dnt_M" && OtherUser.W_Univ == "dnt_M") {
                         //otheruser는 나이 조건있고, 학교 상관없어.
                         if (CheckAgeCondition(OtherUser.W_Age, PickUser.Age)) {
                             return true;
                         } else {
                             return false;
                         }
-                    } else if (OtherUser.W_Age == "Dnt_M" && OtherUser.W_Univ == "myUniv") {
+                    } else if (OtherUser.W_Age == "dnt_M" && OtherUser.W_Univ == "myUniv") {
                         //otheruser는 나이 상관없고, 학교만 울학교면 좋겠어.
                         if (PickUser.Univ == OtherUser.Univ) {
                             return true;
                         } else {
                             return false;
                         }
-                    } else if (OtherUser.W_Age != "Dnt_M" && OtherUser.W_Univ == "myUniv") {
+                    } else if (OtherUser.W_Age != "dnt_M" && OtherUser.W_Univ == "myUniv") {
                         //otheruser는 나이 조건있고, 학교는 울학교면 좋겠어.
                         if (PickUser.Univ == OtherUser.Univ && CheckAgeCondition(OtherUser.W_Age, PickUser.Age)) {
                             return true;
                         } else {
                             return false;
                         }
-                    } else if (OtherUser.W_Age == "Dnt_M" && OtherUser.W_Univ == "otherUniv") {
+                    } else if (OtherUser.W_Age == "dnt_M" && OtherUser.W_Univ == "otherUniv") {
                         //otheruser는 나이 상관없고, 학교가 타학교면 좋겠어.
                         if (PickUser.Univ != OtherUser.Univ) {
                             return true;
                         } else {
                             return false;
                         }
-                    } else if (OtherUser.W_Age != "Dnt_M" && OtherUser.W_Univ == "otherUniv") {
+                    } else if (OtherUser.W_Age != "dnt_M" && OtherUser.W_Univ == "otherUniv") {
                         //otheruser는 나이 조건있고, 학교가 타학교면 좋겠어.
                         if (PickUser.Univ != OtherUser.Univ && CheckAgeCondition(OtherUser.W_Age, PickUser.Age)) {
                             return true;
@@ -480,42 +500,42 @@ const MatchingManager = (props) => {
                             return false;
                         }
                     }
-                } else if (PickUser.W_Age != "Dnt_M" && PickUser.W_Univ == "Dnt_M") {
+                } else if (PickUser.W_Age != "dnt_M" && PickUser.W_Univ == "dnt_M") {
                     //pickuser는 나이 조건있고, 학교 상관없어.
                     if (CheckAgeCondition(PickUser.W_Age, OtherUser.Age)) {
-                        if (OtherUser.W_Age == "Dnt_M" && OtherUser.W_Univ == "Dnt_M") {
+                        if (OtherUser.W_Age == "dnt_M" && OtherUser.W_Univ == "dnt_M") {
                             //otheruser는 나이,학교 상관없어.
                             return true;
                         }
-                        else if (OtherUser.W_Age != "Dnt_M" && OtherUser.W_Univ == "Dnt_M") {
+                        else if (OtherUser.W_Age != "dnt_M" && OtherUser.W_Univ == "dnt_M") {
                             //otheruser는 나이 조건있고, 학교 상관없어.
                             if (CheckAgeCondition(OtherUser.W_Age, PickUser.Age)) {
                                 return true;
                             } else {
                                 return false;
                             }
-                        } else if (OtherUser.W_Age == "Dnt_M" && OtherUser.W_Univ == "myUniv") {
+                        } else if (OtherUser.W_Age == "dnt_M" && OtherUser.W_Univ == "myUniv") {
                             //otheruser는 나이 상관없고, 학교만 울학교면 좋겠어.
                             if (PickUser.Univ == OtherUser.Univ) {
                                 return true;
                             } else {
                                 return false;
                             }
-                        } else if (OtherUser.W_Age != "Dnt_M" && OtherUser.W_Univ == "myUniv") {
+                        } else if (OtherUser.W_Age != "dnt_M" && OtherUser.W_Univ == "myUniv") {
                             //otheruser는 나이 조건있고, 학교는 울학교면 좋겠어.
                             if (PickUser.Univ == OtherUser.Univ && CheckAgeCondition(OtherUser.W_Age, PickUser.Age)) {
                                 return true;
                             } else {
                                 return false;
                             }
-                        } else if (OtherUser.W_Age == "Dnt_M" && OtherUser.W_Univ == "otherUniv") {
+                        } else if (OtherUser.W_Age == "dnt_M" && OtherUser.W_Univ == "otherUniv") {
                             //otheruser는 나이 상관없고, 학교가 타학교면 좋겠어.
                             if (PickUser.Univ != OtherUser.Univ) {
                                 return true;
                             } else {
                                 return false;
                             }
-                        } else if (OtherUser.W_Age != "Dnt_M" && OtherUser.W_Univ == "otherUniv") {
+                        } else if (OtherUser.W_Age != "dnt_M" && OtherUser.W_Univ == "otherUniv") {
                             //otheruser는 나이 조건있고, 학교가 타학교면 좋겠어.
                             if (PickUser.Univ != OtherUser.Univ && CheckAgeCondition(OtherUser.W_Age, PickUser.Age)) {
                                 return true;
@@ -526,42 +546,42 @@ const MatchingManager = (props) => {
                     } else {
                         return false;
                     }
-                } else if (PickUser.W_Age == "Dnt_M" && PickUser.W_Univ == "myUniv") {
+                } else if (PickUser.W_Age == "dnt_M" && PickUser.W_Univ == "myUniv") {
                     //pickuser는 나이 상관없고, 학교만 울학교면 좋겠어.
                     if (PickUser.Univ == OtherUser.Univ) {
-                        if (OtherUser.W_Age == "Dnt_M" && OtherUser.W_Univ == "Dnt_M") {
+                        if (OtherUser.W_Age == "dnt_M" && OtherUser.W_Univ == "dnt_M") {
                             //otheruser는 나이,학교 상관없어.
                             return true;
                         }
-                        else if (OtherUser.W_Age != "Dnt_M" && OtherUser.W_Univ == "Dnt_M") {
+                        else if (OtherUser.W_Age != "dnt_M" && OtherUser.W_Univ == "dnt_M") {
                             //otheruser는 나이 조건있고, 학교 상관없어.
                             if (CheckAgeCondition(OtherUser.W_Age, PickUser.Age)) {
                                 return true;
                             } else {
                                 return false;
                             }
-                        } else if (OtherUser.W_Age == "Dnt_M" && OtherUser.W_Univ == "myUniv") {
+                        } else if (OtherUser.W_Age == "dnt_M" && OtherUser.W_Univ == "myUniv") {
                             //otheruser는 나이 상관없고, 학교만 울학교면 좋겠어.
                             if (PickUser.Univ == OtherUser.Univ) {
                                 return true;
                             } else {
                                 return false;
                             }
-                        } else if (OtherUser.W_Age != "Dnt_M" && OtherUser.W_Univ == "myUniv") {
+                        } else if (OtherUser.W_Age != "dnt_M" && OtherUser.W_Univ == "myUniv") {
                             //otheruser는 나이 조건있고, 학교는 울학교면 좋겠어.
                             if (PickUser.Univ == OtherUser.Univ && CheckAgeCondition(OtherUser.W_Age, PickUser.Age)) {
                                 return true;
                             } else {
                                 return false;
                             }
-                        } else if (OtherUser.W_Age == "Dnt_M" && OtherUser.W_Univ == "otherUniv") {
+                        } else if (OtherUser.W_Age == "dnt_M" && OtherUser.W_Univ == "otherUniv") {
                             //otheruser는 나이 상관없고, 학교가 타학교면 좋겠어.
                             if (PickUser.Univ != OtherUser.Univ) {
                                 return true;
                             } else {
                                 return false;
                             }
-                        } else if (OtherUser.W_Age != "Dnt_M" && OtherUser.W_Univ == "otherUniv") {
+                        } else if (OtherUser.W_Age != "dnt_M" && OtherUser.W_Univ == "otherUniv") {
                             //otheruser는 나이 조건있고, 학교가 타학교면 좋겠어.
                             if (PickUser.Univ != OtherUser.Univ && CheckAgeCondition(OtherUser.W_Age, PickUser.Age)) {
                                 return true;
@@ -572,42 +592,42 @@ const MatchingManager = (props) => {
                     } else {
                         return false;
                     }
-                } else if (PickUser.W_Age != "Dnt_M" && PickUser.W_Univ == "myUniv") {
+                } else if (PickUser.W_Age != "dnt_M" && PickUser.W_Univ == "myUniv") {
                     //pickuser는 나이 조건있고, 학교는 울학교면 좋겠어.
                     if (PickUser.Univ == OtherUser.Univ && CheckAgeCondition(PickUser.W_Age, OtherUser.Age)) {
-                        if (OtherUser.W_Age == "Dnt_M" && OtherUser.W_Univ == "Dnt_M") {
+                        if (OtherUser.W_Age == "dnt_M" && OtherUser.W_Univ == "dnt_M") {
                             //otheruser는 나이,학교 상관없어.
                             return true;
                         }
-                        else if (OtherUser.W_Age != "Dnt_M" && OtherUser.W_Univ == "Dnt_M") {
+                        else if (OtherUser.W_Age != "dnt_M" && OtherUser.W_Univ == "dnt_M") {
                             //otheruser는 나이 조건있고, 학교 상관없어.
                             if (CheckAgeCondition(OtherUser.W_Age, PickUser.Age)) {
                                 return true;
                             } else {
                                 return false;
                             }
-                        } else if (OtherUser.W_Age == "Dnt_M" && OtherUser.W_Univ == "myUniv") {
+                        } else if (OtherUser.W_Age == "dnt_M" && OtherUser.W_Univ == "myUniv") {
                             //otheruser는 나이 상관없고, 학교만 울학교면 좋겠어.
                             if (PickUser.Univ == OtherUser.Univ) {
                                 return true;
                             } else {
                                 return false;
                             }
-                        } else if (OtherUser.W_Age != "Dnt_M" && OtherUser.W_Univ == "myUniv") {
+                        } else if (OtherUser.W_Age != "dnt_M" && OtherUser.W_Univ == "myUniv") {
                             //otheruser는 나이 조건있고, 학교는 울학교면 좋겠어.
                             if (PickUser.Univ == OtherUser.Univ && CheckAgeCondition(OtherUser.W_Age, PickUser.Age)) {
                                 return true;
                             } else {
                                 return false;
                             }
-                        } else if (OtherUser.W_Age == "Dnt_M" && OtherUser.W_Univ == "otherUniv") {
+                        } else if (OtherUser.W_Age == "dnt_M" && OtherUser.W_Univ == "otherUniv") {
                             //otheruser는 나이 상관없고, 학교가 타학교면 좋겠어.
                             if (PickUser.Univ != OtherUser.Univ) {
                                 return true;
                             } else {
                                 return false;
                             }
-                        } else if (OtherUser.W_Age != "Dnt_M" && OtherUser.W_Univ == "otherUniv") {
+                        } else if (OtherUser.W_Age != "dnt_M" && OtherUser.W_Univ == "otherUniv") {
                             //otheruser는 나이 조건있고, 학교가 타학교면 좋겠어.
                             if (PickUser.Univ != OtherUser.Univ && CheckAgeCondition(OtherUser.W_Age, PickUser.Age)) {
                                 return true;
@@ -618,42 +638,42 @@ const MatchingManager = (props) => {
                     } else {
                         return false;
                     }
-                } else if (PickUser.W_Age == "Dnt_M" && PickUser.W_Univ == "otherUniv") {
+                } else if (PickUser.W_Age == "dnt_M" && PickUser.W_Univ == "otherUniv") {
                     //pickuser는 나이 상관없고, 학교가 타학교면 좋겠어.
                     if (PickUser.Univ != OtherUser.Univ) {
-                        if (OtherUser.W_Age == "Dnt_M" && OtherUser.W_Univ == "Dnt_M") {
+                        if (OtherUser.W_Age == "dnt_M" && OtherUser.W_Univ == "dnt_M") {
                             //otheruser는 나이,학교 상관없어.
                             return true;
                         }
-                        else if (OtherUser.W_Age != "Dnt_M" && OtherUser.W_Univ == "Dnt_M") {
+                        else if (OtherUser.W_Age != "dnt_M" && OtherUser.W_Univ == "dnt_M") {
                             //otheruser는 나이 조건있고, 학교 상관없어.
                             if (CheckAgeCondition(OtherUser.W_Age, PickUser.Age)) {
                                 return true;
                             } else {
                                 return false;
                             }
-                        } else if (OtherUser.W_Age == "Dnt_M" && OtherUser.W_Univ == "myUniv") {
+                        } else if (OtherUser.W_Age == "dnt_M" && OtherUser.W_Univ == "myUniv") {
                             //otheruser는 나이 상관없고, 학교만 울학교면 좋겠어.
                             if (PickUser.Univ == OtherUser.Univ) {
                                 return true;
                             } else {
                                 return false;
                             }
-                        } else if (OtherUser.W_Age != "Dnt_M" && OtherUser.W_Univ == "myUniv") {
+                        } else if (OtherUser.W_Age != "dnt_M" && OtherUser.W_Univ == "myUniv") {
                             //otheruser는 나이 조건있고, 학교는 울학교면 좋겠어.
                             if (PickUser.Univ == OtherUser.Univ && CheckAgeCondition(OtherUser.W_Age, PickUser.Age)) {
                                 return true;
                             } else {
                                 return false;
                             }
-                        } else if (OtherUser.W_Age == "Dnt_M" && OtherUser.W_Univ == "otherUniv") {
+                        } else if (OtherUser.W_Age == "dnt_M" && OtherUser.W_Univ == "otherUniv") {
                             //otheruser는 나이 상관없고, 학교가 타학교면 좋겠어.
                             if (PickUser.Univ != OtherUser.Univ) {
                                 return true;
                             } else {
                                 return false;
                             }
-                        } else if (OtherUser.W_Age != "Dnt_M" && OtherUser.W_Univ == "otherUniv") {
+                        } else if (OtherUser.W_Age != "dnt_M" && OtherUser.W_Univ == "otherUniv") {
                             //otheruser는 나이 조건있고, 학교가 타학교면 좋겠어.
                             if (PickUser.Univ != OtherUser.Univ && CheckAgeCondition(OtherUser.W_Age, PickUser.Age)) {
                                 return true;
@@ -664,42 +684,42 @@ const MatchingManager = (props) => {
                     } else {
                         return false;
                     }
-                } else if (PickUser.W_Age != "Dnt_M" && PickUser.W_Univ == "otherUniv") {
+                } else if (PickUser.W_Age != "dnt_M" && PickUser.W_Univ == "otherUniv") {
                     //pickuser는 나이 조건있고, 학교가 타학교면 좋겠어.
                     if (PickUser.Univ != OtherUser.Univ && CheckAgeCondition(PickUser.W_Age, OtherUser.Age)) {
-                        if (OtherUser.W_Age == "Dnt_M" && OtherUser.W_Univ == "Dnt_M") {
+                        if (OtherUser.W_Age == "dnt_M" && OtherUser.W_Univ == "dnt_M") {
                             //otheruser는 나이,학교 상관없어.
                             return true;
                         }
-                        else if (OtherUser.W_Age != "Dnt_M" && OtherUser.W_Univ == "Dnt_M") {
+                        else if (OtherUser.W_Age != "dnt_M" && OtherUser.W_Univ == "dnt_M") {
                             //otheruser는 나이 조건있고, 학교 상관없어.
                             if (CheckAgeCondition(OtherUser.W_Age, PickUser.Age)) {
                                 return true;
                             } else {
                                 return false;
                             }
-                        } else if (OtherUser.W_Age == "Dnt_M" && OtherUser.W_Univ == "myUniv") {
+                        } else if (OtherUser.W_Age == "dnt_M" && OtherUser.W_Univ == "myUniv") {
                             //otheruser는 나이 상관없고, 학교만 울학교면 좋겠어.
                             if (PickUser.Univ == OtherUser.Univ) {
                                 return true;
                             } else {
                                 return false;
                             }
-                        } else if (OtherUser.W_Age != "Dnt_M" && OtherUser.W_Univ == "myUniv") {
+                        } else if (OtherUser.W_Age != "dnt_M" && OtherUser.W_Univ == "myUniv") {
                             //otheruser는 나이 조건있고, 학교는 울학교면 좋겠어.
                             if (PickUser.Univ == OtherUser.Univ && CheckAgeCondition(OtherUser.W_Age, PickUser.Age)) {
                                 return true;
                             } else {
                                 return false;
                             }
-                        } else if (OtherUser.W_Age == "Dnt_M" && OtherUser.W_Univ == "otherUniv") {
+                        } else if (OtherUser.W_Age == "dnt_M" && OtherUser.W_Univ == "otherUniv") {
                             //otheruser는 나이 상관없고, 학교가 타학교면 좋겠어.
                             if (PickUser.Univ != OtherUser.Univ) {
                                 return true;
                             } else {
                                 return false;
                             }
-                        } else if (OtherUser.W_Age != "Dnt_M" && OtherUser.W_Univ == "otherUniv") {
+                        } else if (OtherUser.W_Age != "dnt_M" && OtherUser.W_Univ == "otherUniv") {
                             //otheruser는 나이 조건있고, 학교가 타학교면 좋겠어.
                             if (PickUser.Univ != OtherUser.Univ && CheckAgeCondition(OtherUser.W_Age, PickUser.Age)) {
                                 return true;
@@ -734,10 +754,10 @@ const MatchingManager = (props) => {
 
                     if (MatchingType == "Lilac") {
                         querySnapshot.forEach((doc) => {
-                            if (doc.data().Lilac.Age == "Dnt_M" && doc.data().Lilac.Univ == "Dnt_M") {
+                            if (doc.data().Lilac.Age == "dnt_M" && doc.data().Lilac.Univ == "dnt_M") {
                                 //1순위 매칭 우선배열
                                 DBtoPriority_Array(Priority_Array, 0, MatchingType, doc.data());
-                            } else if (doc.data().Lilac.Age == "Dnt_M" || doc.data().Lilac.Univ == "Dnt_M") {
+                            } else if (doc.data().Lilac.Age == "dnt_M" || doc.data().Lilac.Univ == "dnt_M") {
                                 //2순위 매칭 우선배열
                                 DBtoPriority_Array(Priority_Array, 1, MatchingType, doc.data());
                             } else {
@@ -753,10 +773,10 @@ const MatchingManager = (props) => {
                         })
                     } else if (MatchingType == "Daisy") {
                         querySnapshot.forEach((doc) => {
-                            if (doc.data().Daisy.Age == "Dnt_M" && doc.data().Daisy.Univ == "Dnt_M") {
+                            if (doc.data().Daisy.Age == "dnt_M" && doc.data().Daisy.Univ == "dnt_M") {
                                 //1순위 매칭 우선배열
                                 DBtoPriority_Array(Priority_Array, 0, MatchingType, doc.data());
-                            } else if (doc.data().Daisy.Age == "Dnt_M" || doc.data().Daisy.Univ == "Dnt_M") {
+                            } else if (doc.data().Daisy.Age == "dnt_M" || doc.data().Daisy.Univ == "dnt_M") {
                                 //2순위 매칭 우선배열
                                 DBtoPriority_Array(Priority_Array, 1, MatchingType, doc.data());
                             } else {
@@ -772,10 +792,10 @@ const MatchingManager = (props) => {
                         })
                     } else if (MatchingType == "Clover") {
                         querySnapshot.forEach((doc) => {
-                            if (doc.data().Clover.Age == "Dnt_M" && doc.data().Clover.Univ == "Dnt_M") {
+                            if (doc.data().Clover.Age == "dnt_M" && doc.data().Clover.Univ == "dnt_M") {
                                 //1순위 매칭 우선배열
                                 DBtoPriority_Array(Priority_Array, 0, MatchingType, doc.data());
-                            } else if (doc.data().Clover.Age == "Dnt_M" || doc.data().Clover.Univ == "Dnt_M") {
+                            } else if (doc.data().Clover.Age == "dnt_M" || doc.data().Clover.Univ == "dnt_M") {
                                 //2순위 매칭 우선배열
                                 DBtoPriority_Array(Priority_Array, 1, MatchingType, doc.data());
                             } else {
@@ -796,74 +816,117 @@ const MatchingManager = (props) => {
                         shuffleArray(Priority_Array[i]);
                         Alluser.push(...Priority_Array[i]);
                     }
-
+                    console.log(Alluser);
                     //전체 유저의 수
                     let User_Num = Alluser.length;
 
-                    for (let i = 0; i < User_Num; i++) {
-                        if (i == User_Num - 1) {
-                            //마지막한사람은 ㅂㅂ
-                            break;
+                    for (let k = 0; k < MAX_MATCHING_NUM; k++) {
+                        //MAX_MATCHING_NUM 만큼 돌림
+                        if (k == 1) {
+                            let a = "brak";
                         }
-                        //PickUser = 매칭중인 유저
-                        let PickUser = Alluser[i];
-                        //Pick이 된지 먼저 검증
-                        if (PickUser.Pick) {
-                            continue;
-                            //이미 커플
-                        } else {
-                            //나 다음부터 커플을 찾아보자
-                            for (let j = i + 1; j < User_Num; j++) {
-                                //OtherUser = 상대 유저
-                                let OtherUser = Alluser[j];
-                                if (OtherUser.Pick) {
-                                    //이미 커플
-                                    continue;
-                                } else {
-                                    if (CheckCanCouple(PickUser, OtherUser, MatchingType)) {
-                                        PickUser.Pick = true;
-                                        OtherUser.Pick = true;
-                                        couple[0].push(PickUser);
-                                        couple[1].push(OtherUser);
-                                        break;
+                        for (let i = 0; i < User_Num; i++) {
+                            //PickUser = 매칭중인 유저
+                            let PickUser = Alluser[i];
+                            //이번턴에 매칭 되었으면 패스
+                            if (PickUser.MatchingCode.length == k + 1)
+                                continue;
+                            //Pick이 된지 먼저 검증
+                            if (PickUser.Ticket == 0) {
+                                continue;
+                                //티켓이 없으면 패스~
+                            } else {
+                                //나 다음부터 커플을 찾아보자
+                                for (let j = 0; j < User_Num; j++) {
+                                    //나 자신이면 패스
+                                    if (j == i)
+                                        continue;
+                                    //OtherUser = 상대 유저
+                                    let OtherUser = Alluser[j];
+                                    if (OtherUser.MatchingCode.length == MAX_MATCHING_NUM || OtherUser.MatchingCode.length == k + 1) {
+                                        //이미 최대한으로 매칭되어있거나, 전사람과 매칭되어있으면 패스임
+                                        continue;
+                                    } else {
+                                        if (CheckCanCouple(PickUser, OtherUser, MatchingType)) {
+                                            //커플이 되는사람이면,
+                                            if (PickUser.Ticket >= 1) {
+                                                PickUser.Ticket = PickUser.Ticket - 1;
+                                            }
+                                            if (OtherUser.Ticket >= 1) {
+                                                OtherUser.Ticket = OtherUser.Ticket - 1;
+                                            }
+                                            PickUser.MatchingCode.push(OtherUser.Unique_key);
+                                            OtherUser.MatchingCode.push(PickUser.Unique_key);
+                                            //서로의 매칭코드에 서로의 유니크키를 넣어준다.
+                                            couple[0].push(PickUser);
+                                            couple[1].push(OtherUser);
+                                            console.table(PickUser);
+                                            console.table(OtherUser);
+                                            break;
+                                        }
                                     }
                                 }
                             }
                         }
                     }
+
                     for (let i = 0; i < User_Num; i++) {
-                        if (!Alluser[i].Pick) {
-                            //커플안된놈들
+                        if (Alluser[i].Ticket) {
+                            //티켓 남은 놈들
                             trash.push(Alluser[i]);
                         }
                     }
 
                     if (MatchingType == "Lilac") {
                         PushCoupletoDB(nowCount, "lilac", couple);
+                        PushTrashtoDB(nowCount, "lllac", trash);
                         setL_user(User_Num);
                         setL_boy(boynum);
                         setL_girl(girlnum);
-                        setL_couple(couple.length);
+                        setL_couple(couple[0].length);
                         setL_trash(trash.length);
                     } else if (MatchingType == "Daisy") {
                         PushCoupletoDB(nowCount, "daisy", couple);
                         setD_user(User_Num);
                         setD_boy(boynum);
                         setD_girl(girlnum);
-                        setD_couple(couple.length);
+                        setD_couple(couple[0].length);
                         setD_trash(trash.length);
                     } else {
                         PushCoupletoDB(nowCount, "clover", couple);
                         setC_user(User_Num);
                         setC_boy(boynum);
                         setC_girl(girlnum);
-                        setC_couple(couple.length);
+                        setC_couple(couple[0].length);
                         setC_trash(trash.length);
                     }
                     console.table(couple);
                     console.table(trash);
                 }
             });
+    }
+    //DBdp trash push 해주는 함수
+    const PushTrashtoDB = (NowCount, MatchingType, trash) => {
+        const trashlength = trash.length;
+        for (let i = 0; i < trashlength; i++) {
+            let userTrash = {
+                Nick: trash[i].Nick,
+                Name: trash[i].Name,
+                OriginalTicket: trash[i].OriginalTicket,
+                NamTicket: trash[i].Ticket,
+                MatchingNum: trash[i].MatchingCode.length,
+            };
+            db.collection(String(NowCount) + MatchingType + "trash")
+                .add({
+                    Trash: userTrash
+                })
+                .then(() => {
+                    console.log("success[i]");
+                })
+                .catch((error) => {
+                    alert(error.message);
+                });
+        }
     }
     //DB에 push해주는 함수
     const PushCoupletoDB = (NowCount, MatchingType, couple) => {
@@ -872,18 +935,24 @@ const MatchingManager = (props) => {
             let userOne = {
                 Age: couple[0][i].Age,
                 Gender: couple[0][i].Gender,
-                Manner: couple[0][i].Manner,
+                Name: couple[0][i].Name,
                 Nick: couple[0][i].Nick,
                 Phone: couple[0][i].Phone,
                 Univ: couple[0][i].Univ,
+                OriginalTicket: couple[0][i].OriginalTicket,
+                Matchingnum: couple[0][i].MatchingCode.length,
+                Unique_key: couple[0][i].Unique_key
             };
             let userTwo = {
                 Age: couple[1][i].Age,
                 Gender: couple[1][i].Gender,
-                Manner: couple[1][i].Manner,
+                Name: couple[1][i].Name,
                 Nick: couple[1][i].Nick,
                 Phone: couple[1][i].Phone,
                 Univ: couple[1][i].Univ,
+                OriginalTicket: couple[1][i].OriginalTicket,
+                Matchingnum: couple[1][i].MatchingCode.length,
+                Unique_key: couple[1][i].Unique_key
             };
             db.collection(String(NowCount) + MatchingType)
                 .add({
@@ -972,55 +1041,6 @@ const MatchingManager = (props) => {
     let daisylist = [];
     let cloverlist = [];
 
-    async function getlilacData() {
-        const LilacCollection_DB = String(nowCount) + "lilac"
-
-        const lilacdiv = await db.collection(LilacCollection_DB).get()
-        try {
-            lilacdiv.forEach((doc) => {
-                let tempdic = {
-                    userOne: doc.data().userOne.Nick,
-                    userOnePhone: doc.data().userOne.Phone,
-                    userTwo: doc.data().userTwo.Nick,
-                    userTwoPhone: doc.data().userTwo.Phone
-                }
-                lilaclist.push(tempdic)
-            })
-        } catch (err) { console.log(err) }
-    }
-    async function getdaisyData() {
-        const DaisyCollection_DB = String(nowCount) + "daisy"
-
-        const daisydiv = await db.collection(DaisyCollection_DB).get()
-        try {
-            daisydiv.forEach((doc) => {
-                let tempdic = {
-                    userOne: doc.data().userOne.Nick,
-                    userOnePhone: doc.data().userOne.Phone,
-                    userTwo: doc.data().userTwo.Nick,
-                    userTwoPhone: doc.data().userTwo.Phone
-                }
-                daisylist.push(tempdic)
-            })
-        } catch (err) { console.log(err) }
-    }
-    async function getcloverData() {
-        const CloverCollection_DB = String(nowCount) + "clover"
-
-        const cloverdiv = await db.collection(CloverCollection_DB).get()
-        try {
-            cloverdiv.forEach((doc) => {
-                let tempdic = {
-                    userOne: doc.data().userOne.Nick,
-                    userOnePhone: doc.data().userOne.Phone,
-                    userTwo: doc.data().userTwo.Nick,
-                    userTwoPhone: doc.data().userTwo.Phone
-                }
-                cloverlist.push(tempdic)
-            })
-        } catch (err) { console.log(err) }
-    }
-
     async function getallData() {
         const LilacCollection_DB = String(nowCount) + "lilac"
 
@@ -1028,10 +1048,20 @@ const MatchingManager = (props) => {
         try {
             lilacdiv.forEach((doc) => {
                 let tempdic = {
-                    userOne: doc.data().userOne.Nick,
+                    userOneName: doc.data().userOne.Name,
+                    userOneAge: doc.data().userOne.Age,
+                    userOneNick: doc.data().userOne.Nick,
                     userOnePhone: doc.data().userOne.Phone,
-                    userTwo: doc.data().userTwo.Nick,
-                    userTwoPhone: doc.data().userTwo.Phone
+                    userOneUniv: doc.data().userOne.Univ,
+                    userOneTicket: doc.data().userOne.OriginalTicket,
+                    userOneMatchingnum: String(doc.data().userOne.Matchingnum),
+                    userTwoName: doc.data().userTwo.Name,
+                    userTwoAge: doc.data().userTwo.Age,
+                    userTwoNick: doc.data().userTwo.Nick,
+                    userTwoPhone: doc.data().userTwo.Phone,
+                    userTwoUniv: doc.data().userTwo.Univ,
+                    userTwoTicket: doc.data().userTwo.OriginalTicket,
+                    userTwoMatchingnum: String(doc.data().userTwo.Matchingnum),
                 }
                 lilaclist.push(tempdic)
             })
@@ -1042,10 +1072,20 @@ const MatchingManager = (props) => {
         try {
             daisydiv.forEach((doc) => {
                 let tempdic = {
-                    userOne: doc.data().userOne.Nick,
+                    userOneName: doc.data().userOne.Name,
+                    userOneAge: doc.data().userOne.Age,
+                    userOneNick: doc.data().userOne.Nick,
                     userOnePhone: doc.data().userOne.Phone,
-                    userTwo: doc.data().userTwo.Nick,
-                    userTwoPhone: doc.data().userTwo.Phone
+                    userOneUniv: doc.data().userOne.Univ,
+                    userOneTicket: doc.data().userOne.OriginalTicket,
+                    userOneMatchingnum: String(doc.data().userOne.Matchingnum),
+                    userTwoName: doc.data().userTwo.Name,
+                    userTwoAge: doc.data().userTwo.Age,
+                    userTwoNick: doc.data().userTwo.Nick,
+                    userTwoPhone: doc.data().userTwo.Phone,
+                    userTwoUniv: doc.data().userTwo.Univ,
+                    userTwoTicket: doc.data().userTwo.OriginalTicket,
+                    userTwoMatchingnum: String(doc.data().userTwo.Matchingnum),
                 }
                 daisylist.push(tempdic)
             })
@@ -1055,11 +1095,23 @@ const MatchingManager = (props) => {
         const cloverdiv = await db.collection(CloverCollection_DB).get()
         try {
             cloverdiv.forEach((doc) => {
+                console.log(doc.data().userOne);
                 let tempdic = {
-                    userOne: doc.data().userOne.Nick,
+                    userOneName: doc.data().userOne.Name,
+                    userOneAge: doc.data().userOne.Age,
+                    userOneNick: doc.data().userOne.Nick,
                     userOnePhone: doc.data().userOne.Phone,
-                    userTwo: doc.data().userTwo.Nick,
-                    userTwoPhone: doc.data().userTwo.Phone
+                    userOneUniv: doc.data().userOne.Univ,
+                    userOneTicket: doc.data().userOne.OriginalTicket,
+                    userOneMatchingnum: String(doc.data().userOne.Matchingnum),
+                    userTwoName: doc.data().userTwo.Name,
+                    userTwoAge: doc.data().userTwo.Age,
+                    userTwoNick: doc.data().userTwo.Nick,
+                    userTwoPhone: doc.data().userTwo.Phone,
+                    userTwoUniv: doc.data().userTwo.Univ,
+                    userTwoTicket: doc.data().userTwo.OriginalTicket,
+                    userTwoMatchingnum: String(doc.data().userTwo.Matchingnum),
+
                 }
                 cloverlist.push(tempdic)
             })
@@ -1120,4 +1172,4 @@ const MatchingManager = (props) => {
     );
 }
 
-export default MatchingManager;
+export default MatchingManager2;

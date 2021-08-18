@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import Footer from './Footer';
 import fire from './Register/LoginFire';
 
-const Container=styled.div`
+const Container = styled.div`
 height: 37rem;
     .신고하기타이틀{
         font-size : 2rem;
@@ -61,7 +61,7 @@ height: 37rem;
     // }
 `
 // const db = fire.firestore()
-function Report(props){
+function Report(props) {
     // let user = props.User; 
 
     // let[신고자uid, 신고자uid변경]=useState();
@@ -99,7 +99,7 @@ function Report(props){
     //             console.log(doc.data()['User'])
     //         })
     //     }catch(err){console.log(err)}
-        
+
     // }
 
     // useEffect(()=>{
@@ -107,25 +107,26 @@ function Report(props){
     //     신고자uid변경(props.User.uid);
     //     console.log(props.User.uid)
     // },[])
-    return(
+    return (
         <div>
             <Container>
                 <div className='신고하기타이틀'>사용자 신고하기</div>
                 <div className='신고내용'>
-                    아래 내용과 같은 일을 겪으셨거나 기타 신고 접수는<br/> 
-                    플로스팅 공식 SNS계정을 통해 신고해주시기 바랍니다<br/> 
+                    아래 내용과 같은 일을 겪으셨거나 기타 신고 접수는<br />
+                    플로스팅 공식 SNS계정을 통해 신고해주시기 바랍니다<br />
                 </div>
                 <div className='신고리스트'>
-                    <ul style={{listStyle:"none"}}>
-                        <li>❗ 상대방이 거짓 정보를 이용해 매칭에 참여한 경우</li><br/> 
-                        <li>❗ 내 개인정보가 무단으로 공유당한 경우</li><br/> 
+                    <ul style={{ listStyle: "none" }}>
+                        <li>❗ 상대방이 거짓 정보를 이용해 매칭에 참여한 경우</li><br />
+                        <li>❗ 내 개인정보가 무단으로 공유당한 경우</li><br />
                         <li>❗ 상대방이 선톡/답장을 했다고 매칭결과상 나오지만
-                        실제로 선톡/답장이 오지 않은 경우 </li><br/>
-                        <li>❗ 욕설 및 비속어 사용자</li><br/>
+                            실제로 선톡/답장이 오지 않은 경우 </li><br />
+                        <li>❗ 욕설 및 비속어 사용자</li><br />
+                        <li>❗ 그 외, 기타 이유로 신고를 하길 원하는 경우</li><br />
                         <li>❗ 부적절한 프로필 사진 및 닉네임 사용자</li>
                     </ul>
                 </div>
-                <SNSLink/>
+                <SNSLink />
                 {/* <div className='form_div'>
                     <form onSubmit={onSubmit}>
                         <div className='form_inner'>
@@ -164,7 +165,7 @@ function Report(props){
                     </form>
                 </div> */}
             </Container>
-            <Footer/>
+            <Footer />
         </div>
     )
 }
