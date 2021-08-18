@@ -89,15 +89,15 @@ const RightNav = (props) => {
         if (querySnapshot.size) {
           setisManager(true);
         }
-        else{
+        else {
           setisManager(false);
         }
       });
-    }else{
+    } else {
       setisManager(false);
     }
   }, [user]);
-  
+
   const activeStyle = {
     color: '#2B2A28',
     background: '#F2F2F2'
@@ -173,7 +173,7 @@ const RightNav = (props) => {
             </NavLink>
           </RowDiv>
           <RowDiv>
-          <NavLink to="/plan" activeStyle={activeStyle} style={noneactiveStyle}>
+            <NavLink to="/plan" activeStyle={activeStyle} style={noneactiveStyle}>
               <li onClick={() => props.setOpen(!props.open)}>
                 일정 안내
               </li>
@@ -210,7 +210,7 @@ const RightNav = (props) => {
           <RowDiv>
             <NavLink to="/report" activeStyle={activeStyle} style={noneactiveStyle}>
               <li onClick={() => props.setOpen(!props.open)}>
-                신고 접수
+                고객 센터
               </li>
             </NavLink>
           </RowDiv>

@@ -56,14 +56,14 @@ const Confirm = () => {
 
                 <section className='Container입금안내'>
                     <div className='subtitle'>
-                    💸입금 계좌번호 안내💸
+                        💸입금 계좌번호 안내💸
                     </div>
 
                     <div className='account'>
                         농협 356-1499-7855-83 이상민(플로스 컴패니)
                     </div>
 
-                    <ul style={{listStyle:"none"}}>
+                    <ul style={{ listStyle: "none" }}>
                         <li className='accountText'>
                             🙏미입금자는 참가신청이 자동 취소됩니다.
                         </li>
@@ -81,11 +81,11 @@ const Confirm = () => {
 
                 <section className='Container안내사항'>
                     <div className='subtitle'>
-                    ❗안내사항❗
+                        ❗안내사항❗
                     </div>
-                    <ul style={{listStyle:"none"}}>
+                    <ul style={{ listStyle: "none" }}>
                         <li className='accountText'>
-                            ✔️'메뉴' > '일정 안내' 탭에서 각 학교별 일정을 확인 후 발표일에 맞춰 플로스팅에 접속하시면 결과를 확인하실 수 있습니다.      
+                            ✔️'메뉴' > '일정 안내' 탭에서 각 학교별 일정을 확인 후 발표일에 맞춰 플로스팅에 접속하시면 결과를 확인하실 수 있습니다.
                         </li>
                         <li className='accountText'>
                             ✔️'메뉴' > '마이페이지' > '최근신청' 탭에서 본인의 신청 내역, 금액, 입금확인 상태, 신청 취소를 하실 수 있습니다.
@@ -93,7 +93,7 @@ const Confirm = () => {
                     </ul>
                 </section>
 
-                
+
                 <section>
                     더불어, 저희 플로스팅 카카오톡 채널 친구추가,<br />
                     인스타그램 팔로우를 해주시면 회차별 정보와 공지사항<br />

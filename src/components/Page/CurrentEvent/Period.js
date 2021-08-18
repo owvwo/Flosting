@@ -37,7 +37,7 @@ const Period = (props) => {
           <div className="inner">{period}</div>
         </div>
         <div className="scheduleRight">
-          <div className="scheduleTitle">결과발송</div>
+          <div className="scheduleTitle">결과안내</div>
           <div className="inner">{EP_Result_Day}</div>
         </div>
       </div>

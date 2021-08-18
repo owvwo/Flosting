@@ -110,9 +110,9 @@ const CurrentEvent = (props) => {
               요소btn={요소btn}
               School_Name={["강남대학교", "단국대학교 죽전캠퍼스"]}
               Num={1}
-              Start_Day="0821"
-              End_Day="0824"
-              Result_Day="0825"
+              Start_Day="0825"
+              End_Day="0827"
+              Result_Day="0828"
             />
           </NavLink>
         </Fade>
@@ -121,8 +121,8 @@ const CurrentEvent = (props) => {
             <알람신청 알림wrap={알림wrap} 알림btn={알림btn} />
           </NavLink>
         </Fade >
-        
-      <Footer />
+
+        <Footer />
       </Container>
     </div>
   );

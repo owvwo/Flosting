@@ -19,7 +19,7 @@ function NoticeList(props) {
       {/* <NoticeItem Title="7월 이벤트" Date="2021.07.20 - 07.31"></NoticeItem> */}
       <NoticeItem
         Title="베타 서비스 시작"
-        Date="2021.07.26 - 08.26"
+        Date="2021.07.26 - "
       ></NoticeItem>
       {/* <NoticeItem Title="왕코 행님" Date="2021.06.20 - 10.31"></NoticeItem>
       <NoticeItem Title="왕코 행님" Date="2021.06.20 - 10.31"></NoticeItem>
