@@ -7,7 +7,7 @@ import fire from "../Register/LoginFire";
 
 const Container = styled.div`
   display: flex;
-  flex-direction : column;
+  flex-direction: column;
   font-family: "Noto Sans KR", sans-serif;
   left: 0;
   width: 100%;
@@ -31,7 +31,6 @@ const 요소btn = styled.button`
   color: rgb(0, 0, 0, 0.9);
   padding: 5px;
   width: 17rem;
-  height: 6rem;
   border-radius: 15px;
   border: 1px solid rgb(125, 200, 224, 0.5);
   background-color: rgb(125, 200, 224, 0.1);
@@ -108,11 +107,16 @@ const CurrentEvent = (props) => {
               {...props}
               요소wrap={요소wrap}
               요소btn={요소btn}
-              School_Name={["강남대학교", "단국대학교 죽전캠퍼스"]}
+              School_Name={[
+                "강남대학교",
+                "단국대학교 죽전캠퍼스",
+                "가천대학교",
+                "가천대학교",
+              ]}
               Num={1}
-              Start_Day="0825"
-              End_Day="0827"
-              Result_Day="0828"
+              Start_Day="0821"
+              End_Day="0824"
+              Result_Day="0825"
             />
           </NavLink>
         </Fade>
@@ -120,7 +124,7 @@ const CurrentEvent = (props) => {
           <NavLink to="/currentevent/alarm">
             <알람신청 알림wrap={알림wrap} 알림btn={알림btn} />
           </NavLink>
-        </Fade >
+        </Fade>
 
         <Footer />
       </Container>
