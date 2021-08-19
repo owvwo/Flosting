@@ -37,7 +37,11 @@ import ProfileSelect from './Page/Register/ProfileSelect';
 import MbtiSelect from './Page/Register/MbtiSelect';
 import AdminCheckMoneyGiver from "./Page/Manager/AdminCheckMoneyGiver";
 import DeleteNoPaid from "./Page/Manager/DeleteNoPaid";
-
+import EventPeriod from "./Page/Manager/EventPeriod";
+import Event1 from "./Page/subEvent/EventComponents/Event1";
+import Event2 from "./Page/subEvent/EventComponents/Event2";
+import Notice1 from "./Page/subEvent/NoticeComponents/Notice1";
+import Notice2 from "./Page/subEvent/NoticeComponents/Notice2";
 
 const Transition = (props) => {
 
@@ -90,13 +94,22 @@ const Transition = (props) => {
           <Route path="/submit"><Submit_page EP_Num={EP_Num} User={user} /></Route>
           <Route path="/confirm" component={Confirm_page} />
           <Route exact path="/subevent" component={EventMain} />
-          <Route exact path="/subevent/notice" component={NoticeDetail} />
-          <Route exact path="/subevent/event" component={EventDetail} />
+          <Route exact path="/subevent/notice1" component={Notice1} />
+          <Route exact path="/subevent/notice2" component={Notice2} />
+          <Route exact path="/subevent/event1" component={Event1} />
+          <Route exact path="/subevent/event2" component={Event2} />
           <Route path="/account" component={Account_page} />
           <Route path="/about" component={About_page} />
           <Route path="/history" component={History_page} />
           <Route exact path="/ad" component={AD_page} />
           <Route exact path="/admin"><Admin_page isManager={isManager} setisManager={setisManager} User={user} /></Route>
+          <Route exact path="/admin/jungboo"><EventPeriod
+            setEP_School_Name={setEP_School_Name}
+            setEP_Num={setEP_Num}
+            setEP_Start_Day={setEP_Start_Day}
+            setEP_End_Day={setEP_End_Day}
+            setEP_Result_Day={setEP_Result_Day}
+          /></Route>
           <Route exact path="/admin/owvwo"><AdminOwvwO isManager={isManager} User={user} /></Route>
           <Route exact path="/admin/bigfoot"><AdminBigFoot isManager={isManager} User={user} /></Route>
           <Route exact path="/admin/moneygiver"><AdminCheckMoneyGiver isManager={isManager} User={user} /></Route>

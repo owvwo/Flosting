@@ -243,7 +243,7 @@ export default Home;
 
 function Jumbotron({ CurrentButton, 버튼타이머, 매칭결과조회여부 }) {
 
-    const mp4link = "https://firebasestorage.googleapis.com/v0/b/flosting-65c9e.appspot.com/o/flostingmain.mp4?alt=media&token=" + process.env.REACT_APP_LINK_TOKEN
+    const mp4link = "https://firebasestorage.googleapis.com/v0/b/flosting-65c9e.appspot.com/o/mainflosting(high).mp4?alt=media"
     return (
         <div className='jb_wrap'>
             <div className='video_wrap'>
