@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from "react-router-dom";
 import styled from 'styled-components';
 import Fade from 'react-reveal/Fade';
@@ -57,156 +57,188 @@ background-color:rgb(255,180,224,0.2);
     }
 `
 
-function QnaMain(){
+function QnaMain() {
     let [클릭1번, 클릭1번변경] = useState(false);
     let [클릭2번, 클릭2번변경] = useState(false);
     let [클릭3번, 클릭3번변경] = useState(false);
     let [클릭4번, 클릭4번변경] = useState(false);
     let [클릭5번, 클릭5번변경] = useState(false);
-    
-    function onClickOne(){
+    let [클릭6번, 클릭6번변경] = useState(false);
+
+    function onClickOne() {
         클릭1번변경(!클릭1번)
     }
-    function onClickTwo(){
+    function onClickTwo() {
         클릭2번변경(!클릭2번)
     }
-    function onClickThree(){
+    function onClickThree() {
         클릭3번변경(!클릭3번)
     }
-    function onClickFour(){
+    function onClickFour() {
         클릭4번변경(!클릭4번)
     }
-    function onClickFive(){
+    function onClickFive() {
         클릭5번변경(!클릭5번)
     }
+    function onClickFive() {
+        클릭6번변경(!클릭6번)
+    }
 
-    return(
+    return (
         <div>
-        <Container>
+            <Container>
 
-            <Title 제목={제목}/>
-            
-            <button className='질문' onClick={onClickOne} >매칭 결과는 언제 나오나요?</button>
+                <Title 제목={제목} />
+
+                <button className='질문' onClick={onClickOne} >매칭 결과는 언제 나오나요?</button>
                 {
-                클릭1번 === true
-                ? 
-                <Fade top>
-                    <div className='답변박스'>
-                        <답변1 답변Container={답변Container}/>
-                    </div>
-                </Fade>
-                : 
-                null
+                    클릭1번 === true
+                        ?
+                        <Fade top>
+                            <div className='답변박스'>
+                                <답변1 답변Container={답변Container} />
+                            </div>
+                        </Fade>
+                        :
+                        null
                 }
 
-            <button className='질문' onClick={onClickTwo} >신청 내역을 확인/수정하고 싶어요!</button>
+                <button className='질문' onClick={onClickTwo} >신청 내역을 확인/수정하고 싶어요!</button>
                 {
-                클릭2번 === true
-                ? 
-                <Fade top>
-                <div className='답변박스'>
-                    <답변2 답변Container={답변Container}/>
-                </div>
-                </Fade>
-                : 
-                null
+                    클릭2번 === true
+                        ?
+                        <Fade top>
+                            <div className='답변박스'>
+                                <답변2 답변Container={답변Container} />
+                            </div>
+                        </Fade>
+                        :
+                        null
                 }
 
-            <button className='질문' onClick={onClickThree} >매칭에 실패된 기준은 무엇인가요?</button>
+                <button className='질문' onClick={onClickThree} >매칭에 실패된 기준은 무엇인가요?</button>
                 {
-                클릭3번 === true
-                ? 
-                <Fade top>
-                <div className='답변박스'>
-                    <답변3 답변Container={답변Container}/>
-                </div>
-                </Fade>
-                : 
-                null
+                    클릭3번 === true
+                        ?
+                        <Fade top>
+                            <div className='답변박스'>
+                                <답변3 답변Container={답변Container} />
+                            </div>
+                        </Fade>
+                        :
+                        null
                 }
 
-            <button className='질문' onClick={onClickFour} >다음 회차는 언제 진행되나요?</button>
+                <button className='질문' onClick={onClickFour} >다음 회차는 언제 진행되나요?</button>
                 {
-                클릭4번 === true
-                ? 
-                <Fade top>
-                <div className='답변박스'>
-                    <답변4 답변Container={답변Container}/>
-                </div>
-                </Fade>
-                : 
-                null
+                    클릭4번 === true
+                        ?
+                        <Fade top>
+                            <div className='답변박스'>
+                                <답변4 답변Container={답변Container} />
+                            </div>
+                        </Fade>
+                        :
+                        null
                 }
 
-            <button className='질문' onClick={onClickFive} >플로스팅은 학교에서 만든건가요?</button>
+                <button className='질문' onClick={onClickFive} >플로스팅은 학교에서 만든건가요?</button>
                 {
-                클릭5번 === true
-                ? 
-                <Fade top>
-                <div className='답변박스'>
-                    <답변5 답변Container={답변Container}/>
-                </div>
-                </Fade>
-                : 
-                null
+                    클릭5번 === true
+                        ?
+                        <Fade top>
+                            <div className='답변박스'>
+                                <답변5 답변Container={답변Container} />
+                            </div>
+                        </Fade>
+                        :
+                        null
                 }
-        </Container>
-        <Footer/>
+
+                <button className='질문' onClick={onClickFive} >환불 하고 싶어요!</button>
+                {
+                    클릭6번 === true
+                        ?
+                        <Fade top>
+                            <div className='답변박스'>
+                                <답변6 답변Container={답변Container} />
+                            </div>
+                        </Fade>
+                        :
+                        null
+                }
+            </Container>
+            <Footer />
         </div>
     )
 }
 export default QnaMain;
 
-function Title({제목}){
-    return(
+function Title({ 제목 }) {
+    return (
         <제목>자주 묻는 질문</제목>
     )
 }
 
-function 답변1({답변Container}){
-    return(
+function 답변1({ 답변Container }) {
+    return (
         <답변Container>
             <div className='content'>
-                A. <br/>최종 신청이 마감된 다음날부터 매칭이 진행되며,<br/>
-                매칭 완료 후, 홈페이지에서 결과를 <br/>확인하실 수 있습니다.
+                A. <br />최종 신청이 마감된 다음날부터 매칭이 진행되며,<br />
+                매칭 완료 후, 홈페이지에서 결과를 <br />확인하실 수 있습니다.
             </div>
         </답변Container>
     )
 }
-function 답변2({답변Container}){
-    return(
+function 답변2({ 답변Container }) {
+    return (
         <답변Container>
             <div className='content'>
-                A.   <br/> 마이페이지 - 최근 신청 내역<br/>
-                신청 취소 후 다시 신청 하시면 수정이 가능합니다.<br/>
-                (단, 해당 회차가 신청기간일 경우에만 <br/>취소가 가능합니다.)
+                A.   <br /> 마이페이지 - 최근 신청 내역<br />
+                신청 취소 후 다시 신청 하시면 수정이 가능합니다.<br />
+                (단, 해당 회차가 신청기간일 경우에만 <br />취소가 가능합니다.)
             </div>
         </답변Container>
     )
 }
-function 답변3({답변Container}){
-    return(
+function 답변3({ 답변Container }) {
+    return (
         <답변Container>
             <div className='content'>
-                A. <br/> 1대1일 매칭일 경우 성비 불균형에 따라<br/> 매칭 실패가 발생할 수 있습니다.
+                A. <br /> 신청한 개수보다 많은 인원과 매칭이 되었어요!
+                <br />
+                <br /> 매칭에 실패되는 인원을 최대한으로 줄이고자 하기 위해,
+                <br /> 본인이 신청한 티켓의 개수 보다 더 많은 인원과
+                <br /> 매칭이 될 수도 있다는 점 양해 부탁드립니다.
             </div>
         </답변Container>
     )
 }
-function 답변4({답변Container}){
-    return(
+function 답변4({ 답변Container }) {
+    return (
         <답변Container>
             <div className='content'>
-                A. <br/> 다음 회차에 대한 일정은 항상 변동될 수 있기<br/> 때문에 미리 안내해 드리지 않고 있습니다 :)
+                A. <br /> 다음 회차에 대한 일정은 항상 변동될 수 있기<br /> 때문에 미리 안내해 드리지 않고 있습니다 :)
             </div>
         </답변Container>
     )
 }
-function 답변5({답변Container}){
-    return(
+function 답변5({ 답변Container }) {
+    return (
         <답변Container>
             <div className='content'>
-                A. <br/>저희 플로스팅은 여러 대학교 학생들이 <br/>코로나로 인해 학교를 가지 못하는 대학생들을 위해 <br/>기획하게 된 창업 이벤트 업체입니다.
+                A. <br />저희 플로스팅은 여러 대학교 학생들이 <br />코로나로 인해 학교를 가지 못하는 대학생들을 위해 <br />기획하게 된 창업 이벤트 업체입니다.
+            </div>
+        </답변Container>
+    )
+}
+function 답변6({ 답변Container }) {
+    return (
+        <답변Container>
+            <div className='content'>
+                A. <br />신청하신 분의 성함과 닉네임을
+                <br />카카오 플러스 친구 '플로스팅' 을 통해
+                <br />말씀해 주시면, 확인이 되는대로 처리해드립니다 :)
             </div>
         </답변Container>
     )

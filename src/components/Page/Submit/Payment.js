@@ -28,7 +28,11 @@ const Container = styled.div`
 `;
 
 const PaymentContent = styled.div`
-    width: 30rem;
+    @media all and (min-width:768px) {
+        width: 30rem;
+    }
+
+    width: 100vw;
     border-top : 3px solid rgb(0,0,0, 1);
 
     .ButtonContent{
@@ -49,7 +53,10 @@ const PaymentContent = styled.div`
             height: 3rem;
             flex: 5;
             li{
-                font-size: 0.9rem;
+                @media all and (min-width:768px) {
+                    font-size: 0.9rem;
+                }
+                font-size: 0.7rem;
             }
         }
         .TicketNum{
@@ -58,7 +65,10 @@ const PaymentContent = styled.div`
             justify-content : center;
             flex: 1;
             li{
-                font-size: 0.9rem;
+                @media all and (min-width:768px) {
+                    font-size: 0.9rem;
+                }
+                font-size: 0.7rem;
             }
         }
         .Ticketdollar{
@@ -67,7 +77,10 @@ const PaymentContent = styled.div`
             justify-content : center;
             flex: 1;
             li{
-                font-size: 0.9rem;
+                @media all and (min-width:768px) {
+                    font-size: 0.9rem;
+                }
+                font-size: 0.7rem;
             }
         }
         .TicketSum{
@@ -76,7 +89,10 @@ const PaymentContent = styled.div`
             justify-content : center;
             flex: 1;
             li{
-                font-size: 0.9rem;
+                @media all and (min-width:768px) {
+                    font-size: 0.9rem;
+                }
+                font-size: 0.7rem;
             }
         }
         
@@ -98,9 +114,13 @@ const PaymentContent = styled.div`
             }
             li{
                 margin : 0rem 1rem;
-                font-size: 1.0rem;
                 font-weight : 500;
+                @media all and (min-width:768px) {
+                    font-size: 1.0rem;
+                }
+                font-size: 0.8rem;
             }
+        }
         }
         .TicketNum{
             display: flex;
@@ -108,7 +128,10 @@ const PaymentContent = styled.div`
             justify-content : center;
             flex: 1;
             li{
-                font-size: 0.8rem;
+                @media all and (min-width:768px) {
+                    font-size: 0.8rem;
+                }
+                font-size: 0.7rem;
             }
         }
         .Ticketdollar{
@@ -117,7 +140,10 @@ const PaymentContent = styled.div`
             justify-content : center;
             flex: 1;
             li{
-                font-size: 0.8rem;
+                @media all and (min-width:768px) {
+                    font-size: 0.8rem;
+                }
+                font-size: 0.7rem;
             }
         }
         .TicketSum{
@@ -126,7 +152,10 @@ const PaymentContent = styled.div`
             justify-content : center;
             flex: 1;
             li{
-                font-size: 0.8rem;
+                @media all and (min-width:768px) {
+                    font-size: 0.8rem;
+                }
+                font-size: 0.7rem;
             }
         }
     }
@@ -149,6 +178,12 @@ const AllPaymentPyo = styled.div`
             border-top : 1px solid rgb(0,0,0, 0.2);
             border-left: 1px solid rgb(0,0,0, 0.2);
             flex: 1;
+            li{
+                @media all and (min-width:768px) {
+                    font-size: 1.0rem;
+                }
+                font-size: 0.8rem;
+            }
         }
         .SelectAllSum{
             display: flex;
@@ -158,6 +193,12 @@ const AllPaymentPyo = styled.div`
             border-top : 1px solid rgb(0,0,0, 0.2);
             border-left: 1px solid rgb(0,0,0, 0.2);
             flex: 2;
+            li{
+                @media all and (min-width:768px) {
+                    font-size: 1.0rem;
+                }
+                font-size: 0.8rem;
+            }
         }
         .SelectDiscount{
             display: flex;
@@ -167,6 +208,12 @@ const AllPaymentPyo = styled.div`
             border-top : 1px solid rgb(0,0,0, 0.2);
             border-left: 1px solid rgb(0,0,0, 0.2);
             flex: 1;
+            li{
+                @media all and (min-width:768px) {
+                    font-size: 1.0rem;
+                }
+                font-size: 0.7rem;
+            }
         }
         .SelectRealSum{
             display: flex;
@@ -177,6 +224,12 @@ const AllPaymentPyo = styled.div`
             border-left: 1px solid rgb(0,0,0, 0.2);
             border-right: 1px solid rgb(0,0,0, 0.2);
             flex: 1;
+            li{
+                @media all and (min-width:768px) {
+                    font-size: 1.0rem;
+                }
+                font-size: 0.7rem;
+            }
         }
     }
 
@@ -192,7 +245,13 @@ const AllPaymentPyo = styled.div`
             border-top : 1px solid rgb(0,0,0, 0.2);
             border-left: 1px solid rgb(0,0,0, 0.2);
             border-bottom: 1px solid rgb(0,0,0, 0.2);
-            flex: 1;
+            flex: 1;   
+            li{
+                @media all and (min-width:768px) {
+                    font-size: 1.0rem;
+                }
+                font-size: 0.8rem;
+            }         
         }
         .SelectAllSum{
             display: flex;
@@ -202,6 +261,12 @@ const AllPaymentPyo = styled.div`
             border-left: 1px solid rgb(0,0,0, 0.2);
             border-bottom: 1px solid rgb(0,0,0, 0.2);
             flex: 2;
+            li{
+                @media all and (min-width:768px) {
+                    font-size: 1.0rem;
+                }
+                font-size: 0.8rem;
+            }   
         }
         .SelectDiscount{
             display: flex;
@@ -211,6 +276,12 @@ const AllPaymentPyo = styled.div`
             border-left: 1px solid rgb(0,0,0, 0.2);
             border-bottom: 1px solid rgb(0,0,0, 0.2);
             flex: 1;
+            li{
+                @media all and (min-width:768px) {
+                    font-size: 1.0rem;
+                }
+                font-size: 0.8rem;
+            }   
         }
         .SelectRealSum{
             display: flex;
@@ -223,7 +294,11 @@ const AllPaymentPyo = styled.div`
             flex: 1;
             li{
                 font-weight: 700;
-            }
+                @media all and (min-width:768px) {
+                    font-size: 1.0rem;
+                }
+                font-size: 0.8rem;
+            }   
         }
     }
 
@@ -275,15 +350,15 @@ function Payment(props) {
     const [submitSuccess, setSubmitSuccess] = useState(false);
     const [discountSum, setDiscountSum] = useState(0); // 할인금액 상태 저장
     let AllSum = (Number(clover_Ticket) + Number(lilac_Ticket) + Number(daisy_Ticket)) * 1000
-    let FinishSum = AllSum-discountSum;
+    let FinishSum = AllSum - discountSum;
 
     // 할인되는 금액이 얼마인지 판단하는 hook
-    useEffect(()=>{
-        if(lilac_Ticket_FT){setDiscountSum(cost => cost+1000)}
-        if(daisy_Ticket_FT){setDiscountSum(cost => cost+1000)}
-        if(clover_Ticket_FT){setDiscountSum(cost => cost+1000)}
-        
-    },[])
+    useEffect(() => {
+        if (lilac_Ticket_FT) { setDiscountSum(cost => cost + 1000) }
+        if (daisy_Ticket_FT) { setDiscountSum(cost => cost + 1000) }
+        if (clover_Ticket_FT) { setDiscountSum(cost => cost + 1000) }
+
+    }, [])
 
     let lilacvalues = {
         Ticket: "",
@@ -432,7 +507,7 @@ function Payment(props) {
                             </div>
                             <div className="Ticketdollar">
                                 <li>
-                                1,000
+                                    1,000
                                 </li>
                             </div>
                             <div className="TicketSum">
@@ -513,7 +588,7 @@ function Payment(props) {
                                     </li>
                                 </div>
                                 <div className="SelectAllSum">
-                                    <li> 
+                                    <li>
                                         {/* 숫자 세자릿 수 콤마 찍는 최적화된 방법이라 생각함(String변수 생성 필요없이) */}
                                         {AllSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원
                                     </li>

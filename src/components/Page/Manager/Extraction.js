@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import fire from '../Register/LoginFire';
-import MatchingManager2 from './MatchingManager2';
+import MatchingManager from './MatchingManager';
 
 const Wrapper = styled.div`
     padding : 5px;
@@ -48,9 +48,9 @@ export default function Extraction(props) {
                 <Exbar>
                     <li>{nowCount}회차 애들 매칭해주기</li>
                 </Exbar>
-                <MatchingManager2 nowCount={nowCount}>
+                <MatchingManager nowCount={nowCount}>
 
-                </MatchingManager2>
+                </MatchingManager>
             </div>
         )
     }

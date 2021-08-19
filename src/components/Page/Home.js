@@ -136,12 +136,16 @@ width:100%;
 }
 ul{
     margin-top: 1rem;
-    margin-left: 4rem;
+    margin-left: 2rem;
     margin-bottom: 1rem;
 }
 .text{
+    border-top : 1px solid rgb(0,0,0, 0.1);
+    margin-top: 3rem;
+    padding-top: 1rem;
     text-align: center;
     margin-bottom: 1rem;
+    font-weight: 500;
 }
 `
 const CurrentButton = styled.button`
@@ -243,7 +247,7 @@ function Jumbotron({ CurrentButton, 버튼타이머, 매칭결과조회여부 })
     return (
         <div className='jb_wrap'>
             <div className='video_wrap'>
-                <img src  = "https://firebasestorage.googleapis.com/v0/b/flosting-65c9e.appspot.com/o/startmain.png?alt=media" alt aria-hidden = "true" className='start_img'></img>
+                <img src="https://firebasestorage.googleapis.com/v0/b/flosting-65c9e.appspot.com/o/startmain.png?alt=media" alt aria-hidden="true" className='start_img'></img>
                 <video muted autoPlay playsInline className="videoview">
                     <source poster="https://firebasestorage.googleapis.com/v0/b/flosting-65c9e.appspot.com/o/startmain.png?alt=media" src={mp4link} type="video/mp4">
 
@@ -298,7 +302,7 @@ function WhatIsFlosting({ WhatIsFlostingWrap }) {
                     </div>
                 </div>
                 <div>
-                    <img src={logoimg} className='로고배경'/>
+                    <img src={logoimg} className='로고배경' />
                 </div>
             </Fade>
         </WhatIsFlostingWrap>
@@ -431,23 +435,24 @@ function 추후업데이트({ 참여방법Wrap }) {
                 </div>
                 <ul className='updateList'>
                     <li>
-                        매너온도에 따른 티어별 매칭
+                        ⚪️ 매너온도에 따른 티어별 매칭
                     </li>
                     <li>
-                        MBTI 조건에 따른 매칭
+                        ⚪️ MBTI 조건에 따른 매칭
                     </li>
                     <li>
-                        매칭 성공에 따른 이벤트 진행 예정
+                        ⚪️ 매칭 성공에 따른 이벤트 진행 예정
                     </li>
                     <li>
-                        거짓 정보를 이용한 사용자 신고접수 기능 추가
+                        ⚪️ 거짓 정보를 이용한 사용자 신고접수 기능 추가
                     </li>
                 </ul>
                 <div className='text'>
-                    오로지 대학생을 위하여 출발하게된 플로스팅은<br />
-                    대학생이라면 누구나 다같이 만들어가고자 모든<br />
-                    피드백과 의견수렴에 대해 환영하고 있습니다<br />
-                    무료 서비스인만큼 많은 참여와 의견 부탁드립니다 :)
+                    대학생들만의 풋풋하고 설레임 가득한 플로스팅은<br />
+                    대학생이라면 누구나 다같이 참여가 가능하기에 <br />
+                    여러분의 많은 의견과 피드백에 대해 환영하고 있습니다. <br />
+                    여러 무료 서비스와 다양한 이벤트를 <br />
+                    함께 진행하고 있는 만큼 많은 참여 부탁드립니다.
                 </div>
             </Fade>
         </참여방법Wrap>

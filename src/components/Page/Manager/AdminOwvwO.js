@@ -126,7 +126,7 @@ function AdminOwvwO(props) {
         Lilacvalue.Ticket = true;
         Lilacvalue.TicketNumber = LilacTicketNumber;
 
-        db.collection("Flosting_2")
+        db.collection("Flosting_3")
             .add({
                 ID: ID,
                 User: dbUser,
