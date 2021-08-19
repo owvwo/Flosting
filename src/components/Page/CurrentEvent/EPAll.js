@@ -40,7 +40,7 @@ const SubmitButton = styled.button`
   &:hover{
     background-color: rgb(0,0,0,0.9);
     color: white;
-`
+`;
 const Container = styled.div`
   text-align: center;
   margin-bottom: 1rem;
@@ -115,6 +115,19 @@ function EP1(props) {
     }
   }, [user]);
 
+  function getSchool(eventUniv) {
+    const result = [];
+    let length = eventUniv.length;
+    for (let i = 0; i < length; i++) {
+      result.push(
+        <h3 key={i} className="eventUniv">
+          {eventUniv[i]}{" "}
+        </h3>
+      );
+    }
+    return result;
+  }
+
   let index = eventUniv.indexOf(User.Univ);
   if (!JSON.parse(localStorage.getItem("user"))) {
     return <Redirect to="/login" />;
@@ -126,9 +139,7 @@ function EP1(props) {
         <Container>
           <div className="title">플로스팅 일정안내</div>
           <div className="subtitle">{ep}회차</div>
-          <div className="subtitle">
-            {eventUniv[0]} & {eventUniv[1]}
-          </div>
+          <div className="subtitle">{getSchool(eventUniv)}</div>
           <img src={Logo} />
           {index === -1 ? (
             <ThemeProvider theme={Boldtheme}>
@@ -167,7 +178,7 @@ function EP1(props) {
           )}
 
           <Fade bottom>
-            <Period EP_Result_Day = {EP_Result_Day} period={period}></Period>
+            <Period EP_Result_Day={EP_Result_Day} period={period}></Period>
             <Notice />
           </Fade>
         </Container>
