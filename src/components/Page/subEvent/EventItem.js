@@ -35,12 +35,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function EventItem(props) {
-  const { Img, Title, Date } = props;
+  const { Img, Title, Date, Event } = props;
   const classes = useStyles();
   return (
     <Container>
       <NavContainer>
-        <NavLink to="/subevent/event">
+        <NavLink to={Event}>
           <ListItem alignItems="flex-start" button>
             <ListItemText
               primary={Title}

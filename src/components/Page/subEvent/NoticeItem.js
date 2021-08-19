@@ -32,12 +32,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const NoticeItem = (props) => {
-  const { Title, Date } = props;
+  const { Title, Date, Notice } = props;
   const classes = useStyles();
   return (
     <Container>
       <NavContainer>
-        <NavLink to="/subevent/notice">
+        <NavLink to={Notice}>
           <ListItem alignItems="flex-start" button>
             <ListItemText
               primary={Title}
