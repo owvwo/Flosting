@@ -30,6 +30,7 @@ function EventList(props) {
           Img={EventImg}
           Title="오픈 기념 이벤트"
           Date="2021.07.26 - 08.26"
+          Event="subevent/event1"
         ></EventItem>
         {/* <EventItem
         Img={EventImg}

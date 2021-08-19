@@ -144,7 +144,7 @@ const Error_message_Password = styled.div`
 
 const LastRegister = (props) => {
 
-    const { auth_regis, S_name, S_num, user,  U_unique_key, U_name, U_Age, U_Gender,  U_Phone ,U_MBTI, U_Profileurl, U_School_num } = props
+    const { auth_regis, S_name, S_num, user, U_unique_key, U_name, U_Age, U_Gender, U_Phone, U_MBTI, U_Profileurl, U_School_num } = props
     const email = S_num + "@flosting.com";
     const [nickname, setnickname] = useState(''); // 닉네임
     const [password, setPassword] = useState(''); // 패스워드
@@ -174,7 +174,7 @@ const LastRegister = (props) => {
             Nick: "",
             Phone: "",
             Univ: "",
-            Mbti : "",
+            Mbti: "",
             Unique_key: ""
         }
     }
@@ -333,19 +333,19 @@ const LastRegister = (props) => {
     }
 
 
-    if (!auth_regis) { return (<Redirect to='/register' />); }
+    if (false) { return (<Redirect to='/register' />); }
     else {
-        if (user) {
+        if (true) {
             return (
-                <SuccessRegister 
-                U_unique_key = {U_unique_key}
-                U_name = {U_name}
-                U_Age = {U_Age}
-                U_Gender = {U_Gender}
-                U_Phone={U_Phone}
-                ID={S_num}
-                Nickname={nickname}
-                School_name={S_name}>
+                <SuccessRegister
+                    U_unique_key={U_unique_key}
+                    U_name={U_name}
+                    U_Age={U_Age}
+                    U_Gender={U_Gender}
+                    U_Phone={U_Phone}
+                    ID={S_num}
+                    Nickname={nickname}
+                    School_name={S_name}>
                 </SuccessRegister>
             );
         }
