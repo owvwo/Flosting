@@ -80,7 +80,7 @@ function QnaMain() {
     function onClickFive() {
         클릭5번변경(!클릭5번)
     }
-    function onClickFive() {
+    function onClickSix() {
         클릭6번변경(!클릭6번)
     }
 
@@ -155,7 +155,7 @@ function QnaMain() {
                         null
                 }
 
-                <button className='질문' onClick={onClickFive} >환불 하고 싶어요!</button>
+                <button className='질문' onClick={onClickSix} >환불 하고 싶어요!</button>
                 {
                     클릭6번 === true
                         ?
