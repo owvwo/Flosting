@@ -144,7 +144,7 @@ const Error_message_Password = styled.div`
 
 const LastRegister = (props) => {
 
-    const { auth_regis, S_name, S_num, user, U_unique_key, U_name, U_Age, U_Gender, U_Phone, U_MBTI, U_Profileurl, U_School_num } = props
+    const { auth_regis, controlWhere, S_name, S_num, user, U_unique_key, U_name, U_Age, U_Gender, U_Phone, U_MBTI, U_Profileurl, U_School_num } = props
     const email = S_num + "@flosting.com";
     const [nickname, setnickname] = useState(''); // 닉네임
     const [password, setPassword] = useState(''); // 패스워드
@@ -325,7 +325,35 @@ const LastRegister = (props) => {
                 User: DBForm.User
             })
             .then(() => {
-
+                const docRef = db.collection("가입경로").doc("가입경로");
+                docRef
+                    .get()
+                    .then((doc) => {
+                        if (controlWhere === "insta") {
+                            let Insta = doc.data().Insta;
+                            db.collection("가입경로").doc("가입경로").update({
+                                "Insta": Insta + 1
+                            })
+                        } else if (controlWhere === "facebook") {
+                            let facebook = doc.data().Facebook;
+                            db.collection("가입경로").doc("가입경로").update({
+                                "Facebook": facebook + 1
+                            })
+                        } else if (controlWhere === "gitar") {
+                            let gitar = doc.data().Gitar;
+                            db.collection("가입경로").doc("가입경로").update({
+                                "Gitar": gitar + 1
+                            })
+                        } else {
+                            let friend = doc.data().Friend;
+                            db.collection("가입경로").doc("가입경로").update({
+                                "Friend": friend + 1
+                            })
+                        }
+                    })
+                    .catch((error) => {
+                        console.log("Error getting document:", error);
+                    });
             })
             .catch((error) => {
                 alert(error.message);

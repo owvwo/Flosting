@@ -137,7 +137,7 @@ const ProfileChangeBox = styled.div`
 
 const ProfileSelect = (props) => {
     const classes = useStyles();
-    const {auth_regis, U_MBTI, setU_MBTI} = props
+    const { auth_regis, U_MBTI, setU_MBTI } = props
 
     const noneactiveStyle = {
         textDecoration: 'none'
@@ -149,26 +149,26 @@ const ProfileSelect = (props) => {
     else {
         return (
             <ThemeProvider theme={Colortheme}>
-            <Wrapper>
-                <Container>
-                    <h1>
-                        MBTI 선택
-                    </h1>
-                    <School_title>
-                        <li>MBTI는 사람의 성격을 16가지로 분류해서 나타내는 검사입니다.</li>
-                        <li>성격에 따른 MBTI테스트를 진행후 값을 입력해주세요!</li>
-                        <li>나중에 변경가능해요!</li>
-                    </School_title>
-                    <MbtiBox U_MBTI = {U_MBTI} setU_MBTI = {setU_MBTI}>
+                <Wrapper>
+                    <Container>
+                        <h1>
+                            MBTI 선택
+                        </h1>
+                        <School_title>
+                            <li>MBTI는 사람의 성격을 16가지로 분류해서 나타내는 검사입니다.</li>
+                            <li>성격에 따른 MBTI테스트를 진행후 값을 입력해주세요!</li>
+                            <li>나중에 변경가능해요!</li>
+                        </School_title>
+                        <MbtiBox U_MBTI={U_MBTI} setU_MBTI={setU_MBTI}>
 
-                    </MbtiBox>
-                    <NavLink to="/register/last">
-                        <NextButton >
-                            다음
-                        </NextButton>
-                    </NavLink>
-                </Container>
-            </Wrapper>
+                        </MbtiBox>
+                        <NavLink to="/register/where">
+                            <NextButton >
+                                다음
+                            </NextButton>
+                        </NavLink>
+                    </Container>
+                </Wrapper>
             </ThemeProvider>
         );
     }
