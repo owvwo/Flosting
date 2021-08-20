@@ -333,9 +333,9 @@ const LastRegister = (props) => {
     }
 
 
-    if (false) { return (<Redirect to='/register' />); }
+    if (!auth_regis) { return (<Redirect to='/register' />); }
     else {
-        if (true) {
+        if (user) {
             return (
                 <SuccessRegister
                     U_unique_key={U_unique_key}
