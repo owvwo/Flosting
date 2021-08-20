@@ -14,6 +14,7 @@ import Register_page from './Page/Register/Register'
 import Terms_page from './Page/Register/Terms'
 import Certification_page from './Page/Register/Certification'
 import LastRegister_page from './Page/Register/LastRegister'
+import Whereareyoufrom_page from './Page/Register/WhereAreyoufrom'
 import My_page from './Page/Mypage/Mypage'
 import ShowingResult from './Page/Matched/ShowingResult'
 import CurrentEvent from "./Page/CurrentEvent/CurrentEvent";
@@ -42,7 +43,6 @@ import Event1 from "./Page/subEvent/EventComponents/Event1";
 import Event2 from "./Page/subEvent/EventComponents/Event2";
 import Notice1 from "./Page/subEvent/NoticeComponents/Notice1";
 import Notice2 from "./Page/subEvent/NoticeComponents/Notice2";
-
 const Transition = (props) => {
 
   const [auth_regis, set_auth_regis] = useState(false);
@@ -56,6 +56,7 @@ const Transition = (props) => {
   const [U_Phone, setU_Phone] = useState("");
   const [U_Profileurl, setU_Profileurl] = useState("");
   const [U_MBTI, setU_MBTI] = useState("");
+  const [controlWhere, setcontrolWhere] = useState("");
 
   const [EP_School_Name, setEP_School_Name] = useState([]);
   const [EP_Num, setEP_Num] = useState('');
@@ -177,6 +178,15 @@ const Transition = (props) => {
               U_School_num={U_School_num}
               S_name={S_name}
               user={user}
+              controlWhere={controlWhere}
+              {...props} />
+          )} />
+          <Route path="/register/where" render={props => (
+            <Whereareyoufrom_page
+              auth_regis={auth_regis}
+              user={user}
+              controlWhere={controlWhere}
+              setcontrolWhere={setcontrolWhere}
               {...props} />
           )} />
         </Switch>
