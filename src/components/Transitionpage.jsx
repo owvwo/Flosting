@@ -23,6 +23,7 @@ import MatchingList from '../components/Page/Matched/MatchingList.js';
 import Forgot_page from "./Page/Forgot/forgot";
 import AdminBigFoot from "./Page/Manager/AdminBigFoot.js";
 import AdminOwvwO from "./Page/Manager/AdminOwvwO";
+import UserSearch from "./Page/Manager/UserSearch";
 import EPall from './Page/CurrentEvent/EPAll';
 import Alarm from "./Page/Alarm";
 import Admin_page from "./Page/Manager/Admin";
@@ -112,6 +113,7 @@ const Transition = (props) => {
             setEP_Result_Day={setEP_Result_Day}
           /></Route>
           <Route exact path="/admin/owvwo"><AdminOwvwO isManager={isManager} User={user} /></Route>
+          <Route exact path="/admin/usersearch"><UserSearch isManager={isManager} User={user} /></Route>
           <Route exact path="/admin/bigfoot"><AdminBigFoot isManager={isManager} User={user} /></Route>
           <Route exact path="/admin/moneygiver"><AdminCheckMoneyGiver isManager={isManager} User={user} /></Route>
           <Route exact path="/admin/delete"><DeleteNoPaid isManager={isManager} User={user} /></Route>
