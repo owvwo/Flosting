@@ -71,7 +71,7 @@ function EP1(props) {
   const { EP_School_Name, EP_Num, EP_Start_Day, EP_End_Day, EP_Result_Day } =
     props;
   const user = props.User;
-  const period = EP_Start_Day + "~" + EP_End_Day;
+  const period = EP_Start_Day.substr(0, 2) + "/" + EP_Start_Day.substr(2) + "~" + EP_End_Day.substr(0, 2) + "/" + EP_End_Day.substr(2);
   const ep = EP_Num;
   const eventUniv = EP_School_Name;
   const dbUser = [
@@ -93,8 +93,17 @@ function EP1(props) {
     setOpen(false);
   };
 
+  const handletimeClose = () => {
+    settimeopen(false);
+  };
+  const handlesubmitClose = () => {
+    setsubmitopen(false);
+  };
+
   const [checkUserUniv, setCheckUserUniv] = useState("");
   const [open, setOpen] = useState(false);
+  const [submitopen, setsubmitopen] = useState(false);
+  const [timeopen, settimeopen] = useState(false);
   const [User, setUser] = useState(dbUser);
   const db = fire.firestore();
   useEffect(() => {
@@ -127,8 +136,20 @@ function EP1(props) {
     }
     return result;
   }
-
   let index = eventUniv.indexOf(User.Univ);
+
+  function TimeisRight() {
+    let nowdate = new Date();
+    let comparedate = new Date(2021, Number(EP_Start_Day.substr(0, 2)) - 1, EP_Start_Day.substr(2), 0, 0);
+
+    if (nowdate.getTime() > comparedate.getTime()) {
+      setsubmitopen(true);
+    } else {
+      settimeopen(true);
+    }
+
+  }
+
   if (!JSON.parse(localStorage.getItem("user"))) {
     return <Redirect to="/login" />;
   } else if (!EP_End_Day) {
@@ -171,9 +192,51 @@ function EP1(props) {
             </ThemeProvider>
           ) : (
             <ButtonContainer>
-              <Link to="/submit">
-                <SubmitButton className="submitBtn">신청하기</SubmitButton>
-              </Link>
+              <SubmitButton className="submitBtn" onClick={TimeisRight}>신청하기</SubmitButton>
+              <ThemeProvider theme={Boldtheme}>
+                <Dialog
+                  open={timeopen}
+                  onClose={handletimeClose}
+                  aria-labelledby="alert-dialog-title"
+                  aria-describedby="alert-dialog-description"
+                >
+                  <DialogTitle id="alert-dialog-title">
+                    {"신청기간을 확인해주세요!"}
+                  </DialogTitle>
+                  <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                      신청기간이 아닙니다.
+                    </DialogContentText>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button variant="outlined" onClick={handletimeClose} color="primary">
+                      창 닫기
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+                <Dialog
+                  open={submitopen}
+                  onClose={handlesubmitClose}
+                  aria-labelledby="alert-dialog-title"
+                  aria-describedby="alert-dialog-description"
+                >
+                  <DialogTitle id="alert-dialog-title">
+                    {"신청하기"}
+                  </DialogTitle>
+                  <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                      신청 페이지로 이동할까요?
+                    </DialogContentText>
+                  </DialogContent>
+                  <DialogActions>
+                    <Link to="/submit">
+                      <Button variant="contained" onClick={handlesubmitClose} color="primary">
+                        이동
+                      </Button>
+                    </Link>
+                  </DialogActions>
+                </Dialog>
+              </ThemeProvider>
             </ButtonContainer>
           )}
 
