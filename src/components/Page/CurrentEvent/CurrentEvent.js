@@ -114,9 +114,9 @@ const CurrentEvent = (props) => {
                 "을지대학교",
               ]}
               Num={1}
-              Start_Day="0821"
-              End_Day="0824"
-              Result_Day="0825"
+              Start_Day="0825"
+              End_Day="0827"
+              Result_Day="0828"
             />
           </NavLink>
         </Fade>
