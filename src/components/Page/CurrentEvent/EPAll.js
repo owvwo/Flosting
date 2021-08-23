@@ -140,9 +140,10 @@ function EP1(props) {
 
   function TimeisRight() {
     let nowdate = new Date();
-    let comparedate = new Date(2021, Number(EP_Start_Day.substr(0, 2)) - 1, EP_Start_Day.substr(2), 0, 0);
+    let comparedate = new Date(2021, Number(EP_Start_Day.substr(0, 2)) - 1, Number(EP_Start_Day.substr(2)), 0, 0);
+    let endcomparedate = new Date(2021, Number(EP_End_Day.substr(0, 2)) - 1, Number(EP_End_Day.substr(2)) + 1, 0, 0);
 
-    if (nowdate.getTime() > comparedate.getTime()) {
+    if (nowdate.getTime() > comparedate.getTime() && nowdate.getTime() < endcomparedate.getTime()) {
       setsubmitopen(true);
     } else {
       settimeopen(true);
