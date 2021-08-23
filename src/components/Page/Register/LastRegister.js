@@ -364,7 +364,7 @@ const LastRegister = (props) => {
     }
 
 
-    if (false) { return (<Redirect to='/register' />); }
+    if (!auth_regis) { return (<Redirect to='/register' />); }
     else {
         if (user) {
             return (
