@@ -111,10 +111,10 @@ const CurrentEvent = (props) => {
                 "강남대학교",
                 "단국대학교 죽전캠퍼스",
                 "가천대학교",
-                "을지대학교",
+                "을지대학교 성남캠퍼스",
               ]}
               Num={1}
-              Start_Day="0825"
+              Start_Day="0824"
               End_Day="0827"
               Result_Day="0828"
             />
