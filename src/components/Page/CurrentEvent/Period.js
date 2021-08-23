@@ -38,7 +38,7 @@ const Period = (props) => {
         </div>
         <div className="scheduleRight">
           <div className="scheduleTitle">결과안내</div>
-          <div className="inner">{EP_Result_Day}</div>
+          <div className="inner">{EP_Result_Day.substr(0, 2) + "/" + EP_Result_Day.substr(2)}</div>
         </div>
       </div>
     </Container>

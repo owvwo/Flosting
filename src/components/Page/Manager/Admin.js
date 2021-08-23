@@ -165,6 +165,9 @@ const Admin = (props) => {
         <NavLink to="/admin/jungboo">
           <button>정부 기능</button>
         </NavLink>
+        <NavLink to="/admin/usersearch">
+          <button>유저 검색</button>
+        </NavLink>
       </ThemeProvider>
     );
   } else {

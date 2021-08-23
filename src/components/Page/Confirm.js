@@ -4,20 +4,35 @@ import SNSLink from './SNSLink.js'
 import Footer from './Footer.js'
 
 const Wrapper = styled.div`
-text-align: center;
+    text-align: center;
+    list-style : none;
 .text{
+    display: flex;
+    flex-direction : column;
+    align-items: center;
     margin-top:1.5rem;
     margin-bottom: 1.5rem;
 }
 .Container입금안내{
-background: rgb(209,240,228,0.8);
-border-radius: 25px;
-margin-left: 1rem;
-margin-right: 1rem;
-margin-bottom: 1rem;
+    @media all and (min-width:768px) {
+        width: 40rem;
+    }
+
+    width: 80vw;
+    background: rgb(209,240,228,0.8);
+    border-radius: 25px;
+    padding : 1rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
 }
 .Container안내사항{
-background: rgb(246,248,211,0.8);
+    @media all and (min-width:768px) {
+        width: 40rem;
+    }
+    width: 80vw;
+    padding : 1rem;
+    background: rgb(246,248,211,0.8);
 border-radius: 25px;
 margin-left: 1rem;
 margin-right: 1rem;
@@ -36,6 +51,24 @@ margin-bottom: 1rem;
     text-align:left;
     margin-bottom: 0.3rem;
     font-size: 0.8rem;
+}
+.SectionContent{
+
+    li{
+        font-size: 0.9rem;
+    }
+    .rowContent{
+        display: flex;
+        flex-direction : row;
+        .Accent{
+            background: rgb(230,225,97);
+            font-weight: 500;
+        }
+        .Redcolor{
+            color : rgb(230,100,88);
+            font-weight: bold;
+        }
+    }
 }
 `
 
@@ -94,13 +127,17 @@ const Confirm = () => {
                 </section>
 
 
-                <section>
-                    더불어, 저희 플로스팅 카카오톡 채널 친구추가,<br />
-                    인스타그램 팔로우를 해주시면 회차별 정보와 공지사항<br />
-                    그리고 다음 회차 정보까지 보실 수 있습니다!<br /><br />
-
-                    저희 플로스팅은 모두가<br />
-                    좋은 인연을 찾기를 항상 응원합니다.
+                <section className="SectionContent">
+                    <div className="rowContent">
+                        <li>아래의 플로스팅&nbsp;</li>
+                        <li className="Accent">카카오채널</li>
+                        <li>을&nbsp;</li>
+                        <li className="Redcolor">반드시&nbsp;</li>
+                        <li>추가해 주셔야</li>
+                    </div>
+                    <li>일괄 공지 및 상담원과 개별 연락이 가능합니다.</li>
+                    <li>또한, 인스타 그램을 팔로우 하셔서 회차별 정보와</li>
+                    <li>공지사항 및 다음 회차 정보까지 확인해 보세요!</li>
                     <SNSLink />
                 </section>
             </div>

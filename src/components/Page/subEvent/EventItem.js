@@ -8,9 +8,11 @@ import { Divider } from "@material-ui/core";
 import { NavLink, Redirect } from "react-router-dom";
 
 const Container = styled.div`
+
   text-align: center;
   margin-bottom: 1rem;
   img {
+
     width: 100%;
     text-align: center;
   }

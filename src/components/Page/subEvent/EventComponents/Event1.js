@@ -38,7 +38,11 @@ const NavContainer = styled.div`
   border-radius: 10px;
   margin: 0.5rem;
   img {
-    width: 100%;
+    @media all and (min-width:768px) {
+      width: 30rem;
+  }
+
+    width: 80vw;
     margin: 1rem auto;
     display: block;
   }
@@ -49,11 +53,15 @@ const NavContainer = styled.div`
 `;
 
 const Button = styled.button`
+    @media all and (min-width:768px) {
+      width: 30rem;
+    }
+    width: 80vw;
+    
   margin: 1rem auto;
   text-align: center;
   justify-content: center;
   height: 5rem;
-  width: 70%;
   border-radius: 5px;
   font-family: "Noto Sans KR", sans-serif;
   font-weight: 700;

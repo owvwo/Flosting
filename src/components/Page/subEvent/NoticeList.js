@@ -22,6 +22,11 @@ function NoticeList(props) {
         Date="2021.07.26 - "
         Notice="/subevent/notice1"
       ></NoticeItem>
+      <NoticeItem
+        Title="플로스팅 변경 사항 안내"
+        Date="2021.08.19 - "
+        Notice="/subevent/notice2"
+      ></NoticeItem>
       {/* <NoticeItem Title="왕코 행님" Date="2021.06.20 - 10.31"></NoticeItem>
       <NoticeItem Title="왕코 행님" Date="2021.06.20 - 10.31"></NoticeItem>
       <NoticeItem Title="왕코 행님" Date="2021.06.20 - 10.31"></NoticeItem> */}

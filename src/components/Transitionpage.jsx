@@ -14,6 +14,7 @@ import Register_page from './Page/Register/Register'
 import Terms_page from './Page/Register/Terms'
 import Certification_page from './Page/Register/Certification'
 import LastRegister_page from './Page/Register/LastRegister'
+import Whereareyoufrom_page from './Page/Register/WhereAreyoufrom'
 import My_page from './Page/Mypage/Mypage'
 import ShowingResult from './Page/Matched/ShowingResult'
 import CurrentEvent from "./Page/CurrentEvent/CurrentEvent";
@@ -22,6 +23,7 @@ import MatchingList from '../components/Page/Matched/MatchingList.js';
 import Forgot_page from "./Page/Forgot/forgot";
 import AdminBigFoot from "./Page/Manager/AdminBigFoot.js";
 import AdminOwvwO from "./Page/Manager/AdminOwvwO";
+import UserSearch from "./Page/Manager/UserSearch";
 import EPall from './Page/CurrentEvent/EPAll';
 import Alarm from "./Page/Alarm";
 import Admin_page from "./Page/Manager/Admin";
@@ -41,7 +43,7 @@ import EventPeriod from "./Page/Manager/EventPeriod";
 import Event1 from "./Page/subEvent/EventComponents/Event1";
 import Event2 from "./Page/subEvent/EventComponents/Event2";
 import Notice1 from "./Page/subEvent/NoticeComponents/Notice1";
-
+import Notice2 from "./Page/subEvent/NoticeComponents/Notice2";
 const Transition = (props) => {
 
   const [auth_regis, set_auth_regis] = useState(false);
@@ -55,6 +57,7 @@ const Transition = (props) => {
   const [U_Phone, setU_Phone] = useState("");
   const [U_Profileurl, setU_Profileurl] = useState("");
   const [U_MBTI, setU_MBTI] = useState("");
+  const [controlWhere, setcontrolWhere] = useState("");
 
   const [EP_School_Name, setEP_School_Name] = useState([]);
   const [EP_Num, setEP_Num] = useState('');
@@ -94,6 +97,7 @@ const Transition = (props) => {
           <Route path="/confirm" component={Confirm_page} />
           <Route exact path="/subevent" component={EventMain} />
           <Route exact path="/subevent/notice1" component={Notice1} />
+          <Route exact path="/subevent/notice2" component={Notice2} />
           <Route exact path="/subevent/event1" component={Event1} />
           <Route exact path="/subevent/event2" component={Event2} />
           <Route path="/account" component={Account_page} />
@@ -101,15 +105,16 @@ const Transition = (props) => {
           <Route path="/history" component={History_page} />
           <Route exact path="/ad" component={AD_page} />
           <Route exact path="/admin"><Admin_page isManager={isManager} setisManager={setisManager} User={user} /></Route>
-          <Route exact path="/admin/owvwo"><AdminOwvwO isManager={isManager} User={user} /></Route>
-          <Route exact path="/admin/bigfoot"><AdminBigFoot isManager={isManager} User={user} /></Route>
           <Route exact path="/admin/jungboo"><EventPeriod
-                      setEP_School_Name={setEP_School_Name}
-                      setEP_Num={setEP_Num}
-                      setEP_Start_Day={setEP_Start_Day}
-                      setEP_End_Day={setEP_End_Day}
-                      setEP_Result_Day={setEP_Result_Day}
+            setEP_School_Name={setEP_School_Name}
+            setEP_Num={setEP_Num}
+            setEP_Start_Day={setEP_Start_Day}
+            setEP_End_Day={setEP_End_Day}
+            setEP_Result_Day={setEP_Result_Day}
           /></Route>
+          <Route exact path="/admin/owvwo"><AdminOwvwO isManager={isManager} User={user} /></Route>
+          <Route exact path="/admin/usersearch"><UserSearch isManager={isManager} User={user} /></Route>
+          <Route exact path="/admin/bigfoot"><AdminBigFoot isManager={isManager} User={user} /></Route>
           <Route exact path="/admin/moneygiver"><AdminCheckMoneyGiver isManager={isManager} User={user} /></Route>
           <Route exact path="/admin/delete"><DeleteNoPaid isManager={isManager} User={user} /></Route>
           <Route path="/plan"><Plan /></Route>
@@ -175,6 +180,15 @@ const Transition = (props) => {
               U_School_num={U_School_num}
               S_name={S_name}
               user={user}
+              controlWhere={controlWhere}
+              {...props} />
+          )} />
+          <Route path="/register/where" render={props => (
+            <Whereareyoufrom_page
+              auth_regis={auth_regis}
+              user={user}
+              controlWhere={controlWhere}
+              setcontrolWhere={setcontrolWhere}
               {...props} />
           )} />
         </Switch>

@@ -114,6 +114,10 @@ const School_title = styled.div`
     font-size: 0.7rem;
     color: '#828282';
   }
+  .InstaError{
+      font-size: 0.6rem;
+      color: red;
+  }
 `;
 const AvatarBox = styled.div`
     border-top : 1px solid rgb(0,0,0, 0.1);
@@ -153,7 +157,7 @@ const ProfileSelect = (props) => {
     const [프사, 프사변경] = useState(null);
     const [imgBase64, setImgBase64] = useState("");
 
-    const {setU_Profileurl, auth_regis } = props
+    const { setU_Profileurl, auth_regis } = props
 
     const noneactiveStyle = {
         textDecoration: 'none'
@@ -165,45 +169,46 @@ const ProfileSelect = (props) => {
     else {
         return (
             <ThemeProvider theme={Colortheme}>
-            <Wrapper>
-                <Container>
-                    <h1>
-                        프로필 사진 선택
-                    </h1>
-                    <School_title>
-                        <li>프로필 사진을 등록해주세요!</li>
-                        <li>매칭 시 상대방이 알아볼 수 있는 매력적인 사진으로 선택해주세요!</li>
-                    </School_title>
-                    <AvatarBox>
-                        <Badge
-                            overlap="circular"
-                            anchorOrigin={{
-                                vertical: 'bottom',
-                                horizontal: 'right',
-                            }}
-                        >
-                            <Avatar
-                                alt={"임시프로필"}
-                                src={ProfileImage}
-                                className={classes.largeavatar}
-                            />
-                        </Badge>
-                        <li>
-                            프로필 사진선택은 필수입니다!<br />
-                            비정상적인 프로필 사진을 등록하시면<br />
-                            블랙리스트에 오를 수 있으니 조심하셔야겠죠?
-                        </li>
-                    </AvatarBox>
-                    <ProfileChangeBox>
-                        <UploadProfileImage 프사변경={프사변경} 프사={프사} setU_Profileurl = {setU_Profileurl} setgoNext = {setgoNext} setProfileImage={setProfileImage} imgBase64={imgBase64} setImgBase64={setImgBase64} />
-                    </ProfileChangeBox>
-                    <NavLink to="/register/mbtiselect">
-                        <NextButton disabled = {goNext}>
-                            다음
-                        </NextButton>
-                    </NavLink>
-                </Container>
-            </Wrapper>
+                <Wrapper>
+                    <Container>
+                        <h1>
+                            프로필 사진 선택
+                        </h1>
+                        <School_title>
+                            <li>프로필 사진을 등록해주세요!</li>
+                            <li>매칭 시 상대방이 알아볼 수 있는 매력적인 사진으로 선택해주세요!</li>
+                            <li className="InstaError">인스타그램 링크를 통해 들어오신 경우, 정상적으로 등록되지 않습니다.</li>
+                        </School_title>
+                        <AvatarBox>
+                            <Badge
+                                overlap="circular"
+                                anchorOrigin={{
+                                    vertical: 'bottom',
+                                    horizontal: 'right',
+                                }}
+                            >
+                                <Avatar
+                                    alt={"임시프로필"}
+                                    src={ProfileImage}
+                                    className={classes.largeavatar}
+                                />
+                            </Badge>
+                            <li>
+                                프로필 사진선택은 필수입니다!<br />
+                                비정상적인 프로필 사진을 등록하시면<br />
+                                블랙리스트에 오를 수 있으니 조심하셔야겠죠?
+                            </li>
+                        </AvatarBox>
+                        <ProfileChangeBox>
+                            <UploadProfileImage 프사변경={프사변경} 프사={프사} setU_Profileurl={setU_Profileurl} setgoNext={setgoNext} setProfileImage={setProfileImage} imgBase64={imgBase64} setImgBase64={setImgBase64} />
+                        </ProfileChangeBox>
+                        <NavLink to="/register/mbtiselect">
+                            <NextButton disabled={goNext}>
+                                다음
+                            </NextButton>
+                        </NavLink>
+                    </Container>
+                </Wrapper>
             </ThemeProvider>
         );
     }
@@ -216,7 +221,7 @@ function UploadProfileImage(props) {
     const [open, setOpen] = useState(false);
     const classes = inputStyles();
     const date = new Date();
-    const {setProfileImage, setgoNext, setU_Profileurl } = props;
+    const { setProfileImage, setgoNext, setU_Profileurl } = props;
 
 
     async function onSubmit(event) {
@@ -275,6 +280,9 @@ function UploadProfileImage(props) {
                             </label>
                             <DialogContentText>
                                 위 사진으로 변경하시겠습니까?
+                            </DialogContentText>
+                            <DialogContentText>
+                                누르고 3초만 기다려주세요!
                             </DialogContentText>
                         </DialogContent>
                         <DialogActions>
