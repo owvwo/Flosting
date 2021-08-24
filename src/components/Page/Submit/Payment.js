@@ -347,6 +347,7 @@ function Payment(props) {
 
     const db = fire.firestore();
     // redirect state
+    const [OneClick, setOneClick] = useState(true);
     const [submitSuccess, setSubmitSuccess] = useState(false);
     const [discountSum, setDiscountSum] = useState(0); // 할인금액 상태 저장
     let AllSum = (Number(clover_Ticket) + Number(lilac_Ticket) + Number(daisy_Ticket)) * 1000
@@ -384,82 +385,85 @@ function Payment(props) {
     }
     const handleSubmit = () => {
 
-        if (!lilac_Ticket_FT) {
-            lilacvalues.Ticket = false;
-            lilacvalues.Univ = "";
-            lilacvalues.Age = "";
-            lilacvalues.TicketNumber = "";
-        } else {
-            lilacvalues.Ticket = true;
-            lilacvalues.Univ = lilac_Univ;
-            lilacvalues.Age = lilac_Age;
-            lilacvalues.TicketNumber = lilac_Ticket;
-        }
+        if (OneClick) {
+            setOneClick(false);
+            if (!lilac_Ticket_FT) {
+                lilacvalues.Ticket = false;
+                lilacvalues.Univ = "";
+                lilacvalues.Age = "";
+                lilacvalues.TicketNumber = "";
+            } else {
+                lilacvalues.Ticket = true;
+                lilacvalues.Univ = lilac_Univ;
+                lilacvalues.Age = lilac_Age;
+                lilacvalues.TicketNumber = lilac_Ticket;
+            }
 
-        if (!daisy_Ticket_FT) {
-            daisyvalues.Ticket = false;
-            daisyvalues.Univ = "";
-            daisyvalues.Age = "";
-            daisyvalues.TicketNumber = "";
-        } else {
-            daisyvalues.Ticket = true;
-            daisyvalues.Univ = daisy_Univ;
-            daisyvalues.Age = daisy_Age;
-            daisyvalues.TicketNumber = daisy_Ticket;
-        }
+            if (!daisy_Ticket_FT) {
+                daisyvalues.Ticket = false;
+                daisyvalues.Univ = "";
+                daisyvalues.Age = "";
+                daisyvalues.TicketNumber = "";
+            } else {
+                daisyvalues.Ticket = true;
+                daisyvalues.Univ = daisy_Univ;
+                daisyvalues.Age = daisy_Age;
+                daisyvalues.TicketNumber = daisy_Ticket;
+            }
 
-        if (!clover_Ticket_FT) {
-            clovervalues.Ticket = false;
-            clovervalues.Univ = "";
-            clovervalues.Age = "";
-            clovervalues.TicketNumber = "";
-        } else {
-            clovervalues.Ticket = true;
-            clovervalues.Univ = clover_Univ;
-            clovervalues.Age = clover_Age;
-            clovervalues.TicketNumber = clover_Ticket;
-        }
+            if (!clover_Ticket_FT) {
+                clovervalues.Ticket = false;
+                clovervalues.Univ = "";
+                clovervalues.Age = "";
+                clovervalues.TicketNumber = "";
+            } else {
+                clovervalues.Ticket = true;
+                clovervalues.Univ = clover_Univ;
+                clovervalues.Age = clover_Age;
+                clovervalues.TicketNumber = clover_Ticket;
+            }
 
-        db.collection("Flosting_" + EP_Num)
-            .add({
-                ID: ID,
-                User: User,
-                Lilac: lilacvalues,
-                Daisy: daisyvalues,
-                Clover: clovervalues,
-                Paid: false, // 돈 냈는지 안냈는지 알려주는 변수 추가
-                Cost: FinishSum // 얼마 내야하는지 최종 금액 데이터 추가
-            })
-            .then(() => {
-                alert("신청이 완료되었습니다.");
-                setSubmitSuccess(true);
-            })
-            .catch((error) => {
-                alert(error.message);
-            });
+            db.collection("Flosting_" + EP_Num)
+                .add({
+                    ID: ID,
+                    User: User,
+                    Lilac: lilacvalues,
+                    Daisy: daisyvalues,
+                    Clover: clovervalues,
+                    Paid: false, // 돈 냈는지 안냈는지 알려주는 변수 추가
+                    Cost: FinishSum // 얼마 내야하는지 최종 금액 데이터 추가
+                })
+                .then(() => {
+                    alert("신청이 완료되었습니다.");
+                    setSubmitSuccess(true);
+                })
+                .catch((error) => {
+                    alert(error.message);
+                });
 
-        db.collection("회원정보")
-            .where("ID", "==", ID)
-            .get()
-            .then((querySnapshot) => {
-                let docID;
+            db.collection("회원정보")
+                .where("ID", "==", ID)
+                .get()
+                .then((querySnapshot) => {
+                    let docID;
 
-                if (querySnapshot) {
-                    querySnapshot.forEach((doc) => {
-                        docID = doc.id;
+                    if (querySnapshot) {
+                        querySnapshot.forEach((doc) => {
+                            docID = doc.id;
+                        });
+                    }
+
+                    let batch = db.batch();
+                    let updatedb = db.collection("회원정보").doc(docID);
+                    batch.update(updatedb, {
+                        My_Usage_History: firebase.firestore.FieldValue.arrayUnion(EP_Num),
                     });
-                }
-
-                let batch = db.batch();
-                let updatedb = db.collection("회원정보").doc(docID);
-                batch.update(updatedb, {
-                    My_Usage_History: firebase.firestore.FieldValue.arrayUnion(EP_Num),
+                    batch.update(updatedb, { Ongoing: String(EP_Num) });
+                    batch.commit().then(() => {
+                        // console.log("good");
+                    });
                 });
-                batch.update(updatedb, { Ongoing: String(EP_Num) });
-                batch.commit().then(() => {
-                    // console.log("good");
-                });
-            });
+        }
     }
     if (false) { return (<Redirect to='/register' />); }
     else if (submitSuccess) {
