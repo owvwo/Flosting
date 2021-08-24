@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import firebase from '../Register/LoginFire';
-import { Redirect } from 'react-router-dom';
+import { Redirect, NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import Fade from 'react-reveal/Fade';
-
+import NowUser from './NowUser';
 
 const Container = styled.div`
     display : flex;
@@ -52,7 +52,7 @@ const Parent = styled.div`
     color: black;
     border-bottom : 1px solid rgb(0,0,0, 0.2);
     list-style : none;
-    width: 40rem;
+    width: 70rem;
 
     .Nick{
         display: flex;
@@ -97,6 +97,7 @@ const Parent = styled.div`
 }
 `
 
+
 function UserSearch(props) {
 
     const { isManager } = props;
@@ -105,9 +106,9 @@ function UserSearch(props) {
     const db = firebase.firestore()
     const [사람, set사람] = useState([]);
     const [matchingList, setmatchingList] = useState([]);
+    const [SubmitData, setSubmitData] = useState("");
 
     useEffect(() => {
-
         setmatchingList(사람.map(list =>
             <Fade bottom>
                 <Parent>
@@ -129,8 +130,10 @@ function UserSearch(props) {
                     <div className="Ongoing">
                         <li>{(list.Ongoing !== "") ? list.Ongoing + "회차" : "신청안함"}</li>
                     </div>
-
                 </Parent>
+                <NowUser U_Data={list.Data} SubmitData={SubmitData}>
+
+                </NowUser>
             </Fade>
         ));
     }, [isSearch])
@@ -138,6 +141,7 @@ function UserSearch(props) {
 
 
     const OnClickpush = async () => {
+        사람.pop();
         const checkUserOne = await db.collection(`회원정보`).where("User.Name", "==", ID).get()
         try {
             checkUserOne.forEach((doc) => {
@@ -147,10 +151,20 @@ function UserSearch(props) {
                     'Univ': doc.data().User.Univ,
                     'Age': doc.data().User.Age,
                     'Ongoing': doc.data().Ongoing,
-                    'ID': doc.data().ID
+                    'ID': doc.data().ID,
+                    'Data': doc.data()
                 })
+                // if (doc.data().Ongoing != 0) {
+                //     const checkUserOne = db.collection(`Flosting_` + String(doc.data().Ongoing)).where("User.Nick", "==", doc.data().User.Nick).get()
+                //         .then((querySnapshot) => {
+                //             querySnapshot.forEach((doc) => {
+                //                 사람[0]
+                //             });
+                //         })
+                // }
             });
         } catch (err) { console.log(err) }
+
         setisSearch(!isSearch);
     }
 
