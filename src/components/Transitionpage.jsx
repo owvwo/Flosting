@@ -24,6 +24,7 @@ import Forgot_page from "./Page/Forgot/forgot";
 import AdminBigFoot from "./Page/Manager/AdminBigFoot.js";
 import AdminOwvwO from "./Page/Manager/AdminOwvwO";
 import UserSearch from "./Page/Manager/UserSearch";
+import SubmitStatus from "./Page/Manager/SubmitStatus";
 import CurrentSitu from "./Page/Manager/CurrentSitu";
 import EPall from './Page/CurrentEvent/EPAll';
 import Alarm from "./Page/Alarm";
@@ -115,6 +116,7 @@ const Transition = (props) => {
           /></Route>
           <Route exact path="/admin/owvwo"><AdminOwvwO isManager={isManager} User={user} /></Route>
           <Route exact path="/admin/usersearch"><UserSearch isManager={isManager} User={user} /></Route>
+          <Route exact path="/admin/money"><SubmitStatus isManager={isManager} User={user} /></Route>
           <Route exact path="/admin/now"><CurrentSitu isManager={isManager} User={user} /></Route>
           <Route exact path="/admin/bigfoot"><AdminBigFoot isManager={isManager} User={user} /></Route>
           <Route exact path="/admin/moneygiver"><AdminCheckMoneyGiver isManager={isManager} User={user} /></Route>
