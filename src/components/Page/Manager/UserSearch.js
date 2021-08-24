@@ -111,6 +111,9 @@ function UserSearch(props) {
         setmatchingList(사람.map(list =>
             <Fade bottom>
                 <Parent>
+                    <div className="ID">
+                        <li>{list.ID}</li>
+                    </div>
                     <div className="Nick">
                         <li>{list.Nick}</li>
                     </div>
@@ -143,7 +146,8 @@ function UserSearch(props) {
                     'Phone': doc.data().User.Phone,
                     'Univ': doc.data().User.Univ,
                     'Age': doc.data().User.Age,
-                    'Ongoing': doc.data().Ongoing
+                    'Ongoing': doc.data().Ongoing,
+                    'ID': doc.data().ID
                 })
             });
         } catch (err) { console.log(err) }
