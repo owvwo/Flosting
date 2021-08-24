@@ -106,18 +106,8 @@ function UserSearch(props) {
     const db = firebase.firestore()
     const [사람, set사람] = useState([]);
     const [matchingList, setmatchingList] = useState([]);
-    const [SubmitData, setSubmitData] = useState("");
     const [Refresh, setRefresh] = useState(false);
-    const [UnivList, setUnivList] = useState("");
-    const [girl, setgirl] = useState(0);
-    const [boy, setboy] = useState(0);
-    const [flosting1, setflosting1] = useState("");
-    const [girl1, setgirl1] = useState(0);
-    const [boy1, setboy1] = useState(0);
-    const [univ1, setuniv1] = useState(0);
-    const [univ2, setuniv2] = useState(0);
-    const [univ3, setuniv3] = useState(0);
-    const [univ4, setuniv4] = useState(0);
+
 
     useEffect(() => {
         setmatchingList(사람.map(list =>
@@ -127,57 +117,6 @@ function UserSearch(props) {
             </Fade>
         ));
     }, [isSearch])
-
-    useEffect(() => {
-        let boysize = 0;
-        let girlsize = 0;
-        const checkUserOne = db.collection(`회원정보`).get()
-            .then((querySnapshot) => {
-                setUnivList(querySnapshot.size);
-                querySnapshot.forEach((doc) => {
-                    if (doc.data().User.Gender === "boy") {
-                        boysize++;
-                    } else {
-                        girlsize++;
-                    }
-                });
-                setboy(boysize);
-                setgirl(girlsize);
-            })
-        let boysize2 = 0;
-        let girlsize2 = 0;
-        let univsize1 = 0;
-        let univsize2 = 0;
-        let univsize3 = 0;
-        let univsize4 = 0;
-        const checkUserTwo = db.collection(`Flosting_1`).get()
-            .then((querySnapshot) => {
-                setflosting1(querySnapshot.size);
-                querySnapshot.forEach((doc) => {
-                    if (doc.data().User.Gender === "boy") {
-                        boysize2++;
-                    } else {
-                        girlsize2++;
-                    }
-
-                    if (doc.data().User.Univ === "단국대학교 죽전캠퍼스") {
-                        univsize1++;
-                    } else if (doc.data().User.Univ === "을지대학교 성남캠퍼스") {
-                        univsize2++;
-                    } else if (doc.data().User.Univ === "강남대학교") {
-                        univsize3++;
-                    } else {
-                        univsize4++;
-                    }
-                });
-                setboy1(boysize2);
-                setgirl1(girlsize2);
-                setuniv1(univsize1);
-                setuniv2(univsize2);
-                setuniv3(univsize3);
-                setuniv4(univsize4);
-            })
-    }, [])
 
 
 
@@ -211,26 +150,6 @@ function UserSearch(props) {
     } else {
         return (
             <Container>
-                <h1>현재 가입</h1>
-                {UnivList}명
-                <h3>남자</h3>
-                {boy}명
-                <h3>여자</h3>
-                {girl}명
-                <h1>1회차</h1>
-                {flosting1}명
-                <h3>남자</h3>
-                {boy1}명
-                <h3>여자</h3>
-                {girl1}명
-                <h3>단국대학교</h3>
-                {univ1}명
-                <h3>을지대학교</h3>
-                {univ2}명
-                <h3>강남대학교</h3>
-                {univ3}명
-                <h3>가천대학교</h3>
-                {univ4}명
                 <h1>유저 검색</h1>
                 <li>이름 <Input
                     placeholder="이름 넣어"
