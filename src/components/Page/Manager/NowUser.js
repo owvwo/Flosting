@@ -25,6 +25,7 @@ const Container = styled.div`
             width : 30rem;
         }
     }
+    margin : 2rem 0;
 `
 const Table = styled.div`
     display: flex;
@@ -60,6 +61,14 @@ const Table = styled.div`
 const ProfileTable = styled.div`
     display: flex;
     flex-direction : column;
+    .Facebox{
+        display: flex;
+        align-items : center;
+        justify-content : center;
+        img{
+            height: 20rem;
+        }
+    }
         .RowDiv{
             display: flex;
             .LeftDiv{
@@ -83,12 +92,25 @@ const ProfileTable = styled.div`
 `
 function UserSearch(props) {
 
-    const { U_Data, SubmitData } = props;
+    const { U_Data, Refresh } = props;
     const db = firebase.firestore()
+    const [SubmitData, setSubmitData] = useState("없음")
+
+    useEffect(() => {
+        if (U_Data.Ongoing != 0) {
+            const checkUserOne = db.collection(`Flosting_` + String(U_Data.Ongoing)).where("User.Nick", "==", U_Data.User.Nick).get()
+                .then((querySnapshot) => {
+                    querySnapshot.forEach((doc) => {
+                        setSubmitData(doc.data());
+                    });
+                })
+        }
+
+    }, [Refresh])
 
     return (
         <Container>
-            {/* <div className="RowDiv">
+            <div className="RowDiv">
                 <div className="DivPar">
                     <h3>
                         신청내역
@@ -151,6 +173,10 @@ function UserSearch(props) {
                         프로필 정보
                     </h3>
                     <ProfileTable>
+                        <div className="Facebox">
+                            <img src={U_Data.profileImage}>
+                            </img>
+                        </div>
                         <div className="RowDiv">
                             <div className="LeftDiv">
                                 이름
@@ -221,7 +247,7 @@ function UserSearch(props) {
                         </div>
                     </ProfileTable>
                 </div>
-            </div> */}
+            </div>
         </Container >
     )
 }
