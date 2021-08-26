@@ -887,6 +887,7 @@ const MatchingManager2 = (props) => {
                         setL_trash(trash.length);
                     } else if (MatchingType == "Daisy") {
                         PushCoupletoDB(nowCount, "daisy", couple);
+                        PushTrashtoDB(nowCount, "daisy", trash);
                         setD_user(User_Num);
                         setD_boy(boynum);
                         setD_girl(girlnum);
@@ -894,6 +895,7 @@ const MatchingManager2 = (props) => {
                         setD_trash(trash.length);
                     } else {
                         PushCoupletoDB(nowCount, "clover", couple);
+                        PushTrashtoDB(nowCount, "clover", trash);
                         setC_user(User_Num);
                         setC_boy(boynum);
                         setC_girl(girlnum);
