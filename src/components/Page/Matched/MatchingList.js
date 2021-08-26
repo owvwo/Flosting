@@ -3,6 +3,7 @@ import firebase from '../Register/LoginFire.js'
 import { NavLink, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Fade from 'react-reveal/Fade';
+import { setNestedObjectValues } from 'formik';
 const Container = styled.div`
 display: flex;
 justify-content: center;
@@ -14,6 +15,37 @@ flex-direction: column;
 `
 
 const Parent = styled.div`
+    display: flex;
+    align-items : center;
+    justify-content : center;
+    flex-direction: row;
+    margin-top: 1rem;
+    color: black;
+    border-bottom : 1px solid rgb(0,0,0,0.2);
+    list-style : none;
+    width: 24rem;
+    .confirm{
+        display: flex;
+        align-items : center;
+        justify-content : center;
+        flex: 1;
+        font-size : 0.6rem;
+        text-decoration : underline;
+        padding: 0.5rem;
+    }
+    .Nick{
+        display: flex;
+        align-items : center;
+        justify-content : center;
+        flex: 4;
+        padding: 0.5rem;
+        font-weight: 700;
+        background : rgb(104,86,255,0.1)
+    }
+}
+`
+
+const Parent2 = styled.div`
     display: flex;
     align-items : center;
     justify-content : center;
@@ -42,7 +74,6 @@ const Parent = styled.div`
     }
 }
 `
-
 const Stage = styled.div`
     display: flex;
     align-items : center;
@@ -50,7 +81,7 @@ const Stage = styled.div`
     flex: 1;
     background: ${props => {
         if (props.stage == "zero") return 'rgb(0,0,0,0.1)';
-        else if (props.stage == "half") return 'rgb(0,0,0,0.1)';
+        else if (props.stage == "half") return 'rgb(245,218,63,0.1)';
         else if (props.stage == "end") return 'rgb(245,114,107,0.8)';
         else return 'rgb(198,225,250,0.8)';
     }};
@@ -93,7 +124,21 @@ const Title = styled.div`
                 border-left : 1px solid rgb(0,0,0, 0.1);
                 
             }
-            .NumberBox{
+            .NumberBoxtop{
+                display :flex;
+                flex: 1;
+                align-items : center;
+                justify-content : center;
+                border-top : 1px solid rgb(0,0,0, 0.1);
+                border-left : 1px solid rgb(0,0,0, 0.1);
+                background : rgb(104,86,255,0.1);
+                li{
+                    font-weight: 700;
+                }
+                .OriginalTicket{
+                }
+            }
+            .NumberBoxbotom{
                 display :flex;
                 flex: 1;
                 align-items : center;
@@ -102,6 +147,8 @@ const Title = styled.div`
                 border-left : 1px solid rgb(0,0,0, 0.1);
                 li{
                     font-weight: 700;
+                }
+                .OriginalTicket{
                 }
             }
         }
@@ -118,7 +165,9 @@ function MatchingList(props) {
     let [uniqueKey, setUniqueKey] = useState();
     let [OriginalTicket, setOriginalTicket] = useState();
     let [매칭결과배열, 매칭결과배열변경] = useState([]);
+    let [매칭결과나머지배열, 매칭결과나머지배열변경] = useState([]);
     let copy매칭결과배열 = [];
+    const [complete, setcomplete] = useState(false);
 
     useEffect(() => {
         controlTitle();
@@ -191,7 +240,7 @@ function MatchingList(props) {
                         'DocId': doc.id
                     })
                 }
-
+                setcomplete(true);
             });
         } catch (err) { console.log(err) }
 
@@ -233,6 +282,7 @@ function MatchingList(props) {
                     })
                 }
             });
+            setNestedObjectValues()
         } catch (err) { console.log(err) }
     }
 
@@ -241,11 +291,12 @@ function MatchingList(props) {
             getUserOngoingAndNick();
             if (Ongoing && uniqueKey) {
                 userChecker().then(_ => {
-                    매칭결과배열변경(copy매칭결과배열)
+                    매칭결과배열변경(copy매칭결과배열.slice(0, OriginalTicket));
+                    매칭결과나머지배열변경(copy매칭결과배열.slice(OriginalTicket));
                 })
             }
         }
-    }, [user, Ongoing, uniqueKey])
+    }, [user, Ongoing, uniqueKey, complete])
 
     let matchingList = 매칭결과배열.map(list =>
         <Fade bottom>
@@ -264,6 +315,23 @@ function MatchingList(props) {
             </NavLink>
         </Fade>
     )
+    let matchingList2 = 매칭결과나머지배열.map(list =>
+        <Fade bottom>
+            <NavLink to={`/selectresult/${sort}/${Ongoing}/${list.DocId}`} style={{ textDecoration: 'none' }}>
+                <Parent2>
+                    <div className="confirm">
+                        확인하기
+                    </div>
+                    <div className="Nick">
+                        <li>{list.Nick}</li>
+                    </div>
+                    <Stage stage={list.Stage}>
+                        <li>{list.StageView}</li>
+                    </Stage>
+                </Parent2>
+            </NavLink>
+        </Fade>
+    )
 
     return (
 
@@ -275,16 +343,16 @@ function MatchingList(props) {
                         <div className="NameBox">
                             <li>신청한 티켓 수</li>
                         </div>
-                        <div className="NumberBox">
-                            <li>{OriginalTicket}장</li>
+                        <div className="NumberBoxtop">
+                            <li className="OriginalTicket">{OriginalTicket}장</li>
                         </div>
                     </div>
                     <div className="RowBox">
                         <div className="NameBox">
                             <li>매칭된 사람</li>
                         </div>
-                        <div className="NumberBox">
-                            <li>{매칭결과배열.length}명</li>
+                        <div className="NumberBoxbotom">
+                            <li>{매칭결과배열.length + 매칭결과나머지배열.length}명</li>
                         </div>
                     </div>
                 </div>
@@ -294,6 +362,9 @@ function MatchingList(props) {
             </Title>
             {
                 matchingList
+            }
+            {
+                matchingList2
             }
         </Container>
     )
