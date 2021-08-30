@@ -68,10 +68,23 @@ const Container = styled.div`
 const ButtonContainer = styled.div``;
 
 function EP1(props) {
-  const { EP_School_Name, EP_Num, EP_Start_Day, EP_End_Day, EP_Result_Day } =
-    props;
+  const {
+    EP_School_Name,
+    EP_Num,
+    EP_Start_Day,
+    EP_End_Day,
+    EP_Result_Day,
+    EP_Region,
+  } = props;
   const user = props.User;
-  const period = EP_Start_Day.substr(0, 2) + "/" + EP_Start_Day.substr(2) + "~" + EP_End_Day.substr(0, 2) + "/" + EP_End_Day.substr(2);
+  const period =
+    EP_Start_Day.substr(0, 2) +
+    "/" +
+    EP_Start_Day.substr(2) +
+    "~" +
+    EP_End_Day.substr(0, 2) +
+    "/" +
+    EP_End_Day.substr(2);
   const ep = EP_Num;
   const eventUniv = EP_School_Name;
   const dbUser = [
@@ -140,15 +153,29 @@ function EP1(props) {
 
   function TimeisRight() {
     let nowdate = new Date();
-    let comparedate = new Date(2021, Number(EP_Start_Day.substr(0, 2)) - 1, Number(EP_Start_Day.substr(2)), 0, 0);
-    let endcomparedate = new Date(2021, Number(EP_End_Day.substr(0, 2)) - 1, Number(EP_End_Day.substr(2)) + 1, 0, 0);
+    let comparedate = new Date(
+      2021,
+      Number(EP_Start_Day.substr(0, 2)) - 1,
+      Number(EP_Start_Day.substr(2)),
+      0,
+      0
+    );
+    let endcomparedate = new Date(
+      2021,
+      Number(EP_End_Day.substr(0, 2)) - 1,
+      Number(EP_End_Day.substr(2)) + 1,
+      0,
+      0
+    );
 
-    if (nowdate.getTime() > comparedate.getTime() && nowdate.getTime() < endcomparedate.getTime()) {
+    if (
+      nowdate.getTime() > comparedate.getTime() &&
+      nowdate.getTime() < endcomparedate.getTime()
+    ) {
       setsubmitopen(true);
     } else {
       settimeopen(true);
     }
-
   }
 
   if (!JSON.parse(localStorage.getItem("user"))) {
@@ -160,7 +187,7 @@ function EP1(props) {
       <div>
         <Container>
           <div className="title">플로스팅 일정안내</div>
-          <div className="subtitle">{ep}회차</div>
+          <div className="subtitle">{EP_Region}</div>
           <div className="subtitle">{getSchool(eventUniv)}</div>
           <img src={Logo} />
           {index === -1 ? (
@@ -193,7 +220,9 @@ function EP1(props) {
             </ThemeProvider>
           ) : (
             <ButtonContainer>
-              <SubmitButton className="submitBtn" onClick={TimeisRight}>신청하기</SubmitButton>
+              <SubmitButton className="submitBtn" onClick={TimeisRight}>
+                신청하기
+              </SubmitButton>
               <ThemeProvider theme={Boldtheme}>
                 <Dialog
                   open={timeopen}
@@ -210,7 +239,11 @@ function EP1(props) {
                     </DialogContentText>
                   </DialogContent>
                   <DialogActions>
-                    <Button variant="outlined" onClick={handletimeClose} color="primary">
+                    <Button
+                      variant="outlined"
+                      onClick={handletimeClose}
+                      color="primary"
+                    >
                       창 닫기
                     </Button>
                   </DialogActions>
@@ -231,7 +264,11 @@ function EP1(props) {
                   </DialogContent>
                   <DialogActions>
                     <Link to="/submit">
-                      <Button variant="contained" onClick={handlesubmitClose} color="primary">
+                      <Button
+                        variant="contained"
+                        onClick={handlesubmitClose}
+                        color="primary"
+                      >
                         이동
                       </Button>
                     </Link>
