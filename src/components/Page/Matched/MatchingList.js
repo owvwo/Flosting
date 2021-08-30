@@ -291,6 +291,7 @@ function MatchingList(props) {
             getUserOngoingAndNick();
             if (Ongoing && uniqueKey) {
                 userChecker().then(_ => {
+                    console.log()
                     매칭결과배열변경(copy매칭결과배열.slice(0, OriginalTicket));
                     매칭결과나머지배열변경(copy매칭결과배열.slice(OriginalTicket));
                 })

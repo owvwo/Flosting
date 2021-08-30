@@ -3,8 +3,6 @@ import styled from 'styled-components';
 import Footer from '../Footer';
 import TimerComponent from './Timer.js'
 import fire from '../Register/LoginFire.js'
-import profileImageBoy from '../../../images/profile_boy_default.png';
-import profileImageGirl from '../../../images/profile_girl_default.png';
 import { NavLink } from 'react-router-dom';
 const db = fire.firestore()
 
@@ -74,6 +72,7 @@ margin-right: 1.5rem;
         height: 6rem;
         background-color: grey;
         border-radius: 50%;
+        object-fit:cover;
     }
     .decisionState{
         .ING{
@@ -119,6 +118,7 @@ margin-left: 1.5rem;
         height: 6rem;
         background-color: grey;
         border-radius: 50%;
+        object-fit:cover;
     }
     .decisionState{
         .ING{

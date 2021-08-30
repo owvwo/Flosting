@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Badge from '@material-ui/core/Badge';
 import Avatar from "@material-ui/core/Avatar";
+import imageCompression from 'browser-image-compression';
 
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -157,7 +158,7 @@ const ProfileSelect = (props) => {
     const [프사, 프사변경] = useState(null);
     const [imgBase64, setImgBase64] = useState("");
 
-    const { setU_Profileurl, auth_regis } = props
+    const { setU_Profileurl, auth_regis, U_unique_key } = props
 
     const noneactiveStyle = {
         textDecoration: 'none'
@@ -165,7 +166,7 @@ const ProfileSelect = (props) => {
 
 
 
-    if (!auth_regis) { return (<Redirect to='/register' />); }
+    if (false) { return (<Redirect to='/register' />); }
     else {
         return (
             <ThemeProvider theme={Colortheme}>
@@ -200,7 +201,7 @@ const ProfileSelect = (props) => {
                             </li>
                         </AvatarBox>
                         <ProfileChangeBox>
-                            <UploadProfileImage 프사변경={프사변경} 프사={프사} setU_Profileurl={setU_Profileurl} setgoNext={setgoNext} setProfileImage={setProfileImage} imgBase64={imgBase64} setImgBase64={setImgBase64} />
+                            <UploadProfileImage 프사변경={프사변경} 프사={프사} U_unique_key={U_unique_key} setU_Profileurl={setU_Profileurl} setgoNext={setgoNext} setProfileImage={setProfileImage} imgBase64={imgBase64} setImgBase64={setImgBase64} />
                         </ProfileChangeBox>
                         <NavLink to="/register/mbtiselect">
                             <NextButton disabled={goNext}>
@@ -221,12 +222,14 @@ function UploadProfileImage(props) {
     const [open, setOpen] = useState(false);
     const classes = inputStyles();
     const date = new Date();
-    const { setProfileImage, setgoNext, setU_Profileurl } = props;
+    const { setProfileImage, setgoNext, setU_Profileurl, U_unique_key } = props;
 
 
     async function onSubmit(event) {
+        let storageUniquekey = U_unique_key.replace('/');
         event.preventDefault();
-        const uploadTask = storageRef.child(`profileImage/registerImage/${date}`).put(props.프사)
+        // const uploadTask = storageRef.child(`profileImage/registerImage/${date}`).put(props.프사)
+        const uploadTask = storageRef.child(`profileImage_2/${storageUniquekey}`).put(props.프사)
         uploadTask.then((snapshot) => {
             snapshot.ref.getDownloadURL().then((downloadURL) => {
                 setU_Profileurl(downloadURL);
@@ -237,7 +240,7 @@ function UploadProfileImage(props) {
         })
     }
 
-    function onChange(e) {
+    const onChange = async (e) => {
         let reader = new FileReader();
         reader.onloadend = () => {
             const base64 = reader.result;
@@ -246,8 +249,20 @@ function UploadProfileImage(props) {
             }
         }
         if (e.target.files[0]) {
-            reader.readAsDataURL(e.target.files[0]);
-            props.프사변경(e.target.files[0])
+            let file = e.target.files[0];
+
+            const options = {
+                maxSizeMB: 0.15
+            }
+
+            try {
+                const compressedFile = await imageCompression(file, options);
+                reader.readAsDataURL(compressedFile);
+                props.프사변경(compressedFile);
+
+            } catch (error) {
+                console.log(error);
+            }
         }
     }
 

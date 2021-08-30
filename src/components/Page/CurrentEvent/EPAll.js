@@ -53,6 +53,11 @@ const Container = styled.div`
     font-weight: bold;
     margin-top: 10px;
   }
+  .subtitle2{
+    margin-top: 10px;
+    font-size : 1.4rem;
+    font-weight: bold;
+  }
   img {
     text-align: center;
     width: 15rem;
@@ -187,6 +192,7 @@ function EP1(props) {
       <div>
         <Container>
           <div className="title">플로스팅 일정안내</div>
+          <div className="subtitle2">{ep}회차</div>
           <div className="subtitle">{EP_Region}</div>
           <div className="subtitle">{getSchool(eventUniv)}</div>
           <img src={Logo} />
