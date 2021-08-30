@@ -115,6 +115,7 @@ const Certification = (props) => {
   const [overlap, setoverLap] = useState(false);
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
+  const [open3, setOpen3] = useState(false);
   const [canNext, setcanNext] = useState(true);
   const [goMessage, setgoMessage] = useState(
     "위 버튼을 눌러 휴대폰 인증을 완료해주세요."
@@ -177,6 +178,7 @@ const Certification = (props) => {
       setOpen(true);
     }
   }
+
   function fetchdata(imp_uid) {
     fetch(
       "https://bjvy462n18.execute-api.ap-northeast-2.amazonaws.com/flosting/test",
@@ -194,36 +196,43 @@ const Certification = (props) => {
       })
       .then((_) => {
         const { birthday, certified, gender, name, unique_key } = confirmdata;
-        if (certified) {
-          let Infodb = db.collection("회원정보");
-          let query = Infodb.where("User.Unique_key", "==", unique_key)
-            .get()
-            .then((querySnapshot) => {
-              if (querySnapshot.size) {
-                setOpen2(true);
+        db.collection('블랙리스트').where("Unique_key", "==", unique_key).get()
+          .then((querySnapshot) => {
+            if (querySnapshot.size) {
+              setOpen3(true);
+            } else {
+              if (certified) {
+                let Infodb = db.collection("회원정보");
+                let query = Infodb.where("User.Unique_key", "==", unique_key)
+                  .get()
+                  .then((querySnapshot) => {
+                    if (querySnapshot.size) {
+                      setOpen2(true);
+                    } else {
+                      let agearray = birthday.split("-");
+                      let nowTime = new Date();
+                      let nowyear = nowTime.getFullYear();
+                      let age = nowyear - agearray[0] + 1;
+                      setU_Age(age);
+                      if (gender == "male") {
+                        setU_Gender("boy");
+                      } else {
+                        setU_Gender("girl");
+                      }
+                      setU_unique_key(unique_key);
+                      setU_name(name);
+                      setgoMessage(
+                        "본인인증이 완료되었습니다! 다음으로 넘어가주세요."
+                      );
+                      setcanNext(false);
+                      setlimitnum(false);
+                    }
+                  });
               } else {
-                let agearray = birthday.split("-");
-                let nowTime = new Date();
-                let nowyear = nowTime.getFullYear();
-                let age = nowyear - agearray[0] + 1;
-                setU_Age(age);
-                if (gender == "male") {
-                  setU_Gender("boy");
-                } else {
-                  setU_Gender("girl");
-                }
-                setU_unique_key(unique_key);
-                setU_name(name);
-                setgoMessage(
-                  "본인인증이 완료되었습니다! 다음으로 넘어가주세요."
-                );
-                setcanNext(false);
-                setlimitnum(false);
+                setOpen(true); //본인확인 실패
               }
-            });
-        } else {
-          setOpen(true); //본인확인 실패
-        }
+            }
+          })
       })
       .catch((err) => console.error(err));
   }
@@ -302,12 +311,35 @@ const Certification = (props) => {
                 <NavLink to="/login" style={noneactiveStyle}>
                   <Button
                     variant="contained"
-                    onClick={() => setOpen(false)}
+                    onClick={() => setOpen2(false)}
                     color="primary"
                   >
                     이동
                   </Button>
                 </NavLink>
+              </DialogActions>
+            </Dialog>
+            <Dialog
+              open={open3}
+              onClose={() => setOpen3(false)}
+              aria-labelledby="responsive-dialog-title"
+            >
+              <DialogTitle id="responsive-dialog-title">
+                탈퇴하신 이력이 있으므로 재가입이 불가능합니다.
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  회원가입을 원하실 경우 카카오 채널로 문의해주세요!
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button
+                  variant="contained"
+                  onClick={() => setOpen3(false)}
+                  color="primary"
+                >
+                  확인
+                </Button>
               </DialogActions>
             </Dialog>
             <NavLink to="/register/profileselect">

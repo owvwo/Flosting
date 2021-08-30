@@ -237,7 +237,6 @@ const Register = (props) => {
         else {
             setlimitnummessasge("아이디의 길이가 너무 짧아요!");
         }
-        console.log(e.target.value);
     }
     const handleNameChange = (selected) => {
         set_S_name(selected);
