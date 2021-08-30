@@ -1,4 +1,4 @@
-import React, {useState, useEffect}from 'react';
+import React, { useState, useEffect } from 'react';
 
 import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
@@ -79,12 +79,12 @@ const Forgot = (props) => {
     const [limitnum, setlimitnum] = useState(false); // 학번의 제한 체크 변수
     const theme = useTheme();
     const [value, setValue] = useState(0);
-    const [ID,setID] = useState('');
+    const [ID, setID] = useState('');
     const [Phone_number, setPhone_number] = useState('');
-    const [limitPhone_number,setlimitPhone_number] = useState(false);
+    const [limitPhone_number, setlimitPhone_number] = useState(false);
     const [Phone_num_msg, setPhone_num_msg] = useState('휴대폰 숫자는 11자리란 사실!');
-    const [ID_msg,setID_msg] = useState('학번은 숫자로 이루어져 있답니다.')
-    const [limitID, setlimitID] =useState(true);
+    const [ID_msg, setID_msg] = useState('아이디를 입력해주세요')
+    const [limitID, setlimitID] = useState(true);
     const [goNext, setgoNext] = useState(false);
     const [password, setPassword] = useState(''); // 패스워드
     const [password2, setPassword2] = useState(''); //패스워드 확인
@@ -115,17 +115,17 @@ const Forgot = (props) => {
 
     }, [props]);
 
-    function changecanID(){
-        if(limitSnum && limitSUniv)
+    function changecanID() {
+        if (limitSnum && limitSUniv)
             setgoNextID(false);
         else
             setgoNextID(true);
     }
-    function changecanPW(){
-        if(correspass&& limitpassword)
+    function changecanPW() {
+        if (correspass && limitpassword)
             setcanchangePW(true);
         else
-        setcanchangePW(false);
+            setcanchangePW(false);
     }
 
     const handleChange = (event, newValue) => {
@@ -136,83 +136,83 @@ const Forgot = (props) => {
         setValue(index);
     };
 
-        return (
-            <ThemeProvider theme={Colortheme}>
-                <Container>
-                    <AppBar position="static" color="default">
+    return (
+        <ThemeProvider theme={Colortheme}>
+            <Container>
+                <AppBar position="static" color="default">
                     <div id="recaptcha-container"></div>
-                        <Tabs
-                            value={value}
-                            onChange={handleChange}
-                            indicatorColor="primary"
-                            textColor="primary"
-                            variant="fullWidth"
-                            aria-label="full width tabs example"
-                        >
-                            <Tab label="아이디 찾기" {...a11yProps(0)} />
-                            <Tab label="비밀번호 찾기" {...a11yProps(1)} />
-                        </Tabs>
-                    </AppBar>
-                    <SwipeableViews
-                        axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-                        index={value}
-                        onChangeIndex={handleChangeIndex}
+                    <Tabs
+                        value={value}
+                        onChange={handleChange}
+                        indicatorColor="primary"
+                        textColor="primary"
+                        variant="fullWidth"
+                        aria-label="full width tabs example"
                     >
-                        <TabPanel value={value} index={0} dir={theme.direction}>
-                            <ForgotID
-                            S_num = {S_num}
-                            setS_num = {setS_num}
-                            S_Univ = {S_Univ}
-                            setS_Univ = {setS_Univ}
-                            goNextID = {goNextID}
-                            setgoNextID = {setgoNextID}
-                            setlimitSnum = {setlimitSnum}
-                            setlimitSUniv = {setlimitSUniv}
-                            IDopen = {IDopen}
-                            setIDopen = {setIDopen}
-                            findID = {findID}
-                            setfindID = {setfindID}
-                            ></ForgotID>
-                        </TabPanel>
-                        <TabPanel value={value} index={1} dir={theme.direction}>
-                            <ForgotPW 
-                            setlimitpassword_C= {setlimitpassword_C}
-                            limitpassword_C = {limitpassword_C}
-                            setlimitpassword = {setlimitpassword}
-                            limitpassword = {limitpassword}
-                            setcorrespass = {setcorrespass}
-                            correspass = {correspass}
-                            repasswordError = {repasswordError}
-                            setrepasswordError = {setrepasswordError}
-                            setPasswordError = {setPasswordError}
-                            passwordError = {passwordError}
-                            password2 = {password2}
-                            setPassword2 = {setPassword2}
-                            password = {password} 
-                            setPassword = {setPassword}
-                            ID ={ID}
-                            setID  = {setID}
-                            Phone_number = {Phone_number}
-                            setPhone_number = {setPhone_number}
-                            limitnum ={limitnum}
-                            setlimitnum = {setlimitnum}
-                            limitPhone_number ={limitPhone_number}
-                            setlimitPhone_number = {setlimitPhone_number}
-                            Phone_num_msg = {Phone_num_msg}
-                            setPhone_num_msg = {setPhone_num_msg}
-                            ID_msg ={ID_msg}
-                            setID_msg = {setID_msg}
-                            limitID ={limitID}
-                            setlimitID = {setlimitID}
+                        <Tab label="아이디 찾기" {...a11yProps(0)} />
+                        <Tab label="비밀번호 찾기" {...a11yProps(1)} />
+                    </Tabs>
+                </AppBar>
+                <SwipeableViews
+                    axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+                    index={value}
+                    onChangeIndex={handleChangeIndex}
+                >
+                    <TabPanel value={value} index={0} dir={theme.direction}>
+                        <ForgotID
+                            S_num={S_num}
+                            setS_num={setS_num}
+                            S_Univ={S_Univ}
+                            setS_Univ={setS_Univ}
+                            goNextID={goNextID}
+                            setgoNextID={setgoNextID}
+                            setlimitSnum={setlimitSnum}
+                            setlimitSUniv={setlimitSUniv}
+                            IDopen={IDopen}
+                            setIDopen={setIDopen}
+                            findID={findID}
+                            setfindID={setfindID}
+                        ></ForgotID>
+                    </TabPanel>
+                    <TabPanel value={value} index={1} dir={theme.direction}>
+                        <ForgotPW
+                            setlimitpassword_C={setlimitpassword_C}
+                            limitpassword_C={limitpassword_C}
+                            setlimitpassword={setlimitpassword}
+                            limitpassword={limitpassword}
+                            setcorrespass={setcorrespass}
+                            correspass={correspass}
+                            repasswordError={repasswordError}
+                            setrepasswordError={setrepasswordError}
+                            setPasswordError={setPasswordError}
+                            passwordError={passwordError}
+                            password2={password2}
+                            setPassword2={setPassword2}
+                            password={password}
+                            setPassword={setPassword}
+                            ID={ID}
+                            setID={setID}
+                            Phone_number={Phone_number}
+                            setPhone_number={setPhone_number}
+                            limitnum={limitnum}
+                            setlimitnum={setlimitnum}
+                            limitPhone_number={limitPhone_number}
+                            setlimitPhone_number={setlimitPhone_number}
+                            Phone_num_msg={Phone_num_msg}
+                            setPhone_num_msg={setPhone_num_msg}
+                            ID_msg={ID_msg}
+                            setID_msg={setID_msg}
+                            limitID={limitID}
+                            setlimitID={setlimitID}
                             canchangePW={canchangePW}
-                            goNext = {goNext}
-                            setgoNext = {setgoNext}
-                            ></ForgotPW>
-                        </TabPanel>
-                    </SwipeableViews>
-                </Container>
-            </ThemeProvider>
-        );
+                            goNext={goNext}
+                            setgoNext={setgoNext}
+                        ></ForgotPW>
+                    </TabPanel>
+                </SwipeableViews>
+            </Container>
+        </ThemeProvider>
+    );
 }
 
 export default Forgot;

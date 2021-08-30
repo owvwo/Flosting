@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import fire from "../../Register/LoginFire";
-import Badge from '@material-ui/core/Badge';
+import Badge from "@material-ui/core/Badge";
 import styled from "styled-components";
 import Avatar from "@material-ui/core/Avatar";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
@@ -8,14 +8,15 @@ import MannerInfo from "./MannerInfo";
 import TierInfo from "./TierInfo";
 import MbtiInfo from "./MbtiInfo";
 
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import PhotoCamera from '@material-ui/icons/PhotoCamera';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
+import PhotoCamera from "@material-ui/icons/PhotoCamera";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DeleteUser from "./DeleteUser";
 
 const db = fire.firestore();
 const storage = fire.storage();
@@ -23,15 +24,14 @@ const storageRef = storage.ref();
 
 const inputStyles = makeStyles((theme) => ({
   root: {
-    '& > *': {
+    "& > *": {
       margin: theme.spacing(1),
     },
   },
   input: {
-    display: 'none',
+    display: "none",
   },
 }));
-
 
 const SmallAvatar = withStyles((theme) => ({
   root: {
@@ -85,48 +85,51 @@ const SchoolNumBox = styled.div`
 
 const FlexRowbox = styled.div`
   display: flex;
-  flex-direction : row;
-`
+  flex-direction: row;
+`;
 const FlexColumnbox = styled.div`
   display: flex;
-  flex-direction : column;
+  flex-direction: column;
   margin: 0px 10px;
-`
+`;
 const CameraBox = styled.div`
-label{
-  display: flex;
-  flex-direction : row;
-  justify-content : center;
-  align-items : center;
-  margin : 0px 5px;
-  border-radius : 10px;
-  padding: 3px;
-  border : 1px solid rgb(0,0,0, 0.1);
-  list-style: none;
-  background-color: rgb(0,0,0, 0.2);
-  li{
-    font-family: 'Do Hyeon', sans-serif;
-    font-size: 0.8rem;
+  label {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 0px 5px;
+    border-radius: 10px;
+    padding: 3px;
+    border: 1px solid rgb(0, 0, 0, 0.1);
+    list-style: none;
+    background-color: rgb(0, 0, 0, 0.2);
+    li {
+      font-family: "Do Hyeon", sans-serif;
+      font-size: 0.8rem;
+    }
   }
-}
+`;
+const ButtonContainer = styled.div`
+display:flex;
 `
 const ProfileChangeBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  margin-top : 5px;
-  border-top : 1px solid rgb(0,0,0,0.1);
+  margin-top: 5px;
+  border-top: 1px solid rgb(0, 0, 0, 0.1);
   display: flex;
   height: 2.5rem;
-
-`
-
+`;
 
 const MyInfo = (props) => {
-  const [refresh , setrefresh] = useState(true);
-  const classes = useStyles();
   const user = props.user;
-
+  const onGoing = props.onGoing;
+  const Ukey = props.Ukey;
+  const userNick = props.userNick;
+  const [refresh, setrefresh] = useState(true);
+  const classes = useStyles();
   const [ID, setID] = useState("");
   const [ProfileImage, setProfileImage] = useState("");
   const [Univ, setUniv] = useState("");
@@ -141,12 +144,18 @@ const MyInfo = (props) => {
   const [프사, 프사변경] = useState(null);
   const [회원정보docId, 회원정보docId변경] = useState();
   const [imgBase64, setImgBase64] = useState("");
-  const tier_mi2 = 'https://firebasestorage.googleapis.com/v0/b/flosting-65c9e.appspot.com/o/TierImage%2Ftier_mi2.jpeg?alt=media'
-  const tier_mi1 = 'https://firebasestorage.googleapis.com/v0/b/flosting-65c9e.appspot.com/o/TierImage%2Ftier_mi1.jpeg?alt=media'
-  const tier_zero = 'https://firebasestorage.googleapis.com/v0/b/flosting-65c9e.appspot.com/o/TierImage%2Ftier_zero.png?alt=media'
-  const tier_plus1 = 'https://firebasestorage.googleapis.com/v0/b/flosting-65c9e.appspot.com/o/TierImage%2Ftier_plus1.jpeg?alt=media'
-  const tier_plus2 = 'https://firebasestorage.googleapis.com/v0/b/flosting-65c9e.appspot.com/o/TierImage%2Ftier_plus2.png?alt=media'
-  const tier_plus3 = 'https://firebasestorage.googleapis.com/v0/b/flosting-65c9e.appspot.com/o/TierImage%2Ftier_plus3.png?alt=media'
+  const tier_mi2 =
+    "https://firebasestorage.googleapis.com/v0/b/flosting-65c9e.appspot.com/o/TierImage%2Ftier_mi2.jpeg?alt=media";
+  const tier_mi1 =
+    "https://firebasestorage.googleapis.com/v0/b/flosting-65c9e.appspot.com/o/TierImage%2Ftier_mi1.jpeg?alt=media";
+  const tier_zero =
+    "https://firebasestorage.googleapis.com/v0/b/flosting-65c9e.appspot.com/o/TierImage%2Ftier_zero.png?alt=media";
+  const tier_plus1 =
+    "https://firebasestorage.googleapis.com/v0/b/flosting-65c9e.appspot.com/o/TierImage%2Ftier_plus1.jpeg?alt=media";
+  const tier_plus2 =
+    "https://firebasestorage.googleapis.com/v0/b/flosting-65c9e.appspot.com/o/TierImage%2Ftier_plus2.png?alt=media";
+  const tier_plus3 =
+    "https://firebasestorage.googleapis.com/v0/b/flosting-65c9e.appspot.com/o/TierImage%2Ftier_plus3.png?alt=media";
 
   useEffect(() => {
     if (user) {
@@ -175,12 +184,10 @@ const MyInfo = (props) => {
   }, [user, refresh]);
 
   function whatTier(Temp) {
-
     if (Temp < 20) {
       settierImg(tier_mi2);
       settierName("썩은 씨앗");
-    }
-    else if (Temp < 30) {
+    } else if (Temp < 30) {
       settierImg(tier_mi1);
       settierName("깨진 씨앗");
     } else if (Temp < 40) {
@@ -191,13 +198,12 @@ const MyInfo = (props) => {
       settierName("새싹");
     } else if (Temp < 60) {
       settierImg(tier_plus2);
-      settierName("꽃봉오리")
+      settierName("꽃봉오리");
     } else {
       settierImg(tier_plus3);
-      settierName("데이지")
+      settierName("데이지");
     }
   }
-
 
   return (
     <Container>
@@ -205,11 +211,17 @@ const MyInfo = (props) => {
         <Badge
           overlap="circular"
           anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'right',
+            vertical: "bottom",
+            horizontal: "right",
           }}
-
-          badgeContent={<SmallAvatar alt="Remy Sharp" src={require('../../../../images/Age/Age_' + Age + '.png').default} />}
+          badgeContent={
+            <SmallAvatar
+              alt="Remy Sharp"
+              src={
+                require("../../../../images/Age/Age_" + Age + ".png").default
+              }
+            />
+          }
         >
           <Avatar
             alt={Nickname}
@@ -219,7 +231,9 @@ const MyInfo = (props) => {
         </Badge>
         <FlexColumnbox>
           <SchoolNumBox>
-            <li className="ID">{RealName}[{ID}]</li>
+            <li className="ID">
+              {RealName}[{ID}]
+            </li>
           </SchoolNumBox>
           <NicknameBox>
             <h1>{Nickname}</h1>
@@ -230,7 +244,16 @@ const MyInfo = (props) => {
         </FlexColumnbox>
       </FlexRowbox>
       <ProfileChangeBox>
-        <UploadProfileImage 프사변경={프사변경} 프사={프사} refresh = {refresh} setrefresh = {setrefresh} user={user} 회원정보docId={회원정보docId} imgBase64={imgBase64} setImgBase64={setImgBase64} />
+        <UploadProfileImage
+          프사변경={프사변경}
+          프사={프사}
+          refresh={refresh}
+          setrefresh={setrefresh}
+          user={user}
+          회원정보docId={회원정보docId}
+          imgBase64={imgBase64}
+          setImgBase64={setImgBase64}
+        />
       </ProfileChangeBox>
       <MannerInfo
         Manner={Manner}
@@ -242,38 +265,43 @@ const MyInfo = (props) => {
         tier_plus3={tier_plus3}
       />
       <MbtiInfo Mbti={Mbti}></MbtiInfo>
-      <TierInfo tierName={tierName}
-        tierImg={tierImg}
-        NextTier={NextTier} />
+      <TierInfo tierName={tierName} tierImg={tierImg} NextTier={NextTier} />
+      <DeleteUser
+        User={user}
+        회원정보docId={회원정보docId}
+        onGoing={onGoing}
+        Ukey={Ukey}
+        userNick={userNick}
+      ></DeleteUser>
     </Container>
   );
 };
 
 export default MyInfo;
 
-
 function UploadProfileImage(props) {
-
-  const [open,setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const classes = inputStyles();
   const date = new Date();
-  const {refresh, setrefresh} = props;
-  
+  const { refresh, setrefresh } = props;
+
   async function onSubmit(event) {
     event.preventDefault();
-    const uploadTask = storageRef.child(`profileImage/${props.user.uid}/${date}`).put(props.프사)
+    const uploadTask = storageRef
+      .child(`profileImage/${props.user.uid}/${date}`)
+      .put(props.프사);
     uploadTask.then((snapshot) => {
       snapshot.ref.getDownloadURL().then((downloadURL) => {
-
-        db.collection('회원정보').doc(props.회원정보docId).update(
-          { "profileImage": downloadURL }
-        ).then(
-          alert('프로필 사진 변경 성공! 새로고침 해주세요!'),
-          setOpen(false),
-          setrefresh(!refresh)
-        )
-      })
-    })
+        db.collection("회원정보")
+          .doc(props.회원정보docId)
+          .update({ profileImage: downloadURL })
+          .then(
+            alert("프로필 사진 변경 성공! 새로고침 해주세요!"),
+            setOpen(false),
+            setrefresh(!refresh)
+          );
+      });
+    });
   }
 
   function onChange(e) {
@@ -283,54 +311,78 @@ function UploadProfileImage(props) {
       if (base64) {
         props.setImgBase64(base64.toString());
       }
-    }
+    };
     if (e.target.files[0]) {
       reader.readAsDataURL(e.target.files[0]);
-      props.프사변경(e.target.files[0])
+      props.프사변경(e.target.files[0]);
     }
   }
 
   return (
     <div className={classes.root}>
-      <input className={classes.input} id="icon-button-file" type="file" accept=".gif, .jpg, .png"
+      <input
+        className={classes.input}
+        id="icon-button-file"
+        type="file"
+        accept=".gif, .jpg, .png"
         onChange={onChange}
       />
-      <CameraBox>
-        <label htmlFor="icon-button-file" onClick = {() => setOpen(true)}>
-          <li>프로필 사진 변경</li>
-        </label>
-      </CameraBox>
-      {
-        props.프사 === null
-          ?
-          <div></div>
-          :
-          <Dialog
-            open={open}
-            onClose={() => setOpen(false)}
-            aria-labelledby="responsive-dialog-title"
-          >
-            <DialogTitle id="responsive-dialog-title">프로필 사진 변경</DialogTitle>
-            <DialogContent>
-              <label htmlFor="contained-button-file">
-                <div>
-                  <Avatar style={{ "width": "150px", "height": "150px", "border": "1px solid grey" }} src={props.imgBase64} />
-                </div>
-              </label>
-              <DialogContentText>
-                위 사진으로 변경하시겠습니까?
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button variant="contained" color="primary" component="span" onClick={onSubmit}>
-                저장하기
-              </Button>
-              <Button variant="outlined" color="primary" component="span" onClick={() =>{setOpen(false)}}>
-                취소하기
-              </Button>
-            </DialogActions>
-          </Dialog>
-      }
+      <ButtonContainer>
+        <CameraBox>
+          <label htmlFor="icon-button-file" onClick={() => setOpen(true)}>
+            <li>프로필 사진 변경</li>
+          </label>
+        </CameraBox>
+
+      </ButtonContainer>
+      {props.프사 === null ? (
+        <div></div>
+      ) : (
+        <Dialog
+          open={open}
+          onClose={() => setOpen(false)}
+          aria-labelledby="responsive-dialog-title"
+        >
+          <DialogTitle id="responsive-dialog-title">
+            프로필 사진 변경
+          </DialogTitle>
+          <DialogContent>
+            <label htmlFor="contained-button-file">
+              <div>
+                <Avatar
+                  style={{
+                    width: "150px",
+                    height: "150px",
+                    border: "1px solid grey",
+                  }}
+                  src={props.imgBase64}
+                />
+              </div>
+            </label>
+            <DialogContentText>위 사진으로 변경하시겠습니까?</DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              variant="contained"
+              color="primary"
+              component="span"
+              onClick={onSubmit}
+            >
+              저장하기
+            </Button>
+            <Button
+              variant="outlined"
+              color="primary"
+              component="span"
+              onClick={() => {
+                setOpen(false);
+              }}
+            >
+              취소하기
+            </Button>
+          </DialogActions>
+        </Dialog>
+      )}
     </div>
   );
 }

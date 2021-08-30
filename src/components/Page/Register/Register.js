@@ -132,7 +132,7 @@ const InputDiv = styled.div`
 
 const Register = (props) => {
 
-    const { S_num, set_S_num, set_S_name, set_auth_regis, setU_School_num} = props
+    const { S_num, set_S_num, set_S_name, set_auth_regis, setU_School_num } = props
 
     const [limitnum, setlimitnum] = useState(false); // 아이디의 제한 체크 변수
     const [limitschoolnum, setlimitschoolnum] = useState(false); //학번
@@ -217,11 +217,12 @@ const Register = (props) => {
     const handleNumChange = (e) => {
         let pattern = /[^0-9|a-z|]/gi; // 숫자 입력 되게
         e.target.value = e.target.value.replace(pattern, '');
+        e.target.value = e.target.value.toLowerCase();
         if (e.target.value.length > 13) //글자수 제한
             e.target.value = e.target.value.slice(0, 13);
 
 
-        set_S_num(e.target.value);
+        set_S_num((e.target.value).toLowerCase());
         if (((e.target.value).length <= 13 && (e.target.value).length >= 6)) {
             setlimitnum(true);
         } else {
@@ -236,6 +237,7 @@ const Register = (props) => {
         else {
             setlimitnummessasge("아이디의 길이가 너무 짧아요!");
         }
+        console.log(e.target.value);
     }
     const handleNameChange = (selected) => {
         set_S_name(selected);
@@ -254,7 +256,7 @@ const Register = (props) => {
                         아이디
                     </School_title>
                     <School_content>
-                        ※ 영어와 숫자로 이루어진 6 ~ 13자리 문자열을 입력해주세요.
+                        ※ 영어(소문자)와 숫자로 이루어진 6 ~ 13자리 문자열을 입력해주세요.
                     </School_content>
                     <InputDiv>
                         <Input
@@ -264,7 +266,7 @@ const Register = (props) => {
                             onChange={handleNumChange}
                             disabled={overlap}
                         />
-                        <Overlapbtn overlap={overlap} onClick={handleoverlap} disabled = {overlap}>
+                        <Overlapbtn overlap={overlap} onClick={handleoverlap} disabled={overlap}>
                             중복 확인
                         </Overlapbtn>
                         <Dialog

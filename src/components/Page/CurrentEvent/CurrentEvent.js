@@ -7,7 +7,7 @@ import fire from "../Register/LoginFire";
 
 const Container = styled.div`
   display: flex;
-  flex-direction : column;
+  flex-direction: column;
   font-family: "Noto Sans KR", sans-serif;
   left: 0;
   width: 100%;
@@ -31,7 +31,6 @@ const 요소btn = styled.button`
   color: rgb(0, 0, 0, 0.9);
   padding: 5px;
   width: 17rem;
-  height: 6rem;
   border-radius: 15px;
   border: 1px solid rgb(125, 200, 224, 0.5);
   background-color: rgb(125, 200, 224, 0.1);
@@ -104,25 +103,66 @@ const CurrentEvent = (props) => {
         <Title 제목={제목} />
         <Fade bottom>
           <NavLink to="/currentevent/EP">
+            {/* <Buttoncontent
+              {...props}
+              요소wrap={요소wrap}
+              요소btn={요소btn}
+              School_Name={[
+                "강남대학교",
+                "단국대학교 죽전캠퍼스",
+                "가천대학교",
+                "을지대학교 성남캠퍼스",
+              ]}
+              Region="성남&용인권"
+              Num={1}
+              Start_Day="0824"
+              End_Day="0827"
+              Result_Day="0828"
+            /> */}
             <Buttoncontent
               {...props}
               요소wrap={요소wrap}
               요소btn={요소btn}
-              School_Name={["강남대학교", "단국대학교 죽전캠퍼스"]}
-              Num={1}
-              Start_Day="0821"
-              End_Day="0824"
-              Result_Day="0825"
+              School_Name={[
+                "단국대학교 천안캠퍼스",
+                "상명대학교 천안캠퍼스",
+                "순천향대학교",
+                "백석대학교",
+                "선문대학교",
+                "호서대학교",
+              ]}
+              Region="충남권"
+              Num={2}
+              Start_Day="0831"
+              End_Day="0903"
+              Result_Day="0904"
             />
+            {/* 테스트 */}
+            {/* <Buttoncontent
+              {...props}
+              요소wrap={요소wrap}
+              요소btn={요소btn}
+              School_Name={[
+                "강남대학교",
+                "단국대학교 죽전캠퍼스",
+                "가천대학교",
+                "을지대학교 성남캠퍼스",
+              ]}
+              Region="Test권"
+              Num={4}
+              Start_Day="0830"
+              End_Day="0931"
+              Result_Day="0931"
+            /> */}
           </NavLink>
         </Fade>
         <Fade bottom>
           <NavLink to="/currentevent/alarm">
             <알람신청 알림wrap={알림wrap} 알림btn={알림btn} />
           </NavLink>
-        </Fade >
-        
-      <Footer />
+        </Fade>
+
+        <Footer />
       </Container>
     </div>
   );
@@ -140,6 +180,7 @@ function Buttoncontent(props) {
     setEP_School_Name(School_Name);
     setEP_End_Day(End_Day);
     setEP_Result_Day(Result_Day);
+    setEP_Region(Region);
   };
   const {
     setEP_School_Name,
@@ -147,14 +188,15 @@ function Buttoncontent(props) {
     setEP_Start_Day,
     setEP_End_Day,
     setEP_Result_Day,
+    setEP_Region,
   } = props;
 
-  const { School_Name, Num, Start_Day, End_Day, Result_Day } = props;
+  const { School_Name, Num, Start_Day, End_Day, Result_Day, Region } = props;
 
   return (
     <요소wrap>
       <요소btn Num={1} School_Name={School_Name} onClick={handleallprops}>
-        <li className="EP_Num">{props.Num + "회차"}</li>
+        <li className="EP_Num">{Region}</li>
         {School_Name_Rendering(School_Name)}
       </요소btn>
     </요소wrap>

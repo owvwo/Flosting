@@ -209,26 +209,26 @@ background-color: white;
 `
 
 
-function StageZero(props){
+function StageZero(props) {
     let [init, setInit] = useState(false)
     let [새로고침, 새로고침변경] = useState(false)
 
-    useEffect(()=>{
-        if(props.유저1 && props.유저2){
+    useEffect(() => {
+        if (props.유저1 && props.유저2) {
             setInit(true);
         }
-        if(새로고침){
+        if (새로고침) {
             console.log('refresh')
             window.location.reload();
 
         }
     })
 
-    return(
+    return (
         <div>
             {
                 init
-                ?
+                    ?
                     <Container>
                         <Timer />
                         <Title />
@@ -236,42 +236,42 @@ function StageZero(props){
                             <LeftProfile 유저1={props.유저1} />
                             <RightProfile 유저2={props.유저2} />
                         </div>
-                        <Button 새로고침변경={새로고침변경} 컬렉션={props.컬렉션} 문서번호={props.문서번호} 닉네임={props.닉네임} 회원정보문서아이디={props.회원정보문서아이디} 유저정보={props.유저정보}/>
+                        <Button 새로고침변경={새로고침변경} 컬렉션={props.컬렉션} 문서번호={props.문서번호} 닉네임={props.닉네임} 회원정보문서아이디={props.회원정보문서아이디} 유저정보={props.유저정보} />
                         <Footer />
                     </Container>
-    
-                : null
+
+                    : null
             }
         </div>
     )
 }
 export default StageZero;
 
-function Timer(){
-    return(
+function Timer() {
+    return (
         <TimerWrap>
-            <li className = "Ment">
-            시간이 종료되기 전까지 연락을 해주세요! 
+            <li className="Ment">
+                시간이 종료되기 전까지 연락을 해주세요!
             </li>
-            <TimerComponent/>
+            <TimerComponent />
         </TimerWrap>
     )
 }
 
-function Title(){
-    return(
+function Title() {
+    return (
         <TitleContainer>
             <TitleWrap>
-            매칭 진행 중
+                매칭 진행 중
             </TitleWrap>
             <NoticeMessage><li>표시된 상대방의 번호로 연락을 먼저 해보세요!</li></NoticeMessage>
         </TitleContainer>
     )
 }
 
-function LeftProfile(props){
+function LeftProfile(props) {
     let 유저1 = props.유저1
-    let profileImage=유저1.profileImage;
+    let profileImage = 유저1.profileImage;
 
     const noneactiveStyle = {
         textDecoration: 'none',
@@ -279,48 +279,50 @@ function LeftProfile(props){
     }
 
 
-    return(
-            <LeftProfileWrap>
-                <div className = "ING">결정중</div>
-                <div className='defaultPicBox'>
-                    <NavLink to = {`/userprofile/${유저1.User.Nick}`} style={noneactiveStyle}><li className = "LookProfile">프로필 보기</li></NavLink>
-                    <img src={profileImage} className='defaultPic'/>
-                </div>
-                <div className='profileInfo'>
+    return (
+        <LeftProfileWrap>
+            <div className="ING">결정중</div>
+            <div className='defaultPicBox'>
+                <NavLink to={`/userprofile/${유저1.User.Nick}`} style={noneactiveStyle}><li className="LookProfile">프로필 보기</li></NavLink>
+                <img src={profileImage} className='defaultPic' />
+            </div>
+            <div className='profileInfo'>
                 <li className="UserNick">{유저1.User.Nick}[{유저1.User.Age}]</li>
+                <li className="UserPhone">{유저1.User.Phone.substring(0, 3)}-{유저1.User.Phone.substring(3, 7)}-{유저1.User.Phone.substring(7)}</li>
                 <li className="UserUniv">{유저1.User.Univ}</li>
-                </div>
-            </LeftProfileWrap>
+            </div>
+        </LeftProfileWrap>
     )
 }
-function RightProfile(props){
+function RightProfile(props) {
     let 유저2 = props.유저2
-    let profileImage=유저2.profileImage;
+    let profileImage = 유저2.profileImage;
 
     const noneactiveStyle = {
         textDecoration: 'none',
         color: '#2B2A28'
     }
 
-    return(
+    return (
         <RightProfileWrap>
-                <div className = "ING">결정중</div>
-                <div className='defaultPicBox'>
-                    <NavLink to = {`/userprofile/${유저2.User.Nick}`} style={noneactiveStyle}><li className = "LookProfile">프로필 보기</li></NavLink>
-                    <img src={profileImage} className='defaultPic'/>
-                </div>
-                <div className='profileInfo'>
+            <div className="ING">결정중</div>
+            <div className='defaultPicBox'>
+                <NavLink to={`/userprofile/${유저2.User.Nick}`} style={noneactiveStyle}><li className="LookProfile">프로필 보기</li></NavLink>
+                <img src={profileImage} className='defaultPic' />
+            </div>
+            <div className='profileInfo'>
                 <li className="UserNick">{유저2.User.Nick}[{유저2.User.Age}]</li>
+                <li className="UserPhone">{유저2.User.Phone.substring(0, 3)}-{유저2.User.Phone.substring(3, 7)}-{유저2.User.Phone.substring(7)}</li>
                 <li className="UserUniv">{유저2.User.Univ}</li>
-                </div>
+            </div>
         </RightProfileWrap>
     )
 }
 
-function Button(props){
-    function onClick_sendMessage(){
+function Button(props) {
+    function onClick_sendMessage() {
         const result = window.confirm('정말로 먼저 연락을 보내셨나요?');
-        if(result){
+        if (result) {
             db.collection(props.컬렉션).doc(props.문서번호).update({
                 stage: 'half'
             })
@@ -328,29 +330,29 @@ function Button(props){
                 메세지보낸사람: props.닉네임
             })
             db.collection('회원정보').doc(props.회원정보문서아이디).update({
-                'User.Manner': props.유저정보['Manner']+1
-            }).then(()=>{
+                'User.Manner': props.유저정보['Manner'] + 1
+            }).then(() => {
                 alert('매너온도가 상승했습니다! 좋은 결과 기원합니다 :)')
                 props.새로고침변경(true);
             })
-        }else{}
+        } else { }
     }
-    function onClick_refuse(){
+    function onClick_refuse() {
         const result = window.confirm('정말로 거절하실건가요?');
-        if(result){
+        if (result) {
             db.collection(props.컬렉션).doc(props.문서번호).update({
                 stage: 'end'
             })
             db.collection(props.컬렉션).doc(props.문서번호).update({
                 거절한사람: props.닉네임
-            }).then(()=>{
+            }).then(() => {
                 alert('매칭을 거절하셨습니다.')
                 props.새로고침변경(true);
             })
-        }else{}
+        } else { }
     }
 
-    return(
+    return (
         <ButtonWrap>
             <Agree onClick={onClick_sendMessage}>먼저 연락했어요!</Agree>
             <Refuse onClick={onClick_refuse}>거절할래요</Refuse>

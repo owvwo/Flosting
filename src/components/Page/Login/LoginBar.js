@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import fire from '../Register/LoginFire'
 
@@ -74,8 +74,8 @@ const Loginbar = () => {
         setEmailError('');
     }
 
-    const cangoNext = () =>{
-        if(limitID && limitpassword)
+    const cangoNext = () => {
+        if (limitID && limitpassword)
             setcanlogin(false);
         else
             setcanlogin(true);
@@ -107,8 +107,8 @@ const Loginbar = () => {
             setlimitpassword(false);
         }
     }
-    
-    const handlesetID = (e) =>{
+
+    const handlesetID = (e) => {
         let pattern = /[^|a-z|0-9|]/gi; // 숫자,문자만 입력 되게
         e.target.value = e.target.value.replace(pattern, '');
 

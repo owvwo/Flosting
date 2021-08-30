@@ -24,6 +24,11 @@ const Container = styled.div`
       width: 8rem;
       background-color: #f8ecf4;
     }
+    .inner2{
+      margin: 0 auto;
+      width: 8rem;
+      border-bottom: 4px solid rgb(198,250,226,1.0);
+    }
   }
 `;
 const Period = (props) => {
@@ -37,8 +42,9 @@ const Period = (props) => {
           <div className="inner">{period}</div>
         </div>
         <div className="scheduleRight">
-          <div className="scheduleTitle">결과발송</div>
-          <div className="inner">{EP_Result_Day}</div>
+          <div className="scheduleTitle">결과안내</div>
+          <div className="inner">{EP_Result_Day.substr(0, 2) + "/" + EP_Result_Day.substr(2)}</div>
+          <div className="inner2">낮 12:00</div>
         </div>
       </div>
     </Container>
