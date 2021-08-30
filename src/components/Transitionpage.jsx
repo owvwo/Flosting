@@ -66,6 +66,7 @@ const Transition = (props) => {
   const [EP_Start_Day, setEP_Start_Day] = useState('');
   const [EP_End_Day, setEP_End_Day] = useState('');
   const [EP_Result_Day, setEP_Result_Day] = useState('');
+  const [EP_Region, setEP_Region] = useState('');
   const [S_Event, setS_Event] = useState("");
   const [isManager, setisManager] = useState(false); // 매니저인지 아닌지
 
@@ -84,6 +85,7 @@ const Transition = (props) => {
             setEP_Start_Day={setEP_Start_Day}
             setEP_End_Day={setEP_End_Day}
             setEP_Result_Day={setEP_Result_Day}
+            setEP_Region={setEP_Region}
           /></Route>
           <Route exact path="/currentevent/EP"><EPall
             User={user}
@@ -92,6 +94,7 @@ const Transition = (props) => {
             EP_Start_Day={EP_Start_Day}
             EP_End_Day={EP_End_Day}
             EP_Result_Day={EP_Result_Day}
+            EP_Region={EP_Region}
           /></Route>
           <Route path="/currentevent/alarm"><Alarm User={user} /></Route>
           <Route path="/login" component={Login_page} />
