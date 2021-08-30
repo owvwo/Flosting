@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import firebase from '../Register/LoginFire';
-import { Redirect } from 'react-router-dom';
+import { Redirect, NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import Fade from 'react-reveal/Fade';
-
+import NowUser from './NowUser';
 
 const Container = styled.div`
     display : flex;
@@ -52,7 +52,7 @@ const Parent = styled.div`
     color: black;
     border-bottom : 1px solid rgb(0,0,0, 0.2);
     list-style : none;
-    width: 40rem;
+    width: 70rem;
 
     .Nick{
         display: flex;
@@ -97,6 +97,7 @@ const Parent = styled.div`
 }
 `
 
+
 function UserSearch(props) {
 
     const { isManager } = props;
@@ -105,29 +106,14 @@ function UserSearch(props) {
     const db = firebase.firestore()
     const [사람, set사람] = useState([]);
     const [matchingList, setmatchingList] = useState([]);
+    const [Refresh, setRefresh] = useState(false);
+
 
     useEffect(() => {
-
         setmatchingList(사람.map(list =>
             <Fade bottom>
-                <Parent>
-                    <div className="Nick">
-                        <li>{list.Nick}</li>
-                    </div>
-                    <div className="Phone">
-                        <li>{list.Phone}</li>
-                    </div>
-                    <div className="Univ">
-                        <li>{list.Univ}</li>
-                    </div>
-                    <div className="Age">
-                        <li>{list.Age}</li>
-                    </div>
-                    <div className="Ongoing">
-                        <li>{(list.Ongoing !== "") ? list.Ongoing + "회차" : "신청안함"}</li>
-                    </div>
-
-                </Parent>
+                <NowUser U_Data={list.Data} Refresh={Refresh}>
+                </NowUser>
             </Fade>
         ));
     }, [isSearch])
@@ -143,10 +129,13 @@ function UserSearch(props) {
                     'Phone': doc.data().User.Phone,
                     'Univ': doc.data().User.Univ,
                     'Age': doc.data().User.Age,
-                    'Ongoing': doc.data().Ongoing
+                    'Ongoing': doc.data().Ongoing,
+                    'ID': doc.data().ID,
+                    'Data': doc.data()
                 })
             });
         } catch (err) { console.log(err) }
+
         setisSearch(!isSearch);
     }
 

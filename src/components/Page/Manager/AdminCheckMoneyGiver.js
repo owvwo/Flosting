@@ -81,7 +81,7 @@ function AdminCheckMoneyGiver(props) {
         if (신청중회차arr) {
             aLoop()
         }
-    }, [신청중회차arr])
+    }, [신청중회차arr, 새로고침])
 
     useEffect(() => {
         if (미입금자명단) {
@@ -89,8 +89,7 @@ function AdminCheckMoneyGiver(props) {
         }
 
         if (새로고침) {
-            console.log('refresh')
-            window.location.reload();
+            console.log('refresh');
         }
     }, [미입금자명단, 새로고침])
 

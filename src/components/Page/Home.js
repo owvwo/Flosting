@@ -207,7 +207,8 @@ const Home = (props) => {
         if (user) {
             getVariableInfo();
             getUserOngoing();
-            if (Number(Ongoing) === 진행중회차) { 매칭결과조회여부변경(true) }
+            if (Number(Ongoing) === 0) { 매칭결과조회여부변경(false) }
+            else if (Number(Ongoing) === 진행중회차) { 매칭결과조회여부변경(true) }
             else if (Number(Ongoing) === 지난회차) { 매칭결과조회여부변경(true) }
         }
         setTimeout(function () {

@@ -61,6 +61,7 @@ function QnaMain() {
     let [클릭1번, 클릭1번변경] = useState(false);
     let [클릭2번, 클릭2번변경] = useState(false);
     let [클릭3번, 클릭3번변경] = useState(false);
+    let [클릭3_1번, 클릭3_1번변경] = useState(false);
     let [클릭4번, 클릭4번변경] = useState(false);
     let [클릭5번, 클릭5번변경] = useState(false);
     let [클릭6번, 클릭6번변경] = useState(false);
@@ -73,6 +74,9 @@ function QnaMain() {
     }
     function onClickThree() {
         클릭3번변경(!클릭3번)
+    }
+    function onClickThree_one() {
+        클릭3_1번변경(!클릭3_1번)
     }
     function onClickFour() {
         클릭4번변경(!클릭4번)
@@ -128,7 +132,18 @@ function QnaMain() {
                         :
                         null
                 }
-
+                <button className='질문' onClick={onClickThree_one} >신청한 개수보다 많은 인원과 매칭이 되었어요!</button>
+                {
+                    클릭3_1번 === true
+                        ?
+                        <Fade top>
+                            <div className='답변박스'>
+                                <답변3_1 답변Container={답변Container} />
+                            </div>
+                        </Fade>
+                        :
+                        null
+                }
                 <button className='질문' onClick={onClickFour} >다음 회차는 언제 진행되나요?</button>
                 {
                     클릭4번 === true
@@ -205,11 +220,24 @@ function 답변3({ 답변Container }) {
     return (
         <답변Container>
             <div className='content'>
-                A. <br /> 신청한 개수보다 많은 인원과 매칭이 되었어요!
+                A. <br /> 플로스팅의 매칭은 신청해주신 신청서의 조건에
+                <br /> 따라 분류가 되며, 그 신청서를 바탕으로 매칭을
+                <br /> 진행하기 때문에 원하시는 조건에 대한 참여자가
+                <br /> 없거나 적으면 매칭에 실패하게 됩니다.
                 <br />
-                <br /> 매칭에 실패되는 인원을 최대한으로 줄이고자 하기 위해,
-                <br /> 본인이 신청한 티켓의 개수 보다 더 많은 인원과
-                <br /> 매칭이 될 수도 있다는 점 양해 부탁드립니다.
+                <br /> ※유료 티켓 구매자에 대해서는 매칭 실패에 대해
+                <br /> 환불 조치 해드립니다.
+            </div>
+        </답변Container>
+    )
+}
+function 답변3_1({ 답변Container }) {
+    return (
+        <답변Container>
+            <div className='content'>
+                A. <br /> 매칭에 실패되는 인원을 최대한으로 줄이고자
+                <br /> 하기 위해, 본인이 신청한 티켓의 개수 + 상대방이
+                <br /> 나의 번호를 뽑아간 개수로 매칭결과가 표시됩니다.
             </div>
         </답변Container>
     )

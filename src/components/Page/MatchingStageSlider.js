@@ -4,6 +4,7 @@ import Slider from "react-slick";
 import './Home.css';
 
 import 매칭1 from '../../images/매칭1.png'
+import 매칭1_2 from '../../images/매칭1_2.png'
 import 매칭2 from '../../images/매칭2.png'
 import 매칭3 from '../../images/매칭3.png'
 import 매칭4 from '../../images/매칭4.png'
@@ -15,7 +16,7 @@ const Wrap = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgb(255,180,224,0.1);
+  background-color: rgb(253,239,230,1.0);
   border-radius: 40px;
   height: 40rem;
   .topText{
@@ -81,7 +82,7 @@ export default class 참여방법Slider extends Component {
               <img className='사진' src={매칭1} />
             </div>
             <div className='arrow'>
-              밀어서 계속 확인하세요! →
+              <h4>밀어주세요👉</h4>
             </div>
 
           </Wrap>
@@ -90,8 +91,22 @@ export default class 참여방법Slider extends Component {
             <div className='topText'>
               클로버팅/라일락팅/데이지팅 중<br />
               신청한 플로스팅을 클릭하면<br />
+              매칭된 상대방의 리스트를 확인할 수 있습니다!<br />
+            </div>
+            <div className='imageBox'>
+              <img className='사진' src={매칭1_2} />
+            </div>
+            <div className='arrow'>
+              <h4>밀어주세요👉</h4>
+            </div>
+
+          </Wrap>
+
+          <Wrap>
+            <div className='topText'>
+              매칭된 상대방을 클릭하면<br />
               매칭된 상대와 남은 매칭 시간을 <br />
-              확인 할 수 있어요<br /><br />
+              확인 할 수 있어요!<br /><br />
               제한 시간 내 아무런 응답이 없으면<br />
               내 매너온도가 차감되니 주의하세요!!
             </div>

@@ -206,7 +206,10 @@ const LastRegister = (props) => {
 
     const handleoverlap = () => { //중복검사
 
-        if (limitnick) {
+        if (nickname.indexOf('ㆍ') != -1) {
+            alert("닉네임에는 특수문자가 포함될 수 없어요!")
+        }
+        else if (limitnick) {
             let Infodb = db.collection("회원정보");
             let query = Infodb.where("User.Nick", "==", nickname).get().then((querySnapshot) => {
                 if (querySnapshot.size) {
@@ -259,7 +262,7 @@ const LastRegister = (props) => {
 
     }
     const handleNicChange = (e) => {
-        let pattern = /[^ㄱ-ㅎ|가-힣|a-z|A-Z|]/gi; // 한글이랑 영어만
+        let pattern = /[^ㄱ-ㅎ|가-힣|a-z|A-Z|ㆍ|]/gi; // 한글이랑 영어만
         e.target.value = e.target.value.replace(pattern, '');
         if (e.target.value.length > 6) //글자수 제한
             e.target.value = e.target.value.slice(0, 6);

@@ -168,6 +168,12 @@ const Admin = (props) => {
         <NavLink to="/admin/usersearch">
           <button>유저 검색</button>
         </NavLink>
+        <NavLink to="/admin/now">
+          <button>현재 상황</button>
+        </NavLink>
+        <NavLink to="/admin/money">
+          <button>수금 상황</button>
+        </NavLink>
       </ThemeProvider>
     );
   } else {
