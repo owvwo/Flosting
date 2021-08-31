@@ -35,7 +35,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    ReactGa.initialize("G-SE32GB6S6D");
+    ReactGa.initialize("G-4E949M0T9R");
     ReactGa.set({ page: window.location.pathname });
     ReactGa.pageview(window.location.pathname + window.location.search);
   }, []);
