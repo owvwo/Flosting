@@ -39,6 +39,12 @@ const 요소btn = styled.button`
     font-family: "Noto Sans KR", sans-serif;
     font-weight: 500;
     font-size: 0.8rem;
+    text-decoration : underline;
+  }
+  .EP_Region{
+    font-weight: 500;
+    font-size: 1.2rem;
+    color : rgb(0,0,0,0.7);
   }
   .EP_School_Name {
     font-family: "Noto Sans KR", sans-serif;
@@ -196,7 +202,8 @@ function Buttoncontent(props) {
   return (
     <요소wrap>
       <요소btn Num={1} School_Name={School_Name} onClick={handleallprops}>
-        <li className="EP_Num">{Region}</li>
+        <li className="EP_Num">{Num}회차</li>
+        <li className="EP_Region">{Region}</li>
         {School_Name_Rendering(School_Name)}
       </요소btn>
     </요소wrap>

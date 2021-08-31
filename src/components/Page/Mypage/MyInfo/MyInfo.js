@@ -7,6 +7,7 @@ import { makeStyles, withStyles } from "@material-ui/core/styles";
 import MannerInfo from "./MannerInfo";
 import TierInfo from "./TierInfo";
 import MbtiInfo from "./MbtiInfo";
+import imageCompression from 'browser-image-compression';
 
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
@@ -130,6 +131,7 @@ const MyInfo = (props) => {
   const [ID, setID] = useState("");
   const [ProfileImage, setProfileImage] = useState("");
   const [Univ, setUniv] = useState("");
+  const [Unique_key, setUnique_key] = useState("");
   const [RealName, setRealName] = useState("");
   const [Manner, setManner] = useState("");
   const [Nickname, setNickname] = useState("");
@@ -169,6 +171,7 @@ const MyInfo = (props) => {
             setRealName(doc.data().User.Name);
             setUniv(doc.data().User.Univ);
             setAge(doc.data().User.Age);
+            setUnique_key(doc.data().User.Unique_key);
             setMbti(doc.data().User.Mbti);
             let mannertemp = doc.data().User.Manner;
             setManner(mannertemp);
@@ -249,6 +252,7 @@ const MyInfo = (props) => {
           user={user}
           회원정보docId={회원정보docId}
           imgBase64={imgBase64}
+          Unique_key={Unique_key}
           setImgBase64={setImgBase64}
         />
       </ProfileChangeBox>
@@ -263,13 +267,13 @@ const MyInfo = (props) => {
       />
       <MbtiInfo Mbti={Mbti}></MbtiInfo>
       <TierInfo tierName={tierName} tierImg={tierImg} NextTier={NextTier} />
-      {/* <DeleteUser
+      <DeleteUser
         User={user}
         회원정보docId={회원정보docId}
         onGoing={onGoing}
         Ukey={Ukey}
         userNick={userNick}
-      ></DeleteUser> */}
+      ></DeleteUser>
     </Container>
   );
 };
@@ -280,13 +284,13 @@ function UploadProfileImage(props) {
   const [open, setOpen] = useState(false);
   const classes = inputStyles();
   const date = new Date();
-  const { refresh, setrefresh } = props;
+  const { refresh, setrefresh, Unique_key } = props;
+
 
   async function onSubmit(event) {
+    let storageUniquekey = Unique_key.replace('/');
     event.preventDefault();
-    const uploadTask = storageRef
-      .child(`profileImage/${props.user.uid}/${date}`)
-      .put(props.프사);
+    const uploadTask = storageRef.child(`profileImage_2/${storageUniquekey}`).put(props.프사)
     uploadTask.then((snapshot) => {
       snapshot.ref.getDownloadURL().then((downloadURL) => {
         db.collection("회원정보")
@@ -301,17 +305,29 @@ function UploadProfileImage(props) {
     });
   }
 
-  function onChange(e) {
+  const onChange = async (e) => {
     let reader = new FileReader();
     reader.onloadend = () => {
       const base64 = reader.result;
       if (base64) {
         props.setImgBase64(base64.toString());
       }
-    };
+    }
     if (e.target.files[0]) {
-      reader.readAsDataURL(e.target.files[0]);
-      props.프사변경(e.target.files[0]);
+      let file = e.target.files[0];
+
+      const options = {
+        maxSizeMB: 0.15
+      }
+
+      try {
+        const compressedFile = await imageCompression(file, options);
+        reader.readAsDataURL(compressedFile);
+        props.프사변경(compressedFile);
+
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 

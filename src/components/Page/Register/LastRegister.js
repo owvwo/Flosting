@@ -129,6 +129,14 @@ const Overlapbtn = styled.button`
   width: 4rem;
   height: 2rem;
   font-size: 0.7rem;
+  opacity: ${props => {
+    if (props.overlap) return '0.5';
+    else return '1.0';
+  }};
+cursor: ${props => {
+    if (props.overlap) return 'default';
+    else return 'pointer'
+  }};
 `;
 const Error_message = styled.div`
   margin-left: 0.2rem;
@@ -228,23 +236,24 @@ const LastRegister = (props) => {
 
   const handleoverlap = () => {
     //중복검사
-
-    if (nickname.indexOf("ㆍ") != -1) {
-      alert("닉네임에는 특수문자가 포함될 수 없어요!");
-    } else if (limitnick) {
-      let Infodb = db.collection("회원정보");
-      let query = Infodb.where("User.Nick", "==", nickname)
-        .get()
-        .then((querySnapshot) => {
-          if (querySnapshot.size) {
-            setOpen2(true);
-            setoverLap(false);
-          } else {
-            setOpen(true); //alert창 띄우기
-          }
-        });
-    } else {
-      alert("닉네임의 길이를 확인해주세요!");
+    if (!overlap) {
+      if (nickname.indexOf("ㆍ") != -1) {
+        alert("닉네임에는 특수문자가 포함될 수 없어요!");
+      } else if (limitnick) {
+        let Infodb = db.collection("회원정보");
+        let query = Infodb.where("User.Nick", "==", nickname)
+          .get()
+          .then((querySnapshot) => {
+            if (querySnapshot.size) {
+              setOpen2(true);
+              setoverLap(false);
+            } else {
+              setOpen(true); //alert창 띄우기
+            }
+          });
+      } else {
+        alert("닉네임의 길이를 확인해주세요!");
+      }
     }
   };
   const handlerePassChange = (e) => {
@@ -428,6 +437,7 @@ const LastRegister = (props) => {
                   required
                   value={nickname}
                   onChange={handleNicChange}
+                  disabled={overlap}
                 />
                 <Overlapbtn overlap={overlap} onClick={handleoverlap}>
                   중복 확인

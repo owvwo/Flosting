@@ -161,6 +161,7 @@ const Transition = (props) => {
           )} />
           <Route path="/register/profileselect" render={props => (
             <ProfileSelect
+              U_unique_key={U_unique_key}
               auth_regis={auth_regis}
               U_Profileurl={U_Profileurl}
               setU_Profileurl={setU_Profileurl}

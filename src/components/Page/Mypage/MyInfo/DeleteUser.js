@@ -17,6 +17,16 @@ const Container = styled.div`
     font-size: 2rem;
   }
 `;
+const 탈퇴버튼 = styled.button`
+width: 5rem;
+margin: 2rem 0;
+border-radius: 10px;
+padding: 3px;
+border: 1px solid rgb(0, 0, 0, 0.1);
+font-family: "Do Hyeon", sans-serif;
+font-size: 0.8rem;
+
+`;
 const db = fire.firestore();
 // const db = firebase.firestore();
 const storage = fire.storage();
@@ -28,161 +38,52 @@ function DeleteUser(props) {
   const Ukey = props.Ukey;
   const userNick = props.userNick;
   const userUid = user.uid;
-  console.log(userUid);
   const [open, setOpen] = useState(false);
+  const Tings = ["lilac", "daisy", "clover"];
+  const userNums = ["userOne", "userTwo"];
 
   const onClick = () => {
-    // console.log(user);
-
-    // const user = firebase.auth().currentUser;
-    // console.log("current user " + user);
-    deleteProfie(userUid);
     authStateListener();
     setOpen(true);
   };
 
   const onComfirm = async () => {
-    var onGoingDoc;
-    var lilacDoc;
-    var daisyDoc;
-    var cloverDoc;
-    deleteUser();
+    deleteUser(Ukey);
+
     // 매칭기간 중에 회원 탈퇴 할 경우 무조건 거절 처리
+    Tings.map(ting => (
+      userNums.map(userNum => (
+        db.collection(`${onGoing}${ting}`).where(`${userNum}.Unique_key`, "==", Ukey).get().then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            doc.ref.update({
+              stage: "end",
+              거절한사람: userNick,
+            });
+          })
+        })
+      ))
+    ))
 
-    // lilac matched db 삭제
-    // userOne Search
-    await db
-      .collection(onGoing + "lilac")
-      .where("userOne.Unique_key", "==", Ukey)
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          lilacDoc = doc.id;
-        });
-      });
-
-    //userTwo Search
-    await db
-      .collection(onGoing + "lilac")
-      .where("userTwo.Unique_key", "==", Ukey)
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          lilacDoc = doc.id;
-        });
-      });
-
-    // daisy matched db 삭제
-    // userOne Search
-    await db
-      .collection(onGoing + "daisy")
-      .where("userOne.Unique_key", "==", Ukey)
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          daisyDoc = doc.id;
-        });
-      });
-
-    //userTwo Search
-    await db
-      .collection(onGoing + "daisy")
-      .where("userTwo.Unique_key", "==", Ukey)
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          daisyDoc = doc.id;
-        });
-      });
-
-    // clover matched db 삭제
-    // userOne Search
-    await db
-      .collection(onGoing + "clover")
-      .where("userOne.Unique_key", "==", Ukey)
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          cloverDoc = doc.id;
-        });
-      });
-
-    //userTwo Search
-    await db
-      .collection(onGoing + "clover")
-      .where("userTwo.Unique_key", "==", Ukey)
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          cloverDoc = doc.id;
-          // doc.data().stage = "end";
-          // doc.data().거절한사람 = userNick;
-        });
-      });
-
-    // 매칭 종료 설정
-    await db
-      .collection(onGoing + "lilac")
-      .doc(lilacDoc)
-      .update({
-        stage: "end",
-        거절한사람: userNick,
-      });
-
-    await db
-      .collection(onGoing + "daisy")
-      .doc(daisyDoc)
-      .update({
-        stage: "end",
-        거절한사람: userNick,
-      });
-
-    await db
-      .collection(onGoing + "clover")
-      .doc(cloverDoc)
-      .update({
-        stage: "end",
-        거절한사람: userNick,
-      });
-
-    // FLosting_onging 컬렉션 서치
-    await db
-      .collection("Flosting_" + onGoing)
-      .where("User.Unique_key", "==", Ukey)
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          onGoingDoc = doc.id;
-        });
-      });
-    // 현재 신청내역 삭제
-    await db
-      .collection("Flosting_" + onGoing)
-      .doc(onGoingDoc)
-      .delete()
-      .then(() => {
-        console.log("Onging 신청내역 삭제 완료");
+    // FLosting_onging => 신청내역 삭제
+    await db.collection(`Flosting_${onGoing}`).where("User.Unique_key", "==", Ukey).get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        doc.ref.delete();
       })
-      .catch((err) => {
-        console.log("신청내역 삭제 오류");
-      });
+    })
 
     // 회원정보 삭제
-    await db
-      .collection("회원정보")
-      .doc(userDoc)
-      .delete()
-      .then(() => {
-        console.log("회원 정보 삭제 완료");
+    await db.collection(`회원정보`).where("User.Unique_key", "==", Ukey).get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        doc.ref.delete();
       })
-      .catch((err) => {
-        console.error("회원정보 삭제 오류");
-      });
+    })
   };
+
+
 
   return (
     <div>
-      <button onClick={onClick}>회원탈퇴</button>
+      <탈퇴버튼 onClick={onClick}>회원탈퇴</탈퇴버튼>
       {props.프사 === null ? (
         <div></div>
       ) : (
@@ -196,7 +97,7 @@ function DeleteUser(props) {
             <label htmlFor="contained-button-file">
               <div></div>
             </label>
-            <DialogContentText>탈퇴하면 재가입 안됨</DialogContentText>
+            <DialogContentText>탈퇴 후 재가입은 불가능합니다. 정말 탈퇴하시겠습니까?</DialogContentText>
           </DialogContent>
           <DialogActions>
             <Button
@@ -272,14 +173,19 @@ function getUserProfile() {
   }
   // [END auth_get_user_profile]
 }
-function deleteUser() {
+function deleteUser(Ukey) {
   // [START auth_delete_user]
   const user = firebase.auth().currentUser;
 
   user
     .delete()
     .then(() => {
-      // User deleted.
+      console.log("deleted")
+      // 유니크_키 블랙리스트 등록
+      db.collection("블랙리스트").add({
+        Unique_key: Ukey,
+        탈퇴사유: "회원탈퇴"
+      })
     })
     .catch((error) => {
       // An error ocurred
@@ -288,44 +194,3 @@ function deleteUser() {
   // [END auth_delete_user]
 }
 
-async function deleteProfie(userUid) {
-  // var listRef = storageRef.child(`profileImage/${userUid}/`);
-  // console.log(listRef);
-  // const ref = storageRef.storage().ref(`profileImage/${userUid}`);
-  // console.log(ref);
-  // storageRef.listAll().then((listResults) => {
-  //   const promises = listResults.items.map((item) => {
-  //     return item.delete();
-  //   });
-  //   Promise.all(promises);
-  // });
-  // var changedImageRef = storageRef.child(`profileImage/${userUid}/`);
-  // changedImageRef.listAll().then((listResults) => {
-  //   const promises = listResults.items.map((item) => {
-  //     return item.delete();
-  //   });
-  //   Promise.all(promises);
-  // });
-  // var secondDesertRef = storageRef.child(`profileImage/registerImage/`);
-  // Delete the file
-  // changedImageRef
-  //   .delete()
-  //   .then(function () {
-  //     console.log("등록이미지 삭제 완료");
-  //     // File deleted successfully
-  //   })
-  //   .catch(function (error) {
-  //     console.log("first Uh-oh, an error occurred!");
-  //     // Uh-oh, an error occurred!
-  //   });
-  // secondDesertRef
-  //   .delete()
-  //   .then(function () {
-  //     console.log("변경이미지 삭제 완료");
-  //     // File deleted successfully
-  //   })
-  //   .catch(function (error) {
-  //     console.log("second Uh-oh, an error occurred!");
-  //     // Uh-oh, an error occurred!
-  //   });
-}
