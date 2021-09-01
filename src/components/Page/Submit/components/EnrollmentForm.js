@@ -225,22 +225,18 @@ function EnrollmentForm(props, match) {
   const onSubmit = () => {
     if (lilacOn) {
       setlilac_Ticket_FT(false);
-      console.log("lila");
-      setlilac_Ticket("0");
     } else {
       setlilac_Ticket_FT(true);
     }
 
     if (daisyOn) {
       setdaisy_Ticket_FT(false);
-      setdaisy_Ticket("0");
     } else {
       setdaisy_Ticket_FT(true);
     }
 
     if (cloverOn) {
       setclover_Ticket_FT(false);
-      setclover_Ticket("0");
     } else {
       setclover_Ticket_FT(true);
     }

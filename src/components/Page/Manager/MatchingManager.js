@@ -107,6 +107,7 @@ const MatchingManager2 = (props) => {
             Phone: data.User.Phone,// 본인 폰
             Unique_key: data.User.Unique_key, //Unique Key 값
             Univ: data.User.Univ, // 본인 학교
+            Mbti: data.User.Mbti, // 본인 MBTI
             MaxMatching: MAX_MATCHING_NUM, // 최대 매칭 수
             MatchingCode: [] // 매칭된 사람
         }
@@ -941,6 +942,7 @@ const MatchingManager2 = (props) => {
                 Nick: couple[0][i].Nick,
                 Phone: couple[0][i].Phone,
                 Univ: couple[0][i].Univ,
+                Mbti: couple[0][i].Mbti,
                 OriginalTicket: couple[0][i].OriginalTicket,
                 Matchingnum: couple[0][i].MatchingCode.length,
                 Unique_key: couple[0][i].Unique_key
@@ -952,6 +954,7 @@ const MatchingManager2 = (props) => {
                 Nick: couple[1][i].Nick,
                 Phone: couple[1][i].Phone,
                 Univ: couple[1][i].Univ,
+                Mbti: couple[1][i].Mbti,
                 OriginalTicket: couple[1][i].OriginalTicket,
                 Matchingnum: couple[1][i].MatchingCode.length,
                 Unique_key: couple[1][i].Unique_key
