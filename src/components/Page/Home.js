@@ -38,7 +38,28 @@ const Center = styled.div`
 const ContentWrap = styled.div`
   width: 23rem;
 `;
-
+const RightAdBox = styled.div`
+@media all and (min-width:768px) {
+  position : fixed;
+  display: flex;
+  top : 100px;
+  left : 5%;
+  width: 160px;
+  height: 600px;
+}
+display : none;
+`
+const LeftAdBox = styled.div`
+@media all and (min-width:768px) {
+  position : fixed;
+  display: flex;
+  top : 100px;
+  right : 5%;
+  width: 160px;
+  height: 600px;
+}
+display : none;
+`
 const WhatIsFlostingWrap = styled.div`
   margin-top: 3rem;
   height: 20rem;
@@ -229,6 +250,26 @@ const Home = (props) => {
 
   return (
     <Container>
+      <RightAdBox>
+        <amp-ad
+          layout="fixed"
+          width="160"
+          height="600"
+          type="adsense"
+          data-ad-client="ca-pub-3344134203628892"
+          data-ad-slot="6654887852">
+        </amp-ad>
+      </RightAdBox>
+      <LeftAdBox>
+        <amp-ad
+          layout="fixed"
+          width="160"
+          height="600"
+          type="adsense"
+          data-ad-client="ca-pub-3344134203628892"
+          data-ad-slot="6654887852">
+        </amp-ad>
+      </LeftAdBox>
       <Jumbotron
         CurrentButton={CurrentButton}
         버튼타이머={버튼타이머}
