@@ -15,6 +15,7 @@ import 라일락배경 from "../../images/lilac.png";
 import 클로버배경 from "../../images/clover.png";
 import firebase from "./Register/LoginFire.js";
 import AdfitWebComponent from "react-adfit-web-component";
+import Adsense from "react-adsense";
 
 const db = firebase.firestore();
 const analytics = firebase.analytics();
@@ -251,24 +252,28 @@ const Home = (props) => {
   return (
     <Container>
       <RightAdBox>
-        <amp-ad
-          layout="fixed"
-          width="160"
-          height="600"
-          type="adsense"
-          data-ad-client="ca-pub-3344134203628892"
-          data-ad-slot="6654887852">
-        </amp-ad>
+        <Adsense.Google
+          client='ca-pub-3344134203628892'
+          slot='6654887852'
+          style={{
+            display: 'inline-block',
+            width: 160,
+            height: 600
+          }}
+          format=''
+        />
       </RightAdBox>
       <LeftAdBox>
-        <amp-ad
-          layout="fixed"
-          width="160"
-          height="600"
-          type="adsense"
-          data-ad-client="ca-pub-3344134203628892"
-          data-ad-slot="6654887852">
-        </amp-ad>
+        <Adsense.Google
+          client='ca-pub-3344134203628892'
+          slot='6654887852'
+          style={{
+            display: 'inline-block',
+            width: 160,
+            height: 600
+          }}
+          format=''
+        />
       </LeftAdBox>
       <Jumbotron
         CurrentButton={CurrentButton}
