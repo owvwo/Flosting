@@ -14,6 +14,10 @@ const Container = styled.div`
   height: 40rem;
   align-items: center;
   background-color: white;
+  list-style: none;
+  .clickhere{
+    font-weight: 700;
+  }
 `;
 const 제목 = styled.div`
   font-size: 2rem;
@@ -143,24 +147,10 @@ const CurrentEvent = (props) => {
               End_Day="0903"
               Result_Day="0904"
             />
-            {/* 테스트 */}
-            {/* <Buttoncontent
-              {...props}
-              요소wrap={요소wrap}
-              요소btn={요소btn}
-              School_Name={[
-                "강남대학교",
-                "단국대학교 죽전캠퍼스",
-                "가천대학교",
-                "을지대학교 성남캠퍼스",
-              ]}
-              Region="Test권"
-              Num={4}
-              Start_Day="0830"
-              End_Day="0931"
-              Result_Day="0931"
-            /> */}
           </NavLink>
+          <li className="clickhere">
+            👆원하시는 회차를 클릭해주세요!!👆
+          </li>
         </Fade>
         <Fade bottom>
           <NavLink to="/currentevent/alarm">
@@ -170,7 +160,7 @@ const CurrentEvent = (props) => {
 
         <Footer />
       </Container>
-    </div>
+    </div >
   );
 };
 export default CurrentEvent;
