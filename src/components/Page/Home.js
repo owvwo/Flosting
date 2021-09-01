@@ -202,6 +202,30 @@ const ResultButton = styled.button`
     color: rgb(255, 255, 255, 0.8);
   }
 `;
+const TempWrap = styled.div`
+  position : absolute;
+  top : 50px;
+  left : 0px;
+  width: 100%;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  .Slogun{
+    font-family: 'Noto Sans KR', sans-serif;
+    width: 100%;
+    text-align: center;
+    font-size : 1.5rem;
+    font-weight: 700;
+  }
+  .Slogun2{
+    font-family: 'Ubuntu', sans-serif;
+    width: 100%;
+    text-align: center;
+    font-size : 3.5rem;
+    font-weight: 700;
+  }
+`
 
 const Home = (props) => {
   let user = props.User;
@@ -251,6 +275,14 @@ const Home = (props) => {
 
   return (
     <Container>
+      <TempWrap>
+        <h1 className="Slogun">
+          대학생이라면 누구나,
+        </h1>
+        <h1 className="Slogun2">
+          Flosting
+        </h1>
+      </TempWrap>
       <RightAdBox>
         <Adsense.Google
           client='ca-pub-3344134203628892'
