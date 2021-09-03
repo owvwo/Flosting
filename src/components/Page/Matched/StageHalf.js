@@ -84,6 +84,7 @@ margin-right: 1.5rem;
         height: 6rem;
         background-color: grey;
         border-radius: 50%;
+        object-fit:cover;
     }
     .defaultPicBox{
         list-style: none;
@@ -145,6 +146,7 @@ margin-left: 1.5rem;
     height: 6rem;
     background-color: grey;
     border-radius: 50%;
+    object-fit:cover;
 }
 .defaultPicBox{
     list-style: none;

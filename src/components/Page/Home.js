@@ -204,7 +204,10 @@ const ResultButton = styled.button`
 `;
 const TempWrap = styled.div`
   position : absolute;
-  top : 50px;
+  @media all and (min-width: 768px) {
+    top : 3rem;
+  }
+  top : 1rem;
   left : 0px;
   width: 100%;
   align-items: center;
@@ -215,14 +218,20 @@ const TempWrap = styled.div`
     font-family: 'Noto Sans KR', sans-serif;
     width: 100%;
     text-align: center;
-    font-size : 1.5rem;
+    @media all and (min-width: 768px) {
+      font-size : 1.2rem;
+    }
+    font-size : 0.8rem;
     font-weight: 700;
   }
   .Slogun2{
     font-family: 'Ubuntu', sans-serif;
     width: 100%;
     text-align: center;
-    font-size : 3.5rem;
+    @media all and (min-width: 768px) {
+      font-size : 3.5rem;
+    }
+    font-size : 3.0rem;
     font-weight: 700;
   }
 `

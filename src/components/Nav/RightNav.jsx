@@ -26,6 +26,15 @@ const RowDiv = styled.div`
   justify-content : space-between;
   flex-direction : row;
   flex-grow : 1;
+  .newlist{
+    font-weight: 700;
+  }
+  .newcommend{
+    position: relative;
+    left: 3rem;
+    font-size: 0.5rem;
+    font-weight: 700;
+  }
 `;
 const RowParrent = styled.div`
   color: rgb(0,0,0, 0.7);
@@ -102,11 +111,11 @@ const RightNav = (props) => {
     color: '#2B2A28',
     background: '#F2F2F2'
   };
+
   const noneactiveStyle = {
     textDecoration: 'none',
     color: '#2B2A28'
   }
-
   return (
     <Ul open={props.open}>
       {/* 위에 테두리 */}
@@ -147,6 +156,16 @@ const RightNav = (props) => {
               <NavLink to="/currentevent" activeStyle={activeStyle} style={noneactiveStyle}>
                 <li onClick={() => props.setOpen(!props.open)}>
                   플로스팅 신청하기
+                </li>
+              </NavLink>
+            </RowDiv>
+            <RowDiv>
+              <li className="newcommend">
+                New!!
+              </li>
+              <NavLink to="/statistics/MBTI" activeStyle={activeStyle} style={noneactiveStyle}>
+                <li className="newlist" onClick={() => props.setOpen(!props.open)}>
+                  플로스팅 통계
                 </li>
               </NavLink>
             </RowDiv>
