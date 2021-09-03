@@ -56,6 +56,7 @@ background-color:rgb(255,180,224,0.2);
 `;
 
 function QnaMain() {
+  let [클릭0번, 클릭0번변경] = useState(false);
   let [클릭1번, 클릭1번변경] = useState(false);
   let [클릭2번, 클릭2번변경] = useState(false);
   let [클릭3번, 클릭3번변경] = useState(false);
@@ -64,6 +65,9 @@ function QnaMain() {
   let [클릭6번, 클릭6번변경] = useState(false);
   let [클릭7번, 클릭7번변경] = useState(false);
 
+  function onClickZero() {
+    클릭0번변경(!클릭0번);
+  }
   function onClickOne() {
     클릭1번변경(!클릭1번);
   }
@@ -90,6 +94,17 @@ function QnaMain() {
     <div>
       <Container>
         <Title 제목={제목} />
+
+        <button className="질문" onClick={onClickZero}>
+          신청한 개수보다 많은 인원과 매칭이 되었어요!
+        </button>
+        {클릭0번 === true ? (
+          <Fade top>
+            <div className="답변박스">
+              <답변0 답변Container={답변Container} />
+            </div>
+          </Fade>
+        ) : null}
 
         <button className="질문" onClick={onClickOne}>
           매칭 결과는 언제 나오나요?
@@ -177,6 +192,20 @@ function Title({ 제목 }) {
   return <제목>자주 묻는 질문</제목>;
 }
 
+function 답변0({ 답변Container }) {
+  return (
+    <답변Container>
+      <div className="content">
+        A. <br />
+        매칭 결과 보기에 나타나는 매칭 결과는 회원님께서 뽑으신
+        <br />
+        티켓으로 뽑힌 상대방과,
+        상대방이 회원님을 <br />
+        뽑아간 매칭 정보가 함께 표시됩니다.
+      </div>
+    </답변Container>
+  );
+}
 function 답변1({ 답변Container }) {
   return (
     <답변Container>
@@ -208,11 +237,14 @@ function 답변3({ 답변Container }) {
   return (
     <답변Container>
       <div className="content">
-        A. <br /> 신청한 개수보다 많은 인원과 매칭이 되었어요!
+        A. <br /> 저희 플로스팅은 회원님들께서 작성해주신 신청서에 맞게
+        <br /> 매칭을 해드리기 때문에 선택하신 조건과
+        <br /> 부합한 상대방이 없을 경우 매칭에 실패됩니다.
         <br />
-        <br /> 매칭에 실패되는 인원을 최대한으로 줄이고자 하기 위해,
-        <br /> 본인이 신청한 티켓의 개수 보다 더 많은 인원과
-        <br /> 매칭이 될 수도 있다는 점 양해 부탁드립니다.
+        <br /> ※ 무료티켓으로만 플로스팅을 이용해주신 회원들께는
+        <br /> 매칭 실패에 대한 환불 절차가 없지만,
+        <br />추가 티켓을 구매하신 분들에 한해서는
+        <br />매칭 실패에 대한 환불을 도와드립니다.
       </div>
     </답변Container>
   );

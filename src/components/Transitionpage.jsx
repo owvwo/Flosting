@@ -47,6 +47,7 @@ import Event2 from "./Page/subEvent/EventComponents/Event2";
 import Notice1 from "./Page/subEvent/NoticeComponents/Notice1";
 import Notice2 from "./Page/subEvent/NoticeComponents/Notice2";
 import MBTIstatics_page from "./Page/Statistics/MBTIstatics";
+import Schoolstatics_page from "./Page/Statistics/Schoolstatics";
 const Transition = (props) => {
 
   const [auth_regis, set_auth_regis] = useState(false);
@@ -111,6 +112,7 @@ const Transition = (props) => {
           <Route path="/history" component={History_page} />
           <Route exact path="/ad" component={AD_page} />
           <Route exact path="/statistics/MBTI"><MBTIstatics_page /></Route>
+          <Route exact path="/statistics/School"><Schoolstatics_page /></Route>
           <Route exact path="/admin"><Admin_page isManager={isManager} setisManager={setisManager} User={user} /></Route>
           <Route exact path="/admin/jungboo"><EventPeriod
             setEP_School_Name={setEP_School_Name}
