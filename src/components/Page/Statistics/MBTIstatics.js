@@ -454,7 +454,6 @@ function MBTIstatics() {
                 calculateall().then(_ => {
                     sortArray().then(_ => {
                         setBF(PercentArray[0].name);
-                        console.table(PercentArray);
                         setRealArray(PercentArray);
                         setisSearch(true);
                     })
