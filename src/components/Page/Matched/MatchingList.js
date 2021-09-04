@@ -282,7 +282,6 @@ function MatchingList(props) {
                     })
                 }
             });
-            setNestedObjectValues()
         } catch (err) { console.log(err) }
     }
 
