@@ -67,9 +67,9 @@ function AdminBigFoot(props) {
 
   let alarmList = [];
   let userList = [];
-  let cloverStage = [0, 0, 0];
-  let lilacStage = [0, 0, 0];
-  let daisyStage = [0, 0, 0];
+  let cloverStage = [0, 0, 0, 0];
+  let lilacStage = [0, 0, 0, 0];
+  let daisyStage = [0, 0, 0, 0];
 
   const getVariableInfo = async () => {
     const snapShot = await db
@@ -170,6 +170,8 @@ function AdminBigFoot(props) {
           cloverStage[1] += 1;
         } else if (doc.data().stage === "success") {
           cloverStage[2] += 1;
+        } else if (doc.data().stage === "end") {
+          cloverStage[3] += 1;
         }
         // console.log(cloverStage)
       });
@@ -188,6 +190,8 @@ function AdminBigFoot(props) {
           lilacStage[1] += 1;
         } else if (doc.data().stage === "success") {
           lilacStage[2] += 1;
+        } else if (doc.data().stage === "end") {
+          lilacStage[3] += 1;
         }
         // console.log(lilacStage)
       });
@@ -206,6 +210,8 @@ function AdminBigFoot(props) {
           daisyStage[1] += 1;
         } else if (doc.data().stage === "success") {
           daisyStage[2] += 1;
+        } else if (doc.data().stage === "end") {
+          daisyStage[3] += 1;
         }
         // console.log(daisyStage)
       });
@@ -300,35 +306,38 @@ function AdminBigFoot(props) {
             {modal === true ? (
               <div>
                 <h2>클로버</h2>총 매칭 수:{" "}
-                {클로버현황[0] + 클로버현황[1] + 클로버현황[2]} <br />
+                {클로버현황[0] + 클로버현황[1] + 클로버현황[2] + 클로버현황[3]} <br />
                 zero: {클로버현황[0]} <br />
                 half: {클로버현황[1]} <br />
                 ssuccess: {클로버현황[2]} <br />
+                end: {클로버현황[3]} <br />
                 매칭성공률:{" "}
                 {(클로버현황[2] /
-                  (클로버현황[0] + 클로버현황[1] + 클로버현황[2])) *
+                  (클로버현황[0] + 클로버현황[1] + 클로버현황[2] + 클로버현황[3])) *
                   100}
                 % <br />
                 <br />
                 <h2>라일락</h2>총 매칭 수:{" "}
-                {라일락현황[0] + 라일락현황[1] + 라일락현황[2]} <br />
+                {라일락현황[0] + 라일락현황[1] + 라일락현황[2] + 라일락현황[3]} <br />
                 zero: {라일락현황[0]} <br />
                 half: {라일락현황[1]} <br />
                 ssuccess: {라일락현황[2]} <br />
+                end: {라일락현황[3]} <br />
                 매칭성공률:{" "}
                 {(라일락현황[2] /
-                  (라일락현황[0] + 라일락현황[1] + 라일락현황[2])) *
+                  (라일락현황[0] + 라일락현황[1] + 라일락현황[2] + 라일락현황[3])) *
                   100}
                 % <br />
                 <br />
                 <h2>데이지</h2>총 매칭 수:{" "}
-                {데이지현황[0] + 데이지현황[1] + 데이지현황[2]} <br />
+                {데이지현황[0] + 데이지현황[1] + 데이지현황[2] + 데이지현황[3]} <br />
                 zero: {데이지현황[0]} <br />
                 half: {데이지현황[1]} <br />
                 ssuccess: {데이지현황[2]} <br />
+                end: {데이지현황[3]} <br />
                 매칭성공률:{" "}
                 {(데이지현황[2] /
-                  (데이지현황[0] + 데이지현황[1] + 데이지현황[2])) *
+                  (데이지현황[0] + 데이지현황[1] + 데이지현황[2] + 데이지현황[3])) *
                   100}
                 % <br />
               </div>

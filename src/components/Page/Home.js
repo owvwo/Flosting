@@ -15,6 +15,7 @@ import 라일락배경 from "../../images/lilac.png";
 import 클로버배경 from "../../images/clover.png";
 import firebase from "./Register/LoginFire.js";
 import AdfitWebComponent from "react-adfit-web-component";
+import Adsense from "react-adsense";
 
 const db = firebase.firestore();
 const analytics = firebase.analytics();
@@ -38,7 +39,28 @@ const Center = styled.div`
 const ContentWrap = styled.div`
   width: 23rem;
 `;
-
+const RightAdBox = styled.div`
+@media all and (min-width:768px) {
+  position : fixed;
+  display: flex;
+  top : 100px;
+  left : 5%;
+  width: 160px;
+  height: 600px;
+}
+display : none;
+`
+const LeftAdBox = styled.div`
+@media all and (min-width:768px) {
+  position : fixed;
+  display: flex;
+  top : 100px;
+  right : 5%;
+  width: 160px;
+  height: 600px;
+}
+display : none;
+`
 const WhatIsFlostingWrap = styled.div`
   margin-top: 3rem;
   height: 20rem;
@@ -180,6 +202,30 @@ const ResultButton = styled.button`
     color: rgb(255, 255, 255, 0.8);
   }
 `;
+const TempWrap = styled.div`
+  position : absolute;
+  top : 50px;
+  left : 0px;
+  width: 100%;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  .Slogun{
+    font-family: 'Noto Sans KR', sans-serif;
+    width: 100%;
+    text-align: center;
+    font-size : 1.5rem;
+    font-weight: 700;
+  }
+  .Slogun2{
+    font-family: 'Ubuntu', sans-serif;
+    width: 100%;
+    text-align: center;
+    font-size : 3.5rem;
+    font-weight: 700;
+  }
+`
 
 const Home = (props) => {
   let user = props.User;
@@ -229,6 +275,38 @@ const Home = (props) => {
 
   return (
     <Container>
+      <TempWrap>
+        <h1 className="Slogun">
+          대학생이라면 누구나,
+        </h1>
+        <h1 className="Slogun2">
+          Flosting
+        </h1>
+      </TempWrap>
+      <RightAdBox>
+        <Adsense.Google
+          client='ca-pub-3344134203628892'
+          slot='6654887852'
+          style={{
+            display: 'inline-block',
+            width: 160,
+            height: 600
+          }}
+          format=''
+        />
+      </RightAdBox>
+      <LeftAdBox>
+        <Adsense.Google
+          client='ca-pub-3344134203628892'
+          slot='6654887852'
+          style={{
+            display: 'inline-block',
+            width: 160,
+            height: 600
+          }}
+          format=''
+        />
+      </LeftAdBox>
       <Jumbotron
         CurrentButton={CurrentButton}
         버튼타이머={버튼타이머}

@@ -350,7 +350,8 @@ function Payment(props) {
     const [OneClick, setOneClick] = useState(true);
     const [submitSuccess, setSubmitSuccess] = useState(false);
     const [discountSum, setDiscountSum] = useState(0); // 할인금액 상태 저장
-    let AllSum = (Number(clover_Ticket) + Number(lilac_Ticket) + Number(daisy_Ticket)) * 1000
+    const [AllSum, setAllsum] = useState(0);
+    const [AllTicketNum, setAllTicketNum] = useState(0);
     let FinishSum = AllSum - discountSum;
 
     // 할인되는 금액이 얼마인지 판단하는 hook
@@ -359,6 +360,13 @@ function Payment(props) {
         if (daisy_Ticket_FT) { setDiscountSum(cost => cost + 1000) }
         if (clover_Ticket_FT) { setDiscountSum(cost => cost + 1000) }
 
+        if (lilac_Ticket_FT) { setAllsum(cost => cost + (Number(lilac_Ticket) * 1000)) }
+        if (daisy_Ticket_FT) { setAllsum(cost => cost + (Number(daisy_Ticket) * 1000)) }
+        if (clover_Ticket_FT) { setAllsum(cost => cost + (Number(clover_Ticket) * 1000)) }
+
+        if (lilac_Ticket_FT) { setAllTicketNum(cost => cost + Number(lilac_Ticket)) }
+        if (daisy_Ticket_FT) { setAllTicketNum(cost => cost + Number(daisy_Ticket)) }
+        if (clover_Ticket_FT) { setAllTicketNum(cost => cost + Number(clover_Ticket)) }
     }, [])
 
     let lilacvalues = {
@@ -506,7 +514,7 @@ function Payment(props) {
                             </div>
                             <div className="TicketNum">
                                 <li>
-                                    {lilac_Ticket}
+                                    {(lilac_Ticket_FT) ? lilac_Ticket : 0}
                                 </li>
                             </div>
                             <div className="Ticketdollar">
@@ -516,7 +524,7 @@ function Payment(props) {
                             </div>
                             <div className="TicketSum">
                                 <li>
-                                    {Number(lilac_Ticket) * 1000}
+                                    {(lilac_Ticket_FT) ? Number(lilac_Ticket) * 1000 : 0}
                                 </li>
                             </div>
                         </div>
@@ -527,7 +535,7 @@ function Payment(props) {
                             </div>
                             <div className="TicketNum">
                                 <li>
-                                    {daisy_Ticket}
+                                    {(daisy_Ticket_FT) ? daisy_Ticket : 0}
                                 </li>
                             </div>
                             <div className="Ticketdollar">
@@ -537,7 +545,7 @@ function Payment(props) {
                             </div>
                             <div className="TicketSum">
                                 <li>
-                                    {Number(daisy_Ticket) * 1000}
+                                    {(daisy_Ticket_FT) ? Number(daisy_Ticket) * 1000 : 0}
                                 </li>
                             </div>
                         </div>
@@ -548,7 +556,7 @@ function Payment(props) {
                             </div>
                             <div className="TicketNum">
                                 <li>
-                                    {clover_Ticket}
+                                    {(clover_Ticket_FT) ? clover_Ticket : 0}
                                 </li>
                             </div>
                             <div className="Ticketdollar">
@@ -558,7 +566,7 @@ function Payment(props) {
                             </div>
                             <div className="TicketSum">
                                 <li>
-                                    {Number(clover_Ticket) * 1000}
+                                    {(clover_Ticket_FT) ? Number(clover_Ticket) * 1000 : 0}
                                 </li>
                             </div>
                         </div>
@@ -588,7 +596,7 @@ function Payment(props) {
                             <div className="RowContent">
                                 <div className="SelectNum">
                                     <li>
-                                        {Number(clover_Ticket) + Number(lilac_Ticket) + Number(daisy_Ticket)}
+                                        {AllTicketNum}
                                     </li>
                                 </div>
                                 <div className="SelectAllSum">
