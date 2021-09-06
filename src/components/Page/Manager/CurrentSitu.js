@@ -144,7 +144,7 @@ function UserSearch(props) {
     let univsize6 = 0;
     let univsize7 = 0;
     const checkUserTwo = db
-      .collection(`Flosting_2`)
+      .collection(`Flosting_3`)
       .get()
       .then((querySnapshot) => {
         setflosting1(querySnapshot.size);
@@ -155,18 +155,18 @@ function UserSearch(props) {
             girlsize2++;
           }
 
-          if (doc.data().User.Univ === "단국대학교 천안캠퍼스") {
+          if (doc.data().User.Univ === "건국대학교 서울캠퍼스") {
             univsize1++;
-          } else if (doc.data().User.Univ === "상명대학교 천안캠퍼스") {
+          } else if (doc.data().User.Univ === "중앙대학교 서울캠퍼스") {
             univsize2++;
-          } else if (doc.data().User.Univ === "순천향대학교") {
+          } else if (doc.data().User.Univ === "숭실대학교") {
             univsize3++;
-          } else if (doc.data().User.Univ === "백석대학교") {
+          } else if (doc.data().User.Univ === "세종대학교") {
             univsize4++;
-          } else if (doc.data().User.Univ === "선문대학교") {
-            univsize5++;
-          } else if (doc.data().User.Univ === "호서대학교") {
-            univsize6++;
+            // } else if (doc.data().User.Univ === "선문대학교") {
+            //   univsize5++;
+            // } else if (doc.data().User.Univ === "호서대학교") {
+            //   univsize6++;
           } else {
             univsize7++;
           }
@@ -177,9 +177,9 @@ function UserSearch(props) {
         setuniv2(univsize2);
         setuniv3(univsize3);
         setuniv4(univsize4);
-        setuniv5(univsize5);
-        setuniv6(univsize6);
-        setuniv7(univsize7);
+        // setuniv5(univsize5);
+        // setuniv6(univsize6);
+        // setuniv7(univsize7);
       });
   }, []);
 
@@ -191,16 +191,16 @@ function UserSearch(props) {
         <h1>현재 가입</h1>
         {UnivList}명<h3>남자</h3>
         {boy}명<h3>여자</h3>
-        {girl}명<h1>2회차</h1>
+        {girl}명<h1>3회차</h1>
         {flosting1}명<h3>남자</h3>
         {boy1}명<h3>여자</h3>
-        {girl1}명<h3>단국대학교 천안</h3>
-        {univ1}명<h3>상명대학교 천안</h3>
-        {univ2}명<h3>순천향대학교</h3>
-        {univ3}명<h3>백석대학교</h3>
-        {univ4}명<h3>선문대학교</h3>
-        {univ5}명<h3>호서대학교</h3>
-        {univ6}명{/* {univ7}명 */}
+        {girl1}명<h3>건국대학교</h3>
+        {univ1}명<h3>중앙대학교</h3>
+        {univ2}명<h3>숭실대학교</h3>
+        {univ3}명<h3>세종대학교</h3>
+        {univ4}명{/* <h3>선문대학교</h3> */}
+        {/* {univ5}명<h3>호서대학교</h3>
+        {univ6}명{univ7}명 */}
       </Container>
     );
   }
