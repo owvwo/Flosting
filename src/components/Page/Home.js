@@ -47,6 +47,7 @@ const RightAdBox = styled.div`
   left : 5%;
   width: 160px;
   height: 600px;
+  z-index : 10;
 }
 display : none;
 `
@@ -58,6 +59,7 @@ const LeftAdBox = styled.div`
   right : 5%;
   width: 160px;
   height: 600px;
+  z-index : 10;
 }
 display : none;
 `
