@@ -15,7 +15,7 @@ const Container = styled.div`
   align-items: center;
   background-color: white;
   list-style: none;
-  .clickhere{
+  .clickhere {
     font-weight: 700;
   }
 `;
@@ -43,18 +43,21 @@ const 요소btn = styled.button`
     font-family: "Noto Sans KR", sans-serif;
     font-weight: 500;
     font-size: 0.8rem;
-    text-decoration : underline;
+    text-decoration: underline;
   }
-  .EP_Region{
+  .EP_Region {
+    font-family: "Noto Sans KR", sans-serif;
     font-weight: 500;
     font-size: 1.2rem;
-    color : rgb(0,0,0,0.7);
   }
   .EP_School_Name {
     font-family: "Noto Sans KR", sans-serif;
     font-weight: 500;
     font-size: 1.1rem;
   }
+  &:hover{
+    background-color: rgb(125, 200, 224, 0.8);
+    color: rgb(255,255,255,1.0);
 `;
 const 알림wrap = styled.div`
   margin-top: 15px;
@@ -129,7 +132,7 @@ const CurrentEvent = (props) => {
               End_Day="0827"
               Result_Day="0828"
             /> */}
-            <Buttoncontent
+            {/* <Buttoncontent
               {...props}
               요소wrap={요소wrap}
               요소btn={요소btn}
@@ -146,11 +149,25 @@ const CurrentEvent = (props) => {
               Start_Day="0831"
               End_Day="0903"
               Result_Day="0904"
+            /> */}
+            <Buttoncontent
+              {...props}
+              요소wrap={요소wrap}
+              요소btn={요소btn}
+              School_Name={[
+                "건국대학교 서울캠퍼스",
+                "중앙대학교 서울캠퍼스",
+                "세종대학교",
+                "숭실대학교",
+              ]}
+              Region="동작구, 광진구"
+              Num={3}
+              Start_Day="0907"
+              End_Day="0910"
+              Result_Day="0911"
             />
           </NavLink>
-          <li className="clickhere">
-            👆원하시는 회차를 클릭해주세요!!👆
-          </li>
+          <li className="clickhere">👆원하시는 회차를 클릭해주세요!!👆</li>
         </Fade>
         <Fade bottom>
           <NavLink to="/currentevent/alarm">
@@ -160,7 +177,7 @@ const CurrentEvent = (props) => {
 
         <Footer />
       </Container>
-    </div >
+    </div>
   );
 };
 export default CurrentEvent;
