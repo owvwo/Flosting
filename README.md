@@ -1,20 +1,32 @@
-# Flosting Beta Site
+# Flosting Web Application
 
-플로스팅 공식 웹사이트입니다.
+[박정우](https://github.com/jwoo820)
 
-## Mobile ver1.0
+[정재현](https://github.com/wogus0518)
 
-모바일용 웹사이트 개발중
+[최승훈](https://github.com/owvwo)
 
-### Developer
 
-jwoo820
+### Architecture
 
-### Developer
+react / JS / Firebase / AWS / IamPort 본인인증
 
-owvwo
+------
 
-### Developer
+## Settings
 
-wogus0518
+- DB 구성
 
+  - Firebase - Firestore 이용
+  - main.cpp 파일이 주 소스이다.
+  - imgui 디렉토리 내 GUI 소스이다.
+
+
+- Server 구성
+
+  - Serverless 환경
+  - Aws Lambda / GateWay를 활용
+
+- IamPort Certification 설정
+
+- Front 구성
